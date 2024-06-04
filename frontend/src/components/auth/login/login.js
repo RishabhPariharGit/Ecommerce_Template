@@ -68,7 +68,7 @@ export default function LogIn() {
   
             <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
-              <Link to="/signup">Sign up</Link>
+              <Link to="/signup"><strong>Sign up</strong></Link>
             </p>
           </div>
         </div>
