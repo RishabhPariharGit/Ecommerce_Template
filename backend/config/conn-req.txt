@@ -1,0 +1,3 @@
+us nm - rishabhgit1704
+ps - Rentalmanagement123
+conn string - mongodb+srv://rishabhgit1704:Rentalmanagement123@rentalmgmt.qoi0sqo.mongodb.net/
