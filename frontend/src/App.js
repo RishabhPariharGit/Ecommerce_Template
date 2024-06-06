@@ -1,5 +1,5 @@
 import React from 'react'
-import AuthRoutes from './Routes/authroutes'
+import AuthRoutes from './website/Routes/authroutes'
 
 
 const App = () => {
