@@ -1,14 +1,21 @@
 const express = require('express')
-const connectDB = require('./config/db')
+const connectDB = require('./Database/Connection')
+const UserModel = require('./Model/User');
+const RoleModel = require('./Model/Role');
+const Router = require("./Routes/AllRoutes");
+const cors = require('cors');
 const app = express()
-const port = 8081
+
+require('dotenv').config();
+app.use(express.json());
+const PORT = process.env.PORT;
 
 connectDB();
+UserModel();
+RoleModel();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.use('/', Router);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`)
 })
