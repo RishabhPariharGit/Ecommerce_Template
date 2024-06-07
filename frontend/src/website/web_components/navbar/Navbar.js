@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react'
+import './Navbar.css'
 import {
   Dialog,
   DialogPanel,
@@ -12,26 +13,24 @@ import {
   Transition,
 } from '@headlessui/react'
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
+  UserGroupIcon,
+  UserIcon,      
   XMarkIcon,
+  HomeModernIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 
 const products = [
-  { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-  { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-  { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-  { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
+  { name: 'Room Owners', description: 'Get a better understanding of your traffic', href: '#', icon: HomeModernIcon },
+  { name: 'Clients', description: 'Speak directly to your customers', href: '#', icon: UserGroupIcon },
+  { name: 'Teanents', description: 'Your customers’ data will be safe and secure', href: '#', icon: UserIcon },
+  // { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
+  // { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
 ]
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
+  { name: 'Contact us', href: '#', icon: PhoneIcon },
 ]
 
 function classNames(...classes) {
@@ -61,9 +60,13 @@ export default function Navbar() {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+        <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+            Home
+          </a>
           <Popover className="relative">
+            
             <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              Product
+              Services
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
 
@@ -112,14 +115,14 @@ export default function Navbar() {
           </Popover>
 
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
+            About us
           </a>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
+            Blog
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
-          </a>
+          {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+            More
+          </a> */}
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
