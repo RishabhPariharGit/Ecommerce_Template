@@ -8,7 +8,7 @@ const UserSchema= mongoose.Schema({
     Phone:Number,
     password: String,
    Role:String,
-   Syst:Boolean
+   SubscriptionEndDate:Date
 
 })
 const USerModel = mongoose.model( "USer",UserSchema);

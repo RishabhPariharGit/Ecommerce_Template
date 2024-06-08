@@ -1,13 +1,13 @@
 
 const UserModel = require('../Model/User');
-const RoleModel = require('../Model/Role')
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const RegisterUser = async (req, res) => {
     try {
         console.log(req.body)
-        const { Name,Username,Email, Phone,Password, PropertyOwner, SystemAdmin } = req.body;
+        const { Name,Username,Email, Phone,Password, IsPropertyOwner, IsSystemAdmin } = req.body;
 
         // Check if user with the same email already exists
         const existingUser = await UserModel.findOne({ Email });
@@ -21,7 +21,15 @@ const RegisterUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(Password, salt);
          console.log(hashedPassword)
         // Create a new user instance
-        const newUser = new UserModel({ Name,Username,Email,Phone, password: hashedPassword, PropertyOwner, SystemAdmin });
+        const newUser = new UserModel({ Name,Username,Email,Phone, password: hashedPassword });
+        if(IsPropertyOwner){
+            newUser.role="PropertyOwner"
+        }else if(IsSystemAdmin){
+            newUser.role="SystemAdmin"
+        }
+        else{
+            newUser.role="Tenant"
+        }
        console.log(newUser)
         // Save the user
         const savedUser = await newUser.save();
@@ -31,16 +39,16 @@ const RegisterUser = async (req, res) => {
         }
 
         // Assign roles if specified
-        const rolesToAssign = [];
-        if (PropertyOwner) {
-            rolesToAssign.push({ USerId: savedUser._id, name: "PropertyOwner" });
-        }
-        if (SystemAdmin) {
-            rolesToAssign.push({ USerId: savedUser._id, name: "SystemAdmin" });
-        }
-        if (rolesToAssign.length > 0) {
-            await RoleModel.insertMany(rolesToAssign);
-        }
+        // const rolesToAssign = [];
+        // if (PropertyOwner) {
+        //     rolesToAssign.push({ USerId: savedUser._id, name: "PropertyOwner" });
+        // }
+        // if (SystemAdmin) {
+        //     rolesToAssign.push({ USerId: savedUser._id, name: "SystemAdmin" });
+        // }
+        // if (rolesToAssign.length > 0) {
+        //     await RoleModel.insertMany(rolesToAssign);
+        // }
 
         return res.status(200).json({ message: "User registered successfully", userId: savedUser._id });
     } catch (err) {
@@ -75,18 +83,19 @@ const LoginUser = async (req, res) => {
        
     };
     const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
+    let message;
         // Find user's role
-        const role = await RoleModel.findOne({ USerId: user._id });
-        let message;
-        if (!role) {
-            message = "Login Successfully, Role not defined";
-        } else if (role.name === "PropertyOwner") {
-            message = "Login Successfully, It's Admin";
-        } else if (role.name === "SystemAdmin") {
-            message = "Login Successfully, It's SystemAdmin";
-        } else {
-            message = "Login Successfully, It's User";
-        }
+        // const role = await RoleModel.findOne({ USerId: user._id });
+        // let message;
+        // if (!role) {
+        //     message = "Login Successfully, Role not defined";
+        // } else if (role.name === "PropertyOwner") {
+        //     message = "Login Successfully, It's Admin";
+        // } else if (role.name === "SystemAdmin") {
+        //     message = "Login Successfully, It's SystemAdmin";
+        // } else {
+        //     message = "Login Successfully, It's User";
+        // }
 
         return res.status(200).json({ message,jwtToken });
     } catch (err) {
