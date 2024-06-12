@@ -1,0 +1,50 @@
+/* Newsletter.css */
+.custom-background {
+    background-color: #E3E2FD; /* Tomato color */
+  }
+  
+  .custom-padding {
+    padding: 20px;
+  }
+  
+  .custom-font {
+    font-family: 'Courier New', Courier, monospace;
+    color: #4F46E5;
+  }
+
+  .custom-font-fam{
+    color: #4F46E5;
+  }
+  
+  .custom-text{
+    color: #5a5a5a;
+    font-size: 16px;
+  }
+
+  .custom-icon-text{
+    color: #5a5a5a;
+    font-size: 16px;
+  }
+
+  .custom-border {
+    border: 2px solid #4F46E5; /* Tomato color border */
+  }
+
+  .custom-icon{
+    color: #4F46E5;
+  }
+  
+  .custom-input {
+    background-color: #ffffff; /* Light Tomato background */
+    color: #000000; /* Tomato color text */
+  }
+  
+  .custom-button {
+    background-color: #4F46E5; /* Tomato color */
+    color: white;
+  }
+  
+  .custom-button:hover {
+    background-color: #453cf0; /* Darker Tomato color */
+  }
+  

@@ -7,9 +7,9 @@ import 'swiper/css/controller';
 
 const MainHomebanner = () => {
 
-    const images = ['https://images.pexels.com/photos/16770561/pexels-photo-16770561/free-photo-of-scenic-view-of-green-hills-and-mountains.jpeg', 
-        'https://images.pexels.com/photos/20041507/pexels-photo-20041507/free-photo-of-close-up-of-sleeping-cat.jpeg', 
-        'https://images.pexels.com/photos/12187128/pexels-photo-12187128.jpeg', 
+    const images = ['https://staticg.sportskeeda.com/editor/2022/03/c468f-16482907265601-1920.jpg', 
+        'https://static1.srcdn.com/wordpress/wp-content/uploads/2023/08/naruto_formation_of_akatsuki.jpg?q=50&fit=contain&w=1140&h=&dpr=1.5', 
+        'https://dafunda.com/wp-content/uploads/2023/12/pain-six-paths-from-naruto-3339772528.webp', 
         'https://images.pexels.com/photos/11785594/pexels-photo-11785594.jpeg']
 
     return (
