@@ -1,0 +1,11 @@
+.head-subhead h1{
+font-weight: 700;
+font-size: 35px;
+text-align: center;
+margin: 10px 0px;
+}
+
+.head-subhead p{
+font-size: 15px;
+text-align: center;
+}
