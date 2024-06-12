@@ -36,7 +36,7 @@ const Testimonials = () => {
             <li className="c-testimonials__item c-card-testimonial swiper-slide">
               <div className="c-card-testimonial__profile">
                 <img
-                  src="https://www.ats.hugo-salazar.com/wp-content/uploads/2023/04/zzor.jpeg"
+                  src="https://preview.redd.it/u3kz1tuevfc11.jpg?auto=webp&s=00cd56b0da5989ee8975059e3c1f5bd3ee839e0d"
                   alt=""
                   className="c-card-testimonial__image"
                 />
@@ -63,7 +63,7 @@ const Testimonials = () => {
             <li className="c-testimonials__item c-card-testimonial swiper-slide">
               <div className="c-card-testimonial__profile">
                 <img
-                  src="https://www.ats.hugo-salazar.com/wp-content/uploads/2023/04/pincho.jpeg"
+                  src="https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,q_auto,w_720/63dcc7d0227cb3001dcfc660.jpg"
                   alt=""
                   className="c-card-testimonial__image"
                 />
