@@ -1,5 +1,5 @@
-import { Fragment, useState } from 'react'
-import './Navbar.css'
+import { Fragment, useState } from 'react';
+import './Navbar.css';
 import {
   Dialog,
   DialogPanel,
@@ -11,35 +11,34 @@ import {
   PopoverGroup,
   PopoverPanel,
   Transition,
-} from '@headlessui/react'
+} from '@headlessui/react';
 import {
   Bars3Icon,
   UserGroupIcon,
-  UserIcon,      
+  UserIcon,
   XMarkIcon,
   HomeModernIcon,
-} from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline';
+import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid';
 import { Link } from "react-router-dom";
 
 const products = [
-  { name: 'Room Owners', description: 'Get a better understanding of your traffic', href: '#', icon: HomeModernIcon },
-  { name: 'Clients', description: 'Speak directly to your customers', href: '#', icon: UserGroupIcon },
-  { name: 'Teanents', description: 'Your customers’ data will be safe and secure', href: '#', icon: UserIcon },
-  // { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  // { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-]
+  { name: 'Room Owners', description: 'Get a better understanding of your traffic', to: '/roomowner', icon: HomeModernIcon },
+  { name: 'Buyers', description: 'Speak directly to your customers', to: '/buyer', icon: UserGroupIcon },
+  { name: 'Tenants', description: 'Your customers’ data will be safe and secure', to: '/teanent', icon: UserIcon },
+];
+
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
   { name: 'Contact us', href: '#', icon: PhoneIcon },
-]
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="bg-white">
@@ -61,11 +60,10 @@ export default function Navbar() {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-        <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Home
           </a>
           <Popover className="relative">
-            
             <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
               Services
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
@@ -90,10 +88,17 @@ export default function Navbar() {
                         <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                       </div>
                       <div className="flex-auto">
-                        <a href={item.href} className="block font-semibold text-gray-900">
-                          {item.name}
-                          <span className="absolute inset-0" />
-                        </a>
+                        {item.to ? (
+                          <Link to={item.to} className="block font-semibold text-gray-900">
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </Link>
+                        ) : (
+                          <a href={item.href} className="block font-semibold text-gray-900">
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </a>
+                        )}
                         <p className="mt-1 text-gray-600">{item.description}</p>
                       </div>
                     </div>
@@ -121,16 +126,11 @@ export default function Navbar() {
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Blog
           </a>
-          {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            More
-          </a> */}
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          
-       
-        <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
             Log in <span aria-hidden="true">&rarr;</span>
-            </Link>
+          </Link>
         </div>
       </nav>
       <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -168,7 +168,18 @@ export default function Navbar() {
                         />
                       </DisclosureButton>
                       <DisclosurePanel className="mt-2 space-y-2">
-                        {[...products, ...callsToAction].map((item) => (
+                        {products.map((item) => (
+                          <DisclosureButton
+                            key={item.name}
+                            as={item.to ? Link : 'a'}
+                            to={item.to}
+                            href={item.href}
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                          >
+                            {item.name}
+                          </DisclosureButton>
+                        ))}
+                        {callsToAction.map((item) => (
                           <DisclosureButton
                             key={item.name}
                             as="a"
@@ -214,5 +225,5 @@ export default function Navbar() {
         </DialogPanel>
       </Dialog>
     </header>
-  )
+  );
 }
