@@ -1,110 +1,206 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-export default function LogIn() {
-    return (
-      <>
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-              className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
-            />
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Sign up to your account
-            </h2>
-          </div>
-  
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
-              
-            <div>
-                <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                  Name
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-  
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                    Password
-                  </label>
-                </div>
+import axios from 'axios';
+import './signup.css';
 
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-  
+export default function SignUp() {
 
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                    Confirm Password
-                  </label>
-                </div>
+  const [Name, setName] = useState('');
+  const [Username, setUsername] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [IsPropertyOwner, setIsPropertyOwner] = useState(false);
+  const [IsSystemAdmin, setIsSystemAdmin] = useState(false);
 
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Already a member?{' '}
-              <Link to="/"><strong>Log in</strong></Link>
-            </p>
-          </div>
-        </div>
-      </>
-    )
+  const handleSubmit = async (event) => {
+    debugger
+    event.preventDefault();
+    if(password==confirmPassword){
+      const response = await axios.post("http://localhost:8080/RegisterUser", {Name, Username, Email, Phone, password, IsPropertyOwner, IsSystemAdmin});
+      if(response.status="200"){
+        alert("Registration Succesfull")
+        resetForm();
+      }
+    }
+  else{
+    alert("Password  Not Match")
   }
+       
+
+    
+     
+};
+
+
+const resetForm = () => {
+    setName('');
+    setUsername('');
+    setEmail('');
+    setPhone('');
+    setPassword('');
+    setConfirmPassword('');
+    setIsPropertyOwner(false);
+    setIsSystemAdmin(false);
   
+};
+
+  return (
+    <div className="container">
+      <div className="form-container">
+        <img
+          className="logo"
+          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          alt="Your Company"
+        />
+        <h2 className="title">
+          Sign up to your account
+        </h2>
+      </div>
+
+      <div className="form-wrapper">
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label htmlFor="name" className="label">
+              Name
+            </label>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                id="Name"
+                value={Name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Name"
+                required
+                className="input"
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="username" className="label">
+              Username
+            </label>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                id="Username"
+                value={Username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                required
+                className="input"
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="email" className="label">
+              Email address
+            </label>
+            <div className="input-wrapper">
+              <input
+                type="email"
+                id="Email"
+                value={Email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                required
+                className="input"
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="phone" className="label">
+              Phone Number
+            </label>
+            <div className="input-wrapper">
+              <input
+                type="tel"
+                id="Phone"
+                value={Phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Phone Number"
+                required
+                className="input"
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="password" className="label">
+              Password
+            </label>
+            <div className="input-wrapper">
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+                className="input"
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="confirm-password" className="label">
+              Confirm Password
+            </label>
+            <div className="input-wrapper">
+              <input
+                type="password"
+                id="confirm-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
+                required
+                className="input"
+              />
+            </div>
+          </div>
+
+          <div className="input-group checkbox-group">
+            <div className="checkbox-wrapper">
+              <input
+                type="checkbox"
+                id="IsPropertyOwner"
+                checked={IsPropertyOwner}
+                onChange={(e) => setIsPropertyOwner(e.target.checked)}
+                className="checkbox"
+              />
+              <label htmlFor="IsPropertyOwner" className="label-checkbox">
+                Property Owner
+              </label>
+            </div>
+            <div className="checkbox-wrapper">
+              <input
+                type="checkbox"
+                id="IsSystemAdmin"
+                checked={IsSystemAdmin}
+                onChange={(e) => setIsSystemAdmin(e.target.checked)}
+                className="checkbox"
+              />
+              <label htmlFor="IsSystemAdmin" className="label-checkbox">
+                System Admin
+              </label>
+            </div>
+          </div>
+
+          <div className="button-wrapper">
+            <button type="submit" className="submit-button" onClick={handleSubmit}>
+              Sign Up
+            </button>
+          </div>
+        </form>
+        <p className="footer-text">
+          Already a member?{' '}
+          <Link to="/"><strong>Log in</strong></Link>
+        </p>
+      </div>
+    </div>
+  );
+}
