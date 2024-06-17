@@ -25,12 +25,12 @@ import { Link } from "react-router-dom";
 const products = [
   { name: 'Room Owners', description: 'Get a better understanding of your traffic', to: '/roomowner', icon: HomeModernIcon },
   { name: 'Buyers', description: 'Speak directly to your customers', to: '/buyer', icon: UserGroupIcon },
-  { name: 'Tenants', description: 'Your customers’ data will be safe and secure', to: '/teanent', icon: UserIcon },
+  { name: 'Tenants', description: 'Your customers’ data will be safe and secure', to: '/tenant', icon: UserIcon },
 ];
 
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact us', href: '#', icon: PhoneIcon },
+  { name: 'Contact us', to: '/contact', icon: PhoneIcon },
 ];
 
 function classNames(...classes) {
@@ -44,7 +44,7 @@ export default function Navbar() {
     <header className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
           </a>
@@ -60,7 +60,7 @@ export default function Navbar() {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="/" className="text-sm font-semibold leading-6 text-gray-900">
             Home
           </a>
           <Popover className="relative">
@@ -106,26 +106,37 @@ export default function Navbar() {
                 </div>
                 <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
                   {callsToAction.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
-                    >
-                      <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                      {item.name}
-                    </a>
+                    item.to ? (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                      >
+                        <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                      >
+                        <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                        {item.name}
+                      </a>
+                    )
                   ))}
                 </div>
               </PopoverPanel>
             </Transition>
           </Popover>
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/about" className="text-sm font-semibold leading-6 text-gray-900">
             About us
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          </Link>
+          <Link to="/blog" className="text-sm font-semibold leading-6 text-gray-900">
             Blog
-          </a>
+          </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
@@ -180,14 +191,25 @@ export default function Navbar() {
                           </DisclosureButton>
                         ))}
                         {callsToAction.map((item) => (
-                          <DisclosureButton
-                            key={item.name}
-                            as="a"
-                            href={item.href}
-                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                          >
-                            {item.name}
-                          </DisclosureButton>
+                          item.to ? (
+                            <DisclosureButton
+                              key={item.name}
+                              as={Link}
+                              to={item.to}
+                              className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            >
+                              {item.name}
+                            </DisclosureButton>
+                          ) : (
+                            <DisclosureButton
+                              key={item.name}
+                              as="a"
+                              href={item.href}
+                              className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            >
+                              {item.name}
+                            </DisclosureButton>
+                          )
                         ))}
                       </DisclosurePanel>
                     </>
@@ -213,12 +235,12 @@ export default function Navbar() {
                 </a>
               </div>
               <div className="py-6">
-                <a
-                  href="#"
+                <Link
+                  to="/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log in
-                </a>
+                </Link>
               </div>
             </div>
           </div>
