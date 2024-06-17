@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const RegisterUser = async (req, res) => {
     try {
         console.log(req.body)
-        const { Name,Username,Email, Phone,Password, IsPropertyOwner, IsSystemAdmin } = req.body;
+        const { Name,Username,Email, Phone,password, IsPropertyOwner, IsSystemAdmin } = req.body;
 
         // Check if user with the same email already exists
         const existingUser = await UserModel.findOne({ Email });
@@ -18,7 +18,7 @@ const RegisterUser = async (req, res) => {
 
         // Hash the password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(Password, salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
          console.log(hashedPassword)
         // Create a new user instance
         const newUser = new UserModel({ Name,Username,Email,Phone, password: hashedPassword });
@@ -83,21 +83,11 @@ const LoginUser = async (req, res) => {
        
     };
     const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
-    let message;
-        // Find user's role
-        // const role = await RoleModel.findOne({ USerId: user._id });
-        // let message;
-        // if (!role) {
-        //     message = "Login Successfully, Role not defined";
-        // } else if (role.name === "PropertyOwner") {
-        //     message = "Login Successfully, It's Admin";
-        // } else if (role.name === "SystemAdmin") {
-        //     message = "Login Successfully, It's SystemAdmin";
-        // } else {
-        //     message = "Login Successfully, It's User";
-        // }
+   
+   
 
-        return res.status(200).json({ message,jwtToken });
+        return res.status(200).json({ UserId: user._id,
+            token: jwtToken });
     } catch (err) {
         console.log("Error:", err);
         return res.status(500).json({ message: "Internal Server Error" });
@@ -105,6 +95,25 @@ const LoginUser = async (req, res) => {
 }
 
 
+const UserDetails = async (req, res) => {
+    try {
+        const token = req.headers['authorization'];
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
+
+        const decoded = jwt.verify(token, 'SECRET');
+        const user = await UserModel.findById(decoded.userId, '-password'); // Exclude the password field
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        return res.status(200).json(user);
+    } catch (err) {
+        console.log("Error:", err);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
 
 
-module.exports = { RegisterUser, LoginUser };
+module.exports = { RegisterUser, LoginUser,UserDetails };
