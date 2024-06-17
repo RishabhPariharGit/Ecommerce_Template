@@ -1,5 +1,5 @@
-import { Fragment, useState } from 'react'
-import './Navbar.css'
+import { Fragment, useState } from 'react';
+import './Navbar.css';
 import {
   Dialog,
   DialogPanel,
@@ -11,40 +11,40 @@ import {
   PopoverGroup,
   PopoverPanel,
   Transition,
-} from '@headlessui/react'
+} from '@headlessui/react';
 import {
   Bars3Icon,
   UserGroupIcon,
-  UserIcon,      
+  UserIcon,
   XMarkIcon,
   HomeModernIcon,
-} from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+} from '@heroicons/react/24/outline';
+import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid';
+import { Link } from "react-router-dom";
 
 const products = [
-  { name: 'Room Owners', description: 'Get a better understanding of your traffic', href: '#', icon: HomeModernIcon },
-  { name: 'Clients', description: 'Speak directly to your customers', href: '#', icon: UserGroupIcon },
-  { name: 'Teanents', description: 'Your customers’ data will be safe and secure', href: '#', icon: UserIcon },
-  // { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  // { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-]
+  { name: 'Room Owners', description: 'Get a better understanding of your traffic', to: '/roomowner', icon: HomeModernIcon },
+  { name: 'Buyers', description: 'Speak directly to your customers', to: '/buyer', icon: UserGroupIcon },
+  { name: 'Tenants', description: 'Your customers’ data will be safe and secure', to: '/tenant', icon: UserIcon },
+];
+
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact us', href: '#', icon: PhoneIcon },
-]
+  { name: 'Contact us', to: '/contact', icon: PhoneIcon },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
           </a>
@@ -60,11 +60,10 @@ export default function Navbar() {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-        <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="/" className="text-sm font-semibold leading-6 text-gray-900">
             Home
           </a>
           <Popover className="relative">
-            
             <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
               Services
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
@@ -89,10 +88,17 @@ export default function Navbar() {
                         <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                       </div>
                       <div className="flex-auto">
-                        <a href={item.href} className="block font-semibold text-gray-900">
-                          {item.name}
-                          <span className="absolute inset-0" />
-                        </a>
+                        {item.to ? (
+                          <Link to={item.to} className="block font-semibold text-gray-900">
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </Link>
+                        ) : (
+                          <a href={item.href} className="block font-semibold text-gray-900">
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </a>
+                        )}
                         <p className="mt-1 text-gray-600">{item.description}</p>
                       </div>
                     </div>
@@ -100,34 +106,42 @@ export default function Navbar() {
                 </div>
                 <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
                   {callsToAction.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
-                    >
-                      <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                      {item.name}
-                    </a>
+                    item.to ? (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                      >
+                        <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                      >
+                        <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                        {item.name}
+                      </a>
+                    )
                   ))}
                 </div>
               </PopoverPanel>
             </Transition>
           </Popover>
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/about" className="text-sm font-semibold leading-6 text-gray-900">
             About us
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          </Link>
+          <Link to="/blog" className="text-sm font-semibold leading-6 text-gray-900">
             Blog
-          </a>
-          {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            More
-          </a> */}
+          </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
             Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          </Link>
         </div>
       </nav>
       <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -165,15 +179,37 @@ export default function Navbar() {
                         />
                       </DisclosureButton>
                       <DisclosurePanel className="mt-2 space-y-2">
-                        {[...products, ...callsToAction].map((item) => (
+                        {products.map((item) => (
                           <DisclosureButton
                             key={item.name}
-                            as="a"
+                            as={item.to ? Link : 'a'}
+                            to={item.to}
                             href={item.href}
                             className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                           >
                             {item.name}
                           </DisclosureButton>
+                        ))}
+                        {callsToAction.map((item) => (
+                          item.to ? (
+                            <DisclosureButton
+                              key={item.name}
+                              as={Link}
+                              to={item.to}
+                              className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            >
+                              {item.name}
+                            </DisclosureButton>
+                          ) : (
+                            <DisclosureButton
+                              key={item.name}
+                              as="a"
+                              href={item.href}
+                              className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            >
+                              {item.name}
+                            </DisclosureButton>
+                          )
                         ))}
                       </DisclosurePanel>
                     </>
@@ -199,17 +235,17 @@ export default function Navbar() {
                 </a>
               </div>
               <div className="py-6">
-                <a
-                  href="#"
+                <Link
+                  to="/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log in
-                </a>
+                </Link>
               </div>
             </div>
           </div>
         </DialogPanel>
       </Dialog>
     </header>
-  )
+  );
 }
