@@ -20,6 +20,7 @@ import {
   HomeModernIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { Link } from "react-router-dom";
 
 const products = [
   { name: 'Room Owners', description: 'Get a better understanding of your traffic', href: '#', icon: HomeModernIcon },
@@ -125,9 +126,11 @@ export default function Navbar() {
           </a> */}
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          
+       
+        <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
             Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+            </Link>
         </div>
       </nav>
       <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
