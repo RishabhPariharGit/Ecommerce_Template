@@ -2,7 +2,7 @@
 import {  Routes, Route } from "react-router-dom";
 import SignUp from "../web_components/auth/signup/signup";
 import LogIn from "../web_components/auth/login/login";
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 
 export default function AuthRoutes() {
   return (
