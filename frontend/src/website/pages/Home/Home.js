@@ -5,6 +5,7 @@ import AboutComp from '../../web_components/aboutcomp/AboutComp'
 import ProductCardGrid from '../../web_components/Productcard/ProductCardGrid/ProductCardGrid'
 import Newsletter from '../../web_components/NewsLetter/Newsletter'
 import Testimonials from '../../web_components/Testimonials/Testimonials'
+import SliderWithText from '../../web_components/sliderwithtext/SliderWithText'
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
     <AboutComp/>
     <ProductCardGrid/>
     <Testimonials/>
+    <SliderWithText/>
     <Newsletter/>
     </>
   )
