@@ -1,6 +1,7 @@
 const UserModel = require('../Model/User');
 const Bannerimage = require('../Model/Bannerimage')
 const PlansMonthly = require('../Model/Plans')
+const AboutUs = require('../Model/Aboutus')
 
 const getBannerImgae = async (req, res) => {
     try {
@@ -46,6 +47,28 @@ const postPlansData = async (req, res) => {
 };
 
 
+const postAboutusData = async (req, res) => {
+    const { imgurl,headtext,bodytext } = req.body;
+    try {
+        const newAboutus = new AboutUs({ imgurl,headtext,bodytext });
+        await newAboutus.save();
+        res.status(201).json(newAboutus);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
 
 
-module.exports = {getBannerImgae, postBannerImage, getPlansData, postPlansData}
+const getAboutusData = async (req, res) => {
+    try {
+        const aboutuscompdata = await AboutUs.find();
+        res.json(aboutuscompdata);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+
+
+
+module.exports = {getBannerImgae, postBannerImage, getPlansData, postPlansData, postAboutusData, getAboutusData}

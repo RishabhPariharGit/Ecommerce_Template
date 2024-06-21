@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {RegisterUser,LoginUser,UserDetails}=require('../Services/UserServices');
-const {getBannerImgae,postBannerImage,getPlansData, postPlansData} = require('../controllers/maincontroller')
+const {getBannerImgae,postBannerImage,getPlansData, postPlansData,postAboutusData, getAboutusData} = require('../controllers/maincontroller')
 
   router.post("/RegisterUser", RegisterUser);
   router.post("/LoginUser", LoginUser);
@@ -10,6 +10,8 @@ const {getBannerImgae,postBannerImage,getPlansData, postPlansData} = require('..
   router.post("/postimage",  postBannerImage);
   router.post("/postplans", postPlansData);
   router.get("/plans", getPlansData);
+  router.post("/aboutus", postAboutusData);
+  router.get("/aboutus", getAboutusData);
 
 
   module.exports = router;
