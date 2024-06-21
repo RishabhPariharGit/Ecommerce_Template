@@ -1,16 +1,27 @@
-import React from 'react';
-import { Autoplay, A11y} from 'swiper/modules';
+import React, { useEffect, useState } from 'react';
+import { Autoplay, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/controller';
 
 const MainHomebanner = () => {
+    const [images, setImages] = useState([]);
 
-    const images = ['https://staticg.sportskeeda.com/editor/2022/03/c468f-16482907265601-1920.jpg', 
-        'https://static1.srcdn.com/wordpress/wp-content/uploads/2023/08/naruto_formation_of_akatsuki.jpg?q=50&fit=contain&w=1140&h=&dpr=1.5', 
-        'https://dafunda.com/wp-content/uploads/2023/12/pain-six-paths-from-naruto-3339772528.webp', 
-        'https://images.pexels.com/photos/11785594/pexels-photo-11785594.jpeg']
+    useEffect(() => {
+        fetch('http://localhost:8080/bannerimages') // Ensure the URL matches your backend route
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetched image data:', data); // Log fetched data
+                setImages(data.map(image => image.url));
+            })
+            .catch(error => console.error('Error fetching images:', error));
+    }, []);
 
     return (
         <section className='bg-white'>
