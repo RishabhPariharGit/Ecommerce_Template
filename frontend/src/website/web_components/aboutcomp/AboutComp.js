@@ -1,9 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import Headsubhead from '../HeadSubhead/Headsubhead'
 import './AboutComp.css'
 
 
 const AboutComp = () => {
+
+
+  const [aboutdata, setaboutdata] = useState([]);
+
+  useEffect(() => {
+      fetch('http://localhost:8080/aboutus') // Ensure the URL matches your backend route
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              return response.json();
+          })
+          .then(data => {
+              console.log('Fetched Aboutus data:', data); // Log fetched data
+              setaboutdata(data.map((img, headtxt,bdytxt) => 
+                {
+                  img.imgurl,
+              headtxt.headtext,
+              bdytxt.bodytext
+            }
+            ));
+          })
+          .catch(error => console.error('Error fetching images:', error));
+  }, []);
+
+
+  
   return (<>
   <div className='Abt-Head-subhead'>
     <Headsubhead
