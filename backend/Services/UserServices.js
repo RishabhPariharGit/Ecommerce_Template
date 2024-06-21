@@ -116,4 +116,4 @@ const UserDetails = async (req, res) => {
 };
 
 
-module.exports = { RegisterUser, LoginUser,UserDetails };
+module.exports = { RegisterUser, LoginUser, UserDetails };
