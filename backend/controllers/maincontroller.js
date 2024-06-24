@@ -2,6 +2,7 @@ const UserModel = require('../Model/User');
 const Bannerimage = require('../Model/Bannerimage')
 const PlansMonthly = require('../Model/Plans')
 const AboutUs = require('../Model/Aboutus')
+const TestimonialModel = require('../Model/Testimonials')
 
 const getBannerImgae = async (req, res) => {
     try {
@@ -69,6 +70,30 @@ const getAboutusData = async (req, res) => {
 };
 
 
+const postTestimonialsData = async (req, res) => {
+    const { Imgurl,Headtext,Bodytext } = req.body;
+    try {
+        const newTestimonials = new TestimonialModel({ Imgurl,Headtext,Bodytext });
+        await newTestimonials.save();
+        res.status(201).json(newTestimonials);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
 
 
-module.exports = {getBannerImgae, postBannerImage, getPlansData, postPlansData, postAboutusData, getAboutusData}
+// const getTestimonialsData = async (req, res) => {
+//     try {
+//         const aboutuscompdata = await AboutUs.find();
+//         res.json(aboutuscompdata);
+//     } catch (err) {
+//         res.status(500).send(err);
+//     }
+// };
+
+
+
+
+module.exports = {getBannerImgae, postBannerImage, getPlansData, postPlansData, postAboutusData, getAboutusData,
+    postTestimonialsData
+}
