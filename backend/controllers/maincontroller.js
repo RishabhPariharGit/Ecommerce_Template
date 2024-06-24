@@ -26,6 +26,9 @@ const postBannerImage = async (req, res) => {
 };
 
 
+// monthly plans data api start
+
+
 const getPlansData = async (req, res) => {
     try {
         const plans = await PlansMonthly.find();
@@ -47,6 +50,9 @@ const postPlansData = async (req, res) => {
     }
 };
 
+//monthly plans data api end
+
+// About us api code
 
 const postAboutusData = async (req, res) => {
     const { imgurl,headtext,bodytext } = req.body;
@@ -68,6 +74,20 @@ const getAboutusData = async (req, res) => {
         res.status(500).send(err);
     }
 };
+
+const updateaboutus = (req, res) => {
+    AboutUs.findByIdAndUpdate(req.params.id, req.body)
+      .then(Aboutusdata => res.json({ msg: 'Updated successfully' }))
+      .catch(err =>
+        res.status(400).json({ error: 'Unable to update the Database' })
+      );
+  };
+
+
+//end of about us api code
+
+
+// testimonials api code
 
 
 const postTestimonialsData = async (req, res) => {
@@ -92,8 +112,17 @@ const getTestimonialsData = async (req, res) => {
 };
 
 
+const updatetestimonial = (req, res) => {
+    TestimonialModel.findByIdAndUpdate(req.params.id, req.body)
+      .then(Testimonial => res.json({ msg: 'Updated successfully' }))
+      .catch(err =>
+        res.status(400).json({ error: 'Unable to update the Database' })
+      );
+  };
+
+//end of testimonials api code
 
 
-module.exports = {getBannerImgae, postBannerImage, getPlansData, postPlansData, postAboutusData, getAboutusData,
-    postTestimonialsData, getTestimonialsData
+module.exports = {getBannerImgae, postBannerImage, getPlansData, postPlansData, postAboutusData, getAboutusData,updateaboutus,              
+    postTestimonialsData, getTestimonialsData,updatetestimonial
 }
