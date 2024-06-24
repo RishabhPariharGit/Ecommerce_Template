@@ -29,26 +29,39 @@ const postBannerImage = async (req, res) => {
 // monthly plans data api start
 
 
-const getPlansData = async (req, res) => {
-    try {
-        const plans = await PlansMonthly.find();
-        res.json(plans);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-};
+// const getPlansData = async (req, res) => {
+//     try {
+//         const plans = await PlansMonthly.find();
+//         res.json(plans);
+//     } catch (err) {
+//         res.status(500).send(err);
+//     }
+// };
+
 
 
 const postPlansData = async (req, res) => {
-    const { OfferDetails } = req.body;
+    const { Title,Price,Offerdetails } = req.body;
     try {
-        const newplans = new PlansMonthly({ OfferDetails });
-        await newplans.save();
-        res.status(201).json(newplans);
+        const newplansdata = new PlansMonthly({ Title,Price,Offerdetails });
+        await newplansdata.save();
+        res.status(201).json(newplansdata);
     } catch (err) {
         res.status(500).send(err);
     }
 };
+
+
+
+const getPlansData = async (req, res) => {
+    try {
+        const plansdata = await PlansMonthly.find();
+        res.json(plansdata);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
 
 //monthly plans data api end
 

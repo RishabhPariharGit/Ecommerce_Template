@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 
 const PlansSchema= mongoose.Schema({
-    OfferDetails:String,
+    Title:String,
+    Price:String,
+    Offerdetails:String
 
 })
 const PlansMonthly = mongoose.model( "Monthlyplan", PlansSchema);
