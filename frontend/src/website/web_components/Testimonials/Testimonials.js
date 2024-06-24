@@ -29,23 +29,42 @@ const Testimonials = () => {
 
 
   useEffect(() => {
-    new Swiper('.c-testimonials', {
-      spaceBetween: 30,
-      effect: 'fade',
-      loop: true,
-      mousewheel: {
-        invert: false,
-      },
-      pagination: {
-        el: '.c-testimonials__pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.c-testimonials__arrow-next',
-        prevEl: '.c-testimonials__arrow-prev',
-      },
-    });
-  }, []);
+    if (testimonialdata.length > 1) {
+      new Swiper('.c-testimonials', {
+        spaceBetween: 30,
+        effect: 'fade',
+        loop: true,
+        mousewheel: {
+          invert: false,
+        },
+        pagination: {
+          el: '.c-testimonials__pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.c-testimonials__arrow-next',
+          prevEl: '.c-testimonials__arrow-prev',
+        },
+      });
+    } else {
+      new Swiper('.c-testimonials', {
+        spaceBetween: 30,
+        effect: 'fade',
+        loop: false,
+        mousewheel: {
+          invert: false,
+        },
+        pagination: {
+          el: '.c-testimonials__pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.c-testimonials__arrow-next',
+          prevEl: '.c-testimonials__arrow-prev',
+        },
+      });
+    }
+  }, [testimonialdata]);
 
   return (
     <>
@@ -58,8 +77,8 @@ const Testimonials = () => {
           <ul className="c-testimonials__items swiper-wrapper">
             {/* CARD 1 */}
             { testimonialdata.map((item, index)=>(
-            <li className="c-testimonials__item c-card-testimonial swiper-slide">
-              <div key={index} className="c-card-testimonial__profile">
+            <li key={index} className="c-testimonials__item c-card-testimonial swiper-slide">
+              <div  className="c-card-testimonial__profile">
                 <img
                   src={item.Imgurl}
                   alt=""
