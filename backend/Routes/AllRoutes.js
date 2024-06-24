@@ -11,7 +11,7 @@ const {getBannerImgae,postBannerImage,getPlansData, postPlansData,postAboutusDat
   router.get("/bannerimages", getBannerImgae);
   router.post("/postimage",  postBannerImage);
 
-  router.post("/postplans", postPlansData);
+  router.post("/plans", postPlansData);
   router.get("/plans", getPlansData);
 
   router.post("/aboutus", postAboutusData);
