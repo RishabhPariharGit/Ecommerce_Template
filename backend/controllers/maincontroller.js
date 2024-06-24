@@ -82,18 +82,18 @@ const postTestimonialsData = async (req, res) => {
 };
 
 
-// const getTestimonialsData = async (req, res) => {
-//     try {
-//         const aboutuscompdata = await AboutUs.find();
-//         res.json(aboutuscompdata);
-//     } catch (err) {
-//         res.status(500).send(err);
-//     }
-// };
+const getTestimonialsData = async (req, res) => {
+    try {
+        const testimonialscompdata = await TestimonialModel.find();
+        res.json(testimonialscompdata);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
 
 
 
 
 module.exports = {getBannerImgae, postBannerImage, getPlansData, postPlansData, postAboutusData, getAboutusData,
-    postTestimonialsData
+    postTestimonialsData, getTestimonialsData
 }

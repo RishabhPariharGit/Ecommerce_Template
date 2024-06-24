@@ -6,7 +6,7 @@ const AboutComp = () => {
   const [aboutdata, setaboutdata] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/aboutus') 
+    fetch('http://localhost:8080/aboutus') // Ensure the URL matches your backend route
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -14,7 +14,7 @@ const AboutComp = () => {
         return response.json();
       })
       .then(data => {
-        console.log('Fetched Aboutus data:', data); 
+        console.log('Fetched Aboutus data:', data); // Log fetched data
         setaboutdata(data.map(item => ({
           imgurl: item.imgurl,
           headtext: item.headtext,
