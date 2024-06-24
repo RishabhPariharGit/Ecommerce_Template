@@ -15,7 +15,7 @@ const {getBannerImgae,postBannerImage,getPlansData, postPlansData,postAboutusDat
   router.post("/aboutus", postAboutusData);
   router.get("/aboutus", getAboutusData);
   router.post("/testimonials", postTestimonialsData);
-  // router.get("/aboutus", getAboutusData);
+  router.get("/testimonials", getTestimonialsData);
 
 
   module.exports = router;
