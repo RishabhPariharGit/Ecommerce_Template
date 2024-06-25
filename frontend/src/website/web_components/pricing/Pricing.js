@@ -50,10 +50,10 @@ const Pricing = () => {
     <div className='Card-wrapper'>
       {cardData.map((card, index) => (
         <SingleCard
-          key={index}
-          title={card.title}
-          price={card.price}
-          features={card.features}
+          // key={index}
+          // title={card.title}
+          // price={card.price}
+          // features={card.features}
         />
       ))}
     </div>
