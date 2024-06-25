@@ -27,7 +27,7 @@ const AboutComp = () => {
   return (
     <>
       <div className='Abt-Head-subhead'>
-        <Headsubhead head={"About Company"} />
+        <Headsubhead head={"ABOUT COMPANY"} />
       </div>
       <div className='main-About-wrapper'>
         <div className='main-abt-wrapper'>

@@ -69,7 +69,7 @@ const Testimonials = () => {
   return (
     <>
       <Headsubhead
-        head={"Clients Testimonials"}
+        head={"CLIENTS TESTIMONIALS"}
         subhead={"Our clients love us check them"}
       />
       <div className='Testimonials-main-wrapper'>
