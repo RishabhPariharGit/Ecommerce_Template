@@ -8,7 +8,7 @@ const ProductCardGrid = () => {
   return (
     <><div className='Heading-subhead'>
           <Headsubhead
-          head={"Top Sellers"}
+          head={"TOP SELLERS"}
           />
     </div>
     <div className='Main-Card-Grid-Wrapper'>

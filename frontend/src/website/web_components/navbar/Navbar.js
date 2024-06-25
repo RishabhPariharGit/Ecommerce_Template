@@ -23,14 +23,14 @@ import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/
 import { Link } from "react-router-dom";
 
 const products = [
-  { name: 'Room Owners', description: 'Get a better understanding of your traffic', to: '/roomowner', icon: HomeModernIcon },
-  { name: 'Buyers', description: 'Speak directly to your customers', to: '/buyer', icon: UserGroupIcon },
-  { name: 'Tenants', description: 'Your customers’ data will be safe and secure', to: '/tenant', icon: UserIcon },
+  { name: 'ROOM OWNERS', description: 'Get a better understanding of your traffic', to: '/roomowner', icon: HomeModernIcon },
+  { name: 'BUYERS', description: 'Speak directly to your customers', to: '/buyer', icon: UserGroupIcon },
+  { name: 'TENANTS', description: 'Your customers’ data will be safe and secure', to: '/tenant', icon: UserIcon },
 ];
 
 const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact us', to: '/contact', icon: PhoneIcon },
+  { name: 'WATCH DEMO', href: '#', icon: PlayCircleIcon },
+  { name: 'CONTACT US', to: '/contact', icon: PhoneIcon },
 ];
 
 function classNames(...classes) {
@@ -61,11 +61,11 @@ export default function Navbar() {
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <a href="/" className="text-sm font-semibold leading-6 text-gray-900">
-            Home
+            HOME
           </a>
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              Services
+            <PopoverButton className=" ServicesBtnCstm flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+              SERVICES
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
 
@@ -132,15 +132,15 @@ export default function Navbar() {
           </Popover>
 
           <Link to="/about" className="text-sm font-semibold leading-6 text-gray-900">
-            About us
+            ABOUT US
           </Link>
           <Link to="/blog" className="text-sm font-semibold leading-6 text-gray-900">
-            Blog
+            BLOG
           </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
+            LOGIN <span aria-hidden="true">&rarr;</span>
           </Link>
         </div>
       </nav>

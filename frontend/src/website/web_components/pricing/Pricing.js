@@ -44,7 +44,7 @@ const Pricing = () => {
 
   return (<>
     <Headsubhead 
-      head={"Our Plans"}
+      head={"OUR PLANS"}
       subhead={"Select the most suitable plan for yourself"}
       />
     <div className='Card-wrapper'>
