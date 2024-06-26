@@ -47,7 +47,7 @@ const resetForm = () => {
 };
 
   return (
-    <div className="container">
+    <div className="sig-container">
       <div className="form-container">
         <img
           className="logo"
