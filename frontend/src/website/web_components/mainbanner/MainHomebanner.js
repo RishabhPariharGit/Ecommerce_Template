@@ -29,7 +29,11 @@ const MainHomebanner = () => {
                 modules={[Autoplay, A11y]}
                 spaceBetween={30} // Adjust the spacing as needed
                 slidesPerView={1} // Show only one slide by default
-                autoplay
+                autoplay={{
+                    delay: 2500, // Adjust the delay (in ms) as needed
+                    disableOnInteraction: false
+                }}
+                speed={1500} // Adjust the speed (in ms) of transition as needed
             >
                 {images.map((img, index) => (
                     <SwiperSlide key={index}>
@@ -37,7 +41,7 @@ const MainHomebanner = () => {
                             <img
                                 src={img}
                                 alt={`slide-${index + 1}`}
-                                className='w-[100%] h-[750px] mx-auto select-none'
+                                className='w-[100%] h-[650px] mx-auto select-none'
                             />
                         </a>
                     </SwiperSlide>

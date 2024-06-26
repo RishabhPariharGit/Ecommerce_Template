@@ -27,7 +27,7 @@ const AboutComp = () => {
   return (
     <>
       <div className='Abt-Head-subhead'>
-        <Headsubhead head={"ABOUT COMPANY"} />
+      <Headsubhead head={<span style={{ fontWeight:'900',fontSize:'30px'}}>WHY <span style={{color:'#4F46E5', fontWeight:'900',fontSize:'40px'}}>CHOOSE US ?</span></span>} />
       </div>
       <div className='main-About-wrapper'>
         <div className='main-abt-wrapper'>

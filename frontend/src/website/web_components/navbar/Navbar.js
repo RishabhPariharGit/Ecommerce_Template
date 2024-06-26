@@ -42,11 +42,12 @@ export default function Navbar() {
 
   return (
     <header className="bg-white">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <nav className="navcustom mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5">
+          <a href="/" className="customlogodsg -m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+            {/* <img className="h-8 w-auto" src="https://previews.dropbox.com/p/thumb/ACXZyo_m0RqOxIDiP3iFX7mHQOUIl5VjpOqQWB1DbSR0N0dmME7VwN2jTZCB0V8h6_0udhMt-T13ChqWCp6zXM2sizCJMpXodvVfy-3tSAHKX4TCjMGeB5TK8MoSQuemOPFXyqM4UhbdrVmAPACDv4iC7vDYOqBkD6UhFwvAIgSaLB-kwNUDn9P5-KXaDia_PLxUwRyEbrq-IWma2HDavtzO94qFXwj_drZqEKhBPWgqS2GY5Z8TgWX5iGSZndbQq81bR5vVx-Q4nY_UA43_dRs6jynTC_agIvOr_5gAEAlstdtdOLEZzvqxNYfGEoJfOldZH8UG9FVt-ssMaUKoMvsM/p.png" alt="" /> */}
+          CUSTOMLOGO
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -60,11 +61,11 @@ export default function Navbar() {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <a href="/" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="/" className="navtextcustom text-sm font-semibold leading-6 text-gray-900">
             HOME
           </a>
           <Popover className="relative">
-            <PopoverButton className=" ServicesBtnCstm flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <PopoverButton className=" navtextcustom ServicesBtnCstm flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
               SERVICES
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
@@ -131,16 +132,19 @@ export default function Navbar() {
             </Transition>
           </Popover>
 
-          <Link to="/about" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/about" className="navtextcustom text-sm font-semibold leading-6 text-gray-900">
             ABOUT US
           </Link>
-          <Link to="/blog" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/blog" className="navtextcustom text-sm font-semibold leading-6 text-gray-900">
             BLOG
           </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
-            LOGIN <span aria-hidden="true">&rarr;</span>
+          
+          <Link to="/login" className="loginbtncstm text-sm font-semibold leading-6 text-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="custom-svg bi bi-person-fill" viewBox="0 0 16 16">
+  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+</svg>LOGIN <span aria-hidden="true"></span>
           </Link>
         </div>
       </nav>

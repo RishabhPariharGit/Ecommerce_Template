@@ -5,5 +5,33 @@
 }
 
 
+.navcustom{
+    padding: 15px;
+}
 
+.navtextcustom{
+    color: rgb(0, 0, 0);
+    font-weight: 900;
+    font-size: 15px;
+}
 
+.loginbtncstm{
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: #4F46E5;
+    padding: 5px 30px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.customlogodsg{
+    font-family: monospace;
+    font-size: 22px;
+    font-weight: 900;
+    color: #332ad4;
+}
+
+.custom-svg{
+    margin-right: 10px;
+}
