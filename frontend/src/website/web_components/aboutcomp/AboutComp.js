@@ -46,7 +46,9 @@ const AboutComp = () => {
                       <div className='head-desc'>
                         <p>{item.headtext}</p>
                       </div>
+                      <div className='item-body-text'>
                       <p>{item.bodytext}</p>
+                      </div>
                       <button>Know More</button>
                     </div>
                   </div>
