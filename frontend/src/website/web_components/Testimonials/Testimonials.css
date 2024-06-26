@@ -116,7 +116,7 @@
   position: relative;
   max-width: 800px;
   margin: auto;
-  box-shadow: var(--shadow-base);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: calc(var(--spacing-base) * 8);
   border-radius: 25px;
   height: 400px;
