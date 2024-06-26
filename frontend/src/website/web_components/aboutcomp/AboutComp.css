@@ -46,7 +46,7 @@
 
 .vhcf-module .vhcf-promo_description{
     /* border:2px solid #4F46E5; */
-    padding: 30px;
+    padding: 60px;
     /* border-radius: 7px; */
     background-color: white;
     text-align: center;
@@ -83,3 +83,11 @@
   border: 1px solid #ddd;
 }
 
+.head-desc p{
+  font-size: 18px;
+}
+
+
+.item-body-text p{
+font-size: 16px;
+}
