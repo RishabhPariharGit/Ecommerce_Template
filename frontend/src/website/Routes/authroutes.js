@@ -23,10 +23,6 @@ export default function AuthRoutes() {
         <Route path="/tenant" element={<Teanents />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
-
-
-
-
       </Routes>
   );
 }
