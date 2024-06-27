@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const {RegisterUser,LoginUser,UserDetails}=require('../Services/UserServices');
 const {getBannerImgae,postBannerImage} = require('../controllers/BannerImageController')
 const {getPlansData, postPlansData} = require ('../controllers/PlansController');
@@ -23,6 +24,5 @@ const {postTestimonialsData,getTestimonialsData,updatetestimonial} = require('..
   router.post("/testimonials", postTestimonialsData);
   router.get("/testimonials", getTestimonialsData);
   router.put('/testimonials/:id', updatetestimonial);
-
 
   module.exports = router;
