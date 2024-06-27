@@ -6,7 +6,7 @@ const {getBannerImgae,postBannerImage} = require('../controllers/BannerImageCont
 const {getPlansData, postPlansData} = require ('../controllers/PlansController');
 const {postAboutusData, getAboutusData,updateaboutus} = require ('../controllers/AboutCompanyController');
 const {postTestimonialsData,getTestimonialsData,updatetestimonial} = require('../controllers/TestimonialController');
-
+const {postProductDetails, getProductDetails} = require ('../controllers/ProductCardController')
   router.post("/RegisterUser", RegisterUser);
   router.post("/LoginUser", LoginUser);
   router.get("/UserDetails ", UserDetails);
@@ -25,4 +25,7 @@ const {postTestimonialsData,getTestimonialsData,updatetestimonial} = require('..
   router.get("/testimonials", getTestimonialsData);
   router.put('/testimonials/:id', updatetestimonial);
 
+  router.post("/productcard", postProductDetails);
+  router.get("/productcard", getProductDetails);
+  
   module.exports = router;
