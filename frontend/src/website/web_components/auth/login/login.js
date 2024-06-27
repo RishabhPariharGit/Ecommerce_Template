@@ -114,7 +114,7 @@ const resetForm = () => {
         </form>
         <p className="footer-text">
           Already a member?{' '}
-          <Link to="/"><strong>Sign in</strong></Link>
+          <Link to="/signup"><strong>Sign in</strong></Link>
         </p>
       </div>
     </div>
