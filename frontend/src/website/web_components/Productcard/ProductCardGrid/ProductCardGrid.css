@@ -1,5 +1,16 @@
 .Main-Card-Grid-Wrapper{
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: 70px;
+    padding-bottom: 55px;
+    background-color: #f0f0ff;
+}
+
+.Heading-subhead-card h1{
+    margin: 0px;
+    padding-top: 45px;
+    color: rgb(79, 70, 229);
+}
+
+.Heading-subhead-card{
+    background-color: #f0f0ff;
 }

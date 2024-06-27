@@ -68,10 +68,12 @@ const Testimonials = () => {
 
   return (
     <>
+    <div className='Testimonial-head-subhead'>
       <Headsubhead
         head={"CLIENTS TESTIMONIALS"}
         subhead={"Our clients love us check them"}
       />
+      </div>
       <div className='Testimonials-main-wrapper'>
         <div className="c-testimonials">
           <ul className="c-testimonials__items swiper-wrapper">

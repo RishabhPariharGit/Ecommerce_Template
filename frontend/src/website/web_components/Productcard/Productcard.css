@@ -1,10 +1,10 @@
 .main-card-wrapper {
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 .product-card {
     width: 275px;
-    /* position: relative; */
+    position: relative;
     /* box-shadow: 0 2px 5px #333; */
     border:1px solid rgb(221, 221, 221);
     margin: 0 auto;

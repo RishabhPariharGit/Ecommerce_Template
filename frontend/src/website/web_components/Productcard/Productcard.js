@@ -6,7 +6,7 @@ const Productcard = () => {
    <div className='main-card-wrapper'>
     <section>
   <div className="product-card spacing">
-    <div className="badge">New Product</div>
+    <div className="badge">New Arrival</div>
     <div className="product-thumb">
       <img src="https://cdn-icons-png.flaticon.com/512/2806/2806251.png" />
     </div>
