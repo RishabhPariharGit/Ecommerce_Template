@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const {RegisterUser,LoginUser,UserDetails}=require('../Services/UserServices');
-const {getBannerImgae,postBannerImage,getPlansData, postPlansData,postAboutusData, getAboutusData,updateaboutus,
-  postTestimonialsData,getTestimonialsData,updatetestimonial} = require('../controllers/maincontroller')
+const {getBannerImgae,postBannerImage} = require('../controllers/BannerImageController')
+const {getPlansData, postPlansData} = require ('../controllers/PlansController');
+const {postAboutusData, getAboutusData,updateaboutus} = require ('../controllers/AboutCompanyController');
+const {postTestimonialsData,getTestimonialsData,updatetestimonial} = require('../controllers/TestimonialController');
 
   router.post("/RegisterUser", RegisterUser);
   router.post("/LoginUser", LoginUser);
