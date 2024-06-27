@@ -6,7 +6,7 @@ import Headsubhead from '../../HeadSubhead/Headsubhead'
 
 const ProductCardGrid = () => {
   return (
-    <><div className='Heading-subhead'>
+    <><div className='Heading-subhead-card'>
           <Headsubhead
           head={"TOP SELLERS"}
           />

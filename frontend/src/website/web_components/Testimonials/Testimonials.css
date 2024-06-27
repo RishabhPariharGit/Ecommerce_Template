@@ -60,6 +60,7 @@
   border-radius: 20px;
   opacity: 0;
   transition: all 0.3s;
+  border: 10px solid rgb(255, 255, 255);
 }
 .c-card-testimonial .c-card-testimonial__description {
   padding-right: 25px;
@@ -120,7 +121,7 @@
   padding: calc(var(--spacing-base) * 8);
   border-radius: 25px;
   height: 400px;
-  background-color: var(--color-light);
+  background-color: #eeedff;
   transition: all 300ms;
 }
 @media screen and (max-width: 992px) {
@@ -297,3 +298,7 @@
 }
 
 
+.Testimonial-head-subhead h1{
+  margin: 0px;
+  padding-top: 40px;
+}
