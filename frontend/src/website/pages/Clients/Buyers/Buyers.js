@@ -1,10 +1,11 @@
 import React from 'react'
-import Productcard from '../../../web_components/Productcard/Productcard'
+import ProductCardgridComp from './ProductCardgridComp/ProductCardgridComp'
+
 
 const Buyers = () => {
   return (
     <>
-    <Productcard/>
+  <ProductCardgridComp/>
     </>
   )
 }
