@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './Productcard.css'
+import './Productcard.css';
 
 const Productcard = () => {
-
   const [productdata, setproductdata] = useState([]);
 
   useEffect(() => {
@@ -22,49 +21,44 @@ const Productcard = () => {
           Productname: item.Productname,
           ProductInfo: item.ProductInfo,
           MaximumRP: item.MaximumRP,
-          Sellingprice:item.Sellingprice
+          Sellingprice: item.Sellingprice
         })));
       })
       .catch(error => console.error('Error fetching productcard data:', error));
   }, []);
 
-  return (<>
-   <div className='main-card-wrapper'>
-   {productdata.map((item, index) => (
-    <section>
-  <div key={index} className="product-card spacing">
-    <div className="badge">{item.Arrival}</div>
-    <div className="product-thumb">
-      <img src={item.Image} />
+  return (
+    <div className='main-card-wrapper'>
+      {productdata.slice(0, 4).map((item, index) => (
+        <section key={index} className="product-card">
+          <div className="badge">{item.Arrival}</div>
+          <div className="product-thumb">
+            <img src={item.Image} alt={item.Productname} />
+          </div>
+          <div className="product-details">
+            <span className="product-category">{item.Tag}</span>
+            <h4>
+              <a href="#">{item.Productname}</a>
+            </h4>
+            <p>{item.ProductInfo}</p>
+            <div className="product-bottom-details">
+              <div className="product-price">
+                <small>${item.MaximumRP}</small>${item.Sellingprice}
+              </div>
+              <div className="product-links">
+                <a href="#">
+                  <i className="fa fa-heart" />
+                </a>
+                <a href="#">
+                  <i className="fa fa-shopping-cart" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))}
     </div>
-    <div className="product-details">
-      <span className="product-category">{item.Tag}</span>
-      <h4>
-        <a href="#">{item.Productname}</a>
-      </h4>
-      <p>
-        {item.ProductInfo}
-      </p>
-      <div className="product-bottom-details">
-        <div className="product-price">
-          <small>${item.MaximumRP}</small>${item.Sellingprice}
-        </div>
-        <div className="product-links">
-          <a href="#">
-            <i className="fa fa-heart" />
-          </a>
-          <a href="#">
-            <i className="fa fa-shopping-cart" />
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  </section>
-  ))}
-   </div>
-   </>
-  )
+  );
 }
 
-export default Productcard
+export default Productcard;

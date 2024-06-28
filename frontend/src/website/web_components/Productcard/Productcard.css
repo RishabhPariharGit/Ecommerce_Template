@@ -1,13 +1,16 @@
 .main-card-wrapper {
     margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .product-card {
     width: 275px;
     position: relative;
+
     /* box-shadow: 0 2px 5px #333; */
     border:1px solid rgb(221, 221, 221);
-    margin: 0 auto;
+    margin: 0 10px;
     background: #1A2238;
 }
 
@@ -33,9 +36,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 150px;
-    padding: 10px 30px;
-    padding-top: 20px;
     background: #ffffff;
 }
 
