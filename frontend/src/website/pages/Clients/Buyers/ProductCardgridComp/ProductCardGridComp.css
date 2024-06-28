@@ -1,7 +1,5 @@
-.Main-Card-Grid-Wrapper {
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping */
-    justify-content: space-evenly;
+.custom-wrapper {
+    width: 100%;
     padding-bottom: 55px;
     background-color: #f0f0ff;
 }
@@ -31,10 +29,14 @@
 
 
 
-.main-card-wrapper {
-    margin-top: 40px;
-    display: flex;
-    flex-wrap: wrap;
+.custom-wrapper-card
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Create four columns */
+    gap: 1px; /* Space between grid items */
+    padding-bottom: 55px;
+    background-color: #f0f0ff;
+    justify-items: center;
 }
 
 .product-card {
@@ -43,7 +45,7 @@
 
     /* box-shadow: 0 2px 5px #333; */
     border:1px solid rgb(221, 221, 221);
-    margin: 0 10px;
+    margin:10px;
     background: #1A2238;
 }
 

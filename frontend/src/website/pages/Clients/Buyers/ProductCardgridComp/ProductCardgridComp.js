@@ -35,8 +35,8 @@ const ProductCardgridComp = () => {
 <div className='Heading-subhead-card'>
         <Headsubhead head={"NARUTO COLLECTION"} />
       </div>
-      <div className='Main-Card-Grid-Wrapper'>
-      <div className='main-card-wrapper'>
+      <div className='custom-wrapper'>
+      <div className='custom-wrapper-card'>
         {productdata.map((item, index) => (
           <section key={index} className="product-card">
             <div className="badge">{item.Arrival}</div>

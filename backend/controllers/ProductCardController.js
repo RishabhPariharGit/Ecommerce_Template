@@ -23,4 +23,13 @@ const getProductDetails = async (req, res) => {
 };
 
 
-module.exports = {postProductDetails, getProductDetails}
+const updateproductdetails = (req, res) => {
+    ProductCard.findByIdAndUpdate(req.params.id, req.body)
+      .then(Productcard => res.json({ msg: 'Updated successfully' }))
+      .catch(err =>
+        res.status(400).json({ error: 'Unable to update the Database' })
+      );
+  };
+
+
+module.exports = {postProductDetails, getProductDetails,updateproductdetails}
