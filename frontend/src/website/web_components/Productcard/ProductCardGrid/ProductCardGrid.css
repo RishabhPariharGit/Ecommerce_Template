@@ -1,16 +1,30 @@
-.Main-Card-Grid-Wrapper{
+.Main-Card-Grid-Wrapper {
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping */
     justify-content: space-evenly;
     padding-bottom: 55px;
     background-color: #f0f0ff;
 }
 
-.Heading-subhead-card h1{
-    margin: 0px;
+.Heading-subhead-card h1 {
+    margin: 0;
     padding-top: 45px;
     color: rgb(79, 70, 229);
 }
 
-.Heading-subhead-card{
+.Heading-subhead-card {
     background-color: #f0f0ff;
+}
+
+
+.shopallbtn-cstm{
+    text-align: center;
+    background-color: #F0F0FF;
+    padding-bottom:50px ;
+}
+.shopallbtn-cstm button{
+    padding: 7px 30px;
+    color: white;
+    background-color: #342BE0;
+    border-radius: 3px;
 }
