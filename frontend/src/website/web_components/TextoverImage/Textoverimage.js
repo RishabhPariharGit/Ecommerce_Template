@@ -1,5 +1,6 @@
 import React from 'react'
 import './TextoverImage.css'
+import { Link } from 'react-router-dom'
 
 const Textoverimage = () => {
   return (
@@ -8,13 +9,18 @@ const Textoverimage = () => {
         <div className='Secondary-wrapper'>
         <div className='Text-wrapper'>
         <div className='Main-Text'>
-            <p>Buy Some of the best <span style={{color:'#4F46E5', fontWeight:'900',fontSize:'45px'}}>Buildings</span></p>
+            <p><span style={{color:'#4F46E5', fontWeight:'900',fontSize:'45px'}}>Magical Rentals</span> transforms the rental experience.</p><br></br>
         </div>
         <div className='Secondry-Text'>
-            <p>This is the secondary text</p>
+            <p> We create a seamless and enjoyable process for both homeowners and residents, making renting feel magical.</p>
         </div>
+        <div className='Home-banner-button-wrapper'>
         <div className='main-button'>
-            <button>Buy Now</button>
+           <Link to={"/roomowner"}> <button>For Homeowner</button></Link>
+        </div>
+        <div className='Renter-button'>
+           <Link to={"/roomowner"}> <button>For Renter</button></Link>
+        </div>
         </div>
         </div>
 <div className='Main-Image-wrapper'>
