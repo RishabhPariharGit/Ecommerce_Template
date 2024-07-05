@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Headsubhead from '../HeadSubhead/Headsubhead';
 import './AboutComp.css';
+import { Link } from 'react-router-dom';
 
 const AboutComp = () => {
   const [aboutdata, setaboutdata] = useState([]);
@@ -49,7 +50,9 @@ const AboutComp = () => {
                       <div className='item-body-text'>
                       <p>{item.bodytext}</p>
                       </div>
-                      <button>Know More</button>
+                      <div className='Button-wrapper-aboutus'>
+                      <Link to={"/about"}><button>Know More</button></Link>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -13,20 +13,57 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 50%;
+    padding: 0px 55px;
 }
 
 .Main-Text p{
     font-size: 30px;
+    line-height: 40px;
+    color: #022834;
 }
+
+
+.Secondry-Text p{
+    color: #726f6f;
+}
+
 
 .main-button button {
     cursor: pointer;
-    background-color: #342be0;
-    color: white;
+    background-color: white;
+    color: #342be0;
     padding: 10px 45px;
-    border-radius: 5px;
+    border: 1px solid #342be0;
+    transition: background-color 1.11s ease, color 1.11s ease;
 }
 
-.main-button {
-    margin-top: 20px;
+
+.main-button button:hover{
+    background-color: #342be0;
+    color: white;
 }
+
+
+
+.Home-banner-button-wrapper{
+    display: flex;
+    margin-top: 25px;
+}
+
+.Renter-button button {
+    cursor: pointer;
+    background-color: white;
+    color: #342be0;
+    padding: 10px 45px;
+    border: 1px solid #342be0;
+    margin-left: 25px;
+    transition: background-color 1.11s ease, color 1.11s ease;
+}
+
+.Renter-button button:hover {
+    background-color: #342be0;
+    color: white;
+}
+
+
