@@ -1,18 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import './TextoverImage.css'
 import { Link } from 'react-router-dom'
 
 const Textoverimage = () => {
+
+
+  const [textoverimage, settextoverimage] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/textoverimage') // Ensure the URL matches your backend route
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched TextOverImage data:', data); // Log fetched data
+        settextoverimage(data.map(item => ({
+          Heading: item.Heading,
+          Subhead: item.Subhead,
+          Imgurl: item.Imgurl
+        })));
+      })
+      .catch(error => console.error('Error fetching TextOverImage Data:', error));
+  }, []);
+
+
+
   return (
     <>
     <div className='main-wrapper'>
-        <div className='Secondary-wrapper'>
+
+    {textoverimage.map((item, index) => (
+        <div key={index} className='Secondary-wrapper'>
         <div className='Text-wrapper'>
         <div className='Main-Text'>
-            <p><span style={{color:'#4F46E5', fontWeight:'900',fontSize:'45px'}}>Magical Rentals</span> transforms the rental experience.</p><br></br>
+            <p><span style={{color:'#4F46E5', fontWeight:'900',fontSize:'45px'}}>Magical Rentals </span>{item.Heading}</p><br></br>
         </div>
         <div className='Secondry-Text'>
-            <p> We create a seamless and enjoyable process for both homeowners and residents, making renting feel magical.</p>
+            <p>{item.Subhead}</p>
         </div>
         <div className='Home-banner-button-wrapper'>
         <div className='main-button'>
@@ -24,11 +51,12 @@ const Textoverimage = () => {
         </div>
         </div>
 <div className='Main-Image-wrapper'>
-    <img src='https://img.freepik.com/free-vector/smart-city-townhouse-isometric_1284-21806.jpg?t=st=1719396960~exp=1719400560~hmac=98a47592d3ab69a187ede1b875813ec24c795b86b1005b053ccf15afbe6c6cc2&w=740'
+    <img src={item.Imgurl} alt='main_home_img'
     style={{width: '700px'}}/>
 </div>
 
         </div>
+         ))}
 
     </div>
     </>
