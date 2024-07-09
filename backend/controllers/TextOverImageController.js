@@ -31,4 +31,16 @@ const updateTextOverImageData = (req, res) => {
   };
 
 
-module.exports = {postTextOverImageData, getTextOverImageData, updateTextOverImageData}
+  const deleteTextOverImageData = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await TextoverImage.findByIdAndDelete(id);
+        res.json({ msg: 'Deleted successfully' });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+
+
+module.exports = {postTextOverImageData, getTextOverImageData, updateTextOverImageData, deleteTextOverImageData}

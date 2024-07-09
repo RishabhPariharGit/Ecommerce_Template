@@ -9,6 +9,10 @@ import Buyers from "../pages/Clients/Buyers/Buyers";
 import Teanents from "../pages/Clients/Teanents/Teanents";
 import About from "../pages/About/About";
 import Blog from "../pages/Blog/Blog";
+import Textoverimage from "../web_components/TextoverImage/Textoverimage";
+import AdminPanel from "../../Admin/AdminPanel";
+import TextOverImageData from "../../Admin/TextOverImageData";
+
 
 export default function AuthRoutes() {
   return (
@@ -23,6 +27,10 @@ export default function AuthRoutes() {
         <Route path="/tenant" element={<Teanents />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/textoverimage" element ={<Textoverimage/>} />
+        <Route path="/admin" element={<AdminPanel/>} />
+        <Route path="/textoverimagedata" element={<TextOverImageData/>} />
+
       </Routes>
   );
 }
