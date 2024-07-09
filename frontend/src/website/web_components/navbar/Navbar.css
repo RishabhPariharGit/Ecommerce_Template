@@ -35,3 +35,8 @@
 .custom-svg{
     /* margin-right: 10px; */
 }
+
+.custom-nav{
+    display: flex;
+    align-items: center;
+}
