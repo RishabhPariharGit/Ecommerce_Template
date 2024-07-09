@@ -7,7 +7,7 @@ const {getPlansData, postPlansData} = require ('../controllers/PlansController')
 const {postAboutusData, getAboutusData,updateaboutus} = require ('../controllers/AboutCompanyController');
 const {postTestimonialsData,getTestimonialsData,updatetestimonial} = require('../controllers/TestimonialController');
 const {postProductDetails, getProductDetails,updateproductdetails} = require ('../controllers/ProductCardController')
-const {postTextOverImageData, getTextOverImageData, updateTextOverImageData} = require('../controllers/TextOverImageController');
+const {postTextOverImageData, getTextOverImageData, updateTextOverImageData, deleteTextOverImageData} = require('../controllers/TextOverImageController');
 
 
   router.post("/RegisterUser", RegisterUser);
@@ -35,5 +35,6 @@ const {postTextOverImageData, getTextOverImageData, updateTextOverImageData} = r
   router.post("/textoverimage",postTextOverImageData);
   router.get("/textoverimage",getTextOverImageData);
   router.put("/updatetextoverimage/:id",updateTextOverImageData);
+  router.delete('/textoverimage/:id', deleteTextOverImageData);
   
   module.exports = router;
