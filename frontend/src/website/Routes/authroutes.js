@@ -12,7 +12,7 @@ import Blog from "../pages/Blog/Blog";
 import Textoverimage from "../web_components/TextoverImage/Textoverimage";
 // import AdminPanel from "../../Admin/AdminPanel";
 import TextOverImageData from "../../Admin/TextOverImageData";
-import AdminDashboard from "../../Admin/AdminDashboard";
+import AdminDashboard from "../../Admin/Admin Dashboard/AdminDashboard";
 
 
 export default function AuthRoutes() {

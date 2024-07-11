@@ -8,19 +8,36 @@
 .Side-Navigation{
     width: 20%;
     height: 100vh;
-    background-color: white;
+    background-color: #332ad4;
+}
+
+.Admin-logo{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #9690ff;
+    /* border-right:1px solid black; */
+}
+
+.Admin-logo p{
+    font-family: monospace;
+    font-size: 22px;
+    font-weight: 900;
+    color: #332ad4;
+    padding: 10px 0px;
 }
 
 .work-wrapper-main{
     width: 80%;
     height: 100vh;
-    background-color: rgb(253, 213, 213);
+    background-color: #F0F0FF;
 }
 
 .main-profile-wrapper{
     width: 100%;
     height: 30vh;
-    background-color: rgb(253, 213, 213);;
+    background-color: #F0F0FF;
     display: flex;
 }
 
