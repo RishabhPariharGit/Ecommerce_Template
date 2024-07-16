@@ -12,6 +12,12 @@ const AdminDashboard = () => {
       <div className='Admin-logo'>
         <Link to={"/"}><p>CUSTOMLOGO</p></Link>
       </div>
+      <div className='side-nav-links-main-wrapper'>
+        <div className='nav-link-one'>
+          <p>Home</p>
+        </div>
+      </div>
+      
     </div>
     <div className='work-wrapper-main'>
 
