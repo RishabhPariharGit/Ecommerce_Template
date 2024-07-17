@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminPanel.css'
+import './HomeBannerChanges.css'
 
 const AdminPanel = ({ onNewData }) => {
   const [formData, setFormData] = useState({

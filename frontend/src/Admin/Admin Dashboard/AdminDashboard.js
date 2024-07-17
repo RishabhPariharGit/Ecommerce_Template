@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './AdminDashboard.css';
 import { Link } from 'react-router-dom';
 import Home from '../../website/pages/Home/Home';
+import AdminPanel from '../HomeBannerChanges';
 
 const AdminDashboard = () => {
+
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+
+  // Function to toggle AdminPanel visibility
+  const toggleAdminPanel = () => {
+    setShowAdminPanel(true);
+  };
+
   return (
     <>
       <div className='main-admin-wrapper'>
@@ -18,13 +27,13 @@ const AdminDashboard = () => {
 </svg><p>Pages</p></div>
 
             <div className='dropdown'>
-              <button className="dropbtn"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+              <button className="dropbtn" ><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
   <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
 </svg><p>Home</p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
 </svg></button>
               <div className="dropdown-content">
-                <a href="#">Home Banner</a>
+               <Link to={"/admin"}onClick={toggleAdminPanel}> Home Banner</Link>
                 <a href="#">About Company</a>
                 <a href="#">Pricing Plans</a>
                 <a href="#">Product Cards</a>
@@ -90,6 +99,28 @@ const AdminDashboard = () => {
 </svg><p>Dashboard</p></div>
 
 
+<div className='quic-settings-btn-main-wrapper'>
+<button className="dropbtn custom-dropbtn-2"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+  <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+</svg><p>Settings</p>
+</button>
+
+<button className="dropbtn custom-dropbtn-2"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+</svg><p>Users Guide</p>
+</button>
+
+<button className="dropbtn custom-dropbtn-2"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
+  <path d="M7.5 1v7h1V1z"/>
+  <path d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812"/>
+</svg><p>Log out</p>
+</button>
+
+</div>
+
+
 
           </div>
         </div>
@@ -99,6 +130,7 @@ const AdminDashboard = () => {
             </div>
           </div>
           <div className='main-work-area-wrapper'>
+          {showAdminPanel && <AdminPanel />}
           </div>
         </div>
       </div>
