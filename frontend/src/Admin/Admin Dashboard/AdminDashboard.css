@@ -61,6 +61,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: scroll;
+    height: 88vh;
+
+    /* Hide scrollbar for Webkit browsers */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge, and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .side-nav-links-main-wrapper hr {
@@ -179,4 +190,20 @@ color: white;
 
 .dropdown:hover .dropbtn {
     background-color: #4338CA;
+}
+
+.quic-settings-btn-main-wrapper .custom-dropbtn-2{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    color: #332ad4;
+    width: 240px;
+    font-weight: 600;
+    padding: 8px 10px;
+    font-size: 16px;
+    text-align: left;
+    border: none;
+    cursor: pointer;
+    margin: 10px 15px;
+    border-radius: 5px;
 }
