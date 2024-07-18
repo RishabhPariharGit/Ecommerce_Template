@@ -42,10 +42,18 @@
 }
 
 .secondary-profile-wrapper {
-    width: 97%;
+    width: 58%;
     height: 25vh;
     background-color: white;
-    margin: auto;
+    margin: 16px; 
+    border-radius: 5px;
+}
+
+.secondary-profile-wrapper-two{
+    width: 30vw;
+    height: 25vh;
+    background-color: white;
+    margin-top:16px;
     border-radius: 5px;
 }
 
@@ -206,4 +214,69 @@ color: white;
     cursor: pointer;
     margin: 10px 15px;
     border-radius: 5px;
+}
+
+
+
+.secondary-profile-wrapper{
+    display: flex;
+}
+
+.profile-wlcm-txt p{
+    font-size: 30px;
+    font-weight: 900;
+    color: #332ad4;
+    padding: 5px 10px;
+}
+
+.profile-img-wrapper {
+    width: 100px;
+    height: 100px;
+}
+
+.profile-img-wrapper img{
+    border-radius: 50%;
+}
+
+.profile-main-box{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+} 
+
+.profile-main-box-desc {
+    line-height: 15px;
+    height: 80%;
+}
+.profile-main-box-desc p{
+    font-weight: 600;
+    color: #332ad4;
+}
+
+.profile-main-box-desc span{
+    color: rgb(65, 64, 64);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.profile-main-box-desc .dropbtn {
+    display: flex;
+    align-items: center;
+    background-color: #332ad4;
+    color: #ffffff;
+    font-weight: 600;
+    width: fit-content;
+    padding: 5px;
+    font-size: 16px;
+    text-align: left;
+    border: none;
+    cursor: pointer;
+    margin: 7px 0px;
+    border-radius: 50%;
+}
+
+.profile-main-box-desc .dropbtn svg{
+    margin: 0px;
 }
