@@ -1,5 +1,5 @@
 .admin-panel {
-    max-width: 600px;
+    max-width: 900px;
     margin: auto;
     padding: 20px;
     border: 1px solid #ddd;
@@ -18,7 +18,7 @@
   }
   
   .admin-panel form div {
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
   }
   
   .admin-panel form label {
@@ -31,6 +31,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    margin-bottom: 15px;
   }
   
   .admin-panel form button {
@@ -41,8 +42,19 @@
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    width: 15%;
+    margin: 0px;
   }
   
   .admin-panel form button:hover {
     background: #3e3cc1;
   }
+
+  .Submit-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Submit-button-wrapper button{
+  margin: 5px;
+}

@@ -31,7 +31,6 @@ export default function AuthRoutes() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/textoverimage" element ={<Textoverimage/>} />
         <Route path="/admin" element={<AdminDashboard/>} />
-        <Route path="/admin" element={<AdminPanel/>}/>
         <Route path="/textoverimagedata" element={<TextOverImageData/>} />
 
       </Routes>
