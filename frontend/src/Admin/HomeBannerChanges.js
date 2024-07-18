@@ -48,19 +48,21 @@ const AdminPanel = ({ onNewData }) => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Heading:</label>
-          <input type="text" name="Heading" value={formData.Heading} onChange={handleChange} />
         </div>
+        <input type="text" name="Heading" value={formData.Heading} onChange={handleChange} />
         <div>
           <label>Subhead:</label>
-          <input type="text" name="Subhead" value={formData.Subhead} onChange={handleChange} />
         </div>
+        <input type="text" name="Subhead" value={formData.Subhead} onChange={handleChange} />
         <div>
           <label>Image URL:</label>
-          <input type="text" name="Imgurl" value={formData.Imgurl} onChange={handleChange} />
         </div>
+        <input type="text" name="Imgurl" value={formData.Imgurl} onChange={handleChange} />
+        <div className='Submit-button-wrapper'>
         <button type="submit">Submit</button>
+        <button onClick={handleViewData}>View Data</button>
+        </div>
       </form>
-      <button onClick={handleViewData}>View Data</button>
     </div>
   );
 };
