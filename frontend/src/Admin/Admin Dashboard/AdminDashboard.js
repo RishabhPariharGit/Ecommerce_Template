@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './AdminDashboard.css';
 import { Link } from 'react-router-dom';
-import Home from '../../website/pages/Home/Home';
+// import Home from '../../website/pages/Home/Home';
 import AdminPanel from '../HomeBannerChanges';
 
 const AdminDashboard = () => {
@@ -179,7 +179,7 @@ const AdminDashboard = () => {
 
 </div>
 <div className='profile-img-wrapper'>
-  <img src='https://imageonline.co/imageclip.jpg'/>
+  <img src='https://t4.ftcdn.net/jpg/03/78/43/25/360_F_378432516_6IlKiCLDAqSCGcfc6o8VqWhND51XqfFm.jpg'/>
 </div>
 </div> 
             </div>
