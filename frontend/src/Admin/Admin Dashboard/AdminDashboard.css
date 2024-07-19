@@ -218,9 +218,9 @@ color: white;
 
 
 
-.secondary-profile-wrapper{
+/* .secondary-profile-wrapper{
     display: flex;
-}
+} */
 
 .profile-wlcm-txt p{
     font-size: 30px;
@@ -293,4 +293,73 @@ color: white;
 .greeting-txt span{
     color: #332ad4;
     font-size: 16px;
+}
+
+
+.sales-cards-main-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.orders-main-wrapper{
+    width: 185px;
+    height: 85px;
+    background-color: #FBAD4C;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+}
+.orders-main-wrapper p{
+    font-weight: 600;
+}
+
+.orders-main-wrapper span{
+    font-weight: 400;
+}
+
+.sales-main-wrapper{
+    width: 185px;
+    height: 85px;
+    background-color: #59D05D;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+}
+
+.sales-main-wrapper p{
+    font-weight: 600;
+}
+
+.sales-main-wrapper span{
+    font-weight: 400;
+}
+
+
+.accounts-reached-main-wrapper{
+    width:185px;
+    height:85px;
+    background-color: #FF646D; 
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+}
+
+.accounts-reached-main-wrapper p{
+    font-weight: 600;
+}
+
+.accounts-reached-main-wrapper span{
+    font-weight: 400;
 }
