@@ -280,3 +280,17 @@ color: white;
 .profile-main-box-desc .dropbtn svg{
     margin: 0px;
 }
+
+.greeting-txt{
+    padding: 10px 15px;
+}
+.greeting-txt p{
+    font-weight: 900;
+    font-size: 28px;
+    color: #332ad4;
+}
+
+.greeting-txt span{
+    color: #332ad4;
+    font-size: 16px;
+}

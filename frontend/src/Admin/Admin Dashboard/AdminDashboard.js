@@ -127,7 +127,10 @@ const AdminDashboard = () => {
         <div className='work-wrapper-main'>
           <div className='main-profile-wrapper'>
             <div className='secondary-profile-wrapper'>
-            </div>
+              <div className='greeting-txt'>
+              <p>Welcome, <span>Rishabh Singh Parihar</span></p>
+              </div>
+              </div>
             <div className='secondary-profile-wrapper-two'>
             <div className='profile-main-box'>
             <div className='profile-main-box-desc'>             
