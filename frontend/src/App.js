@@ -7,7 +7,7 @@ import './App.css';
 
 const App = () => {
   const location = useLocation();
-  const hideHeaderFooterRoutes = ['/admin']; // Add any other routes you want to exclude header and footer
+  const hideHeaderFooterRoutes = ['/admin','/sign-up']; // Add any other routes you want to exclude header and footer
 
   return (
     <>
