@@ -12,8 +12,10 @@ import Blog from "../pages/Blog/Blog";
 import Textoverimage from "../web_components/TextoverImage/Textoverimage";
 // import AdminPanel from "../../Admin/AdminPanel";
 import TextOverImageData from "../../Admin/TextOverImageData";
-import AdminDashboard from "../../Admin/Admin Dashboard/AdminDashboard";
-import AdminPanel from "../../Admin/HomeBannerChanges";
+// import AdminDashboard from "../../Admin/Admin Dashboard/AdminDashboard";
+// import AdminPanel from "../../Admin/HomeBannerChanges";
+import Login from "../../Admin/User Authentication/Login/Login";
+import Signup from "../../Admin/User Authentication/Sign up/Signup";
 
 
 export default function AuthRoutes() {
@@ -30,7 +32,8 @@ export default function AuthRoutes() {
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/textoverimage" element ={<Textoverimage/>} />
-        <Route path="/admin" element={<AdminDashboard/>} />
+        <Route path="/admin" element={<Login/>} />
+        <Route path="sign-up" element={<Signup/>} />
         <Route path="/textoverimagedata" element={<TextOverImageData/>} />
 
       </Routes>
