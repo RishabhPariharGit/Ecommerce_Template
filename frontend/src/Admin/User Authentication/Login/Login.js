@@ -7,7 +7,6 @@ const LogIn = ({ setToken }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Replace with actual login logic
     const token = 'dummy_token';
     localStorage.setItem('token', token);
     setToken(token);
@@ -36,6 +35,6 @@ const LogIn = ({ setToken }) => {
 };
 
 
-// chaged user name to rishabh
+
 
 export default LogIn;
