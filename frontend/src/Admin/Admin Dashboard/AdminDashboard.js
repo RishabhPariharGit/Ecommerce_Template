@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // import Home from '../../website/pages/Home/Home';
 import AdminPanel from '../HomeBannerChanges';
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ logout }) => {
 
   const [showAdminPanel, setShowAdminPanel] = useState(false);
 
@@ -172,7 +172,7 @@ const AdminDashboard = () => {
 </button>
               <div className="dropdown-content">
                 <a href="#">Profile</a>
-                <a href="#">Sign-out</a>
+                <button onClick={logout}>Logout</button>
               </div>
             </div>
 
