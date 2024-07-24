@@ -12,13 +12,14 @@ import Blog from "../pages/Blog/Blog";
 import Textoverimage from "../web_components/TextoverImage/Textoverimage";
 // import AdminPanel from "../../Admin/AdminPanel";
 import TextOverImageData from "../../Admin/TextOverImageData";
-// import AdminDashboard from "../../Admin/Admin Dashboard/AdminDashboard";
+import AdminDashboard from "../../Admin/Admin Dashboard/AdminDashboard";
 // import AdminPanel from "../../Admin/HomeBannerChanges";
 import Login from "../../Admin/User Authentication/Login/Login";
 import Signup from "../../Admin/User Authentication/Sign up/Signup";
 
 
-export default function AuthRoutes() {
+const AuthRoutes = ({ token, setToken, logout }) =>  {
+
   return (
   
       <Routes>
@@ -32,10 +33,13 @@ export default function AuthRoutes() {
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/textoverimage" element ={<Textoverimage/>} />
-        <Route path="/admin" element={<Login/>} />
-        <Route path="sign-up" element={<Signup/>} />
         <Route path="/textoverimagedata" element={<TextOverImageData/>} />
+        <Route path="/admindashboard" element={<AdminDashboard logout={logout} />} />
+        <Route path="/log-in" element={<Login setToken={setToken} />} />
+      <Route path="/sign-up" element={<Signup setToken={setToken} />} />
 
       </Routes>
   );
-}
+};
+
+export default AuthRoutes;
