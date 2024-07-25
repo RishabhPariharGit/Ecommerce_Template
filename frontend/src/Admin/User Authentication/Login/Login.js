@@ -1,4 +1,3 @@
-// LogIn.js
 import React, { useState } from 'react';
 
 const LogIn = ({ setToken }) => {
