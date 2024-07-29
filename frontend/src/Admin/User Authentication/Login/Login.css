@@ -1,5 +1,5 @@
 /* Login.css */
-.login-container {
+.Login-main-cont {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -9,11 +9,11 @@
     text-align: center;
 }
 
-.login-container h2 {
+.Login-main-cont h2 {
     margin-bottom: 20px;
 }
 
-.login-container input {
+.Login-main-cont input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -21,7 +21,7 @@
     border-radius: 4px;
 }
 
-.login-container button {
+.Login-main-cont button {
     width: 100%;
     padding: 10px;
     background-color: #007BFF;
@@ -32,11 +32,11 @@
     cursor: pointer;
 }
 
-.login-container button:hover {
+.Login-main-cont button:hover {
     background-color: #0056b3;
 }
 
-.error-message {
+.Login-main-cont {
     color: #FF0000;
     margin-top: 10px;
 }
