@@ -41,5 +41,4 @@ const LogIn = ({ setToken }) => {
   );
 };
 
-
 export default LogIn;
