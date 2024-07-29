@@ -9,7 +9,7 @@ const App = () => {
 
   const [token, setToken] = useState(localStorage.getItem('token'));
   const location = useLocation();
-  const hideHeaderFooterRoutes = ['/log-in','/sign-up','/admindashboard']; // Add any other routes you want to exclude header and footer
+  const hideHeaderFooterRoutes = ['/admin','/sign-up','/admindashboard']; // Add any other routes you want to exclude header and footer
 
   const logout = () => {
     localStorage.removeItem('token');

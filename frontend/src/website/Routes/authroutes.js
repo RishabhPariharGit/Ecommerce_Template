@@ -32,7 +32,7 @@ const AuthRoutes = ({ token, setToken, logout }) =>  {
         <Route path="/textoverimage" element ={<Textoverimage/>} />
         <Route path="/textoverimagedata" element={<TextOverImageData/>} />
         <Route path="/admindashboard" element={<AdminDashboard logout={logout} />} />
-        <Route path="/log-in" element={<Login setToken={setToken} />} />
+        <Route path="/admin" element={<Login setToken={setToken} />} />
       <Route path="/sign-up" element={<Signup setToken={setToken} />} />
 
       </Routes>

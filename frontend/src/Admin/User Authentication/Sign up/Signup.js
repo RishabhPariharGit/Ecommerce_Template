@@ -30,6 +30,7 @@ const SignUp = ({ setToken }) => {
   };
 
   return (
+    <div className='Admin-Signup-main-wrapper'>
     <div className='sign-up-main-cont'>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
@@ -53,6 +54,7 @@ const SignUp = ({ setToken }) => {
         />
         <button type="submit">Sign Up</button>
       </form>
+    </div>
     </div>
   );
 };

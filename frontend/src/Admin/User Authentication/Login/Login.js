@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css'
+import { Link } from 'react-router-dom';
 
 
 const LogIn = ({ setToken }) => {
@@ -15,6 +16,7 @@ const LogIn = ({ setToken }) => {
 
   return (
     <>
+    <div className='Admin-Login-main-wrapper'>
     <div className='Login-main-cont'>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
@@ -32,6 +34,8 @@ const LogIn = ({ setToken }) => {
         />
         <button type="submit">Login</button>
       </form>
+      <p>don't have an account<Link to={'/sign-up'}> sign up</Link></p>
+      </div>
       </div>
     </>
   );
