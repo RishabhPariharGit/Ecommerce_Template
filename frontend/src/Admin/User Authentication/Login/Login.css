@@ -1,19 +1,29 @@
 /* Login.css */
-.login-container {
+
+.Admin-Login-main-wrapper{
+    width: 100%;
+    height: 100vh;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.Login-main-cont {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
+    height: fit-content;
     margin: 0 auto;
     text-align: center;
 }
 
-.login-container h2 {
+.Login-main-cont h2 {
     margin-bottom: 20px;
 }
 
-.login-container input {
+.Login-main-cont input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -21,7 +31,7 @@
     border-radius: 4px;
 }
 
-.login-container button {
+.Login-main-cont button {
     width: 100%;
     padding: 10px;
     background-color: #007BFF;
@@ -30,13 +40,11 @@
     color: #fff;
     font-size: 16px;
     cursor: pointer;
+    margin: auto;
 }
 
-.login-container button:hover {
+.Login-main-cont button:hover {
     background-color: #0056b3;
 }
 
-.error-message {
-    color: #FF0000;
-    margin-top: 10px;
-}
+
