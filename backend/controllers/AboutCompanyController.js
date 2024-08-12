@@ -35,3 +35,4 @@ const updateaboutus = (req, res) => {
 
   //added the RM0022 branch to main branch 
 //   added new branch RM0024
+//checked the working
