@@ -32,3 +32,6 @@ const updateaboutus = (req, res) => {
 
 
   module.exports = {postAboutusData,getAboutusData,updateaboutus}
+
+  //added the RM0022 branch to main branch 
+  
