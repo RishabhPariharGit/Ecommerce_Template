@@ -18,6 +18,7 @@ const Textoverimage = () => {
       .then(data => {
         console.log('Fetched TextOverImage data:', data); // Log fetched data
         settextoverimage(data.map(item => ({
+          Mainhead:item.Mainhead,
           Heading: item.Heading,
           Subhead: item.Subhead,
           Imgurl: item.Imgurl
@@ -36,7 +37,7 @@ const Textoverimage = () => {
         <div key={index} className='Secondary-wrapper'>
         <div className='Text-wrapper'>
         <div className='Main-Text'>
-            <p><span style={{color:'#4F46E5', fontWeight:'900',fontSize:'45px'}}>Magical Rentals </span>{item.Heading}</p><br></br>
+            <p><span style={{color:'#4F46E5', fontWeight:'900',fontSize:'45px'}}> {item.Mainhead} </span>{item.Heading}</p><br></br>
         </div>
         <div className='Secondry-Text'>
             <p>{item.Subhead}</p>
