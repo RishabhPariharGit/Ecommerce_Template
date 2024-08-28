@@ -1,9 +1,9 @@
 const TextoverImage = require('../Model/TextOverImageModel')
 
 const postTextOverImageData = async (req, res) => {
-    const { Mainhead,Heading,Subhead,Imgurl, } = req.body;
+    const { Mainhead,Heading,Subhead,Imgurl,Buttonone,linkone,Buttontwo,linktwo } = req.body;
     try {
-        const newTextOverimage = new TextoverImage({ Mainhead,Heading,Subhead,Imgurl });
+        const newTextOverimage = new TextoverImage({ Mainhead,Heading,Subhead,Imgurl,Buttonone,linkone,Buttontwo,linktwo });
         await newTextOverimage.save();
         res.status(201).json(newTextOverimage);
     } catch (err) {

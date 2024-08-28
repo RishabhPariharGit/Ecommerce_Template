@@ -21,7 +21,11 @@ const Textoverimage = () => {
           Mainhead:item.Mainhead,
           Heading: item.Heading,
           Subhead: item.Subhead,
-          Imgurl: item.Imgurl
+          Imgurl: item.Imgurl,
+          Buttonone:item.Buttonone,
+          linkone:item.linkone,
+          Buttontwo:item.Buttontwo,
+          linktwo:item.linktwo
         })));
       })
       .catch(error => console.error('Error fetching TextOverImage Data:', error));
@@ -44,10 +48,10 @@ const Textoverimage = () => {
         </div>
         <div className='Home-banner-button-wrapper'>
         <div className='main-button'>
-           <Link to={"/roomowner"}> <button>For Homeowner</button></Link>
+           <Link to={item.linkone}> <button>{item.Buttonone}</button></Link>
         </div>
         <div className='Renter-button'>
-           <Link to={"/roomowner"}> <button>For Renter</button></Link>
+           <Link to={item.linktwo}> <button>{item.Buttontwo}</button></Link>
         </div>
         </div>
         </div>
