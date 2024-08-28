@@ -63,6 +63,7 @@
     background-color: white;
     margin: auto;
     border-radius: 5px;
+    overflow-y: scroll;
 }
 
 .side-nav-links-main-wrapper {
