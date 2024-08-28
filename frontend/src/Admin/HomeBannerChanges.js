@@ -7,7 +7,11 @@ const AdminPanel = ({ onNewData }) => {
     Mainhead:'',
     Heading: '',
     Subhead: '',
-    Imgurl: ''
+    Imgurl: '',
+    Buttonone:'',
+    linkone:'',
+    Buttontwo:'',
+    linktwo:''
   });
   const navigate = useNavigate();
 
@@ -17,6 +21,8 @@ const AdminPanel = ({ onNewData }) => {
       ...formData,
       [name]: value
     });
+    console.log(formData);
+    
   };
 
   const handleSubmit = (e) => {
@@ -53,7 +59,6 @@ const AdminPanel = ({ onNewData }) => {
           Main Heading for the Main Banner.</p>
         </div>
         <input type="text" name="Mainhead" value={formData.Mainhead} onChange={handleChange} />
-
         <div>
           <label>Heading</label><br/><p>
           Heading for the Main Banner.</p>
@@ -69,6 +74,36 @@ const AdminPanel = ({ onNewData }) => {
          Images can be stored by posting the image url here.</p>
          </div>
         <input type="text" name="Imgurl" value={formData.Imgurl} onChange={handleChange} />
+
+
+        <div>
+          <label>Button One</label><br/><p>
+          Main Heading for the Button.</p>
+        </div>
+        <input type="text" name="Buttonone" value={formData.Buttonone} onChange={handleChange} />
+
+
+        <div>
+          <label>Button One Link</label><br/><p>
+        Link for the Button.</p>
+        </div>
+        <input type="text" name="linkone" value={formData.linkone} onChange={handleChange} />
+
+
+        <div>
+          <label>Button Two</label><br/><p>
+          Main Heading for the Button.</p>
+        </div>
+        <input type="text" name="Buttontwo" value={formData.Buttontwo} onChange={handleChange} />
+
+
+        <div>
+          <label>Button Two Link</label><br/><p>
+        Link for the Button.</p>
+        </div>
+        <input type="text" name="linktwo" value={formData.linktwo} onChange={handleChange} />
+
+
         <div className='Submit-button-wrapper'>
         <button type="submit">Submit</button>
         <button onClick={handleViewData}>View Data</button>
