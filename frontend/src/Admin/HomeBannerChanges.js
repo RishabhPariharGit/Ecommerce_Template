@@ -4,6 +4,7 @@ import './HomeBannerChanges.css'
 
 const AdminPanel = ({ onNewData }) => {
   const [formData, setFormData] = useState({
+    Mainhead:'',
     Heading: '',
     Subhead: '',
     Imgurl: ''
@@ -46,6 +47,13 @@ const AdminPanel = ({ onNewData }) => {
     <div className="admin-panel">
       <h2>Home Banner</h2>
       <form onSubmit={handleSubmit}>
+
+      <div>
+          <label>Main Heading</label><br/><p>
+          Main Heading for the Main Banner.</p>
+        </div>
+        <input type="text" name="Mainhead" value={formData.Mainhead} onChange={handleChange} />
+
         <div>
           <label>Heading</label><br/><p>
           Heading for the Main Banner.</p>
