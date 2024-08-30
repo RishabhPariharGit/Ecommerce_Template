@@ -1,0 +1,9 @@
+.Announcement-main-wrapper{
+    background-color: #4F46E5;
+    padding: 5px;
+}
+
+.Announcement-main-wrapper p{
+    color: white;
+    text-align: center;
+}

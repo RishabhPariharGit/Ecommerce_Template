@@ -4,6 +4,7 @@ import AuthRoutes from './website/Routes/authroutes';
 import Navbar from './website/web_components/navbar/Navbar';
 import Footer from './website/web_components/Footer/Footer';
 import './App.css';
+import Announcementbar from './website/web_components/Announcementbar/Announcementbar';
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
 
   return (
     <>
+     {!hideHeaderFooterRoutes.includes(location.pathname) && <Announcementbar />}
       {!hideHeaderFooterRoutes.includes(location.pathname) && <Navbar />}
       <AuthRoutes token={token} setToken={setToken} logout={logout}/>
       {!hideHeaderFooterRoutes.includes(location.pathname) && <Footer />}
