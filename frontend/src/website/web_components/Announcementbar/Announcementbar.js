@@ -14,11 +14,11 @@ const Announcementbar = () => {
       <Swiper
         modules={[Navigation, Autoplay]}
         autoplay={{
-          delay: 5000,  // 5000ms = 5 seconds
+          delay: 3000,  
           disableOnInteraction: false,
         }}
         loop={true}
-        speed={800}  // Transition speed in milliseconds
+        speed={800}  
         navigation={{
           prevEl: prevRef.current,
           nextEl: nextRef.current,
