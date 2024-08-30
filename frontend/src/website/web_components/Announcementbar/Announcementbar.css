@@ -1,9 +1,40 @@
-.Announcement-main-wrapper{
+.Announcement-main-wrapper {
     background-color: #4F46E5;
     padding: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px; /* Adjust based on your content */
 }
 
-.Announcement-main-wrapper p{
+.swiper-container {
+    width: 100%;
+}
+
+.swiper-slide p {
     color: white;
     text-align: center;
+    margin: 0;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: white; 
+    z-index: 10;
+    cursor: pointer;
+    font-size: 10px; 
+}
+
+.swiper-button-prev {
+    left: 10px;
+}
+
+.swiper-button-next {
+    right: 10px;
+}
+
+
+.swiper-button-prev:after{
+    width: 10px;
 }
