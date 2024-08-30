@@ -1,28 +1,28 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './Announcementbar.css';
 
 const Announcementbar = () => {
-  // Create refs for the navigation buttons
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
   return (
     <div className='Announcement-main-wrapper'>
       <Swiper
-        modules={[Navigation]}
+        modules={[Navigation, Autoplay]}
+        autoplay={{
+          delay: 5000,  // 5000ms = 5 seconds
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        speed={800}  // Transition speed in milliseconds
         navigation={{
           prevEl: prevRef.current,
           nextEl: nextRef.current,
         }}
-        onBeforeInit={(swiper) => {
-          swiper.params.navigation.prevEl = prevRef.current;
-          swiper.params.navigation.nextEl = nextRef.current;
-        }}
-        loop={true}
         className='swiper-container'
       >
         <SwiperSlide>
@@ -32,10 +32,6 @@ const Announcementbar = () => {
           <p>Free Shipping on orders above 500/-</p>
         </SwiperSlide>
       </Swiper>
-
-      {/* Custom Navigation Buttons */}
-      <div ref={prevRef} className="swiper-button-prev"></div>
-      <div ref={nextRef} className="swiper-button-next"></div>
     </div>
   );
 }
