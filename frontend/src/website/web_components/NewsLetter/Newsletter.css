@@ -1,6 +1,6 @@
 /* Newsletter.css */
 .custom-background {
-    background-color: #E3E2FD; /* Tomato color */
+    background-color: #F7F7FC; /* Tomato color */
   }
   
   .custom-padding {
@@ -9,11 +9,11 @@
   
   .custom-font {
     font-family: 'Courier New', Courier, monospace;
-    color: #4F46E5;
+    color: #000000;
   }
 
   .custom-font-fam{
-    color: #4F46E5;
+    color: #000000;
   }
   
   .custom-text{
@@ -27,11 +27,11 @@
   }
 
   .custom-border {
-    border: 2px solid #4F46E5; /* Tomato color border */
+    border: 2px solid #000000; /* Tomato color border */
   }
 
   .custom-icon{
-    color: #4F46E5;
+    color: #000000;
   }
   
   .custom-input {
@@ -40,11 +40,11 @@
   }
   
   .custom-button {
-    background-color: #4F46E5; /* Tomato color */
+    background-color: #000000; /* Tomato color */
     color: white;
   }
   
   .custom-button:hover {
-    background-color: #453cf0; /* Darker Tomato color */
+    background-color: #000000; /* Darker Tomato color */
   }
   

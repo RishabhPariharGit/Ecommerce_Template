@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     color: white;
-    background-color: #4F46E5;
+    background-color: #000000;
     padding: 5px;
     border-radius: 50%;
     cursor: pointer;
@@ -29,7 +29,7 @@
     font-family: monospace;
     font-size: 22px;
     font-weight: 900;
-    color: #332ad4;
+    color: #000000;
 }
 
 .custom-svg{

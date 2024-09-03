@@ -3,13 +3,13 @@
     flex-wrap: wrap; /* Allow wrapping */
     justify-content: space-evenly;
     padding-bottom: 55px;
-    background-color: #f0f0ff;
+    background-color: #F7F7FC;
 }
 
 .Heading-subhead-card h1 {
     margin: 0;
     padding-top: 45px;
-    color: rgb(79, 70, 229);
+    color: rgb(0, 0, 0);
 }
 
 .Heading-subhead-card {

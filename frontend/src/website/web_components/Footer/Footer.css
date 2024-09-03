@@ -40,7 +40,7 @@
 }
 
 .site-footer h6 {
-    color: #4F46E5;
+    color: #000000;
     font-size: 16px;
     font-weight: 600;
     margin-top: 5px;
@@ -53,7 +53,7 @@
 }
 
 .site-footer a:hover {
-    color: #3366cc;
+    color: #252627;
     text-decoration: none;
 }
 
@@ -73,7 +73,7 @@
 .footer-links a:active,
 .footer-links a:focus,
 .footer-links a:hover {
-    color: #3366cc;
+    color: #3c3e42;
     text-decoration: none;
 }
 
