@@ -7,23 +7,23 @@
 .Heading-subhead-card h1 {
     margin: 0;
     padding-top: 45px;
-    color: rgb(79, 70, 229);
+    color: rgb(0, 0, 0);
 }
 
 .Heading-subhead-card {
-    background-color: #f0f0ff;
+    background-color: #F7F7FC;
 }
 
 
 .shopallbtn-cstm{
     text-align: center;
-    background-color: #F0F0FF;
+    background-color: #F7F7FC;
     padding-bottom:50px ;
 }
 .shopallbtn-cstm button{
     padding: 7px 30px;
     color: white;
-    background-color: #342BE0;
+    background-color: #000000;
     border-radius: 3px;
 }
 
@@ -35,7 +35,7 @@
     grid-template-columns: repeat(4, 1fr); /* Create four columns */
     gap: 1px; /* Space between grid items */
     padding-bottom: 55px;
-    background-color: #f0f0ff;
+    background-color: #ffffff;
     justify-items: center;
 }
 
@@ -62,7 +62,7 @@
     text-transform: uppercase;
     font-size: 10px;
     font-weight: 700;
-    background: #ff1c1c;
+    background: #000000;
     color: #ffffff;
     padding: 3px 10px;
 }
@@ -90,7 +90,7 @@
     color: #ffffff;
     border-radius: 2px;
     padding: 3px 7px;
-    background-color: #4F46E5;
+    background-color: #000000;
 }
 
 .product-details h4 a {
@@ -99,13 +99,13 @@
     margin-bottom: 10px;
     margin-top: 10px;
     font-size: 14px;
-    color: #4F46E5;
+    color: #000000;
     text-decoration: none;
     transition: 0.3s;
 }
 
 .product-details h4 a:hover {
-    color: #F52544;
+    color: #000000;
 }
 
 .product-details p {
@@ -134,7 +134,7 @@
 
 .product-price {
     font-size: 18px;
-    color: #05b40e;
+    color: #000000;
     font-weight: 600;
 }
 
@@ -144,7 +144,7 @@
     text-decoration: line-through;
     display: inline-block;
     margin-right: 5px;
-    color: red;
+    color: rgb(0, 0, 0);
 }
 
 .product-links {
@@ -160,5 +160,5 @@
 }
 
 .product-links a:hover {
-    color: #F52544;
+    color: #000000;
 }

@@ -1,5 +1,5 @@
 .Abt-Head-subhead h1{
-    background-color:#F0F0FF ;
+    background-color:#f7f7fc ;
     margin: 0px;
     padding-top: 40px;
 }
@@ -7,7 +7,7 @@
 .main-About-wrapper{
     width: 100%;
     padding: 30px 70px 70px 70px;
-    background-color: #F0F0FF;
+    background-color: #f7f7fc;
     margin-bottom: 50px;
 }
 
@@ -62,14 +62,14 @@
 .vhcf-module .vhcf-promo_description button{
   cursor: pointer;
   background-color: white;
-  color: #342be0;
+  color: #000000;
   padding: 10px 45px;
-  border: 1px solid #342be0;
+  border: 1px solid #000000;
   transition: background-color 1.11s ease, color 1.11s ease;
 }
 
 .vhcf-module .vhcf-promo_description button:hover{
-  background-color: #342be0;
+  background-color: #000000;
   color: white;
 }
 
