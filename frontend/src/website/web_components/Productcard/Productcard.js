@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Productcard.css';
+import { Link } from 'react-router-dom';
 
 const Productcard = () => {
   const [productdata, setproductdata] = useState([]);
@@ -38,7 +39,7 @@ const Productcard = () => {
           <div className="product-details">
             <span className="product-category">{item.Tag}</span>
             <h4>
-              <a href="#">{item.Productname}</a>
+             <Link to = '/product'> {item.Productname}</Link>
             </h4>
             <p>{item.ProductInfo}</p>
             <div className="product-bottom-details">
