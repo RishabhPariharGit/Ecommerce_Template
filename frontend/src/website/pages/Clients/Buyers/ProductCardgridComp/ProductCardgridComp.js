@@ -46,7 +46,7 @@ const ProductCardgridComp = () => {
             <div className="product-details">
               <span className="product-category">{item.Tag}</span>
               <h4>
-                <a href="#">{item.Productname}</a>
+                <Link to ="/product">{item.Productname}</Link>
               </h4>
               <p>{item.ProductInfo}</p>
               <div className="product-bottom-details">
