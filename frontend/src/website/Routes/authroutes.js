@@ -13,6 +13,8 @@ import TextOverImageData from "../../Admin/TextOverImageData";
 import AdminDashboard from "../../Admin/Admin Dashboard/AdminDashboard";
 import Login from "../../Admin/User Authentication/Login/Login";
 import Signup from "../../Admin/User Authentication/Sign up/Signup";
+import Productcard from "../web_components/Productcard/Productcard";
+import MainProductpg from "../pages/Product/MainProductpg";
 
 
 const AuthRoutes = ({ token, setToken, logout }) =>  {
@@ -26,6 +28,7 @@ const AuthRoutes = ({ token, setToken, logout }) =>  {
         <Route path="/contact" element={<Contact />} />
         <Route path="/roomowner" element={<RoomOwners/>} />
         <Route path="/buyer" element={<Buyers />} />
+        <Route path="/product" element={<MainProductpg />} />
         <Route path="/tenant" element={<Teanents />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
