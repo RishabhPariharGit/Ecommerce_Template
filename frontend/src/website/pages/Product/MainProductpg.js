@@ -44,7 +44,7 @@ const MainProductpg = () => {
           <span>/</span>
           <p>Product 1</p>
         </div>
-
+<div className='Product-page-main-segment-devider'>
         <div className='Product-image-gallery-main-wrapper'>
           <div className='Image-grid-main-wrapper'>
             {images.map((image, index) => (
@@ -56,6 +56,16 @@ const MainProductpg = () => {
                 className='product-image'
               />
             ))}
+          </div>
+        </div>
+
+        <div className='product-complete-desc-main-wrapper'>
+          <div className='Product-main-head-main-wrapper'>
+           <p>Naruto-Leaf Village T-Shirt</p>
+           <div className='Product-sub-head-main-wrapper'>
+           <p>Oversized T-shirt</p>
+           </div>
+          </div>
           </div>
         </div>
 
