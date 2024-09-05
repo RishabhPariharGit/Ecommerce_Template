@@ -13,7 +13,7 @@ const MainProductpg = () => {
           </Link>
           <span>/</span>
           <Link to = '/buyer'>
-          <p>Naruto-Collection</p>
+          <p>Naruto-Collection</p> 
           </Link>
           <span>/</span>
           <p>Product 1</p>
