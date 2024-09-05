@@ -1,35 +1,70 @@
-
 .Product-pg-main-wrapper{
     padding: 15px;
 }
+
 .accordian-main-wrapper{
     display: flex;
     align-items: center;
+    padding-bottom: 15px;
 }
 
 .accordian-main-wrapper p{
-    display: flex;
-    /* padding: 0px 1px; */
     font-size: 12px;
     color: grey;
     cursor: pointer;
 }
 
 .accordian-main-wrapper span{
-    display: flex;
     font-size: 12px;
     color: grey;
     cursor: pointer;
-}
-
-
-.accordian-main-wrapper p:hover{
-    font-size: 12px;
-    color: rgb(0, 0, 0);
-    cursor: pointer;
-}
-
-
-.accordian-main-wrapper span{
     padding: 0px 5px;
+}
+
+.Image-grid-main-wrapper{
+    width: 60%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: stretch; 
+    gap: 3px;
+    justify-content: space-around;
+    overflow-y: scroll;
+    height: 500px;
+    scrollbar-width: none;
+}
+
+.Image-grid-main-wrapper img{
+    width: 100%;
+    height: 500px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.Image-grid-main-wrapper img:hover{
+    transform: scale(1.01);
+}
+
+/* Modal Styling */
+.zoom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0,0.97); /* Added some transparency */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.zoom-image-wrapper {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.zoom-image {
+    width: 100%;
+    height: auto;
 }
