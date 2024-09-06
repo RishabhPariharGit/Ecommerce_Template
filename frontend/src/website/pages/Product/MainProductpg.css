@@ -1,4 +1,4 @@
-.Product-pg-main-wrapper{
+/* .Product-pg-main-wrapper{
     padding: 15px;
 }
 
@@ -48,14 +48,14 @@
     transform: scale(1.01);
 }
 
-/* Modal Styling */
+
 .zoom-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0,0.97); /* Added some transparency */
+    background: rgba(0, 0, 0,0.97); 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,6 +77,12 @@
     padding: 0px 25px;
 }
 
+.Product-main-head-main-wrapper {
+    border-bottom: 1px solid #cac7c7;
+    padding-bottom: 20px;
+    padding-right: 110px;
+}
+
 .Product-main-head-main-wrapper p{
     font-size: 27px;
     font-weight: 700;
@@ -90,4 +96,76 @@
     color: white;
     padding: 0px 5px;
 
+} */
+
+.main-img-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    height: 600px;
 }
+
+.main-img-wrapper img {
+    width: auto;
+    height: 90px;
+    margin: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease; 
+    border-radius: 5px;
+}
+
+.main-img-wrapper img.selected {
+    opacity: 0.5; 
+    border: 1px solid rgb(179, 177, 177); 
+    border-radius: 5px;
+}
+
+.product-display-wrapper {
+    position: relative;
+    width: fit-content;
+    height: 625px;
+    border: 1px solid rgb(221, 220, 220);
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.product-display-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 5px;
+}
+
+.two-segment-devider {
+    display: flex;
+    align-items: center;
+}
+
+.slider-buttons {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.slider-buttons button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.slider-buttons button:hover {
+    background-color: #ccc;
+} 
