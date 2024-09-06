@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './MainProductpg.css';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const MainProductpg = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [zoomPosition, setZoomPosition] = useState({ backgroundPosition: '0% 0%' });
+    const [isHovered, setIsHovered] = useState(false); // New state for controlling zoom visibility
+
     const thumbnails = [
         "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/42d6ee72-d308-4b21-8f1f-3d1be1d3b269/W+NIKE+ZOOMX+ZEGAMA+TRAIL+2.png",
         "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/b0744d81-6067-4d99-8e8b-2e8f493db628/W+NIKE+ZOOMX+ZEGAMA+TRAIL+2.png",
@@ -18,6 +21,23 @@ const MainProductpg = () => {
         setCurrentIndex(index);
     };
 
+    const handleMouseMove = (e) => {
+        const { left, top, width, height } = e.target.getBoundingClientRect();
+        const x = ((e.pageX - left) / width) * 100;
+        const y = ((e.pageY - top) / height) * 100;
+        setZoomPosition({
+            backgroundPosition: `${x}% ${y}%`
+        });
+    };
+
+    const handleMouseEnter = () => {
+        setIsHovered(true); // Show zoom box
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false); // Hide zoom box
+    };
+
     const handlePrev = () => {
         setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : thumbnails.length - 1));
     };
@@ -28,6 +48,17 @@ const MainProductpg = () => {
 
     return (
         <div className="main-dispaly-complete-wrapper">
+            <div className='accordian-main-wrapper'>
+                <Link to='/'>
+                    <p>Home</p>
+                </Link>
+                <span>/</span>
+                <Link to='/buyer'>
+                    <p>Naruto-Collection</p>
+                </Link>
+                <span>/</span>
+                <p>Product 1</p>
+            </div>
             <div className="two-segment-devider">
                 <div className="main-img-wrapper">
                     {thumbnails.map((src, index) => (
@@ -40,7 +71,12 @@ const MainProductpg = () => {
                         />
                     ))}
                 </div>
-                <div className="product-display-wrapper">
+                <div
+                    className="product-display-wrapper"
+                    onMouseMove={handleMouseMove}
+                    onMouseEnter={handleMouseEnter}  // Show zoom box
+                    onMouseLeave={handleMouseLeave}  // Hide zoom box
+                >
                     <img
                         src={thumbnails[currentIndex]}
                         id="main-display"
@@ -51,12 +87,23 @@ const MainProductpg = () => {
                         <button id="nextBtn" onClick={handleNext}>›</button>
                     </div>
                 </div>
+                {isHovered && ( // Only show zoomed image when hovering
+                    <div
+                        className="zoomed-image"
+                        style={{
+                            backgroundImage: `url(${thumbnails[currentIndex]})`,
+                            ...zoomPosition
+                        }}
+                    />
+                )}
             </div>
         </div>
     );
 };
 
-export default MainProductpg
+export default MainProductpg;
+
+
 
 // import React, { useState, useEffect } from 'react';
 // import './MainProductpg.css';
@@ -92,18 +139,18 @@ export default MainProductpg
 
 //   return (
 //     <>
-//       <div className='Product-pg-main-wrapper'>
-//         <div className='accordian-main-wrapper'>
-//           <Link to='/'>
-//             <p>Home</p>
-//           </Link>
-//           <span>/</span>
-//           <Link to='/buyer'>
-//             <p>Naruto-Collection</p>
-//           </Link>
-//           <span>/</span>
-//           <p>Product 1</p>
-//         </div>
+    //  <div className='Product-pg-main-wrapper'>
+    //      <div className='accordian-main-wrapper'>
+    //        <Link to='/'>
+    //          <p>Home</p>
+    //        </Link>
+    //        <span>/</span>
+    //        <Link to='/buyer'>
+    //          <p>Naruto-Collection</p>
+    //        </Link>
+    //        <span>/</span>
+    //        <p>Product 1</p>
+    //      </div>
 // <div className='Product-page-main-segment-devider'>
 //         <div className='Product-image-gallery-main-wrapper'>
 //           <div className='Image-grid-main-wrapper'>
