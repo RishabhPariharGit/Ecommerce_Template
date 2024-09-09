@@ -152,7 +152,7 @@
 .currency-format-main-wrapper p {
     font-size: 10px;
     color: grey;
-    padding: 5px;
+    padding-right: 5px;
 }
 
 .original-selling-price-main-wrapper p{
@@ -170,4 +170,25 @@ text-decoration: line-through;
 .price-content-main-wrapper p{
     color: gray;
     font-size: 14px;
+}
+
+
+
+.variant-selector-main-wrapper img{
+    width: auto;
+    height: 100px;
+}
+
+.variant-selector-main-wrapper img:hover{
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.variant-selector-main-wrapper img.selected {
+    border: 1px solid grey;
+}
+
+.variant-image-main-wrapper{
+    display: flex;
+    gap: 10px;
 }
