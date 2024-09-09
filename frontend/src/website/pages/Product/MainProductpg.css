@@ -81,7 +81,7 @@
 
 .two-segment-devider {
     display: flex;
-    padding-left: 15px;
+    justify-content: space-evenly;
 }
 
 .slider-buttons {
@@ -113,6 +113,7 @@
     padding: 0px 25px;
     position: relative;
     z-index: 1;
+    width: 50%;
 }
 
 .Product-main-head-main-wrapper {
@@ -133,4 +134,8 @@
     background-color: rgb(58, 57, 57);
     color: white;
     padding: 0px 5px;
+}
+
+.image-main-box{
+    display: flex;
 }

@@ -60,6 +60,7 @@ const MainProductpg = () => {
                 <p>Product 1</p>
             </div>
             <div className="two-segment-devider">
+                <div className='image-main-box'>
                 <div className="main-img-wrapper">
                     {thumbnails.map((src, index) => (
                         <img
@@ -95,6 +96,7 @@ const MainProductpg = () => {
                             }}
                         />
                     )}
+                </div>
                 </div>
 
                 <div className='product-complete-desc-main-wrapper'>
