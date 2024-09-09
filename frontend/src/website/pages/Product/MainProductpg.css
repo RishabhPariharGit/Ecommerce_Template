@@ -139,3 +139,35 @@
 .image-main-box{
     display: flex;
 }
+
+.price-details-main-wrapper{
+    padding: 20px 0px;
+}
+
+.price-details-secondary-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.currency-format-main-wrapper p {
+    font-size: 10px;
+    color: grey;
+    padding: 5px;
+}
+
+.original-selling-price-main-wrapper p{
+font-size: 13px;
+color: grey;
+text-decoration: line-through;
+}
+
+.discounted-price-main-wrapper p{
+    font-size: 18px;
+    font-weight: 700;
+    padding: 0px 12px;
+}
+
+.price-content-main-wrapper p{
+    color: gray;
+    font-size: 14px;
+}

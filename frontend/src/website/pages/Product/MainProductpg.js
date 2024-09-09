@@ -101,9 +101,26 @@ const MainProductpg = () => {
 
                 <div className='product-complete-desc-main-wrapper'>
                     <div className='Product-main-head-main-wrapper'>
-                        <p>Naruto-Leaf Village T-Shirt</p>
+                        <p>Nike Zegama 2
+                        Women's Trail-Running Shoes</p>
                         <div className='Product-sub-head-main-wrapper'>
-                            <p>Oversized T-shirt</p>
+                            <p>shoes women</p>
+                        </div>
+                    </div>
+                    <div className='price-details-main-wrapper'>
+                    <div className='price-details-secondary-wrapper'>
+                        <div className='currency-format-main-wrapper'>
+                        <p>MRP</p></div>
+                        <div className='original-selling-price-main-wrapper'>
+                            <p>₹ 16 995.00</p>
+                            </div>
+                            <div className='discounted-price-main-wrapper'>
+                                <p> ₹ 14 995.00</p>
+                            </div>
+                            </div>
+                        <div className='price-content-main-wrapper'>
+                        <p>Inclusive of all taxes
+                        </p>
                         </div>
                     </div>
                 </div>
