@@ -86,22 +86,33 @@ const MainProductpg = () => {
                         <button id="prevBtn" onClick={handlePrev}>‹</button>
                         <button id="nextBtn" onClick={handleNext}>›</button>
                     </div>
+                    {isHovered && ( // Only show zoomed image when hovering
+                        <div
+                            className="zoomed-image"
+                            style={{
+                                backgroundImage: `url(${thumbnails[currentIndex]})`,
+                                ...zoomPosition
+                            }}
+                        />
+                    )}
                 </div>
-                {isHovered && ( // Only show zoomed image when hovering
-                    <div
-                        className="zoomed-image"
-                        style={{
-                            backgroundImage: `url(${thumbnails[currentIndex]})`,
-                            ...zoomPosition
-                        }}
-                    />
-                )}
+
+                <div className='product-complete-desc-main-wrapper'>
+                    <div className='Product-main-head-main-wrapper'>
+                        <p>Naruto-Leaf Village T-Shirt</p>
+                        <div className='Product-sub-head-main-wrapper'>
+                            <p>Oversized T-shirt</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     );
 };
 
 export default MainProductpg;
+
 
 
 
