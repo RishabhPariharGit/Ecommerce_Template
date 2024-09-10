@@ -187,6 +187,16 @@ const MainProductpg = () => {
                             </div>
                         </div>
                     </div>
+
+<div className='Buy-Buttons-Main-Wrapper'>
+    <div className='add-to-cart-main-wrapper'>
+<button>Add to Cart</button>
+    </div>
+    <div className='wishlist-button-main-wrapper'>
+<button>Favourite</button>
+    </div>
+</div>
+
                 </div>
             </div>
         </div>
