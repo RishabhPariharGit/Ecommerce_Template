@@ -245,12 +245,34 @@ text-decoration: line-through;
 border: 1px solid black;
 width: 50%;
 padding: 7px 0px;
-background-color: black;
+background-color: rgb(24, 23, 23);
 color: white;
 }
 
+.add-to-cart-main-wrapper button:hover{
+    border: 1px solid black;
+    width: 50%;
+    padding: 7px 0px;
+    background-color: rgb(10, 10, 10);
+    color: white;
+    }
+
 .wishlist-button-main-wrapper button{
-border: 1px solid rgb(184, 182, 182);
-width: 50%;
-padding: 7px 0px;
+    border: 1px solid rgb(184, 182, 182);
+    width: 50%;
+    display: flex;
+    padding: 7px 0px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.wishlist-button-main-wrapper button:hover{
+    border: 1px solid rgb(20, 20, 20);
+    width: 50%;
+    display: flex;
+    padding: 7px 0px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
