@@ -157,6 +157,36 @@ const MainProductpg = () => {
                             />
                         </div>
                     </div>
+
+                    <div className='size-select-main-wrapper'>
+                        <div className='size-select-secondary-wrapper'>
+                            <p>Select Size</p>
+                            <p>Size Guide</p>
+                        </div>
+                        <div className='size-number-main-wrapper'>
+                            <div className='size-box-main-wrapper'>
+                                UK 3.5
+                            </div>
+                            <div className='size-box-main-wrapper'>
+                                UK 5.5
+                            </div>
+                            <div className='size-box-main-wrapper'>
+                                UK 6.5
+                            </div>
+                            <div className='size-box-main-wrapper'>
+                                UK 7.5
+                            </div>
+                            <div className='size-box-main-wrapper'>
+                                UK 8.5
+                            </div>
+                            <div className='size-box-main-wrapper'>
+                                UK 9.5
+                            </div>
+                            <div className='size-box-main-wrapper'>
+                                UK 10.5
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -192,3 +192,32 @@ text-decoration: line-through;
     display: flex;
     gap: 10px;
 }
+
+.size-select-main-wrapper{
+    padding: 20px 0px;
+}
+.size-select-secondary-wrapper{
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.size-number-main-wrapper{
+    padding: 10px 0px;
+    width: 50%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.size-box-main-wrapper{
+    padding: 5px;
+    width: 70px;
+    border: 1px solid rgb(192, 192, 192);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    margin:5px 0px;
+    cursor: pointer;
+}
