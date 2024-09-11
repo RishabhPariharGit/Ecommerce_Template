@@ -224,13 +224,20 @@ const MainProductpg = () => {
 </div>
 
 <div className='complete-product-desc-button' onClick={handleClick}>
-    <p>View More</p>
+    <p>view more</p>
 </div>
+
+
 
 </div>
 
                 </div>
             </div>
+
+<div className='a-plus-content-main-wrapper'>
+    
+</div>
+
 
             <Modal isOpen={isModalOpen} onClose={handleClose}>
                 <div className='desc-para-main-wrapper'>
@@ -241,8 +248,8 @@ const MainProductpg = () => {
     <li><span>Colour Shown -</span> Black/Wolf Grey/Anthracite/White</li>
     <li><span>Style -</span> FD5191-001</li>
     <li><span>Country/Region of Origin -</span> China</li>
-    <li><span>Weight -</span>264 Approx</li>
-    <li><span>Heel-to-toe drop -</span>4mm</li>
+    <li><span>Weight -</span> 264 Approx</li>
+    <li><span>Heel-to-toe drop -</span> 4mm</li>
     
   </ul>
 </div>
