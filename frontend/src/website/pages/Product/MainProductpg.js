@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './MainProductpg.css';
+import Modal from './ProductDescriptionModal/Modal';
 import { Link } from 'react-router-dom';
 
 const MainProductpg = () => {
@@ -7,6 +8,7 @@ const MainProductpg = () => {
     const [zoomPosition, setZoomPosition] = useState({ backgroundPosition: '0% 0%' });
     const [isHovered, setIsHovered] = useState(false); 
     const [selectedVariant, setSelectedVariant] = useState('black'); // New state for selected variant
+    const [isModalOpen, setModalOpen] = useState(false); 
 
     const allThumbnails = {
         black: [
@@ -61,6 +63,15 @@ const MainProductpg = () => {
     const handleVariantClick = (variant) => {
         setSelectedVariant(variant);
         setCurrentIndex(0); // Reset to the first image of the new variant
+    };
+
+
+    const handleClick = () => {
+        setModalOpen(true); // Open modal
+    };
+
+    const handleClose = () => {
+        setModalOpen(false); // Close modal
     };
 
     return (
@@ -187,7 +198,6 @@ const MainProductpg = () => {
                             </div>
                         </div>
                     </div>
-
 <div className='Buy-Buttons-Main-Wrapper'>
     <div className='add-to-cart-main-wrapper'>
 <button>Add to Cart</button>
@@ -201,13 +211,52 @@ const MainProductpg = () => {
     </div>
 </div>
 
+<div className='product-short-desc-main-wrapper'>
+    <div className='desc-para-main-wrapper'>
+    <p>Up the mountain, through the woods, to the top of the trail you can go. Equipped with an ultra-responsive ZoomX foam midsole, the Zegama 2 is designed to conquer steep ridges, jagged rocks and races from trailhead to tip. Optimal cushioning complements a rugged outsole made for your trail running journey.</p>
+    </div>
+    <div className='desc-points-main-wrapper'>
+  <ul>
+    <li><span>Colour Shown -</span> Black/Wolf Grey/Anthracite/White</li>
+    <li><span>Style -</span> FD5191-001</li>
+    <li><span>Country/Region of Origin -</span> China</li>
+  </ul>
+</div>
+
+<div className='complete-product-desc-button' onClick={handleClick}>
+    <p>View More</p>
+</div>
+
+</div>
+
                 </div>
             </div>
+
+            <Modal isOpen={isModalOpen} onClose={handleClose}>
+                <div className='desc-para-main-wrapper'>
+    <p>Up the mountain, through the woods, to the top of the trail you can go. Equipped with an ultra-responsive ZoomX foam midsole, the Zegama 2 is designed to conquer steep ridges, jagged rocks and races from trailhead to tip. Optimal cushioning complements a rugged outsole made for your trail running journey.</p>
+    </div>
+    <div className='desc-points-main-wrapper'>
+  <ul>
+    <li><span>Colour Shown -</span> Black/Wolf Grey/Anthracite/White</li>
+    <li><span>Style -</span> FD5191-001</li>
+    <li><span>Country/Region of Origin -</span> China</li>
+    <li><span>Weight -</span>264 Approx</li>
+    <li><span>Heel-to-toe drop -</span>4mm</li>
+    
+  </ul>
+</div>
+            </Modal>
         </div>
     );
 };
 
 export default MainProductpg;
+
+
+
+
+
 
 
 

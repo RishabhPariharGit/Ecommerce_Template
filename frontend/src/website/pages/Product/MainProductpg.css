@@ -113,7 +113,10 @@
     padding: 0px 25px;
     position: relative;
     z-index: 1;
+    overflow-y: scroll;
     width: 50%;
+    height: 600px;
+    scrollbar-width: none;
 }
 
 .Product-main-head-main-wrapper {
@@ -247,6 +250,7 @@ width: 50%;
 padding: 7px 0px;
 background-color: rgb(24, 23, 23);
 color: white;
+margin: 0px;
 }
 
 .add-to-cart-main-wrapper button:hover{
@@ -265,6 +269,7 @@ color: white;
     align-items: center;
     justify-content: center;
     gap: 5px;
+    margin: 0px;
 }
 
 .wishlist-button-main-wrapper button:hover{
@@ -276,3 +281,34 @@ color: white;
     justify-content: center;
     gap: 5px;
 }
+
+.product-short-desc-main-wrapper{
+    width: 90%;
+    padding-top: 30px;
+}
+
+.desc-points-main-wrapper {
+    padding: 20px 0px;
+}
+
+.desc-para-main-wrapper {
+    font-size: 16px;
+}
+
+.desc-points-main-wrapper ul {
+    list-style-type: disc; /* Ensures bullet points are shown */
+    padding-left: 20px;
+    font-size: 16px; /* Adds space to the left */
+  }
+  
+  .desc-points-main-wrapper li {
+    margin-bottom: 8px; /* Adds spacing between list items */
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+  }
+
+  .desc-points-main-wrapper span {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+  }
