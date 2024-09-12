@@ -235,7 +235,30 @@ const MainProductpg = () => {
             </div>
 
 <div className='a-plus-content-main-wrapper'>
-    
+    <div className='usp-section-main-wrapper'>
+        {/* <div className='usp-img-and-desc-main-wrapper'> */}
+            <div className='usp-img-and-desc-secondary-wrapper'>
+        <img src='https://storage.googleapis.com/mannequin/blobs/74394210-f2dc-4e0b-b75b-bf403d7f5299.svg'/>
+        <p>The most advanced AI on Pixel.</p> 
+        </div> 
+        <div className='usp-img-and-desc-secondary-wrapper'>
+        <img src='https://storage.googleapis.com/mannequin/blobs/9921e783-cb12-4053-91dc-3b14fde4de5e.svg'/>
+        <p>An elegant design, built to last.</p> 
+        </div>  
+        <div className='usp-img-and-desc-secondary-wrapper'>
+        <img src='https://storage.googleapis.com/mannequin/blobs/061f8b8f-95eb-4239-90f5-3f02bd16017e.svg'/>
+        <p>The best Pixel Camera yet.</p> 
+        </div>
+        <div className='usp-img-and-desc-secondary-wrapper'>
+        <img src='https://storage.googleapis.com/mannequin/blobs/55698f01-545f-4176-a09a-5ed5c9f0af6c.svg'/>
+        <p>Powerful performance with Pixel's most advanced chip.</p>  
+        </div>   
+        <div className='usp-img-and-desc-secondary-wrapper'>
+        <img src='https://storage.googleapis.com/mannequin/blobs/ecda9982-5fdd-4937-95ad-1f041fcd9189.svg'/>
+        <p>Seven years of Pixel Drops, and OS and security updates.3</p>
+        </div>  
+        {/* </div> */}
+    </div>
 </div>
 
 
