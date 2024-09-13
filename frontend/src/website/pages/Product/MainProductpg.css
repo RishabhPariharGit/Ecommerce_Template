@@ -322,13 +322,17 @@ margin: 0px;
   }
 
   .a-plus-content-main-wrapper{
+ width: 100%;
+  }
+
+  .usp-section-mainbody-wrapper{
     width: 95%;
     background-color: #F1F1F1;
     margin: auto;
     border-radius: 10px;
     margin-bottom: 40px;
-  }
 
+  }
   
 
   .usp-section-main-wrapper{
