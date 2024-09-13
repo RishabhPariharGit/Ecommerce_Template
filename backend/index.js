@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const connectDB = require('./Database/Connection');
 const UserModel = require('./Model/User');
+const RoleModel = require('./Model/Role');
 const Router = require("./Routes/AllRoutes");
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -22,6 +23,7 @@ app.use(express.json());
 
 connectDB();
 UserModel();
+RoleModel();
 
 
 const users = [];

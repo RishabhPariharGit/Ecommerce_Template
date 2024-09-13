@@ -6,12 +6,14 @@ const UserSchema= mongoose.Schema({
     Username: String,
     Email: String,
     Phone:Number,
-    password: String,
+    Password: String,
     Role:String,
-    SubscriptionEndDate:Date
+    IsAdmin:Boolean,
+    IsSystemAdmin:Boolean,
+
 
 })
-const USerModel = mongoose.model( "USer",UserSchema);
+const USerModel = mongoose.model( "User",UserSchema);
 
 module.exports = USerModel;
 

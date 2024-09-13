@@ -9,16 +9,15 @@ export default function SignUp() {
   const [Username, setUsername] = useState('');
   const [Email, setEmail] = useState('');
   const [Phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [Password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [IsPropertyOwner, setIsPropertyOwner] = useState(false);
-  const [IsSystemAdmin, setIsSystemAdmin] = useState(false);
+
 
   const handleSubmit = async (event) => {
     debugger
     event.preventDefault();
-    if(password==confirmPassword){
-      const response = await axios.post("http://localhost:8080/RegisterUser", {Name, Username, Email, Phone, password, IsPropertyOwner, IsSystemAdmin});
+    if(Password==confirmPassword){
+      const response = await axios.post("http://localhost:8080/RegisterUser", {Name, Username, Email, Phone, Password});
       if(response.status="200"){
         alert("Registration Succesfull")
         resetForm();
@@ -41,8 +40,7 @@ const resetForm = () => {
     setPhone('');
     setPassword('');
     setConfirmPassword('');
-    setIsPropertyOwner(false);
-    setIsSystemAdmin(false);
+   
   
 };
 
@@ -137,7 +135,7 @@ const resetForm = () => {
               <input
                 type="password"
                 id="password"
-                value={password}
+                value={Password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 required
@@ -163,36 +161,11 @@ const resetForm = () => {
             </div>
           </div>
 
-          <div className="input-group checkbox-group">
-            <div className="checkbox-wrapper">
-              <input
-                type="checkbox"
-                id="IsPropertyOwner"
-                checked={IsPropertyOwner}
-                onChange={(e) => setIsPropertyOwner(e.target.checked)}
-                className="checkbox"
-              />
-              <label htmlFor="IsPropertyOwner" className="label-checkbox">
-                Property Owner
-              </label>
-            </div>
-            <div className="checkbox-wrapper">
-              <input
-                type="checkbox"
-                id="IsSystemAdmin"
-                checked={IsSystemAdmin}
-                onChange={(e) => setIsSystemAdmin(e.target.checked)}
-                className="checkbox"
-              />
-              <label htmlFor="IsSystemAdmin" className="label-checkbox">
-                System Admin
-              </label>
-            </div>
-          </div>
+       
 
           <div className="button-wrapper">
             <button type="submit" className="submit-button" onClick={handleSubmit}>
-              Sign Up
+              Sign Up1
             </button>
           </div>
         </form>

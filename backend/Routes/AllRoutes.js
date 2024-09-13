@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {RegisterUser,LoginUser,UserDetails}=require('../Services/UserServices');
+const {RegisterUser,LoginUser,UserDetails}=require('../controllers/UserController');
 const {getBannerImgae,postBannerImage} = require('../controllers/BannerImageController')
 const {getPlansData, postPlansData} = require ('../controllers/PlansController');
 const {postAboutusData, getAboutusData,updateaboutus} = require ('../controllers/AboutCompanyController');
