@@ -4,6 +4,7 @@ import AuthRoutes from './website/Routes/authroutes';
 import Navbar from './website/web_components/navbar/Navbar';
 import Footer from './website/web_components/Footer/Footer';
 import './App.css';
+import './Styles/global.css'
 import Announcementbar from './website/web_components/Announcementbar/Announcementbar';
 
 const App = () => {
