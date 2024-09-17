@@ -165,7 +165,7 @@ const resetForm = () => {
 
           <div className="button-wrapper">
             <button type="submit" className="submit-button" onClick={handleSubmit}>
-              Sign Up1
+              Sign Up
             </button>
           </div>
         </form>
