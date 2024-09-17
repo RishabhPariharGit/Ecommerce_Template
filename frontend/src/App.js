@@ -1,37 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import AuthRoutes from './website/Routes/authroutes';
-import Navbar from './website/web_components/navbar/Navbar';
-import Footer from './website/web_components/Footer/Footer';
-import './App.css';
-import './Styles/global.css'
-import Announcementbar from './website/web_components/Announcementbar/Announcementbar';
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import WebsiteRoutes from './Routes/WebsiteRoutes';
+import AdminRoutes from './Routes/AdminRoutes';
 
-const App = () => {
-
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const location = useLocation();
-  const hideHeaderFooterRoutes = ['/admin','/sign-up','/admindashboard']; // Add any other routes you want to exclude header and footer
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-  };
-
-  useEffect(() => {
-    // Check token on mount
-    const token = localStorage.getItem('token');
-    setToken(token);
-  }, []);
-
-
+function App() {
   return (
-    <>
-     {!hideHeaderFooterRoutes.includes(location.pathname) && <Announcementbar />}
-      {!hideHeaderFooterRoutes.includes(location.pathname) && <Navbar />}
-      <AuthRoutes token={token} setToken={setToken} logout={logout}/>
-      {!hideHeaderFooterRoutes.includes(location.pathname) && <Footer />}
-    </>
+    <Router>
+      <Switch>
+        {/* Public Routes for Website */}
+        <WebsiteRoutes />     
+        {/* Protected Routes for Admin */}
+        <AdminRoutes />
+        {/* Catch-all Route for 404 */}
+        <Route path="*">
+          <div>404 Not Found</div>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

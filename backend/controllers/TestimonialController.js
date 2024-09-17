@@ -1,4 +1,4 @@
-const TestimonialModel = require('../Model/Testimonials')
+const TestimonialModel = require('../Models/Testimonials')
 
 const postTestimonialsData = async (req, res) => {
     const { Imgurl,Headtext,Bodytext } = req.body;

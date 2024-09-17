@@ -1,7 +1,7 @@
-const Bannerimage = require('../Model/Bannerimage')
-const PlansMonthly = require('../Model/Plans')
-const AboutUs = require('../Model/Aboutus')
-const TestimonialModel = require('../Model/Testimonials')
+const Bannerimage = require('../Models/Bannerimage')
+const PlansMonthly = require('../Models/Plans')
+const AboutUs = require('../Models/Aboutus')
+const TestimonialModel = require('../Models/Testimonials')
 
 const getBannerImgae = async (req, res) => {
     try {

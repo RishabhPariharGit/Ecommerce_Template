@@ -1,4 +1,4 @@
-const PlansMonthly = require('../Model/Plans')
+const PlansMonthly = require('../Models/Plans')
 
 const postPlansData = async (req, res) => {
     const { Title,Price,Offerdetails } = req.body;

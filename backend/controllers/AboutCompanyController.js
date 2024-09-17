@@ -1,4 +1,4 @@
-const AboutUs = require('../Model/Aboutus')
+const AboutUs = require('../Models/Aboutus')
 
 const postAboutusData = async (req, res) => {
     const { imgurl,headtext,bodytext } = req.body;

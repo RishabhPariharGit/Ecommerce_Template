@@ -1,4 +1,4 @@
-const ProductCard = require('../Model/ProductCardModel')
+const ProductCard = require('../Models/ProductCardModel')
 
 const postProductDetails = async (req, res) => {
     const { Arrival,Image,Tag,Productname,ProductInfo,MaximumRP,Sellingprice } = req.body;

@@ -1,4 +1,4 @@
-const TextoverImage = require('../Model/TextOverImageModel')
+const TextoverImage = require('../Models/TextOverImageModel')
 
 const postTextOverImageData = async (req, res) => {
     const { Mainhead,Heading,Subhead,Imgurl,Buttonone,linkone,Buttontwo,linktwo } = req.body;
