@@ -16,10 +16,13 @@ export const registerUser = async (userData) => {
 // Login user
 export const loginUser = async (credentials) => {
   try {
-    const response = await axios.post(`${API_URL}/Login`, credentials);
+    const response = await axios.post(`${API_URL}/LoginUser`, credentials, {
+      withCredentials: true // Include cookies in the request
+    });
     return response;
   } catch (error) {
     console.error('Error logging in user:', error);
     throw error;
   }
 };
+

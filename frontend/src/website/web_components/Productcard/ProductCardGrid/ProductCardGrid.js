@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import './ProductCardGrid.css';
 import Productcard from '../Productcard';
-import Headsubhead from '../../HeadSubhead/Headsubhead';
+import Headsubhead from '../../../../Components/HeadSubhead/Headsubhead'
 
 const ProductCardGrid = () => {
   return (

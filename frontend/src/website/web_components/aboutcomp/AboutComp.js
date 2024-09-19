@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Headsubhead from '../HeadSubhead/Headsubhead';
+import Headsubhead from '../../../Components/HeadSubhead/Headsubhead';
 import './AboutComp.css';
 import { Link } from 'react-router-dom';
 

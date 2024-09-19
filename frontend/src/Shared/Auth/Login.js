@@ -1,51 +1,39 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from '../../Services/AuthService'
-
+import { loginUser } from '../../Services/AuthService';
+import Cookies from 'js-cookie';
 import './login.css';
 
-
 export default function Login() {
-
-  
   const [Username, setUsername] = useState('');
-
   const [Password, setPassword] = useState('');
-  const navigate = useNavigate() 
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    debugger
     event.preventDefault();
-  
-    const response = await loginUser({ Username, Password });
-      if (response.data.token) {
-        // Store the token in localStorage
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('UserId',response.data.UserId)
-        alert('Login successful', 'success');
-        navigate('/UserDetails');
 
-
-
+    try {
+      const response = await loginUser({ Username, Password });
+      if (response.status === 200) {
+        Cookies.set('token', "1234", {
+          expires: 30,        // Cookie expiration time (in days)
+          path: '/',          // Path where the cookie is available
+          sameSite: 'Lax',    // SameSite policy
+          secure: false,      // Secure flag, set to true in production if using HTTPS
+        });
+        const token = Cookies.get('token');
+        alert(token)
+        alert("Login successful");
+        navigate('/admin/dashboard');
+      } else {
+        alert(`Login failed: ${response.data.error}`);
       }
-  else{
-    alert("Password  Not Match")
-  }
-       
-
-    
-     
-};
-
-
-const resetForm = () => {
-
-    setUsername('');
-    setPassword('');
-   
-  
-};
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Login failed: An error occurred');
+    }
+  };
 
   return (
     <div className="log-container">
@@ -56,14 +44,12 @@ const resetForm = () => {
           alt="Your Company"
         />
         <h2 className="title">
-          Sign up to your account
+          Sign in to your account
         </h2>
       </div>
 
       <div className="form-wrapper">
         <form className="form" onSubmit={handleSubmit}>
-          
-
           <div className="input-group">
             <label htmlFor="username" className="label">
               Username
@@ -71,7 +57,7 @@ const resetForm = () => {
             <div className="input-wrapper">
               <input
                 type="text"
-                id="Username"
+                id="username"
                 value={Username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
@@ -80,10 +66,6 @@ const resetForm = () => {
               />
             </div>
           </div>
-
-         
-
-       
 
           <div className="input-group">
             <label htmlFor="password" className="label">
@@ -102,19 +84,15 @@ const resetForm = () => {
             </div>
           </div>
 
-         
-
-        
-
           <div className="button-wrapper">
-            <button type="submit" className="submit-button" onClick={handleSubmit}>
-             Login 
+            <button type="submit" className="submit-button">
+              Login
             </button>
           </div>
         </form>
         <p className="footer-text">
-          Already a member?{' '}
-          <Link to="/signup"><strong>Sign in</strong></Link>
+          Not a member?{' '}
+          <Link to="/signup"><strong>Sign up</strong></Link>
         </p>
       </div>
     </div>

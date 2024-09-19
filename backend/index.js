@@ -7,20 +7,21 @@ const Router = require("./Routes/AllRoutes");
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT;
 
 app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true // If your frontend sends cookies
+  origin: 'http://localhost:3000', // Frontend URL
+  credentials: true                 // Allow cookies
 }));
 
 
-app.use(cors());
-app.use(express.json());
 
+app.use(express.json());
+app.use(cookieParser());
 connectDB();
 UserModel();
 RoleModel();

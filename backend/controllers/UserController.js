@@ -70,38 +70,44 @@ const RegisterUser = async (req, res) => {
 const LoginUser = async (req, res) => {
     try {
         const { Username, Password } = req.body;
-         console.log(Username,Password)
-     
+        console.log(Username, Password);
+
         const user = await UserModel.findOne({ Username });
-        console.log(user)
+        console.log(user);
         if (!user) {
             return res.status(401).json({ error: "User does not exist" });
         }
 
         // Compare Passwords
         const validPassword = await bcrypt.compare(Password, user.Password);
-        console.log(validPassword)
+        console.log(validPassword);
         if (!validPassword) {
             return res.status(400).json({ error: "Invalid Password" });
         }
-      
-        // Create JWT token
-      const tokenPayload = {
-        userId: user._id,
-        email: user.email,
-       
-    };
-    const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
-   
-   
 
-        return res.status(200).json({ UserId: user._id,
-            token: jwtToken });
+        // Create JWT token
+        const tokenPayload = {
+            userId: user._id,
+            email: user.email,
+        };
+        const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
+console.log(jwtToken)
+        // Set JWT as an HTTP-only cookie
+        res.cookie('token', jwtToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Set to true in production
+            sameSite: 'Strict', // Strict or Lax depending on your needs
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+          });
+        
+
+        return res.status(200).json({ jwtToken: jwtToken, message: "Login successful" });
     } catch (err) {
         console.log("Error:", err);
         return res.status(500).json({ message: "Internal Server Error" });
     }
-}
+};
+
 
 
 const UserDetails = async (req, res) => {

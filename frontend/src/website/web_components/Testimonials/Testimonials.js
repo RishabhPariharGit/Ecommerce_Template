@@ -1,7 +1,7 @@
 import React, { useEffect , useState} from 'react';
 import Swiper from 'swiper/bundle';
 import './Testimonials.css';
-import Headsubhead from '../HeadSubhead/Headsubhead';
+import Headsubhead from '../../../Components/HeadSubhead/Headsubhead';
 
 const Testimonials = () => {
 
