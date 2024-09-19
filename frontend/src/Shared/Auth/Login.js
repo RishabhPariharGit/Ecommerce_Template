@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from '../../Services/AuthService';
 import Cookies from 'js-cookie';
+
 import './login.css';
 
 export default function Login() {
@@ -15,15 +16,7 @@ export default function Login() {
 
     try {
       const response = await loginUser({ Username, Password });
-      if (response.status === 200) {
-        Cookies.set('token', "1234", {
-          expires: 30,        // Cookie expiration time (in days)
-          path: '/',          // Path where the cookie is available
-          sameSite: 'Lax',    // SameSite policy
-          secure: false,      // Secure flag, set to true in production if using HTTPS
-        });
-        const token = Cookies.get('token');
-        alert(token)
+      if (response.status === 200) {      
         alert("Login successful");
         navigate('/admin/dashboard');
       } else {

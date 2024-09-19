@@ -91,16 +91,13 @@ const LoginUser = async (req, res) => {
             email: user.email,
         };
         const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
-console.log(jwtToken)
-        // Set JWT as an HTTP-only cookie
-        res.cookie('token', jwtToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Set to true in production
-            sameSite: 'Strict', // Strict or Lax depending on your needs
-            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-          });
-        
 
+        //storing cookie
+          res.cookie('token', jwtToken, {
+            httpOnly: false, 
+            secure: process.env.NODE_ENV === 'production', 
+            maxAge: 24 * 60 * 60 * 1000, 
+          });       
         return res.status(200).json({ jwtToken: jwtToken, message: "Login successful" });
     } catch (err) {
         console.log("Error:", err);
@@ -126,7 +123,7 @@ const UserDetails = async (req, res) => {
         return res.status(200).json(user);
     } catch (err) {
         console.log("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error1" });
     }
 };
 
