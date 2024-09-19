@@ -5,9 +5,8 @@ const UserModel = require('./Models/User');
 const RoleModel = require('./Models/Role');
 const Router = require("./Routes/AllRoutes");
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
+
 
 const app = express();
 require('dotenv').config();
@@ -19,9 +18,9 @@ app.use(cors({
 }));
 
 
-
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
+
 connectDB();
 UserModel();
 RoleModel();
