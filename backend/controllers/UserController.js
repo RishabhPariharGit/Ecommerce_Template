@@ -91,7 +91,7 @@ const LoginUser = async (req, res) => {
             email: user.email,
         };
         const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
-        
+
         //storing cookie
           res.cookie('token', jwtToken, {
             httpOnly: false, 
@@ -123,7 +123,7 @@ const UserDetails = async (req, res) => {
         return res.status(200).json(user);
     } catch (err) {
         console.log("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error1" });
     }
 };
 
