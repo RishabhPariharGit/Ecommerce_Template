@@ -2,12 +2,12 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import SignUp from '../Shared/Auth/SignUp';
 import LogIn from '../Shared/Auth/Login';
-import Home from '../Website/pages/Home/Home';
-import Contact from '../Website/pages/Contact/Contact';
-import About from '../Website/pages/About/About';
-import Blog from '../Website/pages/Blog/Blog';
-import Textoverimage from '../Website/web_components/TextoverImage/Textoverimage';
-import MainProductpg from '../Website/pages/Product/MainProductpg';
+import Home from '../website/pages/Home/Home';
+import About from '../website/pages/About/About';
+import Blog from '../website/pages/Blog/Blog';
+import Textoverimage from '../website/web_components/TextoverImage/Textoverimage';
+import MainProductpg from '../website/pages/Product/MainProductpg';
+import Contact from '../website/pages/Contact/Contact';
 
 const WebsiteRoutes = () => {
   return (
