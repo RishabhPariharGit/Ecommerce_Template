@@ -304,6 +304,19 @@ a{
 		color:#000000;	
 		font-size: 25px;
 	}
+
+
+    ul.menu-main {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        flex-direction: column;
+    }
+
+    /* mobile-nav-alignment */
+
+
+
 	.custom-header-cls .menu .menu-main{
 		height: 100%;
 		overflow-x: hidden;

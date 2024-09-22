@@ -5,7 +5,8 @@ import Newhome from '../../../Components/navbar/Newhome'
 import AboutComp from '../../web_components/aboutcomp/AboutComp'
 import ProductCardGrid from '../../web_components/Productcard/ProductCardGrid/ProductCardGrid'
 import Newsletter from '../../../Components/NewsLetter/Newsletter'
-import Testimonials from '../../web_components/Testimonials/Testimonials'
+// import Testimonials from '../../web_components/Testimonials/Testimonials'
+import Testimonialsnew from '../../../Components/Testimonials/Testimonialsnew'
 import Textoverimage from '../../web_components/TextoverImage/Textoverimage'
 import Navbar from '../../../Components/navbar/Navbar'
 import Footer from '../../../Components/Footer/Footer'
@@ -21,7 +22,8 @@ const Home = () => {
     <AboutComp/>
     <Pricing/>
     <ProductCardGrid/>
-    <Testimonials/>
+    {/* <Testimonials/> */}
+    <Testimonialsnew/>
     <Newsletter/>
     <Footer/>
     </>
