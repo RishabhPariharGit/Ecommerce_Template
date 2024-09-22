@@ -28,7 +28,7 @@ const {postTextOverImageData, getTextOverImageData, updateTextOverImageData, del
   router.get("/testimonials", getTestimonialsData);
   router.put('/testimonials/:id', updatetestimonial);
 
-  router.post("/productcard",   );
+  router.post("/productcard",  postProductDetails );
   router.get("/productcard", getProductDetails);
   router.put("/updateproductdetail/:id",updateproductdetails)
 
