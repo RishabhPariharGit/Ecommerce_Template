@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './MainProductpg.css';
+import Announcementbar from '../../../Components/Announcementbar/Announcementbar';
+import Newhome from '../../../Components/navbar/Newhome';
 import Modal from './ProductDescriptionModal/Modal';
 import { Link } from 'react-router-dom';
 
@@ -74,7 +76,9 @@ const MainProductpg = () => {
         setModalOpen(false); // Close modal
     };
 
-    return (
+    return (<>
+    <Announcementbar/>
+<Newhome/>
         <div className="main-dispaly-complete-wrapper">
             <div className='accordian-main-wrapper'>
                 <Link to='/'>
@@ -234,6 +238,8 @@ const MainProductpg = () => {
                 </div>
             </div>
 
+{/* A+ content styling start */}
+
 <div className='a-plus-content-main-wrapper'>
     <div className='usp-section-mainbody-wrapper'>
     <div className='usp-section-main-wrapper'>
@@ -293,6 +299,7 @@ const MainProductpg = () => {
 </div>
             </Modal>
         </div>
+        </>
     );
 };
 
