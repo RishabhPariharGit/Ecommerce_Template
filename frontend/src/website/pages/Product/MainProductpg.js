@@ -238,6 +238,8 @@ const MainProductpg = () => {
                 </div>
             </div>
 
+{/* A+ content styling start */}
+
 <div className='a-plus-content-main-wrapper'>
     <div className='usp-section-mainbody-wrapper'>
     <div className='usp-section-main-wrapper'>
