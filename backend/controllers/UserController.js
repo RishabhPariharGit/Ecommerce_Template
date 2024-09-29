@@ -70,34 +70,50 @@ const RegisterUser = async (req, res) => {
 const LoginUser = async (req, res) => {
     try {
         const { Username, Password } = req.body;
-        console.log(Username, Password);
 
+        // Find the user by username
         const user = await UserModel.findOne({ Username });
-        console.log(user);
         if (!user) {
             return res.status(401).json({ error: "User does not exist" });
         }
 
         // Compare Passwords
         const validPassword = await bcrypt.compare(Password, user.Password);
-        console.log(validPassword);
         if (!validPassword) {
             return res.status(400).json({ error: "Invalid Password" });
         }
 
+        // Find the role associated with this user
+        const roleData = await RoleModel.findOne({ userId: user._id });
+        if (!roleData) {
+            return res.status(400).json({ error: "User role not found" });
+        }
+        const role = roleData.RoleName;
+       console.log(role)
         // Create JWT token
         const tokenPayload = {
             userId: user._id,
             email: user.email,
+            role: role // Include role in the token payload
         };
         const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
 
-        //storing cookie
-          res.cookie('token', jwtToken, {
-            httpOnly: false, 
+        // Set JWT as an HTTP-only cookie
+        res.cookie('token', jwtToken, {
+            httpOnly: false,
             secure: process.env.NODE_ENV === 'production', 
-            maxAge: 24 * 60 * 60 * 1000, 
-          });       
+            sameSite: 'Strict',
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        });
+
+        // Optionally set the role as a non-httpOnly cookie for client-side access
+        res.cookie('role', role, {
+            httpOnly: false, // Allow client-side access to the role cookie
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict',
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        });
+
         return res.status(200).json({ jwtToken: jwtToken, message: "Login successful" });
     } catch (err) {
         console.log("Error:", err);
@@ -105,8 +121,7 @@ const LoginUser = async (req, res) => {
     }
 };
 
-
-
+//TEst file
 const UserDetails = async (req, res) => {
     try {
         const token = req.headers['authorization'];

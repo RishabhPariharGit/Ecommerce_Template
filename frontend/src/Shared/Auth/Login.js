@@ -12,13 +12,23 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
+    debugger
     event.preventDefault();
-
+  
     try {
       const response = await loginUser({ Username, Password });
       if (response.status === 200) {      
         alert("Login successful");
-        navigate('/admin/dashboard');
+  
+        const role = Cookies.get('role'); // Get the role from the cookie
+        const token = Cookies.get('token');
+        if (role === 'SystemAdmin') {
+          navigate('/admin/panel'); // Redirect SystemAdmin to the panel
+        } else if (role === 'Admin'||role==="SystemAdmin") {
+          navigate('/admin/dashboard'); // Redirect Admin to the dashboard
+        } else {
+          navigate('/not-authorized'); // Redirect to not-authorized if the user has no role
+        }
       } else {
         alert(`Login failed: ${response.data.error}`);
       }
@@ -27,6 +37,7 @@ export default function Login() {
       alert('Login failed: An error occurred');
     }
   };
+  
 
   return (
     <div className="log-container">
