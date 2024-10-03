@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Testimonialsnew.css';
-import Headsubhead from '../HeadSubhead/Headsubhead';
+import Headsubhead from '../../../Components/HeadSubhead/Headsubhead';
 
 const Testimonialsnew = () => {
   const testimonials = [
@@ -61,7 +61,7 @@ const Testimonialsnew = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTestimonial((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 10000); // Update every 10 seconds
+    }, 2000); // Update every 10 seconds
 
     return () => clearInterval(interval); // Clean up the interval on component unmount
   }, [testimonials.length]);
