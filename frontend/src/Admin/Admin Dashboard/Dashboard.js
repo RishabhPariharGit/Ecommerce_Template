@@ -26,6 +26,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <div className='main-admin-wrapper'>
       {/* Top navigation bar */}
       <nav className="top-nav">
         <img className="top-nav-logo" src="https://cdn.worldvectorlogo.com/logos/chinon.svg" alt="Logo" />
@@ -56,6 +57,19 @@ const Dashboard = () => {
       {isOpen && window.innerWidth < 950 && (
         <div className="overlay" onClick={toggleNav}></div>
       )}
+
+      <div className='main-side-wrapper'>
+      <div className='main-side-upper-wrapper'>
+
+      </div>
+
+
+      <div className='main-side-lower-wrapper'>
+        
+        </div>
+
+      </div>
+      </div>
     </div>
   );
 };
