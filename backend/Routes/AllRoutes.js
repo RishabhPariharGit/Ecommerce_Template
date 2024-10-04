@@ -2,39 +2,33 @@ const express = require("express");
 const router = express.Router();
 
 const {RegisterUser,LoginUser,UserDetails}=require('../controllers/UserController');
-const {getBannerImgae,postBannerImage} = require('../controllers/BannerImageController')
-const {getPlansData, postPlansData} = require ('../controllers/PlansController');
-const {postAboutusData, getAboutusData,updateaboutus} = require ('../controllers/AboutCompanyController');
-const {postTestimonialsData,getTestimonialsData,updatetestimonial} = require('../controllers/TestimonialController');
-const {postProductDetails, getProductDetails,updateproductdetails} = require ('../controllers/ProductCardController')
-const {postTextOverImageData, getTextOverImageData, updateTextOverImageData, deleteTextOverImageData} = require('../controllers/TextOverImageController');
+const { CreateCategory } = require("../controllers/CategoryController");
+const {GetAllCategories}= require("../controllers/CategoryController");
+const { CreateSubcategory, GetAllSubCategories, GetAllSubCategoriesByCategoryId } = require("../controllers/SubCategoryController");
+const { CreateProduct } = require("../controllers/ProductController");
 
 
   router.post("/RegisterUser", RegisterUser);
   router.post("/LoginUser", LoginUser);
   router.get("/UserDetails ", UserDetails);
 
-  router.get("/bannerimages", getBannerImgae);
-  router.post("/postimage",  postBannerImage);
+  router.post("/CreateCategory",CreateCategory)
+  router.post("/CreateSubCategory",CreateSubcategory)
+  router.post("/CreateProduct",CreateProduct)
 
-  router.post("/plans", postPlansData);
-  router.get("/plans", getPlansData);
+  router.get("/GetAllCategory",GetAllCategories)
+  router.post("/AllSubCategoriesByCategoryId",GetAllSubCategoriesByCategoryId)
 
-  router.post("/aboutus", postAboutusData);
-  router.get("/aboutus", getAboutusData);
-  router.put("/aboutus/:id",updateaboutus);
 
-  router.post("/testimonials", postTestimonialsData);
-  router.get("/testimonials", getTestimonialsData);
-  router.put('/testimonials/:id', updatetestimonial);
 
-  router.post("/productcard",  postProductDetails );
-  router.get("/productcard", getProductDetails);
-  router.put("/updateproductdetail/:id",updateproductdetails)
 
-  router.post("/textoverimage",postTextOverImageData);
-  router.get("/textoverimage",getTextOverImageData);
-  router.put("/updatetextoverimage/:id",updateTextOverImageData);
-  router.delete('/textoverimage/:id', deleteTextOverImageData);
+
+
+
+
+
+
+
+
   
   module.exports = router;

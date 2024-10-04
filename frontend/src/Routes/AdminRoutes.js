@@ -4,6 +4,9 @@ import AdminDashboard from '../Admin/Admin Dashboard/AdminDashboard'
 import AdminPanel from '../Admin/HomeBannerChanges';
 import TextOverImageData from '../Admin/TextOverImageData';
 import AuthGuard from '../Services/AuthGuard';
+import Category from '../Admin/Category';
+import SubCategory from '../Admin/SubCategory';
+import Product from '../Admin/Product';
 
 const AdminRoutes = () => {
   return (
@@ -37,7 +40,30 @@ const AdminRoutes = () => {
           </AuthGuard>
         } 
       />
-
+      <Route 
+        path="/addCategory" 
+        element={
+         
+            <Category />
+         
+        } 
+      />
+ <Route 
+        path="/addSubCategory" 
+        element={
+         
+            <SubCategory />
+         
+        } 
+      />
+      <Route 
+        path="/addProduct" 
+        element={
+         
+            <Product />
+         
+        } 
+      />
       {/* Optional: Route for not authorized users */}
       <Route 
         path="/not-authorized" 
