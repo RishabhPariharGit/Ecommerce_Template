@@ -1,40 +1,33 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import AdminDashboard from '../Admin/Admin Dashboard/AdminDashboard'
-import AdminPanel from '../Admin/HomeBannerChanges';
-import TextOverImageData from '../Admin/TextOverImageData';
+
+
+
 import AuthGuard from '../Services/AuthGuard';
+import Dashboard from '../Admin/Admin Dashboard/Dashboard';
 
 const AdminRoutes = () => {
   return (
     <Routes>
       {/* Both Admin and SystemAdmin can access the dashboard */}
-      <Route 
+      {/* <Route 
        path="/dashboard" 
         element={
           <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
             <AdminDashboard />
           </AuthGuard>
         } 
-      />
+      /> */}
 
-      {/* Only SystemAdmin can access the panel */}
-      <Route 
-        path="/panel" 
-        element={
-          <AuthGuard allowedRoles={['SystemAdmin']}>
-            <AdminPanel />
-          </AuthGuard>
-        } 
-      />
+     
 
-      {/* Both Admin and SystemAdmin can access TextOverImageData */}
+
       <Route 
-        path="/textoverimagedata" 
+        path="/Dashboard" 
         element={
-          <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-            <TextOverImageData />
-          </AuthGuard>
+        
+            <Dashboard />
+       
         } 
       />
 
