@@ -1,52 +1,148 @@
-/* Newsletter.css */
-.custom-background {
-    background-color: #F7F7FC; /* Tomato color */
-  }
-  
-  .custom-padding {
-    padding: 20px;
-  }
-  
-  .custom-font {
-    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: #000000;
-    text-align: start;
-  }
+/* Container to hold both text and form side by side */
 
-  .custom-font-fam{
-    color: #000000;
-  }
-  
-  .custom-text{
-    color: #5a5a5a;
-    font-size: 16px;
-  }
-
-  .custom-icon-text{
-    color: #5a5a5a;
-    font-size: 16px;
-  }
-
-  .custom-border {
-    border: 2px solid #000000; /* Tomato color border */
-  }
-
-  .custom-icon{
-    color: #000000;
-  }
-  
-  .custom-input {
-    background-color: #ffffff;
-    color: #000000;
-    border: 1px solid grey;
+.main-news-container {
+  width: 100%;
+  height: 100%;
 }
-  
-  .custom-button {
-    background-color: #000000; /* Tomato color */
-    color: white;
+
+.main-news-container-devider {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 40px;
+  /* Ensure the section does not overlap */
+  clear: both; /* Clears any floating elements */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Text Section */
+.text-section {
+  width: 40%;
+  padding-right: 20px;
+  color: #333;
+}
+
+.text-section h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.text-section p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Form Section */
+.newsletter-container {
+  width: 40%;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 6px;
+  border: 1px solid #ccc;
+  /* border-radius: 5px; */
+  font-size: 16px;
+  width: 100%;
+}
+
+.newsletter-form button {
+  padding: 10px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  /* border-radius: 5px; */
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #373737;
+}
+
+/* Media Query for screens below 950px */
+@media (max-width: 950px) {
+  .main-news-container-devider {
+    flex-direction: column; /* Stack text and form sections vertically */
+    align-items: flex-start; /* Align content to the left */
   }
-  
-  .custom-button:hover {
-    background-color: #000000; /* Darker Tomato color */
+
+  .text-section,
+  .newsletter-container {
+    width: 100%; /* Full width for both sections */
+    padding-right: 0; /* Remove padding on the right */
   }
-  
+
+  .text-section {
+    margin-bottom: 20px; /* Add margin between text and form sections */
+  }
+}
+
+/* Responsive Design for tablets and small screens */
+@media (max-width: 768px) {
+  .main-news-container {
+    padding: 15px;
+  }
+
+  .text-section h2 {
+    font-size: 24px;
+  }
+
+  .text-section p {
+    font-size: 14px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-section h2 {
+    font-size: 20px;
+  }
+
+  .text-section p {
+    font-size: 13px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 13px;
+  }
+
+  button {
+    font-size: 13px;
+  }
+}

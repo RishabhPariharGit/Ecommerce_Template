@@ -17,22 +17,38 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  overflow: hidden;
-  padding: 30px 0px;
+  padding: 30px 0;
   margin: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .testimonial-container {
-    background-color: #ffffff;
-    color: #000000;
-    border: 1px solid grey;
-    border-radius: 15px;
-    margin: 20px auto;
-    padding: 50px 80px;
-    max-width: 768px;
-    position: relative;
+  margin-bottom: 40px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid grey;
+  border-radius: 15px;
+  margin: 20px auto;
+  padding: 50px 80px;
+  max-width: 768px;
+  position: relative;
+  height: 500px; /* Set the fixed height */
+  overflow-y: auto; /* Enable scrolling if content overflows */
 }
+
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Add clearfix class to your testimonial container */
+.testimonial-main-container.clearfix {
+  margin-bottom: 40px; /* Add bottom margin to provide space */
+}
+
 
 .fa-quote {
   color: rgba(255, 255, 255, 0.3);
@@ -105,5 +121,22 @@
 
   .fa-quote {
     display: none;
+  }
+}
+
+/* Media Query for tablets and small screens */
+@media (max-width: 768px) {
+  .testimonial-container {
+      padding: 40px 30px; /* Reduce padding for smaller screens */
+      height: 600px; /* Adjust height for tablets and small screens */
+  }
+}
+
+/* Media Query for mobile phones */
+@media (max-width: 480px) {
+  .testimonial-container {
+      padding: 30px 20px; /* Further reduce padding for mobile phones */
+      height: auto; /* Allow flexible height for smaller screens */
+      max-width: 95%; /* Use most of the screen width */
   }
 }
