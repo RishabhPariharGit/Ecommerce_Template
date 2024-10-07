@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { addCategory } from '../Services/CategoryService';
+import './AdminStyle/AdminGlobalStyle.css'
+
 
 
 
@@ -52,7 +54,7 @@ const Category = () => {
     };
 
     return (
-        <div className="wrapper" id="wrapper">
+        <div>
   
 
         <div className='form-800'>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { addSubCategory } from '../Services/CategoryService'; // Update this to addSubCategory service later
 import { getAllCategories } from '../Services/CategoryService'; // Service to fetch categories
-
+import './AdminStyle/AdminGlobalStyle.css'
 
 const SubCategory = () => {
     const [categories, setCategories] = useState([]);
@@ -67,7 +67,7 @@ const SubCategory = () => {
     };
 
     return (
-        <div className="wrapper" id="wrapper">
+        <div >
         
             <div className='form-800'>
                 <div className='white-bg'>
