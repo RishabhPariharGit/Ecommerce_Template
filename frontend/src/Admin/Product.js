@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { addProduct, getAllCategories, getAllSubCategoriesByCategoryId } from '../Services/CategoryService';
-
+import './AdminStyle/AdminGlobalStyle.css'
 
 const Product = () => {
     const [categories, setCategories] = useState([]);
@@ -90,7 +90,8 @@ const Product = () => {
     };
 
     return (
-        <div className="wrapper" id="wrapper">
+        <div >
+            <div class="pagetitle">Create New Product </div>
             <div className='form-800'>
                 <div className='white-bg'>
                     <div className="input-form">

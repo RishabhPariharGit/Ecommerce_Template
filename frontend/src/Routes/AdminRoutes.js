@@ -4,12 +4,12 @@ import AuthGuard from '../Services/AuthGuard';
 import Category from '../Admin/Category';
 import SubCategory from '../Admin/SubCategory';
 import Product from '../Admin/Product';
-
 import Dashboard from '../Admin/Admin Dashboard/Dashboard';
-
+import AdminLayout from '../Admin/AdminLayout';
 
 const AdminRoutes = () => {
   return (
+    <AdminLayout>
     <Routes>
       {/* Both Admin and SystemAdmin can access the dashboard */}
       {/* <Route 
@@ -62,6 +62,7 @@ const AdminRoutes = () => {
         element={<div>You are not authorized to view this page.</div>} 
       />
     </Routes>
+    </AdminLayout>
   );
 };
 
