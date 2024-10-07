@@ -56,7 +56,7 @@ const Category = () => {
     return (
         <div>
   
-
+  <div class="pagetitle">Create a New Category </div>
         <div className='form-800'>
             <div className='white-bg'>
                 <div className="input-form">

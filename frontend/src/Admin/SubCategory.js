@@ -68,6 +68,7 @@ const SubCategory = () => {
 
     return (
         <div >
+  <div class="pagetitle">Create a New Subcategory </div>
         
             <div className='form-800'>
                 <div className='white-bg'>

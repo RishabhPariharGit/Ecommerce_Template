@@ -222,10 +222,14 @@ body {
   text-align: left;
   text-align: center;
   color: var(--PageTitleColor);
-  background-color: #fff;
+  background-color: #efefef;
   box-shadow: rgba(0,0,0,0.03) 0px 2px 2px, rgba(0,0,0,0.03) 0px 0px 2px 2px;
   z-index: 10;
-  border-bottom: solid 1px #BBB;
+  border-bottom: solid 2px #BBB;
+  position: sticky; /* Makes the top bar sticky */
+  top: 0; /* Ensures it sticks to the top */
+  height: 50px; 
+  overflow: hidden; /* Ensures no scrollbar appears in the title bar */
 }
 
 
@@ -295,7 +299,7 @@ body {
 
           .wrapper .top_navbar .top_menu {
               width: calc(100%);
-              background: #fff;
+              background: #EFEFEF;
               height: 100%;
               display: flex;
               justify-content: space-between;
@@ -336,11 +340,12 @@ body {
 
           .wrapper .top_navbar .top_menu {
               width: calc(100%);
-              background: #fff;
+              background: #EFEFEF;
               height: 100%;
               /*display: flex;*/
               /* justify-content: space-between;*/
               align-items: center;
+              border-bottom: 2px solid #BBB;
               /*box-shadow: 0px 1px 1px rgba(0, 0, 0, .1);*/
           }
 
@@ -363,8 +368,9 @@ body {
   background: #FFF;
   width: 235px;
   height: 100%;
+  border-right: 2px solid rgb(169, 169, 169);
   transition: all .3s ease;
-  box-shadow: rgb(0 0 0 / 5%) 0px 15px 25px, rgb(0 0 0 / 5%) 0px 5px 10px;
+  /* box-shadow: rgb(0 0 0 / 5%) 0px 15px 25px, rgb(0 0 0 / 5%) 0px 5px 10px; */
 }
 
   .wrapper .sidebar ul li:first-child {
@@ -374,6 +380,12 @@ body {
   .wrapper .sidebar ul li {
       border-bottom: 1px solid #EEE;
   }
+
+
+  .wrapper .sidebar ul li:hover {
+    border-bottom: 1px solid #EEE;
+    background-color: #f5f5f5;
+}
 
       .wrapper .sidebar ul li a {
           display: block;
@@ -650,7 +662,7 @@ body {
 }
 
 @media (max-width: 625px) {
-  .form-1600, .form-1400, .form-1200, .form-1000, .form-800 .form-600 .form-450 {
+  .form-1600, .form-1400, .form-1200, .form-1000, .form-800 .form-600 .form-450 .form-300 {
       width: 100% !important;
   }
 }
@@ -711,10 +723,12 @@ body {
 
 @media (min-width: 840px) {
   .form-800 {
-      width: 800px !important;
+      width:100% !important;
       position: relative;
-      left: 50%;
-      margin-left: -400px;
+      /* left: 50%;
+      margin-left: -400px; */
+      height: calc(100vh - 50px); /* Adjust height to leave space for the sticky header */
+      overflow-y: auto; 
   }
 }
 
@@ -737,15 +751,27 @@ body {
 }
 
 
+@media (min-width: 300px) {
+  .form-300 {
+      width: 200px !important;
+      position: relative;
+      /* left: 50%;
+      margin-left: -10px; */
+  }
+}
+
+
+
 @media (min-width: 502px) {
-  .form-1600, .form-1400, .form-1200, .form-1000, .form-800, .form-600, .form-450 {
-      padding: 10px;
+  .form-1600, .form-1400, .form-1200, .form-1000, .form-800, .form-600, .form-450, .form-300 {
+      padding: 30px;
   }
 }
 
 @media (max-width: 501px) {
-  .form-1600, .form-1400, .form-1200, .form-1000, .form-800, .form-600, .form-450 {
+  .form-1600, .form-1400, .form-1200, .form-1000, .form-800, .form-600, .form-450, .form-300 {
       padding-top: 10px;
+      margin: 20px;
   }
 }
 
@@ -789,6 +815,12 @@ body {
       display: none;
   }
 }
+
+
+
+
+
+
 
 /* Start Page Layout */
 
@@ -1264,7 +1296,7 @@ td {
   line-height: 1.45;
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 5px;
   font-weight: 600;
 }
 
@@ -1294,10 +1326,10 @@ td {
 }
 
 .button, .smallbutton {
-  background-color: var(--ButtonBackgroundColor);
-  color: var(--ButtonTextColor);
-  border: 1px solid var(--ButtonBackgroundColor);
-  box-shadow: rgb(0 0 0 / 20%) 2px 5px 10px, rgb(0 0 0 / 8%) 2px 5px 10px;
+  background-color: rgb(27, 27, 27);
+  color: white;
+  border: 1px solid  rgb(27, 27, 27);
+  /* box-shadow: rgb(0 0 0 / 20%) 2px 5px 10px, rgb(0 0 0 / 8%) 2px 5px 10px; */
 }
 
 .input-form .button {
@@ -1305,9 +1337,9 @@ td {
 }
 
 .button:hover, .gridbutton:hover, .button-white:hover, .filterbutton:hover, .smallbutton:hover {
-  background: #fff;
+  background: #000000;
   transition: all 0.3s;
-  color: var(--ButtonHoverTextColor);
+  color: white;
   border: 1px solid black;
 }
 
@@ -1404,6 +1436,8 @@ td {
 
 .input-form {
   padding: 15px;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 10px;
 }
 
   .input-form table {
@@ -1447,12 +1481,13 @@ td {
       .input-form table tr {
           display: flex;
           justify-content: center;
+          gap: 20px;
       }
 
           .input-form table tr td {
               max-width: 500px;
               width: 100%;
-              padding: 0 5px;
+              padding: 10px 5px;
           }
 
   .input-form input[type=text] {
@@ -1537,10 +1572,11 @@ input[type="time"] {
 }
 
 .formlabel, .filter-label {
-  color: #666;
+  color: #000000;
   text-transform: uppercase;
   font-size: 12px;
   margin-bottom: 3px;
+  font-weight: 600;
   margin-top: 5px;
   text-align: left;
 }
@@ -1585,7 +1621,7 @@ input {
 
   input[type=text] {
       padding: 3px;
-      border: 1px solid #505050;
+      border: 1px solid #d1d1d1;
       border-radius: 5px;
       width: 100%;
       height: 35px;
@@ -1595,7 +1631,7 @@ input {
 
   input[type=tel] {
       padding: 3px;
-      border: 1px solid #505050;
+      border: 1px solid #d1d1d1;
       border-radius: 5px;
       width: 100%;
       height: 35px;
@@ -1605,7 +1641,7 @@ input {
 
   input[type=password] {
       padding: 3px;
-      border: 1px solid #505050;
+      border: 1px solid #d1d1d1;
       border-radius: 5px;
       width: 100%;
       height: 35px;
@@ -1615,7 +1651,7 @@ input {
 
   input[type=number] {
       padding: 3px;
-      border: 1px solid #505050;
+      border: 1px solid #d1d1d1;
       border-radius: 5px;
       width: 100%;
       height: 35px;
@@ -1630,7 +1666,7 @@ input {
 textarea {
   height: 100px;
   padding: 3px;
-  border: 1px solid #505050;
+  border: 1px solid #d1d1d1;
   border-radius: 5px;
   font-weight: 500;
   width: 100%;
@@ -1646,7 +1682,7 @@ textarea {
 
 select {
   padding: 5px;
-  border: 1px solid #505050;
+  border: 1px solid #d1d1d1;
   border-radius: 5px;
   width: 100%;
   height: 35px;
@@ -1696,7 +1732,7 @@ select {
 
   .check-box-section .anchor {
       padding: 5px;
-      border: 1px solid #505050;
+      border: 1px solid #d1d1d1;
       border-radius: 5px;
       width: 100%;
       height: 35px;
@@ -1983,7 +2019,7 @@ select {
   font-size: 17px;
   font-weight: bold;
   text-align: center;
-  padding: 5px;
+  padding: 20px 0px;
   width: 100%;
   color: var(--SectionHeaderTextColor);
 }
@@ -2437,6 +2473,12 @@ hr {
 }
 
 
+
+/* rishabh new changes */
+
+.overflow-auto {
+  overflow:unset !important;
+}
 
 
 
