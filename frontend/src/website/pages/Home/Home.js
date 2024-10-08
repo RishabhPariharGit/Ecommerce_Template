@@ -1,15 +1,16 @@
-import React from 'react' 
-import Pricing from '../../web_components/pricing/Pricing'
-import Announcementbar from '../../../Components/Announcementbar/Announcementbar'
-import Newhome from '../../../Components/navbar/Newhome'
-import AboutComp from '../../web_components/aboutcomp/AboutComp'
-import ProductCardGrid from '../../web_components/Productcard/ProductCardGrid/ProductCardGrid'
-import Newsletter from '../../../Components/NewsLetter/Newsletter'
-// import Testimonials from '../../web_components/Testimonials/Testimonials'
-import Testimonialsnew from '../../web_components/Testimonials/Testimonialsnew'
-import Textoverimage from '../../web_components/TextoverImage/Textoverimage'
-import Navbar from '../../../Components/navbar/Navbar'
-import Footer from '../../../Components/Footer/Footer'
+import React from 'react' ;
+import Pricing from '../../Web_Components/Pricing/Pricing';
+import Announcementbar from '../../../Components/Announcementbar/Announcementbar';
+import Newhome from '../../../Components/Navbar/Newhome';
+import AboutComp from '../../Web_Components/AboutComp/AboutComp'
+import ProductCardGrid from '../../Web_Components/ProductCard/ProductCardGrid/ProductCardGrid'
+
+import Newsletter from '../../../Components/NewsLetter/Newsletter';
+
+import Testimonialsnew from '../../Web_Components/Testimonials/Testimonialsnew';
+import Textoverimage from '../../Web_Components/TextoverImage/Textoverimage';
+
+import Footer from '../../../Components/Footer/Footer';
 
 
 const Home = () => {
