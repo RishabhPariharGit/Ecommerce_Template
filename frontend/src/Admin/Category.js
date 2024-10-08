@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import { addCategory } from '../Services/CategoryService';
 import './AdminStyle/AdminGlobalStyle.css'
 
-
-
-
-
-
 const Category = () => {
     const [previewSource, setPreviewSource] = useState('');
     const [formData, setFormData] = useState({

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './MainProductpg.css';
 import Announcementbar from '../../../Components/Announcementbar/Announcementbar';
-import Newhome from '../../../Components/navbar/Newhome';
+import Newhome from '../../../Components/Navbar/Newhome';
 import Modal from './ProductDescriptionModal/Modal';
 import { Link } from 'react-router-dom';
 

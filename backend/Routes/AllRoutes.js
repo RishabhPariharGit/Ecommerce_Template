@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const {RegisterUser,LoginUser,UserDetails}=require('../controllers/UserController');
-const { CreateCategory } = require("../controllers/CategoryController");
-const {GetAllCategories}= require("../controllers/CategoryController");
-const { CreateSubcategory, GetAllSubCategories, GetAllSubCategoriesByCategoryId } = require("../controllers/SubCategoryController");
-const { CreateProduct } = require("../controllers/ProductController");
+const {RegisterUser,LoginUser,UserDetails}=require('../Controllers/UserController');
+const { CreateCategory } = require("../Controllers/CategoryController");
+const {GetAllCategories}= require("../Controllers/CategoryController");
+const { CreateSubcategory, GetAllSubCategories, GetAllSubCategoriesByCategoryId } = require("../Controllers/SubCategoryController");
+const { CreateProduct } = require("../Controllers/ProductController");
 
 
   router.post("/RegisterUser", RegisterUser);
