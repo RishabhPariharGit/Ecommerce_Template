@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { addProduct, getAllCategories, getAllSubCategoriesByCategoryId } from '../Services/CategoryService';
-import './AdminStyle/AdminGlobalStyle.css'
+import { addProduct, updateProduct, getProductBySlug, getAllCategories, getAllSubCategoriesByCategoryId } from '../../Services/CategoryService';  // Assuming correct service functions
+import '../AdminStyle/AdminGlobalStyle.css';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const Product = () => {
-    const [categories, setCategories] = useState([]);
-    const [subcategories, setSubcategories] = useState([]);
+const ProductForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
     const [formData, setFormData] = useState({
         Name: '',
@@ -19,19 +18,56 @@ const Product = () => {
         Brand: '',
         Tags: ''
     });
+    const [categories, setCategories] = useState([]);
+    const [subcategories, setSubcategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const { slug } = useParams(); // For edit mode, get slug from the URL
+    const navigate = useNavigate();
 
+    // Load product data if in edit mode
     useEffect(() => {
+        const loadProduct = async () => {
+            try {
+                const response = await getProductBySlug(slug); // Fetch product by slug
+                const product = response.data;
+                setFormData({
+                    Name: product.Name,
+                    Description: product.Description,
+                    Price: product.Price,
+                    Quantity: product.Quantity,
+                    Slug: product.Slug,
+                    CategoryId: product.CategoryId || '',
+                    SubcategoryId: product.SubcategoryId || '',
+                    SKU: product.SKU,
+                    Brand: product.Brand,
+                    Tags: product.Tags,
+                    Product_image: product.Product_image // Use existing image URL for edit
+                });
+                setPreviewSource(product.Product_image); // Set preview source for the existing image
+            } catch (err) {
+                console.error('Error fetching product:', err);
+            } finally {
+                setIsLoading(false); // Stop loading once data is fetched
+            }
+        };
+
         const fetchCategories = async () => {
             try {
-                const response = await getAllCategories();
-                setCategories(response.data);
+                const response = await getAllCategories(); // Fetch categories from backend
+                setCategories(response.data); // Assuming response.data contains categories array
             } catch (err) {
                 console.error('Error fetching categories:', err);
             }
         };
-       
-        fetchCategories();
-    }, []);
+
+        if (isEditMode && slug) {
+            loadProduct(); // Load product details in edit mode
+        } else {
+            setIsLoading(false); // If not in edit mode, stop loading immediately
+        }
+
+        fetchCategories(); // Fetch categories on component mount
+    }, [isEditMode, slug]);
 
     const handleInputChange = (e) => {
         setFormData({
@@ -39,9 +75,10 @@ const Product = () => {
             [e.target.name]: e.target.value
         });
     };
-
+    const handleCancel = () => {
+        navigate('/admin/Products'); // Redirect back to the category list
+    };
     const handleCategoryInputChange = async (e) => {
-        debugger
         const { value } = e.target;
         setFormData({
             ...formData,
@@ -51,7 +88,7 @@ const Product = () => {
 
         if (value) {
             try {
-                const response = await getAllSubCategoriesByCategoryId(value);
+                const response = await getAllSubCategoriesByCategoryId(value); // Fetch subcategories based on category
                 setSubcategories(response.data);
             } catch (err) {
                 console.error('Error fetching subcategories:', err);
@@ -75,27 +112,52 @@ const Product = () => {
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setPreviewSource(reader.result);
-            setFormData({ ...formData, Product_image: reader.result });
+            setFormData((prevData) => ({ ...prevData, Product_image: reader.result })); // Store base64 image
         };
     };
 
     const handleSubmitFile = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent form refresh
+
         try {
-            const response = await addProduct(formData);
-            console.log('Product created successfully:', response.data.product);
+            const formPayload = new FormData(); // Use FormData to handle file upload
+            formPayload.append('Name', formData.Name);
+            formPayload.append('Description', formData.Description);
+            formPayload.append('Price', formData.Price);
+            formPayload.append('Quantity', formData.Quantity);
+            formPayload.append('Slug', formData.Slug);
+            formPayload.append('Product_image', formData.Product_image); // Always append Product_image
+            formPayload.append('CategoryId', formData.CategoryId);
+            formPayload.append('SubcategoryId', formData.SubcategoryId);
+            formPayload.append('SKU', formData.SKU);
+            formPayload.append('Brand', formData.Brand);
+            formPayload.append('Tags', formData.Tags);
+
+            if (isEditMode) {
+                const response = await updateProduct(slug, formPayload); // Pass FormData for updating
+                console.log('Product updated successfully:', response.data);
+            } else {
+                const response = await addProduct(formPayload); // Create a new product
+                console.log('Product created successfully:', response.data);
+            }
+            navigate('/admin/Products'); // Redirect back to the product list after success
         } catch (err) {
-            console.error('Error creating product:', err);
+            console.error('Error submitting form:', err);
+            alert('Failed to submit the form. Please try again.');
         }
     };
 
+    if (isLoading) {
+        return <div>Loading...</div>; // Render loading state while data is being fetched
+    }
+
     return (
-        <div >
-            <div class="pagetitle">Create New Product </div>
+        <div>
+            <div className="pagetitle">{isEditMode ? 'Edit Product' : 'Create a New Product'}</div>
             <div className='form-800'>
                 <div className='white-bg'>
                     <div className="input-form">
-                        <div className='sectionheader'>Create a New Product</div>
+                        <div className='sectionheader'>{isEditMode ? 'Edit Product' : 'Create a New Product'}</div>
                         <form onSubmit={handleSubmitFile}>
                             <table>
                                 <tbody>
@@ -221,32 +283,36 @@ const Product = () => {
                                             <input
                                                 type="text"
                                                 name="Tags"
-                                                placeholder="Tags (comma separated)"
+                                                placeholder="Tags"
                                                 value={formData.Tags}
                                                 onChange={handleInputChange}
+                                                required
                                             />
                                         </td>
                                         <td>
-                                            <div className='formlabel'>Image</div>
+                                            <div className='formlabel'>Product Image</div>
                                             <input
                                                 type="file"
                                                 name="Product_image"
                                                 onChange={handleFileInputChange}
-                                                required
+                                                accept="image/*"
                                             />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan="2" className='text-center'>
-                                            <button type="submit" className="button">Submit</button>
+                                            {previewSource && (
+                                                <img
+                                                    src={previewSource}
+                                                    alt="Preview"
+                                                    style={{ height: '100px', width: '100px' }}
+                                                />
+                                            )}
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <button type="submit" className="btn">{isEditMode ? 'Update Product' : 'Add Product'}</button>
+                            <button type="button" className="button cancel-button" onClick={handleCancel}>
+                                                Cancel
+                                            </button>
                         </form>
-                        {previewSource && (
-                            <img src={previewSource} alt="Selected" style={{ height: '300px', marginTop: '20px' }} />
-                        )}
                     </div>
                 </div>
             </div>
@@ -254,4 +320,4 @@ const Product = () => {
     );
 };
 
-export default Product;
+export default ProductForm;

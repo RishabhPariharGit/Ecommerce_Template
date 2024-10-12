@@ -105,6 +105,21 @@ const Sidenav = () => {
                             <span className="title">Orders</span>
                         </Link>
                     </li>
+                    <li>
+                        <Link to="/admin/Category">
+                            <span className="title">Category</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/SubCategory">
+                            <span className="title">SubCategory</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/Products">
+                            <span className="title">Products</span>
+                        </Link>
+                    </li>
                     <li className="sidebar-dropdown">
                         <a href="#" className="space-between-sec">
                             <span><span className="title">Billing</span></span>
