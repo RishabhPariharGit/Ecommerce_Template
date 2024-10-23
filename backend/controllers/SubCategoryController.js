@@ -53,7 +53,7 @@ const GetAllSubCategories = async (req, res) => {
     try {
        
         const subcategories = await SubCategory.find();
-      
+      console.log(subcategories)
         if (!subcategories || subcategories.length === 0) {
             return res.status(404).json({ message: 'No subcategories found' });
         }     

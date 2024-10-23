@@ -9,7 +9,9 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const SubcategoryModel = require('./Models/SubCategory');
+const CartItemModel =require('./Models/CartItems')
 const ProductModel = require('./Models/Product');
+const WishlistModel=require('./Models/Wishlist ')
 const cloudinary = require('cloudinary').v2;  
 require('dotenv').config();
 
@@ -28,6 +30,8 @@ app.use(cors({
   origin: 'http://localhost:3000', 
   credentials: true                 
 }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(fileUpload({
   useTempFiles: true,
   tempFileDir: '/tmp/' 
@@ -42,6 +46,8 @@ RoleModel();
 CategoryModel();
 SubcategoryModel();
 ProductModel();
+CartItemModel();
+WishlistModel();
 
 app.use('/', Router);
 

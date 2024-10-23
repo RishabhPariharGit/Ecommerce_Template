@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { addCategory, updateCategory, getCategoryBySlug } from '../../Services/CategoryService'; // Import update and get services
+import React, { useState, useEffect, useRef } from 'react';
+import { addCategory, updateCategory, getCategoryBySlug } from '../../Services/CategoryService';
 import '../AdminStyle/AdminGlobalStyle.css';
-import { useNavigate, useParams } from 'react-router-dom'; // For navigation and getting slug from URL
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CategoryForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
@@ -11,48 +11,51 @@ const CategoryForm = ({ isEditMode = false }) => {
         Slug: '',
         label_image: ''
     });
-    const [isLoading, setIsLoading] = useState(true); // Loading state
-
-    const { slug } = useParams(); // Get the slug from URL in case of editing
+    const [isLoading, setIsLoading] = useState(true);
+    const { slug } = useParams();
     const navigate = useNavigate();
+
+    const isFetchedRef = useRef(false); // Track if data has already been fetched
 
     // Load category data if in edit mode
     useEffect(() => {
-        if (isEditMode && slug) {
+        if (!isFetchedRef.current) {
             const loadCategory = async () => {
-                debugger
                 try {
-                    const response = await getCategoryBySlug(slug); // Fetch category by slug
+                    const response = await getCategoryBySlug(slug);
                     const category = response.data;
                     setFormData({
                         Name: category.Name,
                         Description: category.Description,
                         Slug: category.Slug,
-                        label_image: category.label_image // Use existing image URL for edit
+                        label_image: category.label_image
                     });
-                    setIsLoading(false); // Stop loading once data is fetched
                 } catch (err) {
                     console.error('Error fetching category:', err);
-                    setIsLoading(false); // Stop loading even on error
+                } finally {
+                    setIsLoading(false);
                 }
             };
-            loadCategory();
-        } else {
-            setIsLoading(false); // If not in edit mode, stop loading immediately
+
+            if (isEditMode && slug) {
+                loadCategory();
+            } else {
+                setIsLoading(false);
+            }
+            
+            isFetchedRef.current = true; // Mark data as fetched
         }
     }, [isEditMode, slug]);
 
     const handleInputChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
     const handleCancel = () => {
-        navigate('/admin/Category'); // Redirect back to the category list
+        navigate('/admin/Category');
     };
+
     const handleFileInputChange = (e) => {
-        debugger
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
             previewFile(file);
@@ -60,139 +63,124 @@ const CategoryForm = ({ isEditMode = false }) => {
             alert('Please upload a valid image file.');
         }
     };
-    
+
     const previewFile = (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setPreviewSource(reader.result);
-            setFormData({ ...formData, label_image: reader.result });
+            setFormData((prevData) => ({ ...prevData, label_image: reader.result }));
         };
     };
+
     const handleSubmitFile = async (e) => {
-        debugger
-        e.preventDefault(); // Prevent form refresh
-    
+        e.preventDefault();
+
         try {
-            const formPayload = new FormData(); // Use FormData to handle file upload
+            const formPayload = new FormData();
             formPayload.append('Name', formData.Name);
             formPayload.append('Description', formData.Description);
             formPayload.append('Slug', formData.Slug);
-    
-            // Always append label_image, either as a file or as an empty string if no file is selected
+
             if (formData.label_image) {
-                formPayload.append('label_image', formData.label_image);// Append the new image file
+                formPayload.append('label_image', formData.label_image);
             } else {
-                formPayload.append('label_image', ''); // Append an empty string if no new image
+                formPayload.append('label_image', '');
             }
-    
+
             if (isEditMode) {
-                const response = await updateCategory(slug, formPayload); // Pass FormData for updating
-                console.log('Category updated successfully:', response.data);
+                await updateCategory(slug, formPayload);
+                console.log('Category updated successfully');
             } else {
-                const response = await addCategory(formPayload);
-                console.log('Category created successfully:', response.data);
+                await addCategory(formPayload);
+                console.log('Category created successfully');
             }
-            navigate('/admin/Category'); // Redirect back to the category list after success
+            navigate('/admin/Category');
         } catch (err) {
             console.error('Error submitting form:', err);
         }
     };
-    
-    if (isLoading) {
-        return <div>Loading...</div>; // Render loading state while data is being fetched
-    }
+
+    if (isLoading) return <div>Loading...</div>;
 
     return (
         <div>
             <div className="pagetitle">{isEditMode ? 'Edit Category' : 'Create a New Category'}</div>
-            <div className='form-800'>
-                <div className='white-bg'>
-                    <div className="input-form">
-                        <div className='sectionheader'>{isEditMode ? 'Edit Category' : 'Create a New Category'}</div>
-                        <form onSubmit={handleSubmitFile}>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div className='formlabel'>Name</div>
-                                            <div>
-                                                <input
-                                                    type="text"
-                                                    name="Name"
-                                                    placeholder="Category Name"
-                                                    value={formData.Name}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                />
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div className='formlabel'>Slug</div>
-                                            <div>
-                                                <input
-                                                    type="text"
-                                                    name="Slug"
-                                                    placeholder="Slug"
-                                                    value={formData.Slug}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    disabled={isEditMode} // Disable slug editing in edit mode
-                                                />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{ maxWidth: '1000px' }}>
-                                            <div className='formlabel'>Description</div>
-                                            <div>
-                                                <textarea
-                                                    name="Description"
-                                                    placeholder="Category Description"
-                                                    value={formData.Description}
-                                                    onChange={handleInputChange}
-                                                />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div className='formlabel'>Image</div>
-                                            <div>
-                                                <input
-                                                    type="file"
-                                                    name="label_image"
-                                                    onChange={handleFileInputChange}
-                                                    className="form-input"
-                                                    required={!isEditMode} // Require image upload only in add mode
-                                                />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div className='text-center'>
-                                                <button type="submit" className="button">
-                                                    {isEditMode ? 'Update' : 'Submit'}
-                                                </button>
-                                                <button type="button" className="button cancel-button" onClick={handleCancel}>
+            <div className="form-800">
+                <div className="white-bg">
+                    <form onSubmit={handleSubmitFile}>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div className="formlabel">Name</div>
+                                        <input
+                                            type="text"
+                                            name="Name"
+                                            value={formData.Name}
+                                            onChange={handleInputChange}
+                                            required
+                                        />
+                                    </td>
+                                    <td>
+                                        <div className="formlabel">Slug</div>
+                                        <input
+                                            type="text"
+                                            name="Slug"
+                                            value={formData.Slug}
+                                            onChange={handleInputChange}
+                                            required
+                                            disabled={isEditMode}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="2">
+                                        <div className="formlabel">Description</div>
+                                        <textarea
+                                            name="Description"
+                                            value={formData.Description}
+                                            onChange={handleInputChange}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div className="formlabel">Image</div>
+                                        <input
+                                            type="file"
+                                            name="label_image"
+                                            onChange={handleFileInputChange}
+                                            required={!isEditMode}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div className="text-center">
+                                            <button type="submit" className="button">
+                                                {isEditMode ? 'Update' : 'Submit'}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="button cancel-button"
+                                                onClick={handleCancel}
+                                            >
                                                 Cancel
                                             </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        {(previewSource || (isEditMode && formData.label_image)) && (
-                            <img
-                                src={previewSource || (isEditMode ? formData.label_image : '')}  // Show preview or existing image URL
-                                alt="Selected"
-                                style={{ height: '300px', marginTop: '20px' }}
-                            />
-                        )}
-                    </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                    {(previewSource || (isEditMode && formData.label_image)) && (
+                        <img
+                            src={previewSource || formData.label_image}
+                            alt="Selected"
+                            style={{ height: '300px', marginTop: '20px' }}
+                        />
+                    )}
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { getAllSubCategories, deleteSubCategory } from '../../Services/CategoryService'; 
+import React, { useEffect, useState,useRef } from 'react';
+import { getAllSubCategories, deleteSubCategory } from '../../Services/SubCategoryService'; 
 import { useNavigate } from 'react-router-dom'; 
 
 const SubCategoryList = () => {
@@ -7,8 +7,9 @@ const SubCategoryList = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate(); 
-
+    const isFetchedRef = useRef(false); 
     useEffect(() => {
+        if (!isFetchedRef.current) {
         const fetchSubCategories = async () => {
             try {
                 const response = await getAllSubCategories(); 
@@ -23,6 +24,8 @@ const SubCategoryList = () => {
         };
 
         fetchSubCategories();
+        isFetchedRef.current = true;
+    }
     }, []);
 
     const handleEdit = (subCategorySlug) => {

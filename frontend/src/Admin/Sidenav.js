@@ -120,28 +120,9 @@ const Sidenav = () => {
                             <span className="title">Products</span>
                         </Link>
                     </li>
-                    <li className="sidebar-dropdown">
-                        <a href="#" className="space-between-sec">
-                            <span><span className="title">Billing</span></span>
-                            <span className="arrow-func"></span>
-                        </a>
-                        <div className="sidebar-submenu" style={{ display: 'none' }}>
-                            <ul>
-                                <li>
-                                    <Link to="/Billing/UnpaidInvoices" id="nav_UnPaidInvoices">
-                                        <span className="title">UnPaid Invoices</span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to="/Billing/PaidInvoices" id="nav_PaidInvoices">
-                                        <span className="title">Paid Invoices</span>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    
                     <li>
-                        <Link to="/users">
+                        <Link to="/admin/Users">
                             <span className="title">Users</span>
                         </Link>
                     </li>

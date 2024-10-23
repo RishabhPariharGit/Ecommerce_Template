@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { getAllProducts,deleteProduct } from '../../Services/CategoryService'; 
+import React, { useState, useEffect, useRef } from 'react';
+import { getAllProducts,deleteProduct } from '../../Services/ProductService'; 
 import { useNavigate } from 'react-router-dom'; 
 
 const ProductList = () => {
@@ -7,8 +7,9 @@ const ProductList = () => {
     const [isLoading, setIsLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
     const navigate = useNavigate(); // Initialize navigate
-
+    const isFetchedRef = useRef(false);
     useEffect(() => {
+        if (!isFetchedRef.current) {
         const fetchProducts = async () => {
             try {
                 const response = await getAllProducts(); // Fetch all products from the service
@@ -23,15 +24,19 @@ const ProductList = () => {
         };
 
         fetchProducts();
+        isFetchedRef.current = true;
+    }
     }, []);
 
     const handleEdit = (productSlug) => {
         navigate(`/admin/Product/edit/${productSlug}`); // Navigate to edit page with slug
     };
 
-    const handleCreate = () => {
-        navigate('/admin/Product/create'); // Navigate to create page
+    const handleCreate = (e) => {
+        e.preventDefault(); // Prevent form submission side effects
+        navigate('/admin/Product/create');
     };
+    
     const handleDelete = async (ProductId) => {
         if (window.confirm("Are you sure you want to delete this category? This will also delete all related subcategories and products.")) {
             try {

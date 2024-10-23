@@ -7,7 +7,6 @@ const UserSchema= mongoose.Schema({
     Email: String,
     Phone:Number,
     Password: String,
-    Role:String,
     IsAdmin:Boolean,
     IsSystemAdmin:Boolean,
 

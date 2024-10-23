@@ -4,7 +4,10 @@ const router = express.Router();
 const {
   RegisterUser,
   LoginUser,
-  UserDetails
+  GetUserByUsername,
+  GetAllUsers,
+  UpdateUser,
+  DeleteUser
 } = require('../Controllers/UserController');
 const {
   CreateCategory,
@@ -26,13 +29,18 @@ const {
   GetAllProducts,
   GetProductBySlug,
   UpdateProduct,
-  DeleteProduct
+  DeleteProduct,
+  GetAllProductsBySlug
 } = require("../Controllers/ProductController");
 
+const {AddToCart,AddToWishlist}= require("../Controllers/CartItemController")
 // User Ruote
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
-router.get("/UserDetails", UserDetails);
+router.get("/User/Edit/:Username", GetUserByUsername);
+router.get("/GetAllUsers", GetAllUsers);
+router.put("/UpdateUser/:Username", UpdateUser);
+router.delete('/DeleteUser/:id', DeleteUser);
 
 //Category route
 router.post("/CreateCategory", CreateCategory);
@@ -56,9 +64,13 @@ router.get("/GetAllProducts", GetAllProducts);
 router.get("/Product/Edit/:Slug", GetProductBySlug);
 router.put("/UpdateProduct/:slug", UpdateProduct);
 router.delete('/DeleteProduct/:id', DeleteProduct);
+router.get("/AllProducts/:slug", GetAllProductsBySlug);
 
 
+// Asdd To cart
 
+router.post('/AddToCart', AddToCart);
+router.post('/AddToWishlist', AddToWishlist);
 
 
 
