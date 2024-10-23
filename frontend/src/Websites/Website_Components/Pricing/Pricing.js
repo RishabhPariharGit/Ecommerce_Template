@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleCard from './Single-card'; // Ensure correct import path
 import './Single-Card.css';
-import Headsubhead from '../../../Components/HeadSubhead/Headsubhead';
+import Headsubhead from '../../Website_Components/HeadSubhead/Headsubhead';
 
 const Pricing = () => {
   const cardData = [

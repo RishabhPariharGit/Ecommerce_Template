@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Testimonialsnew.css';
-import Headsubhead from '../../../Components/HeadSubhead/Headsubhead';
+import Headsubhead from '../../Website_Components/HeadSubhead/Headsubhead';
 
 const Testimonialsnew = () => {
   const testimonials = [

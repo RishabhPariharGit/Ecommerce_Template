@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductBySlug } from '../../../Services/ProductService';
 import './MainProductpg.css';
-import Announcementbar from '../../../Components/Announcementbar/Announcementbar';
-import Newhome from '../../../Components/Navbar/Newhome';
+import Announcementbar from '../../Website_Components/Announcementbar/Announcementbar';
+import Newhome from '../../Website_Components/Navbar/Newhome';
 import Modal from './ProductDescriptionModal/Modal';
 import { Link } from 'react-router-dom';
 

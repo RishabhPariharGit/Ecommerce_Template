@@ -2,7 +2,7 @@
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css'; // Import Swiper CSS
 import './Testimonials.css';
-import Headsubhead from '../../../Components/HeadSubhead/Headsubhead';
+
 
 const Testimonials = () => {
   const [testimonialData, setTestimonialData] = useState([]);
@@ -54,10 +54,9 @@ const Testimonials = () => {
   return (
     <>
       <div className='Testimonial-head-subhead'>
-        <Headsubhead
-          head={"CLIENTS TESTIMONIALS"}
+               head={"CLIENTS TESTIMONIALS"}
           subhead={"Our clients love us, check them out"}
-        />
+       
       </div>
       <div className='Testimonials-main-wrapper'>
         <div className="c-testimonials swiper-container">

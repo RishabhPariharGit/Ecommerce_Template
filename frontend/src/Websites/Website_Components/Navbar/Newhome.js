@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Newhome.css';
-import { getAllCategories } from '../../Services/CategoryService';
+import { getAllCategories } from '../../../Services/CategoryService';
 import { Link } from 'react-router-dom';
 
 const Newhome = () => {
