@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { registerUser } from '../../Services/AuthService'
+import { registerUser } from '../../Services/UserService'
+import { useNavigate } from "react-router-dom";
 import './Signup.css';
 
 export default function SignUp() {
@@ -12,7 +13,7 @@ export default function SignUp() {
   const [Password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     debugger
     event.preventDefault();
@@ -21,6 +22,7 @@ export default function SignUp() {
       if(response.status="200"){
         alert("Registration Succesfull")
         resetForm();
+        navigate('/login');
       }
     }
   else{

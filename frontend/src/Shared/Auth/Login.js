@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from '../../Services/AuthService';
+import { loginUser } from '../../Services/UserService';
 import Cookies from 'js-cookie';
 
 import './Login.css';
@@ -27,7 +27,7 @@ export default function Login() {
         } else if (role === 'Admin'||role==="SystemAdmin") {
           navigate('/admin/dashboard'); // Redirect Admin to the dashboard
         } else {
-          navigate('/not-authorized'); // Redirect to not-authorized if the user has no role
+          navigate('/'); // Redirect to not-authorized if the user has no role
         }
       } else {
         alert(`Login failed: ${response.data.error}`);

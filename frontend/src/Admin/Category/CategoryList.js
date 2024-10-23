@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getAllCategories, deleteCategory } from '../../Services/CategoryService'; // Import deleteCategory
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 const CategoryList = () => {
     const [categories, setCategories] = useState([]);
     const navigate = useNavigate(); // Initialize navigate
-
+    const isFetchedRef = useRef(false); // Track if data has already been fetched
     useEffect(() => {
+        if (!isFetchedRef.current) {
         const fetchCategories = async () => {
             try {
                 const response = await getAllCategories();
@@ -17,6 +18,8 @@ const CategoryList = () => {
         };
 
         fetchCategories();
+        isFetchedRef.current = true;
+    }
     }, []);
 
     const handleEdit = (categorySlug) => {
