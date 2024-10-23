@@ -2,8 +2,8 @@ import React from 'react' ;
 import Pricing from '../../Web_Components/Pricing/Pricing';
 import Announcementbar from '../../../Components/Announcementbar/Announcementbar';
 import Newhome from '../../../Components/Navbar/Newhome';
-import AboutComp from '../../Web_Components/AboutComp/AboutComp'
-import ProductCardGrid from '../../Web_Components/ProductCard/ProductCardGrid/ProductCardGrid'
+import AboutComp from '../../Web_Components/Aboutcomp/AboutComp'
+
 
 import Newsletter from '../../../Components/NewsLetter/Newsletter';
 
@@ -22,7 +22,6 @@ const Home = () => {
     <Textoverimage/>
     <AboutComp/>
     <Pricing/>
-    <ProductCardGrid/>
     {/* <Testimonials/> */}
     <Testimonialsnew/>
     <Newsletter/>
