@@ -8,16 +8,13 @@ const AddToCart = async (req, res) => {
   try {
     // Extract the token from the Authorization header
     const token = req.headers.authorization?.split(' ')[1];
-    console.log("token", token);
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: No token provided.' });
     }
 
     // Verify and decode the token to get the userId
-    const decoded = jwt.verify(token, 'SECRET'); // Replace with your actual secret or env variable
-    console.log("decoded", decoded);
+    const decoded = jwt.verify(token, 'SECRET'); // Replace with your actual secret or env variable  
     const UserId = decoded.userId; // Assuming token contains `userId`
-    console.log("userid", UserId);
 
     const { ProductId, Quantity } = req.body;
 
@@ -33,15 +30,12 @@ const AddToCart = async (req, res) => {
 
     // Check if the product is already in the cart for the same user
     let cartItem = await CartItem.findOne({ UserId, ProductId });
-    console.log("cartitem", cartItem);
 
     if (cartItem) {
       // Update the Quantity and TotalPrice if the product is already in the cart
       cartItem.Quantity += Quantity;
       cartItem.TotalPrice = cartItem.Quantity * product.Price;
-      console.log("cart1",cartItem)
      var result= await cartItem.save(); // Corrected this line
-     console.log("result",result)
       return res.status(201).json({ message: 'Cart updated successfully.', cartItem });
     } else {
       // Create a new cart entry
@@ -68,16 +62,13 @@ const AddToWishlist = async (req, res) => {
   try {
 
     const token = req.headers.authorization?.split(' ')[1];
-    console.log("token", token);
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: No token provided.' });
     }
 
     // Verify and decode the token to get the userId
     const decoded = jwt.verify(token, 'SECRET'); // Replace with your actual secret or env variable
-    console.log("decoded", decoded);
     const UserId = decoded.userId; // Assuming token contains `userId`
-    console.log("userid", UserId);
     const {  ProductId } = req.body;
 
     // Check if the product is already in the user's wishlist

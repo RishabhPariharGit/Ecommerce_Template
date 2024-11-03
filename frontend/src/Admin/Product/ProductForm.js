@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getAllCategories } from '../../Services/CategoryService';
-import { 
-    addProduct, 
-    updateProduct, 
-    getProductBySlug 
+import {
+    addProduct,
+    updateProduct,
+    getProductBySlug
 } from '../../Services/ProductService';
 import { getAllSubCategoriesByCategoryId } from '../../Services/SubCategoryService';
 import '../AdminStyle/AdminGlobalStyle.css';
@@ -12,6 +12,8 @@ import AllSize from './EnumDropdown'; // Import the enum
 
 const ProductForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
+    const [previewSources, setPreviewSources] = useState([]); // Array for preview
+
     const [formData, setFormData] = useState({
         Name: '',
         Description: '',
@@ -99,10 +101,39 @@ const ProductForm = ({ isEditMode = false }) => {
     const clothingSizes = Object.values(AllSize.Clothing);
     const ShoeSizes = Object.values(AllSize.Shoes);
     const sizeTypes = Object.keys(AllSize);
+
+    const handleFileInputChange = (e) => {
+        debugger;
+        const files = Array.from(e.target.files); // Convert file list to an array
+        const previews = [];
+        const newBase64Strings = []; // Hold new base64 strings for the current selection
     
-    const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        files.forEach((file) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+    
+            reader.onloadend = () => {
+                previews.push(reader.result);
+                newBase64Strings.push(reader.result);
+    
+                // Use a callback to update the state after processing all images
+                if (previews.length === files.length) {
+                    setPreviewSources((prevSources) => [...prevSources, ...previews]); // Append previews
+                    setFormData((prevData) => {
+                        const existingImages = prevData.Product_image ? prevData.Product_image.split(',') : [];
+                        return {
+                            ...prevData,
+                            Product_image: [...existingImages, ...newBase64Strings].join(',') // Append new images to existing ones
+                        };
+                    });
+                }
+            };
+        });
     };
+    
+
+
+
 
     const handleCategoryInputChange = async (e) => {
         const { value } = e.target;
@@ -120,48 +151,37 @@ const ProductForm = ({ isEditMode = false }) => {
         }
     };
 
-    const handleFileInputChange = (e) => {
-        const file = e.target.files[0];
-        if (file && file.type.startsWith('image/')) previewFile(file);
-        else alert('Please upload a valid image file.');
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
-    const previewFile = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setPreviewSource(reader.result);
-            setFormData((prevData) => ({ ...prevData, Product_image: reader.result }));
-        };
-    };
     const handleSubmitFile = async (e) => {
+        debugger
         e.preventDefault(); // Prevent the default form submission behavior
-    
+
         try {
             const formPayload = new FormData(); // Initialize FormData
-    
-           
-    
+
             // Call appropriate API based on edit mode
             if (isEditMode) {
                 await updateProduct(slug, formData);
                 console.log('Product updated successfully');
             } else {
-                debugger
                 await addProduct(formData);
                 console.log('Product created successfully');
             }
-    
+
             // Navigate to product listing page on success
             navigate('/admin/Products');
         } catch (err) {
             console.error('Error submitting form:', err);
-    
+
             // Display error message to user
             alert('Failed to submit the form. Please try again.');
         }
     };
-    
+
     const handleCancel = () => navigate('/admin/Products');
 
     return (
@@ -174,6 +194,7 @@ const ProductForm = ({ isEditMode = false }) => {
                     <form onSubmit={handleSubmitFile}>
                         <table>
                             <tbody>
+                                {/* Product Name and Slug */}
                                 <tr>
                                     <td>
                                         <div className="formlabel">Name</div>
@@ -196,6 +217,8 @@ const ProductForm = ({ isEditMode = false }) => {
                                         />
                                     </td>
                                 </tr>
+
+                                {/* Price and Quantity */}
                                 <tr>
                                     <td>
                                         <div className="formlabel">Price</div>
@@ -218,6 +241,8 @@ const ProductForm = ({ isEditMode = false }) => {
                                         />
                                     </td>
                                 </tr>
+
+                                {/* SKU and Brand */}
                                 <tr>
                                     <td>
                                         <div className="formlabel">SKU</div>
@@ -240,6 +265,8 @@ const ProductForm = ({ isEditMode = false }) => {
                                         />
                                     </td>
                                 </tr>
+
+                                {/* Description */}
                                 <tr>
                                     <td colSpan="2">
                                         <div className="formlabel">Description</div>
@@ -250,6 +277,8 @@ const ProductForm = ({ isEditMode = false }) => {
                                         />
                                     </td>
                                 </tr>
+
+                                {/* Category and Subcategory */}
                                 <tr>
                                     <td>
                                         <div className="formlabel">Category</div>
@@ -283,6 +312,8 @@ const ProductForm = ({ isEditMode = false }) => {
                                         </select>
                                     </td>
                                 </tr>
+
+                                {/* Tags and Product Image */}
                                 <tr>
                                     <td>
                                         <div className="formlabel">Tags</div>
@@ -294,34 +325,25 @@ const ProductForm = ({ isEditMode = false }) => {
                                         />
                                     </td>
                                     <td>
-                                        <div className="formlabel">Product Image</div>
+                                        <div className="formlabel">Product Images</div>
                                         <input
                                             type="file"
+                                            name="Product_image"
                                             accept="image/*"
                                             onChange={handleFileInputChange}
-                                            required={!isEditMode}
+                                            multiple
                                         />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        {previewSource && (
-                                            <img 
-                                                src={previewSource} 
-                                                alt="Product Preview" 
-                                                style={{ maxWidth: '100%', height: 'auto' }} 
-                                            />
-                                        )}
-                                    </td>
-                                </tr>
+
+                                {/* Size Type and Sizes */}
                                 <tr>
                                     <td>
                                         <div className="formlabel">Size Type</div>
-                                        <select 
+                                        <select
                                             name="SizeType"
                                             value={formData.SizeType}
                                             onChange={handleSizeTypeChange}
-                                            required
                                         >
                                             <option value="">Select Size Type</option>
                                             {sizeTypes.map((type) => (
@@ -333,36 +355,54 @@ const ProductForm = ({ isEditMode = false }) => {
                                     </td>
                                     <td>
                                         <div className="formlabel">Sizes</div>
-                                        <div>
-                                            {formData.SizeType === 'Clothing' && clothingSizes.map(size => (
+                                        {formData.SizeType === 'Clothing' &&
+                                            clothingSizes.map((size) => (
                                                 <label key={size}>
                                                     <input
                                                         type="checkbox"
+                                                        value={size}
                                                         checked={formData.Sizes.includes(size)}
                                                         onChange={() => handleSizeChange(size)}
                                                     />
                                                     {size}
                                                 </label>
                                             ))}
-                                            {formData.SizeType === 'Shoes' && ShoeSizes.map(size => (
+                                        {formData.SizeType === 'Shoes' &&
+                                            ShoeSizes.map((size) => (
                                                 <label key={size}>
                                                     <input
                                                         type="checkbox"
+                                                        value={size}
                                                         checked={formData.Sizes.includes(size)}
                                                         onChange={() => handleSizeChange(size)}
                                                     />
                                                     {size}
                                                 </label>
                                             ))}
-                                          
-                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="form-buttons">
-                            <button type="submit">{isEditMode ? 'Update' : 'Create'}</button>
-                            <button type="button" onClick={handleCancel}>Cancel</button>
+
+                        <div className="form-actions">
+                            <button type="submit">
+                                {isEditMode ? 'Update Product' : 'Create Product'}
+                            </button>
+                            <button type="button" onClick={handleCancel}>
+                                Cancel
+                            </button>
+                        </div>
+
+                        {/* Preview Image Section */}
+                        <div className="image-preview-section">
+                            {previewSources.length > 0 && previewSources.map((source, index) => (
+                                <img
+                                    key={index}
+                                    src={source}
+                                    alt={`Preview ${index + 1}`}
+                                    style={{ maxWidth: '100px', margin: '5px' }} // Styling for preview images
+                                />
+                            ))}
                         </div>
                     </form>
                 </div>

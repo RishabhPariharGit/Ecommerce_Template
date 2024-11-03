@@ -36,7 +36,6 @@ const RegisterUser = async (req, res) => {
 
         // Save the user
         const savedUser = await newUser.save();
-        console.log("saved user",savedUser);
         if (!savedUser) {
             return res.status(500).json({ message: "User registration failed" });
         }
@@ -69,7 +68,6 @@ const RegisterUser = async (req, res) => {
 const LoginUser = async (req, res) => {
     try {
         const { Username, Password } = req.body;
-console.log(Username,Password)
         // Find the user by username
         const user = await UserModel.findOne({ Username });
         if (!user) {
@@ -78,7 +76,6 @@ console.log(Username,Password)
 
         // Compare Passwords
         const validPassword = await bcrypt.compare(Password, user.Password);
-        console.log(validPassword)
         if (!validPassword) {
             return res.status(400).json({ error: "Invalid Password" });
         }
@@ -89,7 +86,6 @@ console.log(Username,Password)
             email: user.email,
         };
         const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
-          console.log("token",jwtToken)
         // Set JWT as an HTTP-only cookie
         res.cookie('token', jwtToken, {
             httpOnly: false,
@@ -124,7 +120,6 @@ const GetAllUsers = async (req, res) => {
     try {
         // Fetch all users from the UserModel
         const Users = await UserModel.find();
-console.log(Users)
         // If no users are found, return a 404 response
         if (!Users || Users.length === 0) {
             return res.status(404).json({ message: 'No users found' });
@@ -161,8 +156,6 @@ const GetUserByUsername = async (req, res) => {
         
         // Use regex for case-insensitive search
         const User = await UserModel.findOne({ Username: { $regex: new RegExp(Username, 'i') } });
-        console.log(User)
-     console.log(User)
         
         if (!User) {
             return res.status(404).json({ message: 'User not found' });
@@ -179,8 +172,6 @@ const UpdateUser = async (req, res) => {
     try {
         const { Name, Username, Email, Phone, IsAdmin, IsSystemAdmin } = req.body;
         const { Username: currentUsername } = req.params;
-
-        console.log("Username in params:", req.params);
 
         // Use regex for case-insensitive search to find the user by current username
         const user = await UserModel.findOne({ 

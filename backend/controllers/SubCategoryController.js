@@ -4,7 +4,6 @@ const ProductModel=require('../Models/Product')
 const fs = require('fs');  
 
 const CreateSubcategory = async (req, res) => {
-    console.log("sub ctaegory",req.body)
     const { Name, Description, Slug,label_image,CategoryId } = req.body;
 
     try {
@@ -21,7 +20,6 @@ const CreateSubcategory = async (req, res) => {
                 const result = await cloudinary.uploader.upload(filePath, {
                     folder: 'subcategories'
                 });
-                console.log("result",result)
                 uploadedImageUrl = result.secure_url;
 
             } catch (error) {
@@ -39,7 +37,6 @@ const CreateSubcategory = async (req, res) => {
             Slug,
             CategoryId
         });
-        console.log("newsub",newSubcategory)
         const savedSubcategory = await newSubcategory.save();
         res.status(201).json({
             message: 'Subcategory created successfully!',
@@ -53,7 +50,6 @@ const GetAllSubCategories = async (req, res) => {
     try {
        
         const subcategories = await SubCategory.find();
-      console.log(subcategories)
         if (!subcategories || subcategories.length === 0) {
             return res.status(404).json({ message: 'No subcategories found' });
         }     
@@ -67,7 +63,6 @@ const GetAllSubCategories = async (req, res) => {
 
 const GetAllSubCategoriesByCategoryId = async (req, res) => {
     try {
-        console.log(req.body)
         const { CategoryId } = req.body; 
 
  
@@ -88,11 +83,9 @@ const GetAllSubCategoriesByCategoryId = async (req, res) => {
 const GetSubCategoryBySlug = async (req, res) => {
     try {
         const { Slug } = req.params;
-        console.log("slug", req.params);
         
         // Use regex for case-insensitive search
         const category = await SubCategoryModel.findOne({ Slug: { $regex: new RegExp(Slug, 'i') } });
-        console.log(category);
         
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
@@ -172,7 +165,6 @@ const DeleteSubCategory = async (req, res) => {
 
         // Delete related products
         const products = await ProductModel.find({ SubcategoryId: subcategory._id }); // Ensure you reference the correct field
-        console.log("Related Products: ", products); // Debugging line to see the found products
 
         for (const product of products) {
             if (product.Product_image) {

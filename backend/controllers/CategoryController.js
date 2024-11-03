@@ -19,8 +19,7 @@ const CreateCategory = async (req, res) => {
                 const cloudinary = req.app.locals.cloudinary;
                 const result = await cloudinary.uploader.upload(filePath, {
                     folder: 'categories'
-                });
-                console.log("result", result)
+                })
                 uploadedImageUrl = result.secure_url;
 
             } catch (error) {
@@ -51,7 +50,6 @@ const GetAllCategories = async (req, res) => {
     try {
         // Fetch all categories
         const categories = await CategoryModel.find();
-        console.log("all Categories", categories)
         if (!categories || categories.length === 0) {
             return res.status(404).json({ message: 'No categories found' });
         }
@@ -75,9 +73,7 @@ const GetAllCategories = async (req, res) => {
 const GetCategoryBySlug = async (req, res) => {
     try {
         const { Slug } = req.params;
-        console.log("slug", req.params)
         const category = await CategoryModel.findOne({ Slug });
-        console.log(category)
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
         }
