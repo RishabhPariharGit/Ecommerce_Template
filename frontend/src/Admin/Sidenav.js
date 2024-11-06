@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import './AdminStyle/AdminGlobalStyle.css';
+import Cookies from 'js-cookie';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Sidenav = () => {
+    const navigate = useNavigate();
     useEffect(() => {
         const toggleSidebar = () => {
             const wrapper = document.querySelector('.wrapper');
@@ -62,7 +64,11 @@ const Sidenav = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-
+    const handleLogout = () => {
+        Cookies.remove('token'); // remove the token cookie
+        Cookies.remove('role'); // remove the role cookie
+        navigate('/login'); // redirect to login page
+      };
     return (
         <div>
             {/* Wide Desktop Navbar */}
@@ -133,7 +139,7 @@ const Sidenav = () => {
                     <div>
                         Logged in as <strong>User Name</strong>
                     </div>
-                    <Link to="/logout">Log Out</Link>
+                    <button className='btn' onClick={handleLogout}>Logout</button>
                 </div>
             </div>
         </div>

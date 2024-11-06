@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './Newhome.css';
 import { getAllCategories } from '../../../Services/CategoryService';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Newhome = () => {
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -63,14 +65,12 @@ const Newhome = () => {
       menu.querySelector('.mobile-menu-head').classList.remove('active');
     };
 
-    // Add event listeners
     menuMain.addEventListener('click', handleMenuMainClick);
     goBack.addEventListener('click', hideSubMenu);
     menuTrigger.addEventListener('click', toggleMenu);
     closeMenu.addEventListener('click', toggleMenu);
     menuOverlay.addEventListener('click', toggleMenu);
 
-    // Cleanup on component unmount
     return () => {
       menuMain.removeEventListener('click', handleMenuMainClick);
       goBack.removeEventListener('click', hideSubMenu);
@@ -80,6 +80,25 @@ const Newhome = () => {
     };
   }, []);
 
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+  const handleAddtocartclick = () => {
+    debugger;
+    const token = Cookies.get('token');  
+    // If token exists, navigate to the cart page; otherwise, navigate to login
+    if (token) {
+      navigate('/Checkout/cart'); // Redirect to the cart if the user is logged in
+    } else {
+      navigate('/login'); // Redirect to login if no token is found
+    }
+  };
+  
+  const handleLogout = () => {
+    Cookies.remove('token'); // remove the token cookie
+    Cookies.remove('role'); // remove the role cookie
+    navigate('/login'); // redirect to login page
+  };
   return (
     <>
       <header className="custom-header-cls">
@@ -123,6 +142,13 @@ const Newhome = () => {
               <a href="#"><i className="far fa-heart" /></a>
               <a href="#"><i className="fas fa-shopping-cart" /></a>
               <div className="mobile-menu-trigger"><span /></div>
+            </div>
+            <div>
+            <button className='btn' onClick={handleAddtocartclick}>Addtocart</button>
+            <button className='btn' onClick={handleLoginClick}>Wishlist</button>
+            <button className='btn' onClick={handleLoginClick}>UserProfile</button>
+              <button className='btn' onClick={handleLoginClick}>Login</button>
+              <button className='btn' onClick={handleLogout}>Logout</button>
             </div>
           </div>
         </div>

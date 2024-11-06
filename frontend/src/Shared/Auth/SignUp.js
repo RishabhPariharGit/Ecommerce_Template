@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { registerUser } from '../../Services/UserService'
 import { useNavigate } from "react-router-dom";
-import './Signup.css';
+import './signup.css';
 
 export default function SignUp() {
 

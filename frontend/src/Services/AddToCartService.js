@@ -51,3 +51,18 @@ export const addProductToCart = async (ProductData) => {
       throw error;
     }
   }; 
+
+  export const getCartItems = async (token) => {
+    try {
+      debugger
+      const response = await axios.get(`${API_URL}/GetCartItems`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data; 
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      throw error;
+    }
+  };
