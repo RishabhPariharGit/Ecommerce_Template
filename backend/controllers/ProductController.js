@@ -42,7 +42,6 @@ const validateSizes = (sizeType, sizes) => {
 };
 
 const CreateProduct = async (req, res) => {
-    console.log("body",req.body);
     const { 
         Name, 
         Description, 
@@ -75,7 +74,22 @@ const CreateProduct = async (req, res) => {
         if (!validateSizes(SizeType, Sizes)) {
             return res.status(400).json({ message: `Invalid Sizes for SizeType: ${SizeType}` });
         }
+        const imageArray = Product_image.split(',').map(image => image.trim());
+        console.log("imagearray",imageArray)
+        // Ensure that Product_image is an array
+        if (!Array.isArray(imageArray) || imageArray.length === 0) {
+            return res.status(400).json({ message: 'Product_image must be a non-empty array of images.' });
+        }
+        const cloudinary = req.app.locals.cloudinary;
+        const imageUploadPromises = imageArray.map((image) => {
+            return cloudinary.uploader.upload(image, { folder: 'products' });
+        });
 
+        // Wait for all uploads to complete
+        const uploadResults = await Promise.all(imageUploadPromises);
+console.log("uploadResults",uploadResults)
+        // Get the URLs of the uploaded images
+        const imageUrls = uploadResults.map(result => result.secure_url);
         // Create the product instance
         const newProduct = new ProductModel({
             Name,
@@ -84,7 +98,7 @@ const CreateProduct = async (req, res) => {
             Quantity,
             CategoryId,
             SubcategoryId,
-            Product_image,
+            Product_image: imageUrls,
             Slug,
             SKU,
             Brand,
@@ -94,7 +108,7 @@ const CreateProduct = async (req, res) => {
             Status: ProductStatus.ACTIVE,
         });
 
-        // This will trigger Mongoose validation
+        // Save the product
         const savedProduct = await newProduct.save();
 
         res.status(201).json({
@@ -106,6 +120,7 @@ const CreateProduct = async (req, res) => {
         res.status(500).json({ message: 'Error creating Product', error: err });
     }
 };
+
 
 
 
@@ -175,8 +190,6 @@ const UpdateProduct = async (req, res) => {
         existingProduct.Tags = Tags;
         existingProduct.SizeType=SizeType,
         existingProduct.Sizes=Sizes
-
-        console.log("existingproduct",existingProduct)
         // Save the updated product
         const updatedProduct = await existingProduct.save();
 
@@ -194,7 +207,6 @@ const UpdateProduct = async (req, res) => {
 const GetAllProducts = async (req, res) => {
     try {
         const Products = await ProductModel.find(); // Assuming you're not excluding any fields
-console.log(Products)
         // If no categories are found, return a 404 response
         if (!Products || Products.length === 0) {
             return res.status(404).json({ message: 'No Products found' });
@@ -211,13 +223,10 @@ console.log(Products)
 
 const GetProductBySlug = async (req, res) => {
     try {
-        const { Slug } = req.params;  
-        console.log("Received slug:", Slug); // Log the received slug
+        const { Slug } = req.params;
         
         // Perform case-insensitive search
-        const Product = await ProductModel.findOne({ Slug: { $regex: new RegExp(Slug, "i") } });   
-        
-        console.log("Product found:", Product); // Log the result
+        const Product = await ProductModel.findOne({ Slug: { $regex: new RegExp(Slug, "i") } }); 
 
         if (!Product) {
             return res.status(404).json({ message: 'Product not found' });
@@ -262,14 +271,12 @@ const DeleteProduct = async (req, res) => {
 const GetAllProductsBySlug = async (req, res) => {
     try {
         const { slug } = req.params;
-   console.log("slug for all products",slug)
         // Try finding the slug in the Category table
         let category = await CategoryModel.findOne({ Slug: slug });
 
         if (category) {
             // If found in Category, fetch products by CategoryId
             const products = await ProductModel.find({ CategoryId: category._id });
-            console.log("category Product",products)
             return res.json(products);
         }
 
@@ -279,7 +286,6 @@ const GetAllProductsBySlug = async (req, res) => {
         if (subcategory) {
             // If found in Subcategory, fetch products by SubcategoryId
             const products = await ProductModel.find({ SubcategoryId: subcategory._id });
-            console.log("products",products)
             return res.json(products);
         }
 

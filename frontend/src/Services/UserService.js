@@ -69,3 +69,19 @@ export const updateUser = async (Username, UserData) => {
     throw error;
   }
 };
+
+export const getUserProfile = async (token) => {
+  try {
+    debugger
+    const response = await axios.get(`${API_URL}/UserProfile`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Send token in Authorization header
+      },
+    });
+    return response.data; // Return the data from the response
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error; // Rethrow the error to handle it elsewhere if needed
+  }
+};
+

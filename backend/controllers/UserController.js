@@ -1,11 +1,11 @@
 const UserModel = require('../Models/User');
-const RoleModel=require('../Models/Role')
+const RoleModel = require('../Models/Role')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const USerModel = require('../Models/User');
 
 const RegisterUser = async (req, res) => {
-    try { 
+    try {
         const { Name, Username, Email, Phone, Password, IsAdmin, IsSystemAdmin } = req.body;
 
         // Validate required fields
@@ -36,7 +36,6 @@ const RegisterUser = async (req, res) => {
 
         // Save the user
         const savedUser = await newUser.save();
-        console.log("saved user",savedUser);
         if (!savedUser) {
             return res.status(500).json({ message: "User registration failed" });
         }
@@ -69,7 +68,6 @@ const RegisterUser = async (req, res) => {
 const LoginUser = async (req, res) => {
     try {
         const { Username, Password } = req.body;
-console.log(Username,Password)
         // Find the user by username
         const user = await UserModel.findOne({ Username });
         if (!user) {
@@ -78,7 +76,6 @@ console.log(Username,Password)
 
         // Compare Passwords
         const validPassword = await bcrypt.compare(Password, user.Password);
-        console.log(validPassword)
         if (!validPassword) {
             return res.status(400).json({ error: "Invalid Password" });
         }
@@ -89,18 +86,17 @@ console.log(Username,Password)
             email: user.email,
         };
         const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
-          console.log("token",jwtToken)
         // Set JWT as an HTTP-only cookie
         res.cookie('token', jwtToken, {
             httpOnly: false,
-            secure: process.env.NODE_ENV === 'production', 
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'Lax',
             maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         });
-        
+
         // Find the role associated with this user
         const roleData = await RoleModel.findOne({ userId: user._id });
-        if (roleData !=null) {
+        if (roleData != null) {
             const role = roleData.RoleName;
             res.cookie('role', role, {
                 httpOnly: false, // Allow client-side access to the role cookie
@@ -111,7 +107,7 @@ console.log(Username,Password)
         }
 
         // Optionally set the role as a non-httpOnly cookie for client-side access
-     
+
 
         return res.status(200).json({ jwtToken: jwtToken, message: "Login successful" });
     } catch (err) {
@@ -124,7 +120,6 @@ const GetAllUsers = async (req, res) => {
     try {
         // Fetch all users from the UserModel
         const Users = await UserModel.find();
-console.log(Users)
         // If no users are found, return a 404 response
         if (!Users || Users.length === 0) {
             return res.status(404).json({ message: 'No users found' });
@@ -134,7 +129,7 @@ console.log(Users)
         const userIds = Users.map(user => user._id); // Extract user IDs
 
         const Roles = await RoleModel.find({ userId: { $in: userIds } })
-                                     .select('RoleName userId -_id'); // Get only RoleName and userId
+            .select('RoleName userId -_id'); // Get only RoleName and userId
 
         // Map roles to the corresponding users
         const usersWithRoles = Users.map(user => {
@@ -157,13 +152,11 @@ console.log(Users)
 const GetUserByUsername = async (req, res) => {
     try {
         const { Username } = req.params;
-    
-        
+
+
         // Use regex for case-insensitive search
         const User = await UserModel.findOne({ Username: { $regex: new RegExp(Username, 'i') } });
-        console.log(User)
-     console.log(User)
-        
+
         if (!User) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -180,11 +173,9 @@ const UpdateUser = async (req, res) => {
         const { Name, Username, Email, Phone, IsAdmin, IsSystemAdmin } = req.body;
         const { Username: currentUsername } = req.params;
 
-        console.log("Username in params:", req.params);
-
         // Use regex for case-insensitive search to find the user by current username
-        const user = await UserModel.findOne({ 
-            Username: { $regex: new RegExp(`^${currentUsername}$`, 'i') } 
+        const user = await UserModel.findOne({
+            Username: { $regex: new RegExp(`^${currentUsername}$`, 'i') }
         });
 
         if (!user) {
@@ -235,9 +226,9 @@ const UpdateUser = async (req, res) => {
             await systemAdminRole.save();
         }
 
-        return res.status(200).json({ 
-            message: "User updated successfully", 
-            user: updatedUser 
+        return res.status(200).json({
+            message: "User updated successfully",
+            user: updatedUser
         });
 
     } catch (err) {
@@ -249,13 +240,13 @@ const DeleteUser = async (req, res) => {
     const { id } = req.params;
 
     try {
-      
+
         const user = await UserModel.findById(id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        const Role = await RoleModel.find({ UserId: user._id }); 
-  
+        const Role = await RoleModel.find({ UserId: user._id });
+
         await RoleModel.deleteMany({ UserId: user._id });
         await USerModel.findByIdAndDelete(id);
 
@@ -266,4 +257,31 @@ const DeleteUser = async (req, res) => {
     }
 };
 
-module.exports = { RegisterUser, LoginUser, GetUserByUsername,GetAllUsers ,UpdateUser,DeleteUser};
+const GetUserProfile = async (req, res) => {
+    try {
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        console.log("token", token)
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
+        const decoded = jwt.verify(token, 'SECRET');
+        const user = await UserModel.findById(decoded.userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        return res.status(200).json({
+            user
+        });
+    } catch (err) {
+        console.error("Error:", err);
+        if (err.name === 'JsonWebTokenError') {
+            return res.status(403).json({ message: 'Invalid token' });
+        }
+
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+module.exports = { RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser, DeleteUser,GetUserProfile };

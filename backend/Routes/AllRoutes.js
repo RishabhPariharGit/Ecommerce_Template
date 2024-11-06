@@ -7,7 +7,8 @@ const {
   GetUserByUsername,
   GetAllUsers,
   UpdateUser,
-  DeleteUser
+  DeleteUser,
+  GetUserProfile
 } = require('../Controllers/UserController');
 const {
   CreateCategory,
@@ -33,7 +34,7 @@ const {
   GetAllProductsBySlug
 } = require("../Controllers/ProductController");
 
-const {AddToCart,AddToWishlist}= require("../Controllers/CartItemController")
+const {AddToCart,AddToWishlist,GetCartItems}= require("../Controllers/CartItemController")
 // User Ruote
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
@@ -41,6 +42,8 @@ router.get("/User/Edit/:Username", GetUserByUsername);
 router.get("/GetAllUsers", GetAllUsers);
 router.put("/UpdateUser/:Username", UpdateUser);
 router.delete('/DeleteUser/:id', DeleteUser);
+router.get('/UserProfile', GetUserProfile);
+
 
 //Category route
 router.post("/CreateCategory", CreateCategory);
@@ -71,6 +74,7 @@ router.get("/AllProducts/:slug", GetAllProductsBySlug);
 
 router.post('/AddToCart', AddToCart);
 router.post('/AddToWishlist', AddToWishlist);
+router.get("/GetCartItems", GetCartItems);
 
 
 
