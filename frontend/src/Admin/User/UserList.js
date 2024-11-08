@@ -57,11 +57,14 @@ const UserList = () => {
             <div className="pagetitle">
                 Users
             </div>
-            <div className="form-600">
-                <div className="white-bg">
-                    <button className="button" onClick={handleCreate}>
+            <div className="white-bg-btn">
+            <button className="button" onClick={handleCreate}>
                         Create User
                     </button>
+                    </div>
+            <div className="form-600">
+                <div className="white-bg">
+                
                     {error && <div className="error">{error}</div>} {/* Display error message */}
                     <table className="tablestyle">
                         <thead>
@@ -84,6 +87,7 @@ const UserList = () => {
                     {user.Roles.join(", ")}
                 </td>
                                         <td>
+                                        <div className='customization-main-btns'>
                                             <button
                                                 className="gridbutton"
                                                 onClick={() => handleEdit(user.Username)}
@@ -91,11 +95,12 @@ const UserList = () => {
                                                 Edit
                                             </button>
                                             <button
-                                                className="gridbutton"
+                                                className="gridbutton delete-button"
                                                 onClick={() => handleDelete(user._id)} // Add delete button
                                             >
                                                 Delete
                                             </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))

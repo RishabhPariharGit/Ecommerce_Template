@@ -48,11 +48,16 @@ const CategoryList = () => {
             <div className="pagetitle">
                 Categories
             </div>
-            <div className="form-600">
-                <div className="white-bg">
-                    <button className="button" onClick={handleCreate}>
+
+            <div className="white-bg-btn">
+            <button className="button" onClick={handleCreate}>
                         Create Category
                     </button>
+                    
+                </div>
+
+            <div className="form-600">
+                <div className="white-bg">
                     <table className="tablestyle">
                         <thead>
                             <tr className="roundheader">
@@ -68,6 +73,7 @@ const CategoryList = () => {
                                         <td>{category.Name}</td>
                                         <td>{category.Description}</td>
                                         <td>
+                                        <div className='customization-main-btns'>
                                             <button
                                                 className="gridbutton"
                                                 onClick={() => handleEdit(category.Slug)}
@@ -75,11 +81,12 @@ const CategoryList = () => {
                                                 Edit
                                             </button>
                                             <button
-                                                className="gridbutton"
+                                                className="gridbutton delete-button"
                                                 onClick={() => handleDelete(category._id)} // Add delete button
                                             >
                                                 Delete
                                             </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../AdminStyle/AdminGlobalStyle.css';
+import '../AdminStyle/Color.css';
+
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);

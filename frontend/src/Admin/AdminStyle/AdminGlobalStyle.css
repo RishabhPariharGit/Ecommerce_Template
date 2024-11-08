@@ -1,3 +1,6 @@
+
+
+
 /* Main container for mobile navigation */
 
 
@@ -221,13 +224,18 @@ body {
   padding-bottom: 8px;
   text-align: left;
   text-align: center;
-  color: var(--PageTitleColor);
-  background-color: #efefef;
-  box-shadow: rgba(0,0,0,0.03) 0px 2px 2px, rgba(0,0,0,0.03) 0px 0px 2px 2px;
+  margin: auto;
+  color:white;
+  width: 98%;
+  border-radius: 8px;
+  /* margin-left: 5px */
+  background-color: #222E3C;
+  /* box-shadow: rgba(0,0,0,0.03) 0px 2px 2px, rgba(0,0,0,0.03) 0px 0px 2px 2px; */
   z-index: 10;
-  border-bottom: solid 2px #BBB;
-  position: sticky; /* Makes the top bar sticky */
-  top: 0; /* Ensures it sticks to the top */
+  /* border-bottom: solid 2px #BBB; */
+  position: sticky; 
+  /* Makes the top bar sticky */
+  top: 6px; /* Ensures it sticks to the top */
   height: 57px; 
   overflow: hidden; /* Ensures no scrollbar appears in the title bar */
 }
@@ -340,8 +348,10 @@ body {
 
           .wrapper .top_navbar .top_menu {
               width: calc(100%);
-              background: #fff;
+              background: #222E3C;
               height: 100%;
+              border-top-left-radius: 10px;
+              border-top-right-radius: 10px;
               /*display: flex;*/
               /* justify-content: space-between;*/
               align-items: center;
@@ -364,7 +374,9 @@ body {
 
 .wrapper .sidebar {
   position: fixed;
-  background: #FFF;
+  background: #222E3C;
+  margin: 5px;
+  border-radius: 10px;
   width: 235px;
   height: 100%;
   transition: all .3s ease;
@@ -372,20 +384,22 @@ body {
 }
 
   .wrapper .sidebar ul li:first-child {
-      border-top: 1px solid #EEE;
+      /* border-top: 1px solid #EEE; */
   }
 
   .wrapper .sidebar ul li {
-      border-bottom: 1px solid #EEE;
+      /* border-bottom: 1px solid #EEE; */
   }
 
       .wrapper .sidebar ul li a {
-          display: block;
-          padding: 10px 10px 10px 20px;
-          position: relative;
-          color: var(--SideNavTextColor);
-          white-space: nowrap;
-          cursor: pointer;
+        display: flex;
+        padding: 20px 10px 20px 20px;
+        position: relative;
+        color: var(--SideNavTextColor);
+        white-space: nowrap;
+        cursor: pointer;
+        gap: 20px;
+        align-items: center;
       }
 
           .wrapper .sidebar ul li a::before {
@@ -415,11 +429,12 @@ body {
 
           .wrapper .sidebar ul li a span.title {
               display: inline-block;
-              font-size: 16px;
+              font-size: 15px;
               text-decoration: none;
               line-height: 1;
               margin-top: 3px;
               margin-bottom: 3px;
+              color: var(--SideNavTextColor);
           }
 
           .wrapper .sidebar ul li a.active,
@@ -725,11 +740,12 @@ body {
 
 @media (min-width: 640px) {
   .form-600 {
-      width: 600px !important;
+      width: 100% !important;
       position: relative;
-      left: 50%;
-      margin-left: -300px;
-  }
+      /* left: 50%; */
+      /* margin-left: -300px; */
+  margin: auto;
+    }
 }
 
 @media (min-width: 490px) {
@@ -1016,7 +1032,8 @@ html[xmlns] .clearfix {
   box-shadow: rgb(0 0 0 / 5%) 0px 15px 25px, rgb(0 0 0 / 5%) 0px 5px 10px;
   margin-bottom: 15px;
   z-index: 0;
-  border-radius: 15px;
+  border-radius: 5px;
+  border: 1px solid gray;
 }
 
   .white-bg ul {
@@ -1107,7 +1124,7 @@ html[xmlns] .clearfix {
   margin-bottom: 3px;
   margin-top: 5px;
   text-align: left;
-  padding: 10px;
+  padding: 20px;
   vertical-align: top;
   border-bottom: 1px solid #AAA;
   /*font-weight: 500;*/
@@ -1148,7 +1165,7 @@ html[xmlns] .clearfix {
 }
 
 .tablestyle td {
-  padding: 7px 10px;
+  padding: 15px 15px;
   border-top: 1px solid #AAA;
   vertical-align: top;
   font-weight: 500;
@@ -2480,6 +2497,36 @@ hr {
   overflow:unset !important;
 }
 
+/* Increase icon size */
+.icon {
+  font-size: 18px; /* Adjust the size as needed */
+  transition: none; /* Disable any transition effect if it exists */
+}
+
+/* Remove hover effect from icons */
+.icon:hover {
+  color: inherit; /* Set color to inherit, or a specific color if needed */
+  transform: none; /* Remove any transform effects if applied */
+}
 
 
+ul{
+  border-top: none !important;
+}
 
+.white-bg-btn {
+  width: 100%;
+  text-align: right;
+  padding: 30px 30px 0px 30px;
+}
+
+.customization-main-btns {
+  display: flex;
+  width: fit-content;
+}
+
+button.gridbutton.delete-button {
+  color: white;
+  background-color: rgba(223, 3, 3, 0.911);
+  border: navajowhite;
+}

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from '../../Services/UserService';
 import Cookies from 'js-cookie';
 
-import './login.css';
+import './Login.css';
 
 export default function Login() {
   const [Username, setUsername] = useState('');

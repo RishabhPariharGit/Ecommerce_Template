@@ -56,11 +56,15 @@ const ProductList = () => {
             <div className="pagetitle">
                 Products
             </div>
-            <div className="form-600">
-                <div className="white-bg">
-                    <button className="button" onClick={handleCreate}>
+            <div className="white-bg-btn">
+            <button className="button" onClick={handleCreate}>
                         Create Product
                     </button>
+                    </div>
+
+            <div className="form-600">
+                <div className="white-bg">
+                    
                     {error && <div className="error">{error}</div>} {/* Display error message */}
                     <table className="tablestyle">
                         <thead>
@@ -81,6 +85,7 @@ const ProductList = () => {
                                         <td>{product.SKU}</td>
                                         <td>{product.CategoryName}</td> {/* Assuming the product has a CategoryName field */}
                                         <td>
+                                        <div className='customization-main-btns'>
                                             <button
                                                 className="gridbutton"
                                                 onClick={() => handleEdit(product.Slug)}
@@ -88,11 +93,12 @@ const ProductList = () => {
                                                 Edit
                                             </button>
                                             <button
-                                                className="gridbutton"
+                                                className="gridbutton delete-button"
                                                 onClick={() => handleDelete(product._id)} // Add delete button
                                             >
                                                 Delete
                                             </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))

@@ -59,11 +59,22 @@ const SubCategoryList = () => {
             <div className="pagetitle">
                 Subcategories
             </div>
-            <div className="form-600">
-                <div className="white-bg">
-                    <button className="button" onClick={handleCreate}>
+
+            
+
+
+                   
+                <div className="white-bg-btn">
+                <button className="button" onClick={handleCreate}>
                         Create Subcategory
                     </button>
+                    
+                </div>
+
+
+            <div className="form-600">
+                <div className="white-bg">
+                    
                     {error && <div className="error">{error}</div>}
                     <table className="tablestyle">
                         <thead>
@@ -80,6 +91,9 @@ const SubCategoryList = () => {
                                         <td>{subCategory.Name}</td>
                                         <td>{subCategory.Description}</td>
                                         <td>
+
+<div className='customization-main-btns'>
+
                                             <button
                                                 className="gridbutton"
                                                 onClick={() => handleEdit(subCategory.Slug)}
@@ -92,6 +106,7 @@ const SubCategoryList = () => {
                                             >
                                                 Delete
                                             </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
