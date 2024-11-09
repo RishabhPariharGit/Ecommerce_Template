@@ -137,7 +137,7 @@ const Sidenav = () => {
                     <div>
                         Logged in as <strong>User Name</strong>
                     </div>
-                    <button className='btn' onClick={handleLogout}>Logout</button>
+                    <button className='btn logout-btn' onClick={handleLogout}>Logout</button>
                 </div>
             </div>
         </div>

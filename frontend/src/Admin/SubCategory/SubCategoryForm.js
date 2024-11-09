@@ -137,9 +137,9 @@ const SubCategoryForm = ({ isEditMode = false }) => {
             <div className="form-800">
                 <div className="white-bg">
                     <div className="input-form">
-                        <div className="sectionheader">
+                        {/* <div className="sectionheader">
                             {isEditMode ? 'Edit Subcategory' : 'Create a New Subcategory'}
-                        </div>
+                        </div> */}
                         <form onSubmit={handleSubmitFile}>
                             <table>
                                 <tbody>

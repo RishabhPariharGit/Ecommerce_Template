@@ -155,9 +155,14 @@ const CategoryForm = ({ isEditMode = false }) => {
                                         />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div className="text-center">
+                                
+                                        
+                                   
+                            </tbody>
+                        </table>
+                    </form>
+
+                    <div className="text-center">
                                             <button type="submit" className="button">
                                                 {isEditMode ? 'Update' : 'Submit'}
                                             </button>
@@ -169,11 +174,7 @@ const CategoryForm = ({ isEditMode = false }) => {
                                                 Cancel
                                             </button>
                                         </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </form>
+
                     {(previewSource || (isEditMode && formData.label_image)) && (
                         <img
                             src={previewSource || formData.label_image}
