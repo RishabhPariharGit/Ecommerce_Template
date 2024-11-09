@@ -384,11 +384,13 @@ const ProductForm = ({ isEditMode = false }) => {
                             </tbody>
                         </table>
 
-                        <div className="form-actions">
-                            <button type="submit">
+                        <div className="text-center">
+                            <button type="submit" className="button">
                                 {isEditMode ? 'Update Product' : 'Create Product'}
                             </button>
-                            <button type="button" onClick={handleCancel}>
+                            <button type="button" 
+                            className="button cancel-button"
+                            onClick={handleCancel}>
                                 Cancel
                             </button>
                         </div>

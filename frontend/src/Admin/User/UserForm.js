@@ -189,12 +189,14 @@ const UserForm = ({ isEditMode = false }) => {
                                 </tr>
                             </tbody>
                         </table>
-                        <button type="submit" className="btn" disabled={isLoading}>
+                        <div className="text-center">
+                        <button type="submit" className="button" disabled={isLoading}>
                             {isEditMode ? 'Update User' : 'Add User'}
                         </button>
                         <button type="button" className="button cancel-button" onClick={handleCancel}>
                             Cancel
                         </button>
+                        </div>
                     </form>
                 </div>
             </div>
