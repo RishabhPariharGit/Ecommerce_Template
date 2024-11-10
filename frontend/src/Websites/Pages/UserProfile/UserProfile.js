@@ -38,8 +38,6 @@ const UserProfile = () => {
       <h2>User Profile</h2>
       <p><strong>Name:</strong> {userData.Name}</p>
       <p><strong>Email:</strong> {userData.Email}</p>
-  
-      {/* Display other user information as needed */}
     </div>
   );
 };

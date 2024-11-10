@@ -11,7 +11,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AllSize from './EnumDropdown'; // Import the enum
 
 const ProductForm = ({ isEditMode = false }) => {
-    const [previewSource, setPreviewSource] = useState('');
     const [previewSources, setPreviewSources] = useState([]); // Array for preview
 
     const [formData, setFormData] = useState({
@@ -21,7 +20,7 @@ const ProductForm = ({ isEditMode = false }) => {
         Quantity: '',
         CategoryId: '',
         SubcategoryId: '',
-        Product_image: '',
+        Product_image: [],
         Slug: '',
         SKU: '',
         Brand: '',
@@ -51,8 +50,10 @@ const ProductForm = ({ isEditMode = false }) => {
 
             const loadProduct = async () => {
                 try {
+                    debugger
                     const response = await getProductBySlug(slug);
                     const product = response.data;
+                
                     if (product) {
                         setFormData({
                             Name: product.Name,
@@ -65,11 +66,11 @@ const ProductForm = ({ isEditMode = false }) => {
                             SKU: product.SKU,
                             Brand: product.Brand,
                             Tags: product.Tags,
-                            Product_image: product.Product_image,
+                            Product_image: product.Product_image || [],
                             SizeType: product.SizeType || '',
                             Sizes: product.Sizes || [] // Assuming product.Sizes is an array
                         });
-                        setPreviewSource(product.Product_image);
+                        setPreviewSources(product.Product_image || []);
                     }
                 } catch (err) {
                     console.error('Error fetching product:', err);
@@ -103,37 +104,27 @@ const ProductForm = ({ isEditMode = false }) => {
     const sizeTypes = Object.keys(AllSize);
 
     const handleFileInputChange = (e) => {
-        debugger;
         const files = Array.from(e.target.files); // Convert file list to an array
-        const previews = [];
         const newBase64Strings = []; // Hold new base64 strings for the current selection
-    
+
         files.forEach((file) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-    
+
             reader.onloadend = () => {
-                previews.push(reader.result);
                 newBase64Strings.push(reader.result);
-    
-                // Use a callback to update the state after processing all images
-                if (previews.length === files.length) {
-                    setPreviewSources((prevSources) => [...prevSources, ...previews]); // Append previews
-                    setFormData((prevData) => {
-                        const existingImages = prevData.Product_image ? prevData.Product_image.split(',') : [];
-                        return {
-                            ...prevData,
-                            Product_image: [...existingImages, ...newBase64Strings].join(',') // Append new images to existing ones
-                        };
-                    });
+
+                // Once all files are processed, update the state
+                if (newBase64Strings.length === files.length) {
+                    setPreviewSources((prevSources) => [...prevSources, ...newBase64Strings]); // Append previews
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        Product_image: [...(prevData.Product_image || []), ...newBase64Strings] // Append new images to existing ones as an array
+                    }));
                 }
             };
         });
     };
-    
-
-
-
 
     const handleCategoryInputChange = async (e) => {
         const { value } = e.target;
@@ -157,7 +148,7 @@ const ProductForm = ({ isEditMode = false }) => {
     };
 
     const handleSubmitFile = async (e) => {
-        debugger
+
         e.preventDefault(); // Prevent the default form submission behavior
 
         try {
@@ -397,15 +388,20 @@ const ProductForm = ({ isEditMode = false }) => {
 
                         {/* Preview Image Section */}
                         <div className="image-preview-section">
-                            {previewSources.length > 0 && previewSources.map((source, index) => (
-                                <img
-                                    key={index}
-                                    src={source}
-                                    alt={`Preview ${index + 1}`}
-                                    style={{ maxWidth: '100px', margin: '5px' }} // Styling for preview images
-                                />
-                            ))}
+                            {previewSources && previewSources.length > 0 ? (
+                                previewSources.map((source, index) => (
+                                    <img
+                                        key={index}
+                                        src={source}
+                                        alt={`Preview ${index + 1}`}
+                                        style={{ maxWidth: '100px', margin: '5px' }}
+                                    />
+                                ))
+                            ) : (
+                                <p>No images available</p>
+                            )}
                         </div>
+
                     </form>
                 </div>
             </div>

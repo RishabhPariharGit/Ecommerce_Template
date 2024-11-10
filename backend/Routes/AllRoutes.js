@@ -34,7 +34,12 @@ const {
   GetAllProductsBySlug
 } = require("../Controllers/ProductController");
 
-const {AddToCart,AddToWishlist,GetCartItems}= require("../Controllers/CartItemController")
+const {AddToCart,
+  GetCartItems,
+  DeleteCartItem}= require("../Controllers/CartItemController")
+const {AddToWishlist,
+  GetWishListItems,
+  DeleteWishlistItem}= require("../Controllers/WishListItemController")
 // User Ruote
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
@@ -70,12 +75,15 @@ router.delete('/DeleteProduct/:id', DeleteProduct);
 router.get("/AllProducts/:slug", GetAllProductsBySlug);
 
 
-// Asdd To cart
-
+// Add To cart
 router.post('/AddToCart', AddToCart);
-router.post('/AddToWishlist', AddToWishlist);
 router.get("/GetCartItems", GetCartItems);
+router.delete('/removeCartItem/:id', DeleteCartItem);
 
 
+//WishlistItem Route
+router.post('/AddToWishlist', AddToWishlist);
+router.get("/GetWishListItems", GetWishListItems);
+router.delete('/removeWishListItem/:id', DeleteWishlistItem);
 
 module.exports = router;

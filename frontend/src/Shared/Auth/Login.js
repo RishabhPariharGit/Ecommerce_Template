@@ -12,7 +12,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    debugger
+    
     event.preventDefault();
   
     try {

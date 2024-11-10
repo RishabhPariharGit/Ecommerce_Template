@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
-const CartItem = require('../Models/CartItems'); // Adjust path as needed
-const Product = require('../Models/Product'); // Adjust path as needed
+const CartItem = require('../Models/CartItems'); 
+const Product = require('../Models/Product'); 
 
-const Wishlist = require('../Models/Wishlist ');
 
 const AddToCart = async (req, res) => {
   try {
@@ -55,38 +54,6 @@ const AddToCart = async (req, res) => {
     res.status(500).json({ message: 'Server error.' });
   }
 };
-
-
-
-const AddToWishlist = async (req, res) => {
-  try {
-
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-      return res.status(401).json({ message: 'Unauthorized: No token provided.' });
-    }
-
-    // Verify and decode the token to get the userId
-    const decoded = jwt.verify(token, 'SECRET'); // Replace with your actual secret or env variable
-    const UserId = decoded.userId; // Assuming token contains `userId`
-    const {  ProductId } = req.body;
-
-    // Check if the product is already in the user's wishlist
-    const existingEntry = await Wishlist.findOne({ UserId, ProductId });
-    if (existingEntry) {
-      return res.status(400).json({ message: 'Product is already in wishlist' });
-    }
-
-    const newWishlistEntry = new Wishlist({ UserId, ProductId });
-    await newWishlistEntry.save();
-    res.status(201).json({ message: 'Product added to wishlist' });
-  } catch (error) {
-    console.error('Error adding to wishlist:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
-
 const GetCartItems = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
@@ -108,5 +75,19 @@ console.log("cartitems",cartItems)
     return res.status(500).json({ message: 'Server error.' });
   }
 };
+const DeleteCartItem = async (req, res) => {
+  const { id } = req.params; 
+  try {
+      const cartItem = await CartItem.findById(id);
+      if (!cartItem) {
+          return res.status(404).json({ message: 'Wishlist not found' });
+      }
+      await CartItem.findByIdAndDelete(id);
 
-module.exports = { AddToCart ,AddToWishlist,GetCartItems};
+      res.status(200).json({ message: 'Product deleted successfully!' });
+  } catch (err) {
+      console.error("Error deleting product:", err);
+      res.status(500).json({ message: 'Error deleting product', error: err });
+  }
+};
+module.exports = { AddToCart ,GetCartItems ,DeleteCartItem};

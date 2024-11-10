@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080';
 
-// Register user
+
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(`${API_URL}/RegisterUser`, userData);
@@ -13,7 +13,7 @@ export const registerUser = async (userData) => {
   }
 };
 
-// Login user
+
 export const loginUser = async (credentials) => {
   try {
     const response = await axios.post(`${API_URL}/LoginUser`, credentials, {
@@ -28,7 +28,7 @@ export const loginUser = async (credentials) => {
 
 export const getAllUsers  = async () => {
   try {
-    debugger
+    
    
     const response = await axios.get(`${API_URL}/GetAllUsers`);
     return response;
@@ -40,7 +40,7 @@ export const getAllUsers  = async () => {
 
 export const deleteUser = async (UserId) => {
   try {
-    debugger
+    
     const response = await axios.delete(`${API_URL}/DeleteUser/${UserId}`);
     return response;
   } catch (error) {
@@ -51,7 +51,7 @@ export const deleteUser = async (UserId) => {
 
 export const getUserByUsername = async (Username) => {
   try {
-debugger
+
     const response = await axios.get(`${API_URL}/User/Edit/${Username}`)
     return response
   } catch (error) {
@@ -72,16 +72,16 @@ export const updateUser = async (Username, UserData) => {
 
 export const getUserProfile = async (token) => {
   try {
-    debugger
+    
     const response = await axios.get(`${API_URL}/UserProfile`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Send token in Authorization header
+        Authorization: `Bearer ${token}`, 
       },
     });
-    return response.data; // Return the data from the response
+    return response.data; 
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    throw error; // Rethrow the error to handle it elsewhere if needed
+    throw error; 
   }
 };
 
