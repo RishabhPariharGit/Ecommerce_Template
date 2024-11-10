@@ -15,7 +15,7 @@ export default function SignUp() {
 
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
-    debugger
+    
     event.preventDefault();
     if(Password==confirmPassword){
         const response = await registerUser({ Name, Username, Email, Phone, Password });

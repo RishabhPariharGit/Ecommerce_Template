@@ -35,7 +35,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                 }
             };
             const fetchData = async () => {
-                debugger
+                
                 try {
                     if (isEditMode && slug && !isFetchedRef.current) {
                         const response = await getSubCategoryBySlug(slug);

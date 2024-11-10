@@ -1,6 +1,6 @@
 import React, { useEffect, useState ,useRef} from 'react';
 import Cookies from 'js-cookie';
-import { getCartItems } from '../../../Services/AddToCartService'; // Assume this is your cart API service
+import { getCartItems ,removeCartItem } from '../../../Services/AddToCartService'; 
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -9,7 +9,7 @@ const CartItems = () => {
   useEffect(() => {
     if (!isFetchedRef.current) {
     const fetchCartItems = async () => {
-        debugger
+        
       const token = Cookies.get('token');
       if (!token) {
         console.error('No token found');
@@ -30,6 +30,14 @@ const CartItems = () => {
 }
   }, []);
 
+  const handleRemove = async (itemId) => {
+    try {      
+      await removeCartItem(itemId);
+      setCartItems((prevItems) => prevItems.filter(item => item._id !== itemId));
+    } catch (error) {
+      console.error('Error removing wishlist item:', error);
+    }
+  };
   if (loading) {
     return <div>Loading cart items...</div>;
   }
@@ -45,7 +53,6 @@ const CartItems = () => {
         {cartItems.map((item) => (
          <li key={item._id} className="cart-item">
          <div className="cart-item-details">
-           {/* Display the product image */}
            {item.ProductId.Image && (
              <img 
                src={item.ProductId.Product_image} 
@@ -60,6 +67,7 @@ const CartItems = () => {
            <p><strong>Description:</strong> {item.Description}</p>
            <p><strong>Price:</strong> ${item.Price}</p>
            <p><strong>Total:</strong> ${item.Price * item.Quantity}</p>
+           <button onClick={() => handleRemove(item._id)} className="remove-button">Remove</button>
          </div>
        </li>
        

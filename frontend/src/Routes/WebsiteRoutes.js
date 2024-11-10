@@ -11,6 +11,7 @@ import Textoverimage from '../Websites/Website_Components/Textoverimage/Textover
 import MainProductPage from '../Websites/Pages/MainProductPage/MainProductPage'
 import UserProfile from '../Websites/Pages/UserProfile/UserProfile'
 import CartItems from '../Websites/Pages/CartItems/Cartitems'
+import WishlistItems from '../Websites/Pages/WishlistItems/WishlistItems';
 
 const WebsiteRoutes = () => {
   return (
@@ -25,6 +26,7 @@ const WebsiteRoutes = () => {
       <Route path="/product/:slug" element={<SingleProductpage />} />
       <Route path="/UserProfile" element={<UserProfile />} />
       <Route path="/Checkout/cart" element={<CartItems />} />
+      <Route path="/Wishlist" element={<WishlistItems />} />
 
     </Routes>
   );

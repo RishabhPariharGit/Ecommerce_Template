@@ -84,7 +84,7 @@ const Newhome = () => {
     navigate('/login');
   };
   const handleAddtocartclick = () => {
-    debugger;
+    
     const token = Cookies.get('token');  
     // If token exists, navigate to the cart page; otherwise, navigate to login
     if (token) {
@@ -93,7 +93,16 @@ const Newhome = () => {
       navigate('/login'); // Redirect to login if no token is found
     }
   };
-  
+  const handleWishlistclick = () => {
+    
+    const token = Cookies.get('token');  
+    // If token exists, navigate to the cart page; otherwise, navigate to login
+    if (token) {
+      navigate('/Wishlist'); // Redirect to the cart if the user is logged in
+    } else {
+      navigate('/login'); // Redirect to login if no token is found
+    }
+  };
   const handleLogout = () => {
     Cookies.remove('token'); // remove the token cookie
     Cookies.remove('role'); // remove the role cookie
@@ -145,7 +154,7 @@ const Newhome = () => {
             </div>
             <div>
             <button className='btn' onClick={handleAddtocartclick}>Addtocart</button>
-            <button className='btn' onClick={handleLoginClick}>Wishlist</button>
+            <button className='btn' onClick={handleWishlistclick}>Wishlist</button>
             <button className='btn' onClick={handleLoginClick}>UserProfile</button>
               <button className='btn' onClick={handleLoginClick}>Login</button>
               <button className='btn' onClick={handleLogout}>Logout</button>

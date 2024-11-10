@@ -29,7 +29,7 @@ const UserList = () => {
     }, []);
 
     const handleEdit = (Username) => {
-        debugger
+        
         navigate(`/admin/User/Edit/${Username}`); // Navigate to edit page with user ID
     };
 

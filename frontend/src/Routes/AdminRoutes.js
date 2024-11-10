@@ -16,10 +16,8 @@ const AdminRoutes = () => {
   return (
     <AdminLayout>
       <Routes>
-        {/* Dashboard Route */}
         <Route path="/Dashboard" element={  <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}><Dashboard /> </AuthGuard>} />
 
-        {/* Category Routes */}
         <Route path="/Category/create" element={ <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}> <CategoryForm isEditMode={false} /> </AuthGuard>} />
         <Route
           path="/Category/edit/:slug"
@@ -37,8 +35,6 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-
-        {/* Subcategory Routes */}
         <Route
           path="/SubCategory/create"
           element={
@@ -63,8 +59,6 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-
-        {/* Product Routes */}
         <Route
           path="/Products"
           element={
@@ -89,8 +83,6 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-
-        {/* User Routes */}
         <Route
           path="/Users"
           element={

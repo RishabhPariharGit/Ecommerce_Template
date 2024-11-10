@@ -3,10 +3,10 @@ import Cookies from 'js-cookie';
 const API_URL = 'http://localhost:8080';
 
 
-//Category Service
+
 export const addCategory = async (CategoryData) => {
   try {
-    debugger
+    
     console.log(CategoryData)
     const response = await axios.post(`${API_URL}/CreateCategory`, CategoryData);
     return response;
@@ -16,9 +16,9 @@ export const addCategory = async (CategoryData) => {
   }
 };
 export const getAllCategories  = async () => {
-  debugger
+  
   try {
-    debugger
+    
    
     const response = await axios.get(`${API_URL}/GetAllCategory`);
     return response;

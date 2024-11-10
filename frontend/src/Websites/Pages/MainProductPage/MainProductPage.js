@@ -1,21 +1,19 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import useFetchProducts from '../../../Hooks/useFetchProducts';
-import Cookies from 'js-cookie'; // For reading cookies
-import { addProductToCart, addProductToWishlist } from '../../../Services/AddToCartService';
+import Cookies from 'js-cookie';
+import { addProductToCart } from '../../../Services/AddToCartService';
+import { addProductToWishlist } from '../../../Services/WishlistService';
 import { Link } from 'react-router-dom';
 
 const MainProductPage = () => {
-    const { slug } = useParams(); // Get slug from URL
-    const navigate = useNavigate(); // For navigation
-    const { products, loading, error } = useFetchProducts(slug); // Fetch products
+    const { slug } = useParams(); 
+    const navigate = useNavigate(); 
+    const { products, loading, error } = useFetchProducts(slug); 
 
-    // Handle Add to Cart action
     const handleAddToCart = async (product) => {
-        debugger
-        const token = Cookies.get('token'); // Get token from cookies
-
+        
+        const token = Cookies.get('token'); 
         if (!token) {
-            // If no token found, redirect to login page
             navigate('/login');
             return;
         }
@@ -23,7 +21,7 @@ const MainProductPage = () => {
         try {
             const response = await addProductToCart({
                 ProductId: product._id,
-                Quantity: 1, // Default quantity
+                Quantity: 1, 
             });
 
             if (response.status === 201) {
@@ -38,21 +36,17 @@ const MainProductPage = () => {
     };
 
     const handleWishlist = async (product) => {
-        debugger
-        const token = Cookies.get('token'); // Get token from cookies
-
+        
+        const token = Cookies.get('token'); 
         if (!token) {
-            // If no token found, redirect to login page
             navigate('/login');
             return;
         }
-
         try {
             const response = await addProductToWishlist({
                 ProductId: product._id,
-                Quantity: 1, // Default quantity
+                Quantity: 1, 
             });
-
             if (response.status === 201) {
                 alert('Product added to wishlist successfully!');
             } else {
@@ -63,8 +57,8 @@ const MainProductPage = () => {
             alert('An error occurred. Please try again.');
         }
     };
-    if (loading) return <p>Loading...</p>; // Loading state
-    if (error) return <p>{error}</p>; // Error message
+    if (loading) return <p>Loading...</p>; 
+    if (error) return <p>{error}</p>;
 
     return (
         <div>

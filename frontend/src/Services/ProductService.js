@@ -3,9 +3,10 @@
 import axios from 'axios';
 import Cookies from 'js-cookie'; 
 const API_URL = 'http://localhost:8080';
+
 export const addProduct = async (Product) => {
     try {
-      debugger
+      
       console.log(Product)
       const response = await axios.post(`${API_URL}/CreateProduct`, Product);
       return response;
@@ -25,7 +26,7 @@ export const addProduct = async (Product) => {
   };
   export const getProductBySlug = async (Slug) => {
     try {
-  debugger
+  
       const response = await axios.get(`${API_URL}/Product/Edit/${Slug}`)
       return response
     } catch (error) {
@@ -35,7 +36,7 @@ export const addProduct = async (Product) => {
   };
   export const getAllProducts  = async () => {
     try {
-      debugger
+      
      
       const response = await axios.get(`${API_URL}/GetAllProducts`);
       return response;
@@ -46,7 +47,7 @@ export const addProduct = async (Product) => {
   };
   export const deleteProduct = async (ProductId) => {
     try {
-      debugger
+      
       const response = await axios.delete(`${API_URL}/DeleteProduct/${ProductId}`);
       return response;
     } catch (error) {
@@ -56,7 +57,7 @@ export const addProduct = async (Product) => {
   };
   export const getAllProductsBySlug = async (Slug) => {
     try {
-      debugger
+      
         const response = await axios.get(`${API_URL}/AllProducts/${Slug}`); 
         console.log(response)
         return response;

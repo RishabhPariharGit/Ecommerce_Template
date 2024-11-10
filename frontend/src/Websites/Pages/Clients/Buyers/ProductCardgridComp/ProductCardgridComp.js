@@ -8,7 +8,7 @@ const ProductCardgridComp = () => {
     const [productdata, setproductdata] = useState([]);
 
     useEffect(() => {
-      fetch('http://localhost:8080/productcard') // Ensure the URL matches your backend route
+      fetch('http://localhost:8080/productcard') 
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -16,7 +16,7 @@ const ProductCardgridComp = () => {
           return response.json();
         })
         .then(data => {
-          console.log('Fetched productcard data:', data); // Log fetched data
+          console.log('Fetched productcard data:', data); 
           setproductdata(data.map(item => ({
             Arrival: item.Arrival,
             Image: item.Image,

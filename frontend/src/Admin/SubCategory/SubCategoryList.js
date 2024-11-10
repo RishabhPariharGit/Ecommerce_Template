@@ -37,7 +37,7 @@ const SubCategoryList = () => {
     };
 
     const handleDelete = async (subCategoryId) => {
-        debugger
+        
         const confirmDelete = window.confirm('Are you sure you want to delete this subcategory?');
         if (confirmDelete) {
             try {

@@ -2,9 +2,10 @@
 import axios from 'axios';
 import Cookies from 'js-cookie'; 
 const API_URL = 'http://localhost:8080';
+
 export const addSubCategory = async (SubCategoryData) => {
     try {
-      debugger
+      
       console.log(SubCategoryData)
       const response = await axios.post(`${API_URL}/CreateSubCategory`, SubCategoryData);
       return response;
@@ -25,7 +26,7 @@ export const addSubCategory = async (SubCategoryData) => {
   };
   export const getAllSubCategories  = async () => {
     try {
-      debugger
+      
      
       const response = await axios.get(`${API_URL}/GetAllSubCategories`);
       return response;
@@ -36,7 +37,7 @@ export const addSubCategory = async (SubCategoryData) => {
   };
   export const getSubCategoryBySlug = async (Slug) => {
     try {
-      debugger
+      
         const response = await axios.get(`${API_URL}/SubCategory/Edit/${Slug}`); 
         return response;
     } catch (error) {
@@ -55,7 +56,7 @@ export const addSubCategory = async (SubCategoryData) => {
   };
   export const deleteSubCategory = async (subcategoryId) => {
     try {
-      debugger
+      
       const response = await axios.delete(`${API_URL}/DeleteSubCategory/${subcategoryId}`);
       return response;
     } catch (error) {
