@@ -1,33 +1,32 @@
-import React, { useEffect, useState ,useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Cookies from 'js-cookie';
-import { getCartItems ,removeCartItem } from '../../../Services/AddToCartService'; 
+import { getCartItems, removeCartItem } from '../../../Services/AddToCartService';
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const isFetchedRef = useRef(false);
+
   useEffect(() => {
     if (!isFetchedRef.current) {
-    const fetchCartItems = async () => {
-        
-      const token = Cookies.get('token');
-      if (!token) {
-        console.error('No token found');
-        return;
-      }
-      try {
-        const response = await getCartItems(token); 
-        console.log("response",response)
-        setCartItems(response.cartItems);
-      } catch (error) {
-        console.error('Error fetching cart items:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCartItems();
-    isFetchedRef.current = true;
-}
+      const fetchCartItems = async () => {
+        const token = Cookies.get('token');
+        if (!token) {
+          console.error('No token found');
+          return;
+        }
+        try {
+          const response = await getCartItems(token); 
+          setCartItems(response.cartItems);
+        } catch (error) {
+          console.error('Error fetching cart items:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchCartItems();
+      isFetchedRef.current = true;
+    }
   }, []);
 
   const handleRemove = async (itemId) => {
@@ -35,9 +34,14 @@ const CartItems = () => {
       await removeCartItem(itemId);
       setCartItems((prevItems) => prevItems.filter(item => item._id !== itemId));
     } catch (error) {
-      console.error('Error removing wishlist item:', error);
+      console.error('Error removing cart item:', error);
     }
   };
+
+  const calculateTotal = () => {
+    return cartItems.reduce((acc, item) => acc + item.Price * item.Quantity, 0);
+  };
+
   if (loading) {
     return <div>Loading cart items...</div>;
   }
@@ -51,28 +55,32 @@ const CartItems = () => {
       <h2>Your Cart Items</h2>
       <ul>
         {cartItems.map((item) => (
-         <li key={item._id} className="cart-item">
-         <div className="cart-item-details">
-           {item.ProductId.Image && (
-             <img 
-               src={item.ProductId.Product_image} 
-               alt={item.ProductId.Name} 
-               className="cart-item-image" 
-               style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-             />
-           )}
-           
-           <p><strong>Product:</strong> {item.ProductId.Name}</p>
-           <p><strong>Quantity:</strong> {item.Quantity}</p>
-           <p><strong>Description:</strong> {item.Description}</p>
-           <p><strong>Price:</strong> ${item.Price}</p>
-           <p><strong>Total:</strong> ${item.Price * item.Quantity}</p>
-           <button onClick={() => handleRemove(item._id)} className="remove-button">Remove</button>
-         </div>
-       </li>
-       
+          <li key={item._id} className="cart-item">
+            <div className="cart-item-details">
+              {item.ProductId.Product_Main_image && (
+                <img 
+                  src={item.ProductId.Product_Main_image} 
+                  alt={item.ProductId.Name} 
+                  className="cart-item-image" 
+                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                />
+              )}
+              <p><strong>Product:</strong> {item.ProductId.Name}</p>
+              <p><strong>Quantity:</strong> {item.Quantity}</p>
+              <p><strong>Description:</strong> {item.Description}</p>
+              <p><strong>Price:</strong> ${item.Price}</p>
+              <p><strong>Total:</strong> ${item.Price * item.Quantity}</p>
+              <button onClick={() => handleRemove(item._id)} className="remove-button">Remove</button>
+            </div>
+          </li>
         ))}
       </ul>
+
+      {/* Total and Checkout Section */}
+      <div className="cart-total">
+        <h3>Total: ${calculateTotal()}</h3>
+        <button className="checkout-button"  onClick={() => handleRemove()} style={{ padding: '10px 20px', cursor: 'pointer' }}>Checkout</button>
+      </div>
     </div>
   );
 };
