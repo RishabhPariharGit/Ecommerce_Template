@@ -1,8 +1,10 @@
 const { ProductStatus, AllSize } = require('../Enum/Enum');
 const ProductModel = require('../Models/Product');
-const SubcategoryModel =require('../Models/SubCategory')
-const CategoryModel =require('../Models/Category')
-const fs = require('fs');  
+const SubcategoryModel = require('../Models/SubCategory')
+const CategoryModel = require('../Models/Category')
+const CartItemModel = require('../Models/CartItems'); 
+const WishlistItemModel = require('../Models/Wishlist ');
+const fs = require('fs');
 
 const validateSizes = (sizeType, sizes) => {
     const validSizes = AllSize[sizeType];
@@ -12,7 +14,7 @@ const validateSizes = (sizeType, sizes) => {
                 return sizes.every(size => Object.values(validSizes).includes(size));
             case 'Shoes':
                 return sizes.every(size => Object.values(validSizes).includes(size));
-                
+
             case 'Pants':
                 return sizes.every(size => validSizes.Waist.includes(size));
             case 'Dresses':
@@ -40,20 +42,21 @@ const validateSizes = (sizeType, sizes) => {
 };
 
 const CreateProduct = async (req, res) => {
-    const { 
-        Name, 
-        Description, 
-        Price, 
-        Quantity, 
-        CategoryId, 
-        SubcategoryId, 
-        Product_image, 
-        Slug, 
-        SKU, 
-        Brand, 
-        Tags, 
-        SizeType, 
-        Sizes 
+    const {
+        Name,
+        Description,
+        Price,
+        Quantity,
+        CategoryId,
+        SubcategoryId,
+        Product_image,
+        Product_Main_image,
+        Slug,
+        SKU,
+        Brand,
+        Tags,
+        SizeType,
+        Sizes
     } = req.body;
 
     try {
@@ -73,14 +76,30 @@ const CreateProduct = async (req, res) => {
             return res.status(400).json({ message: 'Product_image must be a non-empty array of images.' });
         }
         const cloudinary = req.app.locals.cloudinary;
-        console.log("Image URLs to upload:", Product_image);
         const imageUploadPromises = Product_image.map((image) => {
             return cloudinary.uploader.upload(image, { folder: 'products' });
         });
-        
         const uploadResults = await Promise.all(imageUploadPromises);
         const imageUrls = uploadResults.map(result => result.secure_url);
-console.log("imageurl",imageUrls)
+        //upload single main image
+
+        let uploadedImageUrl = '';
+        if (Product_Main_image) {
+            const filePath = Product_Main_image;
+            try {
+                const result = await cloudinary.uploader.upload(filePath, {
+                    folder: 'products'
+                })
+                uploadedImageUrl = result.secure_url;
+
+            } catch (error) {
+                console.log(error)
+                return res.status(500).json({ message: 'Error uploading image to Cloudinary', error });
+            }
+        } else {
+            return res.status(400).json({ message: 'Image file is required' });
+        }
+
         const newProduct = new ProductModel({
             Name,
             Description,
@@ -88,7 +107,8 @@ console.log("imageurl",imageUrls)
             Quantity,
             CategoryId,
             SubcategoryId,
-            Product_image: imageUrls, // Store image URLs as array
+            Product_image: imageUrls,
+            Product_Main_image: uploadedImageUrl,
             Slug,
             SKU,
             Brand,
@@ -112,7 +132,7 @@ console.log("imageurl",imageUrls)
 
 const UpdateProduct = async (req, res) => {
     const { slug } = req.params;
-    const { Name, Description, Price, Quantity, CategoryId, SubcategoryId, Product_image, SKU, Brand, Tags, SizeType, Sizes } = req.body;
+    const { Name, Description, Price, Quantity, CategoryId, SubcategoryId, Product_image,Product_Main_image, SKU, Brand, Tags, SizeType, Sizes } = req.body;
 
     try {
         // Find existing product
@@ -123,87 +143,91 @@ const UpdateProduct = async (req, res) => {
 
         const cloudinary = req.app.locals.cloudinary;
 
-        // Delete old images from Cloudinary if they exist
-        if (Array.isArray(existingProduct.Product_image)) {
-            const deletePromises = existingProduct.Product_image.map((imageUrl) => {
-                const public_id = imageUrl.split('/').pop().split('.')[0];
-                console.log("Deleting image with public ID:", public_id);
-                return cloudinary.uploader.destroy(`products/${public_id}`);
-            });
+        // Step 1: Prepare to remove images not in new Product_image array
+        const existingImageUrls = existingProduct.Product_image || [];
+        const newImageUrls = Product_image || []; // New images from frontend
 
-            const deleteResponses = await Promise.all(deletePromises);
-            console.log("Deleted images response:", deleteResponses);
-        }
+        // Extract public IDs of existing images and delete if not in new images
+        const existingPublicIds = existingImageUrls.map(url => {
+            const parts = url.split('/');
+            return parts[parts.length - 2] + '/' + parts[parts.length - 1].split('.')[0];
+        });
 
-        // Upload new images if provided
-        let updatedImageUrls = [];
-        if (Array.isArray(Product_image) && Product_image.length > 0) {
-            console.log("Uploading new images:", Product_image);
+        const newPublicIds = newImageUrls.map(url => {
+            const parts = url.split('/');
+            return parts[parts.length - 2] + '/' + parts[parts.length - 1].split('.')[0];
+        });
 
-            // Upload each image to Cloudinary
-            // const imageUploadPromises = Product_image.map((image) => {
-            //     return cloudinary.uploader.upload(image, { folder: 'products' });
-            // });
-            const imageUploadPromises = Product_image.map((imageUrl) => {
-                const public_id = imageUrl.split('/').pop();
-                const url="image/"+public_id;
-                console.log("url",url)
-                return cloudinary.uploader.upload(url, { folder: 'products' });
-            });
+        const deletePromises = existingPublicIds
+            .filter(publicId => !newPublicIds.includes(publicId))
+            .map(publicId => cloudinary.uploader.destroy(publicId));
 
-            const uploadResults = await Promise.all(imageUploadPromises);
-            console.log("Image upload results:", uploadResults);
+        await Promise.all(deletePromises);
 
-            // Filter out successful uploads
-            updatedImageUrls = uploadResults
-                .filter(result => result.result === 'ok')  // Only include successful uploads
-                .map(result => result.secure_url);  // Extract the URL of each uploaded image
+        // Step 2: Upload new images that aren’t URLs in Cloudinary
+        const updatedImageUrls = await Promise.all(newImageUrls.map(async (imageUrl) => {
+            if (imageUrl.startsWith('http')) {
+                return imageUrl; // URL already uploaded to Cloudinary
+            } else {
+                const uploadResult = await cloudinary.uploader.upload(imageUrl, { folder: 'products', resource_type: 'auto' });
+                return uploadResult.secure_url; // Newly uploaded image URL
+            }
+        }));
 
-            // Log failed uploads
-            uploadResults.forEach(result => {
-                if (result.result !== 'ok') {
-                    console.error("Failed to upload image:", result);
+        //update Single image of Product
+        let uploadedImageUrl = existingProduct.Product_Main_image;
+        if (Product_Main_image && Product_Main_image !== existingProduct.Product_Main_image) {
+            try {
+                const cloudinary = req.app.locals.cloudinary;
+                if (existingProduct.Product_Main_image) {
+                    const public_id = existingProduct.Product_Main_image.split('/').pop().split('.')[0];
+                    await cloudinary.uploader.destroy(`products/${public_id}`);
                 }
-            });
+                const result = await cloudinary.uploader.upload(Product_Main_image, {
+                    folder: 'products'
+                });
+                uploadedImageUrl = result.secure_url;
+            } catch (error) {
+                console.log(error);
+                return res.status(500).json({ message: 'Error uploading image to Cloudinary', error });
+            }
         }
 
-        // Update the product fields with new values
+        // Step 3: Update product fields
         existingProduct.Name = Name;
         existingProduct.Description = Description;
         existingProduct.Price = Price;
         existingProduct.Quantity = Quantity;
         existingProduct.CategoryId = CategoryId;
         existingProduct.SubcategoryId = SubcategoryId;
-        existingProduct.Product_image = updatedImageUrls.length > 0 ? updatedImageUrls : existingProduct.Product_image;  // If no new images, keep old ones
+        existingProduct.Product_image = updatedImageUrls; 
+        existingProduct.Product_Main_image = uploadedImageUrl; 
         existingProduct.SKU = SKU;
         existingProduct.Brand = Brand;
         existingProduct.Tags = Tags;
         existingProduct.SizeType = SizeType;
         existingProduct.Sizes = Sizes;
 
-        // Save the updated product
+        // Step 4: Save updated product
         const updatedProduct = await existingProduct.save();
 
-        // Send response
         res.status(200).json({
             message: 'Product updated successfully!',
             Product: updatedProduct
         });
+
     } catch (err) {
         console.error("Error updating product:", err);
         res.status(500).json({ message: 'Error updating product', error: err });
     }
 };
 
-
-
-
 const GetAllProducts = async (req, res) => {
     try {
-        const Products = await ProductModel.find(); 
+        const Products = await ProductModel.find();
         if (!Products || Products.length === 0) {
             return res.status(404).json({ message: 'No Products found' });
-        }      
+        }
         return res.status(200).json(Products);
     } catch (err) {
         console.error("Error:", err);
@@ -214,7 +238,8 @@ const GetAllProducts = async (req, res) => {
 const GetProductBySlug = async (req, res) => {
     try {
         const { Slug } = req.params;
-        const Product = await ProductModel.findOne({ Slug: { $regex: new RegExp(Slug, "i") } }); 
+        const Product = await ProductModel.findOne({ Slug: { $regex: new RegExp(Slug, "i") } });
+        console.log("Product",Product)
         if (!Product) {
             return res.status(404).json({ message: 'Product not found' });
         }
@@ -225,16 +250,23 @@ const GetProductBySlug = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
 const DeleteProduct = async (req, res) => {
     const { id } = req.params;
+    const session = await ProductModel.startSession(); // Start a new session for the transaction
+    session.startTransaction();
+
     try {
-        const product = await ProductModel.findById(id);
+        const product = await ProductModel.findById(id).session(session); // Include session in the find query
+
         if (!product) {
+            await session.abortTransaction();
+            session.endSession();
             return res.status(404).json({ message: 'Product not found' });
         }
 
         const cloudinary = req.app.locals.cloudinary;
+        
+        // Delete images from Cloudinary
         if (Array.isArray(product.Product_image)) {
             const deletePromises = product.Product_image.map((imageUrl) => {
                 const public_id = imageUrl.split('/').pop().split('.')[0];
@@ -242,14 +274,28 @@ const DeleteProduct = async (req, res) => {
             });
             await Promise.all(deletePromises);
         }
-        await ProductModel.findByIdAndDelete(id);
 
-        res.status(200).json({ message: 'Product deleted successfully!' });
+        // Cascade delete associated CartItems and WishlistItems
+        await CartItemModel.deleteMany({ ProductId: id }).session(session);
+        await WishlistItemModel.deleteMany({ ProductId: id }).session(session);
+
+        // Finally, delete the product itself
+        await ProductModel.findByIdAndDelete(id).session(session);
+
+        // Commit the transaction
+        await session.commitTransaction();
+        session.endSession();
+
+        res.status(200).json({ message: 'Product and associated items deleted successfully!' });
     } catch (err) {
+        await session.abortTransaction();
+        session.endSession();
+
         console.error("Error deleting product:", err);
         res.status(500).json({ message: 'Error deleting product', error: err });
     }
 };
+
 
 
 const GetAllProductsBySlug = async (req, res) => {
@@ -257,7 +303,7 @@ const GetAllProductsBySlug = async (req, res) => {
         const { slug } = req.params;
         let category = await CategoryModel.findOne({ Slug: slug });
 
-        if (category) {       
+        if (category) {
             const products = await ProductModel.find({ CategoryId: category._id });
             return res.json(products);
         }
@@ -276,7 +322,7 @@ const GetAllProductsBySlug = async (req, res) => {
 };
 
 
-module.exports = { CreateProduct,UpdateProduct,GetAllProducts,GetProductBySlug ,DeleteProduct,GetAllProductsBySlug };
+module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug, DeleteProduct, GetAllProductsBySlug };
 
 ``
 

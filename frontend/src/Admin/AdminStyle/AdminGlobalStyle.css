@@ -1506,7 +1506,7 @@ td {
       .input-form table tr {
           display: flex;
           justify-content: center;
-          gap: 20px;
+          gap: 5px;
       }
 
           .input-form table tr td {

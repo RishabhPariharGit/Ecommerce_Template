@@ -5,14 +5,14 @@ import {
     updateProduct,
     getProductBySlug
 } from '../../Services/ProductService';
-import { getAllSubCategoriesByCategoryId } from '../../Services/SubCategoryService';
+import { getAllSubCategoriesByCategoryId,getAllSubCategories } from '../../Services/SubCategoryService';
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import AllSize from './EnumDropdown'; // Import the enum
 
 const ProductForm = ({ isEditMode = false }) => {
     const [previewSources, setPreviewSources] = useState([]); // Array for preview
-
+    const [SinglepreviewSource, setSinglepreviewSource] = useState('');
     const [formData, setFormData] = useState({
         Name: '',
         Description: '',
@@ -21,6 +21,7 @@ const ProductForm = ({ isEditMode = false }) => {
         CategoryId: '',
         SubcategoryId: '',
         Product_image: [],
+        Product_Main_image: '',
         Slug: '',
         SKU: '',
         Brand: '',
@@ -47,13 +48,20 @@ const ProductForm = ({ isEditMode = false }) => {
                     console.error('Error fetching categories:', err);
                 }
             };
-
+            const fetchSubCategories = async () => {
+                try {
+                    const response = await getAllSubCategories();
+                    setSubcategories(response.data);
+                } catch (err) {
+                    console.error('Error fetching categories:', err);
+                }
+            };
             const loadProduct = async () => {
                 try {
                     debugger
                     const response = await getProductBySlug(slug);
                     const product = response.data;
-                
+
                     if (product) {
                         setFormData({
                             Name: product.Name,
@@ -67,10 +75,13 @@ const ProductForm = ({ isEditMode = false }) => {
                             Brand: product.Brand,
                             Tags: product.Tags,
                             Product_image: product.Product_image || [],
+                            Product_Main_image: product.Product_Main_image,
                             SizeType: product.SizeType || '',
                             Sizes: product.Sizes || [] // Assuming product.Sizes is an array
                         });
                         setPreviewSources(product.Product_image || []);
+                        setSinglepreviewSource(product.Product_Main_image);
+
                     }
                 } catch (err) {
                     console.error('Error fetching product:', err);
@@ -80,6 +91,7 @@ const ProductForm = ({ isEditMode = false }) => {
             };
 
             fetchCategories();
+            fetchSubCategories();
             if (isEditMode && slug) loadProduct();
             isFetchedRef.current = true;
         }
@@ -98,6 +110,15 @@ const ProductForm = ({ isEditMode = false }) => {
             return { ...prevData, Sizes: newSizes };
         });
     };
+    const handleRemoveImage = (index, event) => {
+        event.preventDefault();
+        setPreviewSources((prevSources) => prevSources.filter((_, i) => i !== index));
+        setFormData((prevData) => ({
+            ...prevData,
+            Product_image: prevData.Product_image.filter((_, i) => i !== index)
+        }));
+    };
+
 
     const clothingSizes = Object.values(AllSize.Clothing);
     const ShoeSizes = Object.values(AllSize.Shoes);
@@ -124,6 +145,24 @@ const ProductForm = ({ isEditMode = false }) => {
                 }
             };
         });
+    };
+
+    const handleSingleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            previewFile(file);
+        } else {
+            alert('Please upload a valid image file.');
+        }
+    };
+
+    const previewFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setSinglepreviewSource(reader.result);
+            setFormData((prevData) => ({ ...prevData, Product_Main_image: reader.result }));
+        };
     };
 
     const handleCategoryInputChange = async (e) => {
@@ -303,30 +342,6 @@ const ProductForm = ({ isEditMode = false }) => {
                                         </select>
                                     </td>
                                 </tr>
-
-                                {/* Tags and Product Image */}
-                                <tr>
-                                    <td>
-                                        <div className="formlabel">Tags</div>
-                                        <input
-                                            type="text"
-                                            name="Tags"
-                                            value={formData.Tags}
-                                            onChange={handleInputChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <div className="formlabel">Product Images</div>
-                                        <input
-                                            type="file"
-                                            name="Product_image"
-                                            accept="image/*"
-                                            onChange={handleFileInputChange}
-                                            multiple
-                                        />
-                                    </td>
-                                </tr>
-
                                 {/* Size Type and Sizes */}
                                 <tr>
                                     <td>
@@ -372,35 +387,105 @@ const ProductForm = ({ isEditMode = false }) => {
                                             ))}
                                     </td>
                                 </tr>
+                                {/* Tags and Product Image */}
+                                <tr>
+                                    <td>
+                                        <div className="formlabel">Tags</div>
+                                        <input
+                                            type="text"
+                                            name="Tags"
+                                            value={formData.Tags}
+                                            onChange={handleInputChange}
+                                        />
+                                    </td>
+                                    <td>
+                                        <div className="formlabel">Main Product Image</div>
+                                        <input
+                                            type="file"
+                                            name="label_image"
+                                            onChange={handleSingleFileInputChange}
+                                            required={!isEditMode}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div className="formlabel">Product Images</div>
+                                        <input
+                                            type="file"
+                                            name="Product_image"
+                                            accept="image/*"
+                                            onChange={handleFileInputChange}
+                                            multiple
+                                        />
+                                         {/* Preview Image Section */}
+                                    <div className="image-preview-section">
+                                        {previewSources && previewSources.length > 0 ? (
+                                            previewSources.map((source, index) => (
+                                                <div key={index} style={{ position: 'relative', display: 'inline-block', margin: '5px' }}>
+                                                    <img
+                                                        src={source}
+                                                        alt={`Preview ${index + 1}`}
+                                                        style={{ maxWidth: '100px' }}
+                                                    />
+                                                    <button
+                                                        onClick={(event) => handleRemoveImage(index, event)}
+                                                        style={{
+                                                            position: 'absolute',
+                                                            top: '0',
+                                                            right: '0',
+                                                            background: 'red',
+                                                            color: 'white',
+                                                            border: 'none',
+                                                            borderRadius: '50%',
+                                                            cursor: 'pointer',
+                                                            padding: '2px 5px'
+                                                        }}
+                                                    >
+                                                        &times;
+                                                    </button>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p>No images available</p>
+                                        )}
+                                    </div>
+                                    </td>
+
+                                    <td>
+                                        {(SinglepreviewSource || (isEditMode && formData.label_image)) && (
+                                            <img
+                                                src={SinglepreviewSource || formData.label_image}
+                                                alt="Selected"
+                                                style={{ height: '145px', marginTop: '20px' }}
+                                            />
+                                        )}
+                                    </td>
+                                </tr>
+                               
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <button type="submit" className="button">
+                                                {isEditMode ? 'Update Product' : 'Create Product'}
+                                            </button>
+                                            <button type="button"
+                                                className="button cancel-button"
+                                                onClick={handleCancel}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </td>
+                                    
+                                </tr>
                             </tbody>
                         </table>
 
-                        <div className="text-center">
-                            <button type="submit" className="button">
-                                {isEditMode ? 'Update Product' : 'Create Product'}
-                            </button>
-                            <button type="button" 
-                            className="button cancel-button"
-                            onClick={handleCancel}>
-                                Cancel
-                            </button>
-                        </div>
 
-                        {/* Preview Image Section */}
-                        <div className="image-preview-section">
-                            {previewSources && previewSources.length > 0 ? (
-                                previewSources.map((source, index) => (
-                                    <img
-                                        key={index}
-                                        src={source}
-                                        alt={`Preview ${index + 1}`}
-                                        style={{ maxWidth: '100px', margin: '5px' }}
-                                    />
-                                ))
-                            ) : (
-                                <p>No images available</p>
-                            )}
-                        </div>
+
+
+
+
 
                     </form>
                 </div>

@@ -42,7 +42,7 @@ const CategoryForm = ({ isEditMode = false }) => {
             } else {
                 setIsLoading(false);
             }
-            
+
             isFetchedRef.current = true; // Mark data as fetched
         }
     }, [isEditMode, slug]);
@@ -75,7 +75,7 @@ const CategoryForm = ({ isEditMode = false }) => {
 
     const handleSubmitFile = async (e) => {
         e.preventDefault();
-
+        debugger
         try {
             const formPayload = new FormData();
             formPayload.append('Name', formData.Name);
@@ -108,81 +108,93 @@ const CategoryForm = ({ isEditMode = false }) => {
             <div className="pagetitle">{isEditMode ? 'Edit Category' : 'Create a New Category'}</div>
             <div className="form-800">
                 <div className="white-bg">
-                    <form onSubmit={handleSubmitFile}>
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div className="formlabel">Name</div>
-                                        <input
-                                            type="text"
-                                            name="Name"
-                                            value={formData.Name}
-                                            onChange={handleInputChange}
-                                            required
-                                        />
-                                    </td>
-                                    <td>
-                                        <div className="formlabel">Slug</div>
-                                        <input
-                                            type="text"
-                                            name="Slug"
-                                            value={formData.Slug}
-                                            onChange={handleInputChange}
-                                            required
-                                            disabled={isEditMode}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colSpan="2">
-                                        <div className="formlabel">Description</div>
-                                        <textarea
-                                            name="Description"
-                                            value={formData.Description}
-                                            onChange={handleInputChange}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="formlabel">Image</div>
-                                        <input
-                                            type="file"
-                                            name="label_image"
-                                            onChange={handleFileInputChange}
-                                            required={!isEditMode}
-                                        />
-                                    </td>
-                                </tr>
-                                
-                                        
-                                   
-                            </tbody>
-                        </table>
-                    </form>
+                    <div className='input-form'>
+                        <form onSubmit={handleSubmitFile}>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div className="formlabel">Name</div>
+                                            <input
+                                                type="text"
+                                                name="Name"
+                                                value={formData.Name}
+                                                onChange={handleInputChange}
+                                                required
+                                            />
+                                        </td>
+                                        <td>
+                                            <div className="formlabel">Slug</div>
+                                            <input
+                                                type="text"
+                                                name="Slug"
+                                                value={formData.Slug}
+                                                onChange={handleInputChange}
+                                                required
+                                                disabled={isEditMode}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="2">
+                                            <div className="formlabel">Description</div>
+                                            <textarea
+                                                name="Description"
+                                                value={formData.Description}
+                                                onChange={handleInputChange}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div className="formlabel">Image</div>
+                                            <input
+                                                type="file"
+                                                name="label_image"
+                                                onChange={handleFileInputChange}
+                                                required={!isEditMode}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {(previewSource || (isEditMode && formData.label_image)) && (
+                                                <img
+                                                    src={previewSource || formData.label_image}
+                                                    alt="Selected"
+                                                    style={{ height: '180px' }}
+                                                />
+                                            )}
+                                        </td>
+                                    </tr>
+                                    <tr>
 
-                    <div className="text-center">
-                                            <button type="submit" className="button">
-                                                {isEditMode ? 'Update' : 'Submit'}
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="button cancel-button"
-                                                onClick={handleCancel}
-                                            >
-                                                Cancel
-                                            </button>
-                                        </div>
+                                        <td>
+                                            <div >
+                                                <button type="submit" className="button">
+                                                    {isEditMode ? 'Update' : 'Submit'}
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="button cancel-button"
+                                                    onClick={handleCancel}
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </td>
 
-                    {(previewSource || (isEditMode && formData.label_image)) && (
-                        <img
-                            src={previewSource || formData.label_image}
-                            alt="Selected"
-                            style={{ height: '300px', marginTop: '20px' }}
-                        />
-                    )}
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </form>
+
+                    </div>
+
+
                 </div>
+
             </div>
         </div>
     );

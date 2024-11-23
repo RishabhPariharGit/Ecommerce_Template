@@ -83,6 +83,10 @@ const Newhome = () => {
   const handleLoginClick = () => {
     navigate('/login');
   };
+  
+  const handleProfileClick = () => {
+    navigate('/UserProfile');
+  };
   const handleAddtocartclick = () => {
     
     const token = Cookies.get('token');  
@@ -155,7 +159,7 @@ const Newhome = () => {
             <div>
             <button className='btn' onClick={handleAddtocartclick}>Addtocart</button>
             <button className='btn' onClick={handleWishlistclick}>Wishlist</button>
-            <button className='btn' onClick={handleLoginClick}>UserProfile</button>
+            <button className='btn' onClick={handleProfileClick}>UserProfile</button>
               <button className='btn' onClick={handleLoginClick}>Login</button>
               <button className='btn' onClick={handleLogout}>Logout</button>
             </div>

@@ -12,6 +12,8 @@ const SubcategoryModel = require('./Models/SubCategory');
 const CartItemModel =require('./Models/CartItems')
 const ProductModel = require('./Models/Product');
 const WishlistModel=require('./Models/Wishlist ')
+const AddressModel=require('./Models/UserAddress')
+
 const cloudinary = require('cloudinary').v2;  
 require('dotenv').config();
 
@@ -48,6 +50,7 @@ SubcategoryModel();
 ProductModel();
 CartItemModel();
 WishlistModel();
+AddressModel();
 
 app.use('/', Router);
 
