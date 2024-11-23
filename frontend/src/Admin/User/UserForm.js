@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { registerUser, getUserByUsername, updateUser } from '../../Services/UserService'; 
 import { useNavigate, useParams } from 'react-router-dom';
 import '../AdminStyle/AdminGlobalStyle.css';
+import Navbar from '../AdminComponents/Navbar';
 
 const UserForm = ({ isEditMode = false }) => {
     const [formData, setFormData] = useState({
@@ -85,7 +86,13 @@ const UserForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-            <div className="pagetitle">{isEditMode ? 'Edit User' : 'Create a New User'}</div>
+            <Navbar/>
+            <div className="white-bg-btn">
+            <div className='title-bread-crumbs'>
+               <p>User Form</p> 
+               </div>
+            </div>
+            {/* <div className="pagetitle">{isEditMode ? 'Edit User' : 'Create a New User'}</div> */}
             <div className="form-800">
                 <div className="white-bg">
                     <form onSubmit={handleSubmit}>

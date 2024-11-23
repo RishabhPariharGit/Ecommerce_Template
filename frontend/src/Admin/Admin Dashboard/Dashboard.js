@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../AdminStyle/AdminGlobalStyle.css';
 import '../AdminStyle/Color.css';
+import Navbar from '../AdminComponents/Navbar';
+import ResponsiveGrid from '../AdminComponents/ResponsiveGrid';
 
 
 const Dashboard = () => {
@@ -24,7 +26,9 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className='main-admin-wrapper'>
+      <Navbar/>
+      <ResponsiveGrid/>
+      {/* <div className='main-admin-wrapper'>
     
 
       <div className='main-side-wrapper'>
@@ -38,7 +42,7 @@ const Dashboard = () => {
         </div>
 
       </div>
-      </div>
+      </div> */}
     </div>
   );
 };

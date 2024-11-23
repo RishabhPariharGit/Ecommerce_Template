@@ -224,18 +224,20 @@ body {
   padding-bottom: 8px;
   text-align: left;
   text-align: center;
-  margin: auto;
-  color:white;
-  width: 98%;
-  border-radius: 8px;
+  margin-left: 15px;
+  color:rgb(0, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;  
+  width: 100%;
+  /* border-radius: 8px; */
   /* margin-left: 5px */
-  background-color: #222E3C;
+  background-color: #FFFFFF;
   /* box-shadow: rgba(0,0,0,0.03) 0px 2px 2px, rgba(0,0,0,0.03) 0px 0px 2px 2px; */
   z-index: 10;
   /* border-bottom: solid 2px #BBB; */
   position: sticky; 
   /* Makes the top bar sticky */
-  top: 6px; /* Ensures it sticks to the top */
+  /* top: 6px;  */
+  /* Ensures it sticks to the top */
   height: 57px; 
   overflow: hidden; /* Ensures no scrollbar appears in the title bar */
 }
@@ -348,7 +350,7 @@ body {
 
           .wrapper .top_navbar .top_menu {
               width: calc(100%);
-              background: #222E3C;
+              background: #202B46;
               height: 100%;
               border-top-left-radius: 10px;
               border-top-right-radius: 10px;
@@ -374,10 +376,8 @@ body {
 
 .wrapper .sidebar {
   position: fixed;
-  background: #222E3C;
-  margin: 5px;
-  border-radius: 10px;
-  width: 235px;
+  background: #202B46;
+  /* width: 250px; */
   height: 100%;
   transition: all .3s ease;
   box-shadow: rgb(0 0 0 / 5%) 0px 15px 25px, rgb(0 0 0 / 5%) 0px 5px 10px;
@@ -398,7 +398,7 @@ body {
     color: var(--SideNavTextColor);
     white-space: nowrap;
     cursor: pointer;
-    gap: 20px;
+    gap: 12px;
     align-items: center;
     margin: 15px 15px 15px 7px;
 }
@@ -411,10 +411,10 @@ body {
   color: var(--SideNavTextColor) !important;
   white-space: nowrap;
   cursor: pointer;
-  gap: 20px;
+  gap: 12px;
   align-items: center;
   margin: 15px 7px 15px 7px;
-  background-color: #2f3c4b;
+  background-color: #ffffff;
 }
 
           .wrapper .sidebar ul li a::before {
@@ -444,7 +444,8 @@ body {
 
           .wrapper .sidebar ul li a span.title {
               display: inline-block;
-              font-size: 15px;
+              font-size: 13px;
+              font-weight: 500;
               text-decoration: none;
               line-height: 1;
               margin-top: 3px;
@@ -456,7 +457,7 @@ body {
           .wrapper .sidebar ul li a:hover {
               /* color: var(--SideNavSelectedItemTextColor); */
               margin: 15px 7px 15px 7px;
-              background-color: #2f3c4b;
+              background-color: #3E97FF;
               text-decoration: none;
               border-radius: 5px;
           }
@@ -1047,7 +1048,7 @@ html[xmlns] .clearfix {
 
 .white-bg {
   background: #fff;
-  box-shadow: rgb(0 0 0 / 5%) 0px 15px 25px, rgb(0 0 0 / 5%) 0px 5px 10px;
+  /* box-shadow: rgb(0 0 0 / 5%) 0px 15px 25px, rgb(0 0 0 / 5%) 0px 5px 10px; */
   margin-bottom: 15px;
   z-index: 0;
   border-radius: 5px;
@@ -2528,7 +2529,9 @@ hr {
 /* Increase icon size */
 .icon {
   font-size: 18px; /* Adjust the size as needed */
-  transition: none; /* Disable any transition effect if it exists */
+  transition: none;
+  color: white; /* Disable any transition effect if it exists */
+
 }
 
 /* Remove hover effect from icons */
@@ -2544,9 +2547,19 @@ ul{
 
 .white-bg-btn {
   width: 100%;
+  display: flex;
   text-align: right;
   padding: 30px 30px 0px 30px;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.white-bg-btn p{
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
 
 .customization-main-btns {
   display: flex;
@@ -2578,3 +2591,64 @@ button.btn.logout-btn {
   padding: 8px 80px;
   font-weight: 600;
 }
+
+header.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation4.MuiAppBar-root.MuiAppBar-colorPrimary.MuiAppBar-positionStatic.css-ptdwpq-MuiPaper-root-MuiAppBar-root {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+input.MuiInputBase-input.css-yimnyd-MuiInputBase-input {
+  padding: 0px 50px;
+}
+
+span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular.MuiBadge-overlapRectangular.MuiBadge-colorError.css-1enwswh-MuiBadge-badge {
+  background-color: #3E97FF;
+}
+
+.wrapper .sidebar ul{
+ padding: 20px 0px;
+}
+
+
+/* grid styling start */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.dashboard-card {
+  background-color: #f8f9fa;
+  /* border-radius: 8px; */
+  padding: 20px;
+  display: flex;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 45px;
+}
+
+.card-icon {
+  font-size: 2.2rem;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.dashboard-card h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 100;
+}
+
+.dashboard-card p {
+  font-size: 14px;
+  color: #007bff;
+  font-weight: 600;
+}
+
+
+/* grid styling end */
