@@ -77,7 +77,10 @@ const Sidenav = () => {
                     </div>
                     <div className="top_menu">
                         <div className="logo">
-                            <img id="logo" src="https://www.logolynx.com/images/logolynx/56/56afea50b83164e3e272d4ebeccd94fb.png" alt="Logo" height="40" />
+                            <img id="logo" src="https://cdn.worldvectorlogo.com/logos/akasol-1.svg" alt="Logo" height="40" />
+                        
+                            {/* <h4 style={{ color: '#3E97FF', fontWeight: '900', fontSize:'18px',fontFamily:'sans-serif',marginLeft:'10px' }}>ECOMMERCE</h4> */}
+                        
                         </div>
                     </div>
                 </div>
@@ -87,8 +90,11 @@ const Sidenav = () => {
                 <div className="desktop">
                     <div className="top_navbar">
                         <div className="top_menu">
-                            <div className="logo center" style={{ paddingTop: '5px' }}>
-                                <img id="logo" src="https://www.logolynx.com/images/logolynx/56/56afea50b83164e3e272d4ebeccd94fb.png" alt="Logo" height="40" />
+                            <div className="logo center" style={{ paddingTop: '25px' }}>
+                                <img id="logo" src="https://cdn.worldvectorlogo.com/logos/akasol-1.svg" alt="Logo" height="45" />
+                                {/* <h4 style={{ color: '#3E97FF', fontWeight: '900', fontSize:'18px',fontFamily:'sans-serif' }}>ECOMMERCE</h4> */}
+
+
                             </div>
                         </div>
                     </div>
@@ -96,13 +102,13 @@ const Sidenav = () => {
 
                 <ul style={{ borderTop: 'solid 1px #EEE' }}>
                     <li>
-                        <Link to="/dashboard">
+                        <Link to="/admin/dashboard">
                             <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
                             <span className="title">Dashboard</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/orders">
+                        <Link to="/admin/orders">
                             <FontAwesomeIcon icon={faShoppingCart} className="icon" />
                             <span className="title">Orders</span>
                         </Link>

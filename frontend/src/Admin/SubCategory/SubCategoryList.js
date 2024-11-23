@@ -1,6 +1,7 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { getAllSubCategories, deleteSubCategory } from '../../Services/SubCategoryService'; 
 import { useNavigate } from 'react-router-dom'; 
+import Navbar from '../AdminComponents/Navbar';
 
 const SubCategoryList = () => {
     const [subCategories, setSubCategories] = useState([]);
@@ -50,28 +51,21 @@ const SubCategoryList = () => {
         }
     };
   
-    if (isLoading) {
-        return <div>Loading subcategories...</div>;
-    }
+    // if (isLoading) {
+    //     return <div>Loading subcategories...</div>;
+    // }
 
     return (
         <div>
-            <div className="pagetitle">
-                Subcategories
-            </div>
-
-            
-
-
-                   
+           <Navbar/>                
                 <div className="white-bg-btn">
+                <div className='title-bread-crumbs'>
+               <p>Subcategories</p> 
+               </div>
                 <button className="button" onClick={handleCreate}>
                         Create Subcategory
-                    </button>
-                    
+                    </button>   
                 </div>
-
-
             <div className="form-600">
                 <div className="white-bg">
                     

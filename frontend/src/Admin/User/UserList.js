@@ -1,6 +1,7 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { getAllUsers, deleteUser } from '../../Services/UserService'; // Adjust service functions for users
 import { useNavigate } from 'react-router-dom'; 
+import Navbar from '../AdminComponents/Navbar';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -48,16 +49,20 @@ const UserList = () => {
         }
     };
 
-    if (isLoading) {
-        return <div>Loading users...</div>; // Loading indicator
-    }
+    // if (isLoading) {
+    //     return <div>Loading users...</div>; 
+    // }
 
     return (
-        <div>
-            <div className="pagetitle">
+        <>
+            {/* <div className="pagetitle">
                 Users
-            </div>
+            </div> */}
+<Navbar/>
             <div className="white-bg-btn">
+            <div className='title-bread-crumbs'>
+               <p>Users</p> 
+               </div>
             <button className="button" onClick={handleCreate}>
                         Create User
                     </button>
@@ -113,7 +118,7 @@ const UserList = () => {
                     </table>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

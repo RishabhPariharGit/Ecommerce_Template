@@ -7,6 +7,7 @@ import {
 } from '../../Services/SubCategoryService';
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import Navbar from '../AdminComponents/Navbar';
 
 const SubCategoryForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
@@ -130,10 +131,16 @@ const SubCategoryForm = ({ isEditMode = false }) => {
     if (isLoading) return <div>Loading...</div>;
 
     return (
-        <div>
-            <div className="pagetitle">
+        <>
+   <Navbar/>      
+   <div className="white-bg-btn">
+            <div className='title-bread-crumbs'>
+               <p>Create Subcategory</p> 
+               </div>
+            </div>   
+            {/* <div className="pagetitle">
                 {isEditMode ? 'Edit Subcategory' : 'Create a New Subcategory'}
-            </div>
+            </div> */}
             <div className="form-800">
                 <div className="white-bg">
                     <div className="input-form">
@@ -241,7 +248,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                     </div>
                 </div>
             </div>
-        </div>
+            </>
     );
 };
 

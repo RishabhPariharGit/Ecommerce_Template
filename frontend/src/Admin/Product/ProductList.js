@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getAllProducts,deleteProduct } from '../../Services/ProductService'; 
 import { useNavigate } from 'react-router-dom'; 
+import Navbar from '../AdminComponents/Navbar';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -47,16 +48,18 @@ const ProductList = () => {
             }
         }
     };
-    if (isLoading) {
-        return <div>Loading products...</div>; // Loading indicator
-    }
+    // if (isLoading) {
+    //     return <div>Loading products...</div>; 
+        
+    // }
 
     return (
         <div>
-            <div className="pagetitle">
-                Products
-            </div>
+           <Navbar/>
             <div className="white-bg-btn">
+            <div className='title-bread-crumbs'>
+               <p>Product List</p> 
+               </div>
             <button className="button" onClick={handleCreate}>
                         Create Product
                     </button>
