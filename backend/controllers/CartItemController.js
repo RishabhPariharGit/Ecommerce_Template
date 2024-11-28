@@ -12,7 +12,7 @@ const AddToCart = async (req, res) => {
     // Verify token if it exists
     if (token) {
       try {
-        const decoded = jwt.verify(token, 'SECRET'); // Replace 'SECRET' with your actual secret key
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Replace 'SECRET' with your actual secret key
         UserId = decoded.userId; // Assuming token contains `userId`
       } catch (err) {
         return res.status(401).json({ message: 'Unauthorized: Invalid token.' });
@@ -80,7 +80,7 @@ const GetCartItems = async (req, res) => {
     let filter = {}; 
 
     if (token) {     
-      const decoded = jwt.verify(token, 'SECRET'); 
+      const decoded = jwt.verify(token, process.env.JWT_SECRET); 
       const UserId = decoded.userId;
       filter.UserId = UserId; 
     } else if (guid) {     
@@ -122,7 +122,7 @@ const MergeCartItems = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized: No token provided.' });
     }
 
-    const decoded = jwt.verify(token, 'SECRET'); 
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); 
     const UserId = decoded.userId;
     const { GUID } = req.body;
 console.log(GUID)
