@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const authMiddleware = require('../middleware/authMiddleware');
 const {
   RegisterUser,
   LoginUser,
@@ -8,7 +8,9 @@ const {
   GetAllUsers,
   UpdateUser,
   DeleteUser,
-  GetUserProfile
+  GetUserProfile,
+  GetAddresses,
+  AddAddress
 } = require('../Controllers/UserController');
 const {
   CreateCategory,
@@ -36,7 +38,8 @@ const {
 
 const {AddToCart,
   GetCartItems,
-  DeleteCartItem}= require("../Controllers/CartItemController")
+  DeleteCartItem,
+  MergeCartItems}= require("../Controllers/CartItemController")
 const {AddToWishlist,
   GetWishListItems,
   DeleteWishlistItem}= require("../Controllers/WishListItemController")
@@ -47,8 +50,11 @@ router.get("/User/Edit/:Username", GetUserByUsername);
 router.get("/GetAllUsers", GetAllUsers);
 router.put("/UpdateUser/:Username", UpdateUser);
 router.delete('/DeleteUser/:id', DeleteUser);
-router.get('/UserProfile', GetUserProfile);
+router.get('/UserProfile',authMiddleware, GetUserProfile);
 
+//User Address route
+router.get('/user/addresses', authMiddleware,GetAddresses);
+router.post('/user/address', authMiddleware, AddAddress);
 
 //Category route
 router.post("/CreateCategory", CreateCategory);
@@ -79,6 +85,8 @@ router.get("/AllProducts/:slug", GetAllProductsBySlug);
 router.post('/AddToCart', AddToCart);
 router.get("/GetCartItems", GetCartItems);
 router.delete('/removeCartItem/:id', DeleteCartItem);
+router.post('/mergeCartItems', MergeCartItems);
+
 
 
 //WishlistItem Route

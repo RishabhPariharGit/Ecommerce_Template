@@ -1,33 +1,35 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from '../../Services/UserService';
 import Cookies from 'js-cookie';
-
+import useMergeCartOnLogin from "../../Hooks/useMergeCartOnLogin";
 import './Login.css';
 
 export default function Login() {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
   const navigate = useNavigate();
+  const location = useLocation(); 
+  const mergeCartItems = useMergeCartOnLogin();
 
   const handleSubmit = async (event) => {
-    
     event.preventDefault();
-  
+
     try {
       const response = await loginUser({ Username, Password });
-      if (response.status === 200) {      
+      if (response.status === 200) {
         alert("Login successful");
-  
-        const role = Cookies.get('role'); // Get the role from the cookie
-        const token = Cookies.get('token');
+        await mergeCartItems(); 
+
+        const role = Cookies.get('role');
+        const redirectTo = location.state?.redirectTo || '/UserProfile';
+
         if (role === 'SystemAdmin') {
-          navigate('/admin/panel'); // Redirect SystemAdmin to the panel
-        } else if (role === 'Admin'||role==="SystemAdmin") {
-          navigate('/admin/dashboard'); // Redirect Admin to the dashboard
+          navigate('/admin/panel');
+        } else if (role === 'Admin' || role === "SystemAdmin") {
+          navigate('/admin/dashboard');
         } else {
-          navigate('/UserProfile'); // Redirect to not-authorized if the user has no role
+          navigate(redirectTo); 
         }
       } else {
         alert(`Login failed: ${response.data.error}`);
@@ -37,7 +39,6 @@ export default function Login() {
       alert('Login failed: An error occurred');
     }
   };
-  
 
   return (
     <div className="log-container">
