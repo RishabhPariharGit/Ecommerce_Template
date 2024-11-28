@@ -87,24 +87,16 @@ const Newhome = () => {
   const handleProfileClick = () => {
     navigate('/UserProfile');
   };
-  const handleAddtocartclick = () => {
-    
-    const token = Cookies.get('token');  
-    // If token exists, navigate to the cart page; otherwise, navigate to login
-    if (token) {
-      navigate('/Checkout/cart'); // Redirect to the cart if the user is logged in
-    } else {
-      navigate('/login'); // Redirect to login if no token is found
-    }
+  const handleAddtocartclick = () => {    
+      navigate('/Checkout/cart'); 
   };
   const handleWishlistclick = () => {
     
     const token = Cookies.get('token');  
-    // If token exists, navigate to the cart page; otherwise, navigate to login
     if (token) {
-      navigate('/Wishlist'); // Redirect to the cart if the user is logged in
+      navigate('/Wishlist'); 
     } else {
-      navigate('/login'); // Redirect to login if no token is found
+      navigate('/login');
     }
   };
   const handleLogout = () => {

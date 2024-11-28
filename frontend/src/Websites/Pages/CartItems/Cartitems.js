@@ -1,29 +1,52 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import { getCartItems, removeCartItem } from '../../../Services/AddToCartService';
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const isFetchedRef = useRef(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (!isFetchedRef.current) {
       const fetchCartItems = async () => {
-        const token = Cookies.get('token');
-        if (!token) {
-          console.error('No token found');
-          return;
+        debugger
+        const token = Cookies.get('token'); // Get JWT token for authenticated users
+        const guid = Cookies.get('guid'); // Get GUID for anonymous users
+    
+        // If neither token nor GUID exists, return early
+        if (!token && !guid) {
+            console.error('No token or GUID found');
+            return;
         }
+    
         try {
-          const response = await getCartItems(token); 
-          setCartItems(response.cartItems);
+            // Determine the headers dynamically
+            const headers = {};
+            if (token) {
+                headers.Authorization = `Bearer ${token}`; // Add Authorization header for authenticated users
+            }
+            if (guid) {
+                headers['x-anonymous-id'] = guid; // Add GUID header for anonymous users
+            }
+    
+            // Fetch cart items from the backend
+            const response = await getCartItems(headers);
+    
+            if (response?.cartItems) {
+                setCartItems(response.cartItems); // Update cart items state
+            } else {
+                console.warn('No cart items found');
+                setCartItems([]);
+            }
         } catch (error) {
-          console.error('Error fetching cart items:', error);
+            console.error('Error fetching cart items:', error);
         } finally {
-          setLoading(false);
+            setLoading(false); // Stop loading spinner
         }
-      };
+    };
+    
       fetchCartItems();
       isFetchedRef.current = true;
     }
@@ -38,6 +61,17 @@ const CartItems = () => {
     }
   };
 
+  const handleCheckout = async () => {
+    try {      
+      const token = Cookies.get('token'); 
+      if (!token) {
+        navigate('/login', { state: { redirectTo: '/Checkout/cart' } });
+        return;
+      }
+    } catch (error) {
+      console.error('Error redirecting to login:', error);
+    }
+  };
   const calculateTotal = () => {
     return cartItems.reduce((acc, item) => acc + item.Price * item.Quantity, 0);
   };
@@ -79,7 +113,7 @@ const CartItems = () => {
       {/* Total and Checkout Section */}
       <div className="cart-total">
         <h3>Total: ${calculateTotal()}</h3>
-        <button className="checkout-button"  onClick={() => handleRemove()} style={{ padding: '10px 20px', cursor: 'pointer' }}>Checkout</button>
+        <button className="checkout-button"  onClick={() => handleCheckout()} >Checkout</button>
       </div>
     </div>
   );

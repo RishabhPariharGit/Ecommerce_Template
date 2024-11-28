@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { registerUser } from '../../Services/UserService'
-import { useNavigate } from "react-router-dom";
 import './SignUp.css';
 
 export default function SignUp() {
@@ -14,6 +13,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigate = useNavigate();
+  const location = useLocation(); 
   const handleSubmit = async (event) => {
     
     event.preventDefault();
@@ -22,7 +22,7 @@ export default function SignUp() {
       if(response.status="200"){
         alert("Registration Succesfull")
         resetForm();
-        navigate('/login');
+        navigate("/login", { state: { redirectTo: location.state?.redirectTo || "/" } });
       }
     }
   else{

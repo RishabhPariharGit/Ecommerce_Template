@@ -4,8 +4,13 @@ const { Schema } = mongoose;
 const cartItemSchema = new Schema({
   UserId: { 
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', 
-    required: true 
+    ref: 'User' 
+  }, 
+  GUID: { 
+    type: String, 
+    required: function () {
+      return !this.UserId; 
+    },
   },
   ProductId: { 
     type: mongoose.Schema.Types.ObjectId, 
@@ -35,9 +40,9 @@ const cartItemSchema = new Schema({
   }
 });
 
-// Update the `updatedAt` field automatically on save
+// Update the `UpdatedAt` field automatically on save
 cartItemSchema.pre('save', function (next) {
-  this.updatedAt = Date.now();
+  this.UpdatedAt = Date.now();
   next();
 });
 

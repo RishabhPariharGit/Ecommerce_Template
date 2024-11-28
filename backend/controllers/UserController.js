@@ -3,6 +3,7 @@ const RoleModel = require('../Models/Role')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const USerModel = require('../Models/User');
+const Address = require('../Models/Address');
 
 const RegisterUser = async (req, res) => {
     try {
@@ -67,7 +68,7 @@ const LoginUser = async (req, res) => {
             userId: user._id,
             email: user.email,
         };
-        const jwtToken = jwt.sign(tokenPayload, 'SECRET', { expiresIn: '1h' });
+        const jwtToken = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', jwtToken, {
             httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
@@ -204,31 +205,52 @@ const DeleteUser = async (req, res) => {
     }
 };
 
+
 const GetUserProfile = async (req, res) => {
     try {
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        console.log("token", token)
-        if (!token) {
-            return res.status(401).json({ message: 'No token provided' });
-        }
-        const decoded = jwt.verify(token, 'SECRET');
-        const user = await UserModel.findById(decoded.userId);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        return res.status(200).json({
-            user
-        });
+        const user = req.user;
+        return res.status(200).json({ user });
     } catch (err) {
         console.error("Error:", err);
-        if (err.name === 'JsonWebTokenError') {
-            return res.status(403).json({ message: 'Invalid token' });
-        }
-
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
-module.exports = { RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser, DeleteUser,GetUserProfile };
+
+const GetAddresses = async (req, res) => {
+    try {
+      const addresses = await Address.find({ userId: req.user.id });
+      res.status(200).json(addresses);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching addresses', error });
+    }
+  };
+
+  
+  const AddAddress = async (req, res) => {
+    const { Name, Mobile, PinCode, Address, Locality, City, State, IsDefault, Type } = req.body;
+    
+    try {
+      
+      if (IDBDatabasesDefault) {
+        await Address.updateMany({ userId: req.user.id }, { isDefault: false });
+      }
+      const newAddress = new Address({
+        UserId: req.user.id,
+        Name,
+        Mobile,
+        PinCodeinCode,
+        Address,
+        Locality,
+        City,
+        State,
+        IsDefault,
+        Type,
+      });
+      await newAddress.save();
+      res.status(201).json(newAddress);
+    } catch (error) {
+      res.status(500).json({ message: 'Error adding address', error });
+    }
+  };
+module.exports = { RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser, DeleteUser,GetUserProfile,GetAddresses,AddAddress };
