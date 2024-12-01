@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { ShoppingCartOutlined, FavoriteBorderOutlined, PersonOutline, LoginOutlined, LogoutOutlined } from '@mui/icons-material';
 import './Newhome.css';
 import { getAllCategories } from '../../../Services/CategoryService';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const Newhome = () => {
+
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+  // Handle mouse enter and leave for the dropdown
+  const handleMouseEnter = () => setIsDropdownVisible(true);
+  const handleMouseLeave = () => setIsDropdownVisible(false);
+
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
@@ -143,17 +151,27 @@ const Newhome = () => {
               </nav>
             </div>
             <div className="header-item item-right">
-              <a href="#"><i className="fas fa-search" /></a>
-              <a href="#"><i className="far fa-heart" /></a>
-              <a href="#"><i className="fas fa-shopping-cart" /></a>
-              <div className="mobile-menu-trigger"><span /></div>
-            </div>
-            <div>
-            <button className='btn' onClick={handleAddtocartclick}>Addtocart</button>
-            <button className='btn' onClick={handleWishlistclick}>Wishlist</button>
-            <button className='btn' onClick={handleProfileClick}>UserProfile</button>
-              <button className='btn' onClick={handleLoginClick}>Login</button>
-              <button className='btn' onClick={handleLogout}>Logout</button>
+            <div className='cstm-right-icons'>
+            <button className="btn" onClick={handleAddtocartclick}>
+        <ShoppingCartOutlined /> {/* Outlined Cart Icon */}
+      </button>
+      <button className="btn" onClick={handleWishlistclick}>
+        <FavoriteBorderOutlined /> {/* Outlined Wishlist Icon */}
+      </button>
+      <div  className="profile-dropdown-container">
+        <button className="btn profile-btn">
+          <PersonOutline /> {/* Outlined User Profile Icon */}
+        </button>
+        <div className="dropdown-menu">
+          <button className="dropdown-item" onClick={handleLoginClick}>
+            <LoginOutlined /> Login
+          </button>
+          <button className="dropdown-item" onClick={handleLogout}>
+            <LogoutOutlined /> Logout
+          </button>
+        </div>
+      </div>
+    </div>
             </div>
           </div>
         </div>

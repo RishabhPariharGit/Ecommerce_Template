@@ -5,8 +5,6 @@ import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
 import { addProductToCart, getCartItems } from '../../../Services/AddToCartService';
 import { addProductToWishlist ,getWishListItems} from '../../../Services/WishlistService';
-import Announcementbar from '../../Website_Components/Announcementbar/Announcementbar';
-import Newhome from '../../Website_Components/Navbar/Newhome';
 import './MainProductpg.css';
 
 const SingleProductpage = () => {
@@ -131,8 +129,6 @@ const SingleProductpage = () => {
 
     return (
         <>
-            <Announcementbar />
-            <Newhome />
             <div className="main-dispaly-complete-wrapper">
                 <div className="two-segment-devider">
                     <div className="product-complete-desc-main-wrapper">
