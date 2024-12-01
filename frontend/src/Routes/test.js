@@ -4,38 +4,30 @@ import { getProductBySlug } from '../../../Services/ProductService';
 import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
 import { addProductToCart, getCartItems } from '../../../Services/AddToCartService';
-import { addProductToWishlist, getWishListItems } from '../../../Services/WishlistService';
+import { addProductToWishlist ,getWishListItems} from '../../../Services/WishlistService';
 import './SingleProductpage.css';
-import ImageGallery from "../../Website_Components/ImageGallery/ImageGallery";
-import ProductDetails from "../../Website_Components/ProductDetails/ProductDetails";
+import ProductImageGallery from './Productdisplaycarousel';
 
 const SingleProductpage = () => {
-    const [product, setProduct] = useState(null);
+    const [product, setProduct] = useState(null); // State for product data
     const [cartProductIds, setCartProductIds] = useState(new Set());
     const [wishlistedProductIds, setWishlistedProductIds] = useState(new Set());
-    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const isFetchedRef = useRef(false);
     const navigate = useNavigate();
     const { slug } = useParams();
-
-    const styles = {
-        container: { display: "flex", gap: "20px", padding: "20px" },
-        leftSection: { display: "flex", flexDirection: "row" },
-        rightSection: { textAlign: "center" },
-        mainImage: { width: "100%", maxHeight: "400px", objectFit: "contain" },
-        imageWrapper: { position: "relative" },
-    };
 
     useEffect(() => {
         if (!isFetchedRef.current) {
             const fetchProduct = async () => {
                 try {
                     const response = await getProductBySlug(slug);
+                    console.log('API Response:', response);
                     if (response?.data) {
                         setProduct(response.data);
                     } else {
+                        console.error('Product data is missing from the API response.');
                         alert('Product not found!');
-                        navigate('/');
+                        navigate('/'); // Redirect to home if product not found
                     }
                 } catch (err) {
                     console.error('Error fetching product:', err);
@@ -64,48 +56,33 @@ const SingleProductpage = () => {
         }
     }, [slug, navigate]);
 
-    const nextImage = () => {
-        if (product?.Product_image?.length > 0) {
-            setSelectedImageIndex((prevIndex) => (prevIndex + 1) % product.Product_image.length);
-        }
-    };
-
-    const prevImage = () => {
-        if (product?.Product_image?.length > 0) {
-            setSelectedImageIndex((prevIndex) =>
-                (prevIndex === 0 ? product.Product_image.length - 1 : prevIndex - 1)
-            );
-        }
-    };
-
-
     const handleAddToCart = async (product) => {
         debugger
         let token = Cookies.get('token'); // Retrieve JWT token
         let guid = Cookies.get('guid'); // Retrieve GUID for anonymous users
-
+    
         // If neither token nor GUID is available, generate a new GUID for anonymous user
-        if (!token && !guid) {
+        if (!token && !guid) {          
             guid = uuidv4(); // Generate a new GUID
             Cookies.set('guid', guid, { expires: 30 }); // Store GUID in cookies with 30 days expiry
-        }
-
-
-        try {
+        }   
+    
+        
+        try {            
             // Prepare payload
             const payload = {
                 ProductId: product._id,
                 Quantity: 1,
             };
-
+    
             // Add GUID to payload if available
             if (guid) {
                 payload.GUID = guid;
-            }
-
+            }    
+    
             // Call API to add product to cart
             const response = await addProductToCart(payload);
-
+    
             if (response.status === 201) {
                 alert('Product added to cart successfully!');
                 setCartProductIds((prev) => new Set([...prev, product._id]));
@@ -142,12 +119,7 @@ const SingleProductpage = () => {
         }
     };
 
-    useEffect(() => {
-        if (product?.Product_image && product.Product_image.length > 0) {
-            setSelectedImageIndex(0); // Reset index when product changes
-        }
-    }, [product]);
-
+    // Display a loading message while fetching data
     if (!product) {
         return (
             <div>
@@ -160,37 +132,82 @@ const SingleProductpage = () => {
         <>
             <div className="main-dispaly-complete-wrapper">
                 <div className="two-segment-devider">
-                    <div style={styles.leftSection}>
-                        <div>
-                            <ImageGallery
-                                images={product.Product_image}
-                                onImageHover={(index) => setSelectedImageIndex(index)}
-                            />
+                <div className="product-complete-image-carousel-main-wrapper">
+                        {/ Main Product Image /}
+                        <div className="main-product-image-wrapper">
+                            {product.Product_Main_image ? (
+                                <img
+                                    src={product.Product_Main_image}
+                                    alt={`${product.Name || 'Product'} Main Image`}
+                                    className="main-product-image"                            
+                                />
+                            ) : (
+                                <p>Main image not available</p>
+                            )}
                         </div>
-                        <div style={styles.imageWrapper}>
-                            <img
-                                src={product.Product_image[selectedImageIndex]}
-                                alt="Selected"
-                                style={styles.mainImage}
-                                key={selectedImageIndex} // Force re-render on index change
-                            />
-                            <div style={{ marginLeft: "500px" }}>
-                                <button onClick={prevImage}>{"<"}</button>
-                                <button onClick={nextImage}>{">"}</button>
+
+                        {/ Additional Product Images /}
+
+                        <div className="product-images-wrapper">
+                            {product.Product_image?.length > 0 ? (
+                                product.Product_image.map((imageUrl, index) => (
+                                    <img
+                                        key={index}
+                                        src={imageUrl}
+                                        alt={`${product.Name || 'Product'} Image ${index + 1}`}
+                                        className="product-image"
+                                    />
+                                ))
+                            ) : (
+                                <p>No images available</p>
+                            )}
+
+
+                        </div>
+                      
+                        </div>
+
+                        <div className="product-complete-desc-main-wrapper">
+
+                        <div className="Product-main-head-main-wrapper">
+                            <p>{product.Name || 'Product Name'}</p>
+                            <div className="Product-sub-head-main-wrapper">
+                              
                             </div>
                         </div>
-                    </div>
-                    <div style={styles.rightSection}>
-                        <div>
-                            <ProductDetails
-                                product={product}
-                                cartProductIds={cartProductIds}
-                                wishlistedProductIds={wishlistedProductIds}
-                                handleAddToCart={handleAddToCart}
-                                handleWishlist={handleWishlist}
-                                navigate={navigate}
-                            />
 
+                        {/ Price /}
+                        <div className="product-price">
+                            <p>Price: ${product.Price || '0.00'}</p>
+                        </div>
+
+                        {/ Sizes /}
+                        <div className="product-sizes">
+                            <p>Select Size:</p>
+                            {product.Sizes?.length > 0 ? (
+                                product.Sizes.map((size, index) => (
+                                    <label key={index} style={{ marginRight: '10px' }}>
+                                        <input type="radio" name="size" value={size} style={{ marginRight: '5px' }} />
+                                        {size}
+                                    </label>
+                                ))
+                            ) : (
+                                <p>No sizes available</p>
+                            )}
+                        </div>
+
+                        {/ Add to Cart and Wishlist Buttons /}
+                        <div className="product-buttons">
+                            {cartProductIds.has(product._id) ? (
+                                <button onClick={() => navigate('/checkout/cart')}>Go to Cart</button>
+                            ) : (
+                                <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                            )}
+                            {wishlistedProductIds.has(product._id) ? (
+                                <button style={{ color: 'red' }}>Wishlisted</button>
+                            ) : (
+                                <button onClick={() => handleWishlist(product)}>Wishlist</button>
+                            )}
                         </div>
                     </div>
                 </div>
