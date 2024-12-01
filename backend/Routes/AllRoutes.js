@@ -10,7 +10,10 @@ const {
   DeleteUser,
   GetUserProfile,
   GetAddresses,
-  AddAddress
+  AddAddress,
+  UpdateUserAddress,
+  DeleteUserAddress,
+  UpdateDefaultAddress
 } = require('../Controllers/UserController');
 const {
   CreateCategory,
@@ -53,8 +56,12 @@ router.delete('/DeleteUser/:id', DeleteUser);
 router.get('/UserProfile',authMiddleware, GetUserProfile);
 
 //User Address route
-router.get('/user/addresses', authMiddleware,GetAddresses);
-router.post('/user/address', authMiddleware, AddAddress);
+router.get('/User/addresses', authMiddleware,GetAddresses);
+router.post('/User/address', authMiddleware, AddAddress);
+router.put("/updateUserAddress/:editingAddressId",authMiddleware, UpdateUserAddress);
+router.delete('/deleteUserAddress/:id',authMiddleware, DeleteUserAddress);
+router.put("/addresses/default/:AddressId", UpdateDefaultAddress);
+
 
 //Category route
 router.post("/CreateCategory", CreateCategory);

@@ -85,3 +85,80 @@ export const getUserProfile = async (token) => {
   }
 };
 
+export const getUserAddresses = async (token) => {
+  try {
+    debugger
+    const response = await axios.get(`${API_URL}/User/addresses`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });   
+    return response; 
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error; 
+  }
+};
+
+
+export const addUserAddress = async (token, addressdata) => {
+  try {
+    debugger
+    const response = await axios.post(`${API_URL}/User/address`, addressdata,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error;
+  }
+};
+
+
+export const updateUserAddress = async (token, editingAddressId, newAddress) => {
+  try {
+    debugger
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      },
+    };
+    const response = await axios.put(
+      `${API_URL}/updateUserAddress/${editingAddressId}`, 
+      newAddress,
+      config
+    );
+    return response.data; 
+  } catch (error) {
+    console.error('Error updating address:', error);
+    throw error; 
+  }
+};
+
+
+export const deleteUserAddress = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      },
+    };
+    const response = await axios.delete(
+      `${API_URL}/deleteUserAddress/${id}`,
+      config 
+    );
+    return response.data; 
+  } catch (error) {
+    console.error('Error deleting address:', error);
+    throw error; 
+  }
+};
+
+export const UpdateDefaultAddress = async (addressId) => {
+  try {
+    const response = await axios.put(`${API_URL}/addresses/default/${addressId}`); 
+    return response;
+  } catch (error) {
+    console.error('Error updating category:', error);
+    throw error;
+  }
+};

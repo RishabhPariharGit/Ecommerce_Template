@@ -12,7 +12,7 @@ import MainProductPage from '../Websites/Pages/MainProductPage/MainProductPage'
 import UserProfile from '../Websites/Pages/UserProfile/UserProfile'
 import CartItems from '../Websites/Pages/CartItems/Cartitems'
 import WishlistItems from '../Websites/Pages/WishlistItems/WishlistItems';
-
+import Address from '../Websites/Pages/Address/Address'
 const WebsiteRoutes = () => {
   return (
     <Routes>
@@ -26,6 +26,7 @@ const WebsiteRoutes = () => {
       <Route path="/product/:slug" element={<SingleProductpage />} />
       <Route path="/UserProfile" element={<UserProfile />} />
       <Route path="/Checkout/cart" element={<CartItems />} />
+      <Route path="/Checkout/address" element={<Address />} />
       <Route path="/Wishlist" element={<WishlistItems />} />
 
     </Routes>

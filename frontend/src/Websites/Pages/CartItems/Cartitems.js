@@ -25,7 +25,7 @@ const CartItems = () => {
             // Determine the headers dynamically
             const headers = {};
             if (token) {
-                headers.Authorization = `Bearer ${token}`; // Add Authorization header for authenticated users
+                headers.Authorization = `Bearer ${token}`; 
             }
             if (guid) {
                 headers['x-anonymous-id'] = guid; // Add GUID header for anonymous users
@@ -67,6 +67,8 @@ const CartItems = () => {
       if (!token) {
         navigate('/login', { state: { redirectTo: '/Checkout/cart' } });
         return;
+      }else{
+        navigate('/Checkout/address')
       }
     } catch (error) {
       console.error('Error redirecting to login:', error);
