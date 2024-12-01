@@ -119,7 +119,7 @@ const Newhome = () => {
           <div className="custom-roww v-center">
             <div className="header-item item-left">
               <div className="logo">
-                <a href="#">Customlogo</a>
+              <Link to="/">Customlogo</Link>
               </div>
             </div>
             <div className="header-item item-center">
