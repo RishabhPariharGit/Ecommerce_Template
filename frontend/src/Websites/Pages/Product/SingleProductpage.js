@@ -5,7 +5,8 @@ import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
 import { addProductToCart, getCartItems } from '../../../Services/AddToCartService';
 import { addProductToWishlist ,getWishListItems} from '../../../Services/WishlistService';
-import './MainProductpg.css';
+import './SingleProductpage.css';
+import ProductImageGallery from './Productdisplaycarousel';
 
 const SingleProductpage = () => {
     const [product, setProduct] = useState(null); // State for product data
@@ -131,22 +132,14 @@ const SingleProductpage = () => {
         <>
             <div className="main-dispaly-complete-wrapper">
                 <div className="two-segment-devider">
-                    <div className="product-complete-desc-main-wrapper">
-                        <div className="Product-main-head-main-wrapper">
-                            <p>{product.Name || 'Product Name'}</p>
-                            <div className="Product-sub-head-main-wrapper">
-                              
-                            </div>
-                        </div>
-
+                <div className="product-complete-image-carousel-main-wrapper">
                         {/* Main Product Image */}
                         <div className="main-product-image-wrapper">
                             {product.Product_Main_image ? (
                                 <img
                                     src={product.Product_Main_image}
                                     alt={`${product.Name || 'Product'} Main Image`}
-                                    className="main-product-image"
-                                    style={{ width: '250px', height: 'auto', objectFit: 'cover', margin: '5px' }}
+                                    className="main-product-image"                            
                                 />
                             ) : (
                                 <p>Main image not available</p>
@@ -154,6 +147,7 @@ const SingleProductpage = () => {
                         </div>
 
                         {/* Additional Product Images */}
+
                         <div className="product-images-wrapper">
                             {product.Product_image?.length > 0 ? (
                                 product.Product_image.map((imageUrl, index) => (
@@ -162,12 +156,24 @@ const SingleProductpage = () => {
                                         src={imageUrl}
                                         alt={`${product.Name || 'Product'} Image ${index + 1}`}
                                         className="product-image"
-                                        style={{ width: '200px', height: 'auto', objectFit: 'cover', margin: '5px' }}
                                     />
                                 ))
                             ) : (
                                 <p>No images available</p>
                             )}
+
+
+                        </div>
+                      
+                        </div>
+
+                        <div className="product-complete-desc-main-wrapper">
+
+                        <div className="Product-main-head-main-wrapper">
+                            <p>{product.Name || 'Product Name'}</p>
+                            <div className="Product-sub-head-main-wrapper">
+                              
+                            </div>
                         </div>
 
                         {/* Price */}
