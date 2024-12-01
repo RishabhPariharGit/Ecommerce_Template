@@ -12,11 +12,13 @@ import MainProductPage from '../Websites/Pages/MainProductPage/MainProductPage'
 import UserProfile from '../Websites/Pages/UserProfile/UserProfile'
 import CartItems from '../Websites/Pages/CartItems/Cartitems'
 import WishlistItems from '../Websites/Pages/WishlistItems/WishlistItems';
+import Layout from '../Websites/Website_Components/Layout/Layout';
 
 const WebsiteRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+        <Route path="/" element={<Layout/>}>
+     <Route index element={<Home />} />
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/contact" element={<Contact />} />
@@ -27,7 +29,7 @@ const WebsiteRoutes = () => {
       <Route path="/UserProfile" element={<UserProfile />} />
       <Route path="/Checkout/cart" element={<CartItems />} />
       <Route path="/Wishlist" element={<WishlistItems />} />
-
+      </Route>
     </Routes>
   );
 };
