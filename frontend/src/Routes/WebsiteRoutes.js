@@ -18,7 +18,7 @@ import Layout from '../Websites/Website_Components/Layout/Layout';
 const WebsiteRoutes = () => {
   return (
     <Routes>
-        <Route path="/" element={<Layout/>}>
+     <Route path="/" element={<Layout/>}>
      <Route index element={<Home />} />
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />

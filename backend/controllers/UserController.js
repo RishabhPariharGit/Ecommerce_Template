@@ -274,43 +274,71 @@ const GetAddresses = async (req, res) => {
 
 
 
-  const UpdateUserAddress = async (req, res) => {
-      try {
-          const { editingAddressId } = req.params;
-          console.log(req.params)
-          const { Name, Mobile, PinCode, Address, Locality, City, State, IsDefault, Type } = req.body;
+const UpdateUserAddress = async (req, res) => {
+    try {
+        const { editingAddressId } = req.params;
 
-          const address = await AddressModel.findById(editingAddressId);
-  console.log(address)
-          if (!address) {
-              return res.status(404).json({ message: "Address not found" });
-          }
-          if (Name) address.Name = Name;
-          if (Mobile) address.Mobile = Mobile;
-          if (PinCode) address.PinCode = PinCode;
-          if (Address) address.Address = Address;
-          if (Locality) address.Locality = Locality;
-          if (City) address.City = City;
-          if (State) address.State = State;
-          if (Type) address.Type = Type;
+        const { Name, Mobile, PinCode, Address, Locality, City, State, IsDefault, Type } = req.body;
 
-          if (IsDefault) {
-              await AddressModel.updateMany(
-                  { UserId: address.UserId, _id: { $ne: editingAddressId } },
-                  { IsDefault: false }
-              );
-              address.IsDefault = true;
-          }
-          const updatedAddress = await address.save();
-          return res.status(200).json({
-              message: "Address updated successfully",
-              data: updatedAddress,
-          });
-      } catch (err) {
-          console.error("Error updating address:", err);
-          return res.status(500).json({ message: "Internal Server Error" });
-      }
-  };
+        const address = await AddressModel.findById(editingAddressId);
+        if (!address) {
+            return res.status(404).json({ message: "Address not found" });
+        }
+
+        if (Name) address.Name = Name;
+        if (Mobile) address.Mobile = Mobile;
+        if (PinCode) address.PinCode = PinCode;
+        if (Address) address.Address = Address;
+        if (Locality) address.Locality = Locality;
+        if (City) address.City = City;
+        if (State) address.State = State;
+        if (Type) address.Type = Type;
+
+        if (IsDefault === true) {
+            // Set current address as default, and set others to non-default
+            await AddressModel.updateMany(
+                { UserId: address.UserId, _id: { $ne: editingAddressId } },
+                { IsDefault: false }
+            );
+            address.IsDefault = true;
+        } else {
+            // If the current address is the only address left, it should be set as default
+            const remainingAddresses = await AddressModel.find({ UserId: address.UserId });
+            
+            if (remainingAddresses.length === 1) {
+                // Only one address left, so make it the default
+                address.IsDefault = true;
+            } else {
+                // Check if there is already a default address
+                const existingDefault = await AddressModel.findOne({ 
+                    UserId: address.UserId, 
+                    IsDefault: true, 
+                    _id: { $ne: address._id } 
+                });
+                
+                console.log(existingDefault)
+                if (!existingDefault) {
+                    // If no default address exists, make the first remaining address default
+                    const firstRemainingAddress = await AddressModel.findOne({ UserId: address.UserId }).sort({ _id: 1 });
+                    if (firstRemainingAddress) {
+                        firstRemainingAddress.IsDefault = true;
+                        await firstRemainingAddress.save();
+                    }
+                }
+            }
+        }
+
+        const updatedAddress = await address.save();
+        return res.status(200).json({
+            message: "Address updated successfully",
+            data: updatedAddress,
+        });
+    } catch (err) {
+        console.error("Error updating address:", err);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
   
   const DeleteUserAddress = async (req, res) => {
     const { id } = req.params;
