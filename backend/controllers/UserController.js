@@ -3,7 +3,7 @@ const RoleModel = require('../Models/Role')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const USerModel = require('../Models/User');
-const Address = require('../Models/Address');
+const AddressModel = require('../Models/Address');
 
 const RegisterUser = async (req, res) => {
     try {
@@ -68,7 +68,8 @@ const LoginUser = async (req, res) => {
             userId: user._id,
             email: user.email,
         };
-        const jwtToken = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const jwtToken = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '30d' });
+
         res.cookie('token', jwtToken, {
             httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
@@ -219,7 +220,7 @@ const GetUserProfile = async (req, res) => {
 
 const GetAddresses = async (req, res) => {
     try {
-      const addresses = await Address.find({ userId: req.user.id });
+      const addresses = await AddressModel.find({ UserId: req.user.id });
       res.status(200).json(addresses);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching addresses', error });
@@ -229,28 +230,163 @@ const GetAddresses = async (req, res) => {
   
   const AddAddress = async (req, res) => {
     const { Name, Mobile, PinCode, Address, Locality, City, State, IsDefault, Type } = req.body;
-    
+
     try {
-      
-      if (IDBDatabasesDefault) {
-        await Address.updateMany({ userId: req.user.id }, { isDefault: false });
-      }
-      const newAddress = new Address({
-        UserId: req.user.id,
-        Name,
-        Mobile,
-        PinCodeinCode,
-        Address,
-        Locality,
-        City,
-        State,
-        IsDefault,
-        Type,
-      });
-      await newAddress.save();
-      res.status(201).json(newAddress);
+        // Create a new address object
+        const newAddress = new AddressModel({
+            UserId: req.user.id,
+            Name,
+            Mobile,
+            PinCode,
+            Address,
+            Locality,
+            City,
+            State,
+            IsDefault,
+            Type,
+        });
+
+        // If IsDefault is true, make all other addresses for this user not default
+        if (IsDefault) {
+            await AddressModel.updateMany(
+                { UserId: req.user.id },
+                { IsDefault: false }
+            );
+        } else {
+            // If no address exists, set the first address as default
+            const existingAddresses = await AddressModel.find({ UserId: req.user.id });
+            if (existingAddresses.length === 0) {
+                newAddress.IsDefault = true;
+            }
+        }
+        // Save the new address
+        await newAddress.save();
+
+        res.status(201).json({
+            message: 'Address added successfully',
+            data: newAddress,
+        });
     } catch (error) {
-      res.status(500).json({ message: 'Error adding address', error });
+        console.error('Error adding address:', error);
+        res.status(500).json({ message: 'Error adding address', error });
     }
+};
+
+
+
+  const UpdateUserAddress = async (req, res) => {
+      try {
+          const { editingAddressId } = req.params;
+          console.log(req.params)
+          const { Name, Mobile, PinCode, Address, Locality, City, State, IsDefault, Type } = req.body;
+
+          const address = await AddressModel.findById(editingAddressId);
+  console.log(address)
+          if (!address) {
+              return res.status(404).json({ message: "Address not found" });
+          }
+          if (Name) address.Name = Name;
+          if (Mobile) address.Mobile = Mobile;
+          if (PinCode) address.PinCode = PinCode;
+          if (Address) address.Address = Address;
+          if (Locality) address.Locality = Locality;
+          if (City) address.City = City;
+          if (State) address.State = State;
+          if (Type) address.Type = Type;
+
+          if (IsDefault) {
+              await AddressModel.updateMany(
+                  { UserId: address.UserId, _id: { $ne: editingAddressId } },
+                  { IsDefault: false }
+              );
+              address.IsDefault = true;
+          }
+          const updatedAddress = await address.save();
+          return res.status(200).json({
+              message: "Address updated successfully",
+              data: updatedAddress,
+          });
+      } catch (err) {
+          console.error("Error updating address:", err);
+          return res.status(500).json({ message: "Internal Server Error" });
+      }
   };
-module.exports = { RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser, DeleteUser,GetUserProfile,GetAddresses,AddAddress };
+  
+  const DeleteUserAddress = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const address = await AddressModel.findById(id);
+        
+        if (!address) {
+            return res.status(404).json({ message: 'Address not found' });
+        }
+
+        const { UserId, IsDefault } = address;
+
+        // Delete the address
+        await AddressModel.findByIdAndDelete(id);
+
+        // If the deleted address was the default, update the first remaining address to be default
+        if (IsDefault) {
+            const firstRemainingAddress = await AddressModel.findOne({ UserId }).sort({ _id: 1 }); // Sort by ID to get the first address
+
+            if (firstRemainingAddress) {
+                firstRemainingAddress.IsDefault = true;
+                await firstRemainingAddress.save();
+            }
+        }
+
+        res.status(200).json({ message: 'Address deleted successfully!' });
+    } catch (err) {
+        console.error("Error deleting address:", err);
+        res.status(500).json({ message: 'Error deleting address', error: err });
+    }
+};
+
+const UpdateDefaultAddress = async (req, res) => {
+    try {
+        const { AddressId } = req.params; // Extract AddressId from params
+        const { Name, Mobile, PinCode, Address, Locality, City, State, IsDefault, Type } = req.body;
+
+        // Find the address to update
+        const address = await AddressModel.findById(AddressId);
+
+        if (!address) {
+            return res.status(404).json({ message: "Address not found" });
+        }
+
+        // Update the provided fields
+        if (Name) address.Name = Name;
+        if (Mobile) address.Mobile = Mobile;
+        if (PinCode) address.PinCode = PinCode;
+        if (Address) address.Address = Address;
+        if (Locality) address.Locality = Locality;
+        if (City) address.City = City;
+        if (State) address.State = State;
+        if (Type) address.Type = Type;
+
+        // If IsDefault is true, set this address as default and unset others
+        if (IsDefault) {
+            await AddressModel.updateMany(
+                { UserId: address.UserId, _id: { $ne: AddressId } }, // Exclude this address
+                { IsDefault: false }
+            );
+            address.IsDefault = true;
+        }
+
+        // Save the updated address
+        const updatedAddress = await address.save();
+
+        return res.status(200).json({
+            message: "Address updated successfully",
+            data: updatedAddress,
+        });
+    } catch (err) {
+        console.error("Error updating address:", err);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+module.exports = { RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser, 
+    DeleteUser,GetUserProfile,GetAddresses,AddAddress,UpdateUserAddress,DeleteUserAddress,UpdateDefaultAddress };

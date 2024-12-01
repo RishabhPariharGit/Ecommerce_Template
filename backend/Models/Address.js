@@ -13,4 +13,6 @@ const AddressSchema = new mongoose.Schema({
   Type: { type: String, enum: ['Home', 'Work'], required: true },
 });
 
-module.exports = mongoose.model('Address', AddressSchema);
+
+const AddressModel = mongoose.model('Address', AddressSchema);
+module.exports = AddressModel;
