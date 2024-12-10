@@ -1,0 +1,227 @@
+/* General Styles */
+.container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .icon {
+    margin-bottom: 10px;
+    font-size: 60px;
+    color: #333;
+  }
+  
+  .title {
+    font-size: 16px;
+    color: #666;
+    line-height: 25px;
+  }
+  
+  /* Mobile Styles */
+  .slider-item {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* Adjust height as needed */
+  }
+  
+  /* Styles for Tablet (between 769px and 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .slider-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  /* Desktop Styles (Above 1024px) */
+  @media (min-width: 1025px) {
+    .desktop-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap:5px;
+    }
+  
+    .desktop-item {
+      text-align: center;
+      width: 20%; /* Control the width of each item */
+      padding: 10px;
+    }
+  
+    .icon {
+      font-size: 50px; /* Adjust the icon size for desktop */
+    }
+  }
+  
+  
+  /* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  } */
+  .text-content {
+    width: 50%;
+    margin: auto;
+  }
+  
+  .text-content p, h1 {
+    color: #333;
+    line-height: 30px;
+  }
+  
+  .magic-section {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #fff;
+  }
+  
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .text-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .text-content p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  .grid-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: stretch;
+    justify-content: center;
+  }
+  
+  .text-box {
+    flex: 1;
+    max-width: 40%;
+    background-color: #F5F3EF;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .text-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .text-box p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 30px;
+  }
+  
+  .image-box {
+    flex: 1;
+    max-width: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .image-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .refresh-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .refresh-btn:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Media query for mobile screens */
+  @media (max-width: 768px) {
+    
+    .text-content h1 {
+     line-height: 50px;
+     font-size: 30px;
+  }
+  
+    .text-content {
+      width: 90%;
+      margin: auto;
+  }
+  
+    .grid-content {
+      flex-direction: column;
+    }
+  
+    .text-box, 
+    .image-box {
+      max-width: 100%;
+    }
+  
+    .text-box {
+      margin-bottom: 20px; /* Add some spacing between the two boxes */
+    }
+  }
+  
+  
+  
+  .text-content-down {
+    width: 90%;
+    margin: auto;
+    padding-top: 40px;
+  }
+  
+  .text-content-down p {
+    color: #333;
+    line-height: 30px;
+    text-align: center;
+  }
+  
+  
+  .text-content-down h1 {
+    color: #333;
+    line-height: 30px;
+    text-align: center;
+    font-size: 40px;
+  }
+  
+  .reviews-main-wrapper {
+    text-align: center;
+    width: 25%;
+    padding: 15px;
+    background-color: #F5F3EF;
+    border-radius: 10px;
+  }
+  
+  .desktop-reviews-container{
+    display: flex;
+      justify-content: center;
+      align-items: center;
+      gap:25px;
+      padding-bottom: 40px;
+  }

@@ -1,6 +1,7 @@
 .two-segment-devider{
     display: flex;
     justify-content: center;
+    margin-top: 20px;
 }
 
 
@@ -60,3 +61,40 @@
     border-radius: 0; /* Remove this or set to 50% if you want circular images */
 }
   
+.main-image-carousel-wrapper {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    gap: 15px;
+}
+.main-image-display-wrapper img{
+width: 480px;
+height: 580px;
+object-fit: cover;
+}
+
+.main-product-details-wrapper {
+    width: 50%;
+}
+
+.main-image-display-wrapper {
+    position: relative;
+}
+
+.main-product-carousel-buttons-wrapper {
+    position: absolute;
+    top: 90%;
+    left: 90%;
+    transform: translateX(-50%);
+    z-index: 10; /* Ensures buttons appear above the image */
+    display: flex;
+    gap: 10px; /* Adjust spacing between buttons */
+}
+
+.main-product-carousel-buttons-wrapper button{
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    background-color:#FFFFFF;
+    border: none;
+}

@@ -19,10 +19,10 @@ const ImageGallery = ({ images, onImageHover }) => {
 const styles = {
   gallery: { display: "flex", flexDirection: "column", gap: "10px" },
   thumbnail: {
-    width: "100px",
-    height: "100px",
+    width: "70px",
+    height: "70px",
     cursor: "pointer",
-    objectFit: "contain",
+    objectFit: "cover",
     border: "1px solid #ddd",
     borderRadius: "4px",
     transition: "transform 0.2s ease", // Added transition for smooth effect

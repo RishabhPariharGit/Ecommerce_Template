@@ -1,0 +1,117 @@
+/* Base styles */
+.main-prodiuct-secondary-details-wrapper-content-spacing-mng {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.main-prodiuct-secondary-details-wrapper {
+    width: 65%;
+}
+
+.main-prodiuct-secondary-details-wrapper-content h2 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.main-prodiuct-secondary-details-wrapper-content-price p {
+    font-weight: 600;
+    font-size: 22px;
+    color: #dd0404;
+}
+
+.main-prodiuct-secondary-details-wrapper-content-price-taxes p {
+    font-size: 12px;
+}
+
+.main-prodiuct-secondary-details-wrapper-content.product-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main-prodiuct-secondary-details-wrapper-content {
+    padding-top: 15px;
+}
+
+.main-prodiuct-secondary-details-wrapper-content-product-sizes p {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.main-size-select-block-wrapper {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap; /* Ensure sizes wrap on smaller screens */
+}
+
+.main-size-select-block-wrapper label {
+    border: 1px solid #bfbcbc;
+    font-size: 12px;
+    padding: 7px 12px;
+    /* background-color: #ededed; */
+    flex: 1; /* Adjust size labels to fill available space */
+    text-align: center; /* Center align text inside labels */
+}
+
+.main-prodiuct-secondary-details-wrapper-content.product-buttons.add-to-cart button {
+    background-color: black;
+    color: white;
+    padding: 8px;
+    width: 100%; /* Full width for better visibility on small screens */
+}
+
+.main-prodiuct-secondary-details-wrapper-content.product-buttons.add-to-cart {
+    padding: 0px;
+}
+
+.main-prodiuct-secondary-details-wrapper-content.product-buttons.wishlist button {
+    background-color: white;
+    color: black;
+    padding: 8px;
+    width: 100%; /* Full width for better visibility on small screens */
+    border: 1px solid;
+}
+
+/* Responsive styles for laptops (768px and above) */
+@media (min-width: 768px) {
+    .main-prodiuct-secondary-details-wrapper-content h2 {
+        font-size: 28px; /* Slightly reduce font size for laptops */
+    }
+
+    .main-prodiuct-secondary-details-wrapper-content-price p {
+        font-size: 20px;
+    }
+
+    .main-size-select-block-wrapper label {
+        font-size: 14px; /* Increase readability on larger screens */
+    }
+
+    .main-prodiuct-secondary-details-wrapper-content.product-buttons button {
+        width: 60%; /* Adjust button width */
+    }
+}
+
+/* Responsive styles for smaller screens (below 768px) */
+@media (max-width: 768px) {
+    .main-prodiuct-secondary-details-wrapper-content h2 {
+        font-size: 24px; /* Smaller font size for mobile */
+    }
+
+    .main-prodiuct-secondary-details-wrapper-content-price p {
+        font-size: 18px; /* Adjust font size for mobile */
+    }
+
+    .main-size-select-block-wrapper {
+        gap: 10px; /* Reduce gap for smaller screens */
+    }
+
+    .main-size-select-block-wrapper label {
+        font-size: 12px; /* Keep labels readable */
+    }
+
+    .main-prodiuct-secondary-details-wrapper-content.product-buttons button {
+        width: 90%; /* Almost full width for buttons on mobile */
+    }
+}
