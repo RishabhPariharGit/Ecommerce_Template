@@ -1,65 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { CiHeart } from "react-icons/ci";
 import './Productcard.css';
-import { Link } from 'react-router-dom';
 
-const Productcard = () => {
-  const [productdata, setproductdata] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:8080/productcard') // Ensure the URL matches your backend route
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Fetched productcard data:', data); // Log fetched data
-        setproductdata(data.map(item => ({
-          Arrival: item.Arrival,
-          Image: item.Image,
-          Tag: item.Tag,
-          Productname: item.Productname,
-          ProductInfo: item.ProductInfo,
-          MaximumRP: item.MaximumRP,
-          Sellingprice: item.Sellingprice
-        })));
-      })
-      .catch(error => console.error('Error fetching productcard data:', error));
-  }, []);
-
-  return (
-    <div className='main-card-wrapper'>
-      {productdata.slice(0, 4).map((item, index) => (
-        <section key={index} className="product-card">
-          <div className="badge">{item.Arrival}</div>
-          <div className="product-thumb">
-            <img src={item.Image} alt={item.Productname} />
-          </div>
-          <div className="product-details">
-            <span className="product-category">{item.Tag}</span>
-            <h4>
-             <Link to = '/product'> {item.Productname}</Link>
-            </h4>
-            <p>{item.ProductInfo}</p>
-            <div className="product-bottom-details">
-              <div className="product-price">
-                <small>${item.MaximumRP}</small>${item.Sellingprice}
-              </div>
-              <div className="product-links">
-                <a href="#">
-                  <i className="fa fa-heart" />
-                </a>
-                <a href="#">
-                  <i className="fa fa-shopping-cart" />
-                </a>
-              </div>
+const Productcard = ({
+    product,
+    handleAddToCart,
+    handleWishlist,
+    isWishlisted,
+}) => {
+    return (
+        <div className='main-product-card-main-wrapper'>
+            <div className='image-and-icons-main-wrapper'>
+                <img
+                    src={product.Product_Main_image}
+                    alt={product.Name}
+                    onClick={() => window.open(`/product/${product.Slug}`, '_blank', 'noopener,noreferrer')}
+                />
+                <div className="discount-badge">-33%</div>
+                <div className='product-card-wishlist-btn-main-wrapper'>
+                    {isWishlisted ? (
+                        <button style={{ color: 'red' }}>❤️</button>
+                    ) : (
+                        <button onClick={() => handleWishlist(product)}><CiHeart size={20} /></button>
+                    )}
+                </div>
             </div>
-          </div>
-        </section>
-      ))}
-    </div>
-  );
-}
+            <div className='main-product-card-description-main-wrapper'>
+                <h2>{product.Name}</h2>
+                <p>{product.Description}</p>
+                <p>
+                    <span className="old-price">{product.Price}</span>
+                    <span className="price">{product.Price}</span>
+                </p>
+                <button className='add-to-cart' onClick={() => handleAddToCart(product)}>
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    );
+};
 
 export default Productcard;

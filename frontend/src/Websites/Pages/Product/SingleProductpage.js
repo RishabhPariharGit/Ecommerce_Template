@@ -8,6 +8,12 @@ import { addProductToWishlist, getWishListItems } from '../../../Services/Wishli
 import './SingleProductpage.css';
 import ImageGallery from "../../Website_Components/ImageGallery/ImageGallery";
 import ProductDetails from "../../Website_Components/ProductDetails/ProductDetails";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import ProductUsps from '../../Website_Components/ProductPageComponents/ProductUsps';
+import ImageWithText from '../../Website_Components/ProductPageComponents/ImageWithText';
+import ProductReviews from '../../Website_Components/ProductPageComponents/ProductReviews';
+
 
 const SingleProductpage = () => {
     const [product, setProduct] = useState(null);
@@ -19,11 +25,11 @@ const SingleProductpage = () => {
     const { slug } = useParams();
 
     const styles = {
-        container: { display: "flex", gap: "20px", padding: "20px" },
-        leftSection: { display: "flex", flexDirection: "row" },
-        rightSection: { textAlign: "center" },
-        mainImage: { width: "100%", maxHeight: "400px", objectFit: "contain" },
-        imageWrapper: { position: "relative" },
+        // container: { display: "flex", gap: "20px", padding: "20px" },
+        // leftSection: { display: "flex", flexDirection: "row" },
+        // rightSection: { textAlign: "center" },
+        // mainImage: { width: "100%", maxHeight: "400px", objectFit: "contain" },
+        // imageWrapper: { position: "relative" },
     };
 
     useEffect(() => {
@@ -160,28 +166,27 @@ const SingleProductpage = () => {
         <>
             <div className="main-dispaly-complete-wrapper">
                 <div className="two-segment-devider">
-                    <div style={styles.leftSection}>
-                        <div>
+                    <div className='main-image-carousel-wrapper'>
+                        <div className='main-image-thumbnail-wrapper'>
                             <ImageGallery
                                 images={product.Product_image}
                                 onImageHover={(index) => setSelectedImageIndex(index)}
                             />
                         </div>
-                        <div style={styles.imageWrapper}>
+                        <div className='main-image-display-wrapper'>
                             <img
                                 src={product.Product_image[selectedImageIndex]}
                                 alt="Selected"
-                                style={styles.mainImage}
                                 key={selectedImageIndex} // Force re-render on index change
                             />
-                            <div style={{ marginLeft: "500px" }}>
-                                <button onClick={prevImage}>{"<"}</button>
-                                <button onClick={nextImage}>{">"}</button>
+                            <div className='main-product-carousel-buttons-wrapper'>
+                                <button onClick={prevImage}>{<MdOutlineKeyboardArrowLeft />}</button>
+                                <button onClick={nextImage}>{<MdOutlineKeyboardArrowRight />}</button>
                             </div>
                         </div>
                     </div>
-                    <div style={styles.rightSection}>
-                        <div>
+                    <div className='main-product-details-wrapper'>
+                        <div className='main-prodiuct-secondary-details-wrapper'>
                             <ProductDetails
                                 product={product}
                                 cartProductIds={cartProductIds}
@@ -194,6 +199,9 @@ const SingleProductpage = () => {
                         </div>
                     </div>
                 </div>
+                <ProductUsps/>
+                <ImageWithText/>
+                <ProductReviews/>
             </div>
         </>
     );
