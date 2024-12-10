@@ -1,16 +1,12 @@
 /* General Styles */
-.container {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .icon {
+
+  .review-main-custom-icon {
     margin-bottom: 10px;
     font-size: 60px;
     color: #333;
   }
   
-  .title {
+  .review-main-custom-title {
     font-size: 16px;
     color: #666;
     line-height: 25px;
@@ -49,18 +45,12 @@
       padding: 10px;
     }
   
-    .icon {
+    .review-main-custom-icon {
       font-size: 50px; /* Adjust the icon size for desktop */
     }
   }
   
   
-  /* body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  } */
   .text-content {
     width: 50%;
     margin: auto;
@@ -104,7 +94,7 @@
   
   .text-box {
     flex: 1;
-    max-width: 40%;
+    max-width: 45%;
     background-color: #F5F3EF;
     padding: 20px;
     border-radius: 10px;
@@ -118,6 +108,7 @@
     font-size: 1.8rem;
     margin-bottom: 10px;
     color: #333;
+    font-weight: 600;
   }
   
   .text-box p {
@@ -128,7 +119,7 @@
   
   .image-box {
     flex: 1;
-    max-width: 50%;
+    max-width: 55%;
     position: relative;
     display: flex;
     align-items: center;
@@ -200,6 +191,7 @@
     color: #333;
     line-height: 30px;
     text-align: center;
+    font-size: 18px;
   }
   
   
@@ -208,6 +200,8 @@
     line-height: 30px;
     text-align: center;
     font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 15px;
   }
   
   .reviews-main-wrapper {

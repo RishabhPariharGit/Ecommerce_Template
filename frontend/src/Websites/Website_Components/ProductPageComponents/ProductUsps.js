@@ -13,19 +13,19 @@ const ProductUsps = () => {
 
     const features = [
         {
-          icon: <DiamondIcon className="icon" />,
+          icon: <DiamondIcon className="review-main-custom-icon" />,
           title: "The most advanced AI on Pixel.",
         },
         {
-          icon: <BuildIcon className="icon" />,
+          icon: <BuildIcon className="review-main-custom-icon" />,
           title: "An elegant design, built to last.",
         },
         {
-          icon: <CameraAltIcon className="icon" />,
+          icon: <CameraAltIcon className="review-main-custom-icon" />,
           title: "The best Pixel Camera yet.",
         },
         {
-          icon: <MemoryIcon className="icon" />,
+          icon: <MemoryIcon className="review-main-custom-icon" />,
           title: "Powerful performance with Pixel's most advanced chip.",
         },
         // {
@@ -55,8 +55,8 @@ const ProductUsps = () => {
         <Slider {...settings}>
           {features.map((feature, index) => (
             <div key={index} className="slider-item">
-              <div className="icon">{feature.icon}</div>
-              <div className="title">{feature.title}</div>
+              <div className="review-main-custom-icon">{feature.icon}</div>
+              <div className="review-main-custom-title">{feature.title}</div>
             </div>
           ))}
         </Slider>
@@ -65,8 +65,8 @@ const ProductUsps = () => {
         <div className="desktop-container">
           {features.map((feature, index) => (
             <div key={index} className="desktop-item">
-              <div className="icon">{feature.icon}</div>
-              <div className="title">{feature.title}</div>
+              <div className="review-main-custom-icon">{feature.icon}</div>
+              <div className="review-main-custom-title">{feature.title}</div>
             </div>
           ))}
         </div>
