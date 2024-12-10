@@ -428,7 +428,7 @@ ul.menu-main {
   .dropdown-menu {
 	display: none;
 	position: absolute;
-	top: calc(100% + 5px); /* Replaces margin-top */
+	top: calc(100%); /* Replaces margin-top */
 	right: 0;
 	background-color: white;
 	border: 1px solid rgb(235, 235, 235);
