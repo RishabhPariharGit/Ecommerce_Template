@@ -13,6 +13,8 @@ const CartItemModel =require('./Models/CartItems')
 const ProductModel = require('./Models/Product');
 const WishlistModel=require('./Models/Wishlist ')
 const AddressModel=require('./Models/Address')
+const HomepageSectionModel =require('./Models/HomepageSections ')
+
 
 const cloudinary = require('cloudinary').v2;  
 require('dotenv').config();
@@ -51,6 +53,7 @@ ProductModel();
 CartItemModel();
 WishlistModel();
 AddressModel();
+HomepageSectionModel();
 
 app.use('/', Router);
 

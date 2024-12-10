@@ -1,32 +1,32 @@
-import React, { useEffect, useState,useRef } from 'react';
-import { getAllSubCategories, deleteSubCategory } from '../../Services/SubCategoryService'; 
-import { useNavigate } from 'react-router-dom'; 
+import React, { useEffect, useState, useRef } from 'react';
+import { getAllSubCategories, deleteSubCategory } from '../../Services/SubCategoryService';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../AdminComponents/Navbar';
 
 const SubCategoryList = () => {
     const [subCategories, setSubCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); 
-    const isFetchedRef = useRef(false); 
+    const navigate = useNavigate();
+    const isFetchedRef = useRef(false);
     useEffect(() => {
         if (!isFetchedRef.current) {
-        const fetchSubCategories = async () => {
-            try {
-                const response = await getAllSubCategories(); 
-                setSubCategories(response.data); 
-                setError(null); 
-            } catch (err) {
-                console.error('Error fetching subcategories:', err);
-                setError('Failed to fetch subcategories. Please try again later.');
-            } finally {
-                setIsLoading(false); 
-            }
-        };
+            const fetchSubCategories = async () => {
+                try {
+                    const response = await getAllSubCategories();
+                    setSubCategories(response.data);
+                    setError(null);
+                } catch (err) {
+                    console.error('Error fetching subcategories:', err);
+                    setError('Failed to fetch subcategories. Please try again later.');
+                } finally {
+                    setIsLoading(false);
+                }
+            };
 
-        fetchSubCategories();
-        isFetchedRef.current = true;
-    }
+            fetchSubCategories();
+            isFetchedRef.current = true;
+        }
     }, []);
 
     const handleEdit = (subCategorySlug) => {
@@ -38,7 +38,7 @@ const SubCategoryList = () => {
     };
 
     const handleDelete = async (subCategoryId) => {
-        
+
         const confirmDelete = window.confirm('Are you sure you want to delete this subcategory?');
         if (confirmDelete) {
             try {
@@ -50,25 +50,25 @@ const SubCategoryList = () => {
             }
         }
     };
-  
+
     // if (isLoading) {
     //     return <div>Loading subcategories...</div>;
     // }
 
     return (
         <div>
-           <Navbar/>                
-                <div className="white-bg-btn">
+            <Navbar />
+            <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
-               <p>Subcategories</p> 
-               </div>
-                <button className="button" onClick={handleCreate}>
-                        Create Subcategory
-                    </button>   
+                    <p>Subcategories</p>
                 </div>
+                <button className="button" onClick={handleCreate}>
+                    Create Subcategory
+                </button>
+            </div>
             <div className="form-600">
                 <div className="white-bg">
-                    
+
                     {error && <div className="error">{error}</div>}
                     <table className="tablestyle">
                         <thead>
@@ -86,20 +86,20 @@ const SubCategoryList = () => {
                                         <td>{subCategory.Description}</td>
                                         <td>
 
-<div className='customization-main-btns'>
+                                            <div className='customization-main-btns'>
 
-                                            <button
-                                                className="gridbutton"
-                                                onClick={() => handleEdit(subCategory.Slug)}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="gridbutton delete-button" // Add a class for styling
-                                                onClick={() => handleDelete(subCategory._id)}
-                                            >
-                                                Delete
-                                            </button>
+                                                <button
+                                                    className="gridbutton"
+                                                    onClick={() => handleEdit(subCategory.Slug)}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className="gridbutton delete-button" // Add a class for styling
+                                                    onClick={() => handleDelete(subCategory._id)}
+                                                >
+                                                    Delete
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
