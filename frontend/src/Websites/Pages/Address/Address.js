@@ -36,6 +36,11 @@ export default function Address() {
                     }
                     const response = await getUserAddresses(token);
                     setAddresses(response.data);
+                    debugger
+                    const defaultAddress = response.data.find((address) => address.IsDefault);
+                    if (defaultAddress) {
+                        setSelectedAddress(defaultAddress._id); // Set the selected address to the default address
+                    }
                 } catch (error) {
                     console.error('Error fetching addresses:', error);
                     setError('Unable to fetch addresses. Please try again.');
@@ -116,7 +121,7 @@ export default function Address() {
 
     const handleProceed = () => {
         if (selectedAddress) {
-            navigate('/checkout/summary', { state: { addressId: selectedAddress } });
+            navigate('/Checkout/payment', { state: { addressId: selectedAddress } });
         } else {
             alert('Please select an address.');
         }

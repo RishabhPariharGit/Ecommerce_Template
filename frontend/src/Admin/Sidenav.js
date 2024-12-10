@@ -132,6 +132,12 @@ const Sidenav = () => {
                         </Link>
                     </li>
                     <li>
+                        <Link to="/admin/HomepageSections">
+                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <span className="title">HomepageSections</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link to="/admin/Users">
                             <FontAwesomeIcon icon={faUsers} className="icon" />
                             <span className="title">Users</span>

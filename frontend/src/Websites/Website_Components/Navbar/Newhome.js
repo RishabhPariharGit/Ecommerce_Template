@@ -140,6 +140,8 @@ const Newhome = () => {
                         <ul>
                           {category.subcategories.map((sub) => (
                             <li key={sub._id}>
+                               <Link to={`/collections/${sub.Slug}`}>
+                                 <img alt='' src={sub.label_image}  style={{ width: '20%' }}/></Link>
                               <Link to={`/collections/${sub.Slug}`}>{sub.Name}</Link>
                             </li>
                           ))}

@@ -45,7 +45,14 @@ const {AddToCart,
   MergeCartItems}= require("../Controllers/CartItemController")
 const {AddToWishlist,
   GetWishListItems,
-  DeleteWishlistItem}= require("../Controllers/WishListItemController")
+  DeleteWishlistItem}= require("../Controllers/WishListItemController");
+
+const { AddSection,
+  GetAllSections,
+  GetSectionById,
+  UpdateSection,
+  DeleteSection,
+  GetAllCollectionsforWebsite } = require("../controllers/HomepageSectionController");
 // User Ruote
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
@@ -101,4 +108,11 @@ router.post('/AddToWishlist', AddToWishlist);
 router.get("/GetWishListItems", GetWishListItems);
 router.delete('/removeWishListItem/:id', DeleteWishlistItem);
 
+//HomePagesection Route
+router.post("/AddSection", AddSection);
+router.get("/GetAllSections", GetAllSections);
+router.get("/HomePageSection/Edit/:id", GetSectionById);
+router.put("/UpdateSection/:id", UpdateSection);
+router.delete('/DeleteSection/:id', DeleteSection);
+router.get("/GetAllsectionsforwebsite", GetAllCollectionsforWebsite);
 module.exports = router;

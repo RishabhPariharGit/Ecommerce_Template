@@ -11,14 +11,16 @@ import ProductList from '../Admin/Product/ProductList';
 import ProductForm from '../Admin/Product/ProductForm';
 import UserList from '../Admin/User/UserList';
 import UserForm from '../Admin/User/UserForm';
+import HomepageSectionForm from '../Admin/HomepageSections/HomepageSectionForm';
+import HomepageSectionList from '../Admin/HomepageSections/HomepageSectionList';
 
 const AdminRoutes = () => {
   return (
     <AdminLayout>
       <Routes>
-        <Route path="/Dashboard" element={  <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}><Dashboard /> </AuthGuard>} />
+        <Route path="/Dashboard" element={<AuthGuard allowedRoles={['Admin', 'SystemAdmin']}><Dashboard /> </AuthGuard>} />
 
-        <Route path="/Category/create" element={ <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}> <CategoryForm isEditMode={false} /> </AuthGuard>} />
+        <Route path="/Category/create" element={<AuthGuard allowedRoles={['Admin', 'SystemAdmin']}> <CategoryForm isEditMode={false} /> </AuthGuard>} />
         <Route
           path="/Category/edit/:slug"
           element={
@@ -107,7 +109,30 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-
+        <Route
+          path="/HomepageSections"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <HomepageSectionList />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/HomepageSection/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <HomepageSectionForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/HomepageSection/Edit/:sectionId"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <HomepageSectionForm isEditMode={true}/>
+            </AuthGuard>
+          }
+        />
         {/* Unauthorized Route */}
         <Route
           path="/not-authorized"
