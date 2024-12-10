@@ -1,0 +1,16 @@
+.section-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px; /* Space between the items */
+    justify-content: space-between; /* Distribute items evenly */
+}
+
+.section-item {
+    flex: 1 1 calc(25% - 20px);/* Each item takes 1/3 of the row, with gap space */
+    box-sizing: border-box; /* Ensure padding/margin doesn’t affect width */
+}
+
+.section-item img {
+    width: 50%; /* Make sure the image fits within the container */
+    height: auto;
+}
