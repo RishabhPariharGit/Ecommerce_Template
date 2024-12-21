@@ -24,6 +24,14 @@
     font-size: 12px;
 }
 
+.main-prodiuct-secondary-details-wrapper-content-product-description{
+    padding-top: 15px;
+}
+
+.main-prodiuct-secondary-details-wrapper-content-product-description p{
+    font-size: 15px;
+}
+
 .main-prodiuct-secondary-details-wrapper-content.product-buttons {
     display: flex;
     flex-direction: column;

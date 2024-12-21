@@ -13,6 +13,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import ProductUsps from '../../Website_Components/ProductPageComponents/ProductUsps';
 import ImageWithText from '../../Website_Components/ProductPageComponents/ImageWithText';
 import ProductReviews from '../../Website_Components/ProductPageComponents/ProductReviews';
+import Footer from '../../Website_Components/Footer/Footer';
 
 
 const SingleProductpage = () => {
@@ -202,6 +203,7 @@ const SingleProductpage = () => {
                 <ProductUsps/>
                 <ImageWithText/>
                 <ProductReviews/>
+                <Footer/>
             </div>
         </>
     );
