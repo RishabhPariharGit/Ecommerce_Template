@@ -14,8 +14,10 @@ const ProductDetails = ({ product, cartProductIds, wishlistedProductIds, handleA
             <p>${product.Price || '0.00'}</p>
             </div>
         <div className="main-prodiuct-secondary-details-wrapper-content-price-taxes">
-
             <p>Inclusive of all taxes</p>
+            </div>
+            <div className="main-prodiuct-secondary-details-wrapper-content-product-description">
+            <p>{product.Description}</p>
             </div>
             </div>
         <div className="main-prodiuct-secondary-details-wrapper-content-product-sizes">
