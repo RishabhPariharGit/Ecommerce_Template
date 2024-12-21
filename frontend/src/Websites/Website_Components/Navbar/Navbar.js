@@ -164,7 +164,7 @@ const Navbar = () => {
         </button>
         <div className="dropdown-menu">
           <button className="dropdown-item" onClick={handleLoginClick}>
-            <LoginOutlined /> Login
+            <LoginOutlined /> Login1
           </button>
           <button className="dropdown-item" onClick={handleLogout}>
             <LogoutOutlined /> Logout

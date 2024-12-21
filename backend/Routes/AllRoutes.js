@@ -52,7 +52,9 @@ const { AddSection,
   GetSectionById,
   UpdateSection,
   DeleteSection,
-  GetAllCollectionsforWebsite } = require("../controllers/HomepageSectionController");
+  GetAllCollectionsforWebsite,
+  SectionsAddToSidenav
+ } = require("../controllers/HomepageSectionController");
 // User Ruote
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
@@ -115,4 +117,5 @@ router.get("/HomePageSection/Edit/:id", GetSectionById);
 router.put("/UpdateSection/:id", UpdateSection);
 router.delete('/DeleteSection/:id', DeleteSection);
 router.get("/GetAllsectionsforwebsite", GetAllCollectionsforWebsite);
+router.put("/SectionsAddToSidenav", SectionsAddToSidenav);
 module.exports = router;

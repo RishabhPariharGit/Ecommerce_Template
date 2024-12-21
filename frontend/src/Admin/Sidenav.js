@@ -1,64 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './AdminStyle/AdminGlobalStyle.css';
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faShoppingCart, faTags, faBoxes, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { getAllsections } from '../Services/HomepageSectionService';
 
 const Sidenav = () => {
     const navigate = useNavigate();
+    const [sections, setSections] = useState([]);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isHovered, setIsHovered] = useState(false); // Track hover state
+    const isFetchedRef = useRef(false);
+
+    const fetchSections = async () => {
+        try {
+            setIsLoading(true);
+            const response = await getAllsections(); // Fetch all sections from the service
+            setSections(response.data); // Assuming response.data contains an array of sections
+            setError(null); // Clear any previous error
+        } catch (err) {
+            console.error('Error fetching Sections:', err);
+            setError('Failed to fetch Sections. Please try again later.');
+        } finally {
+            setIsLoading(false); // Stop loading regardless of success or error
+        }
+    };
 
     useEffect(() => {
-        const toggleSidebar = () => {
-            const wrapper = document.querySelector('.wrapper');
-            wrapper.classList.toggle('collapseSideBar');
-        };
-
-        const handleResize = () => {
-            const wrapper = document.querySelector('.wrapper');
-            if (window.innerWidth > 1200) {
-                wrapper.classList.remove('collapseSideBar');
-            }
-        };
-
-        const hamburger = document.querySelector('.hamburger');
-        hamburger.addEventListener('click', toggleSidebar);
-
-        const links = document.querySelectorAll('.sidebar ul li a');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                links.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-            });
-        });
-
-        const dropdowns = document.querySelectorAll('.sidebar-dropdown > a');
-        dropdowns.forEach(dropdown => {
-            dropdown.addEventListener('click', function (event) {
-                event.preventDefault();
-                const submenu = this.nextElementSibling;
-                const isActive = this.parentElement.classList.contains('active');
-
-                document.querySelectorAll('.sidebar-submenu').forEach(sub => sub.style.display = 'none');
-                document.querySelectorAll('.sidebar-dropdown').forEach(d => d.classList.remove('active'));
-
-                if (!isActive) {
-                    submenu.style.display = 'block';
-                    this.parentElement.classList.add('active');
-                } else {
-                    submenu.style.display = 'none';
-                    this.parentElement.classList.remove('active');
-                }
-            });
-        });
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            hamburger.removeEventListener('click', toggleSidebar);
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+        if (isHovered && !isFetchedRef.current) {
+            fetchSections();
+            isFetchedRef.current = true;
+        }
+    }, [isHovered]);
 
     const handleLogout = () => {
         Cookies.remove('token');
@@ -78,9 +53,6 @@ const Sidenav = () => {
                     <div className="top_menu">
                         <div className="logo">
                             <img id="logo" src="https://cdn.worldvectorlogo.com/logos/akasol-1.svg" alt="Logo" height="40" />
-                        
-                            {/* <h4 style={{ color: '#3E97FF', fontWeight: '900', fontSize:'18px',fontFamily:'sans-serif',marginLeft:'10px' }}>ECOMMERCE</h4> */}
-                        
                         </div>
                     </div>
                 </div>
@@ -92,9 +64,6 @@ const Sidenav = () => {
                         <div className="top_menu">
                             <div className="logo center" style={{ paddingTop: '25px' }}>
                                 <img id="logo" src="https://cdn.worldvectorlogo.com/logos/akasol-1.svg" alt="Logo" height="45" />
-                                {/* <h4 style={{ color: '#3E97FF', fontWeight: '900', fontSize:'18px',fontFamily:'sans-serif' }}>ECOMMERCE</h4> */}
-
-
                             </div>
                         </div>
                     </div>
@@ -132,10 +101,37 @@ const Sidenav = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/admin/HomepageSections">
-                            <FontAwesomeIcon icon={faTags} className="icon" />
-                            <span className="title">HomepageSections</span>
-                        </Link>
+                        <div
+                            className="profile-dropdown-container"
+                            onMouseEnter={() => setIsHovered(true)} // Trigger fetch when hovered
+                            onMouseLeave={() => setIsHovered(false)} // Reset hover state
+                        >
+                            <Link to="/admin/HomepageSections">
+                                <FontAwesomeIcon icon={faTags} className="icon" />
+                                <span className="title">HomepageSections</span>
+                            </Link>
+                            <div className="dropdown-menu">
+                                <Link to="/admin/HomepageSections">
+                                    <span className="dropdown-item">Allsections</span>
+                                </Link>
+
+                                {/* Show dynamic sections when hovered */}
+                                {isHovered && !isLoading && sections.length > 0 && (
+                                    <div className="dynamic-sections">
+                                        {sections.map((section) => (
+                                            <Link key={section.id} to={`/admin/HomepageSection/Edit/${section._id}`} className="dropdown-item">
+                                                <span className="dropdown-item">{section.Title}</span>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                                {/* Show loading indicator while fetching */}
+                                {isLoading && <span className="dropdown-item">Loading...</span>}
+
+                                {/* Show error message if fetching failed */}
+                                {error && <span className="dropdown-item">{error}</span>}
+                            </div>
+                        </div>
                     </li>
                     <li>
                         <Link to="/admin/Users">

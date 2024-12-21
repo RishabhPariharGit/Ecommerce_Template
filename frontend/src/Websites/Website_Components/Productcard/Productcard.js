@@ -1,5 +1,6 @@
 import React from 'react';
 import { CiHeart } from "react-icons/ci";
+import { Link } from 'react-router-dom';
 import './Productcard.css';
 
 const Productcard = ({
@@ -11,11 +12,12 @@ const Productcard = ({
     return (
         <div className='main-product-card-main-wrapper'>
             <div className='image-and-icons-main-wrapper'>
+            <Link to={`/product/${product.Slug}`}>
                 <img
                     src={product.Product_Main_image}
-                    alt={product.Name}
-                    onClick={() => window.open(`/product/${product.Slug}`, '_blank', 'noopener,noreferrer')}
+                    alt={product.Name}               
                 />
+                 </Link>
                 <div className="discount-badge">-33%</div>
                 <div className='product-card-wishlist-btn-main-wrapper'>
                     {isWishlisted ? (
@@ -26,7 +28,8 @@ const Productcard = ({
                 </div>
             </div>
             <div className='main-product-card-description-main-wrapper'>
-                <h2>{product.Name}</h2>
+            <Link to={`/product/${product.Slug}`}>
+                <h2>{product.Name}</h2> </Link>
                 <p>{product.Description}</p>
                 <p>
                     <span className="old-price">{product.Price}</span>
