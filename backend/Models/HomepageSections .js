@@ -7,22 +7,28 @@ const HomepageSectionSchema = new mongoose.Schema({
     },
     SectionType: {
         type: String,
-        enum: ['Category', 'Subcategory', 'Product'], 
-        required: true,
+        enum: ['Category', 'Subcategory', 'Product']
+       
     },
     Items: [{
         type: mongoose.Schema.Types.ObjectId,
-        refPath: 'SectionType', 
-        required: true,
+        refPath: 'SectionType'
+       
     }],
     DisplayOrder: {
         type: Number,
         default: 0, 
     },
+
+    AddToSidenav: 
+    { type: Boolean, 
+    default: false
+     },
+  
     Status: {
         type: String,
-        enum: ['Active', 'Inactive'], 
-        required: true,
+        enum: ['Active', 'Inactive']
+       
     },
     Created_at: {
         type: Date,

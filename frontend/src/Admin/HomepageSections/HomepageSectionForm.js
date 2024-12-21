@@ -1,53 +1,47 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getAllProducts } from '../../Services/ProductService';
-import { getAllCategories } from '../../Services/CategoryService';
 import { getAllSubCategories } from '../../Services/SubCategoryService';
-import { addsection,getSectionById,updateSection } from '../../Services/HomepageSectionService';
+import { addsection, getSectionById, updateSection } from '../../Services/HomepageSectionService';
 
 import axios from 'axios';
 import '../AdminStyle/AdminGlobalStyle.css';
 import Navbar from '../AdminComponents/Navbar';
 
 const HomepageSectionForm = ({ isEditMode = false }) => {
-    debugger
     const [formData, setFormData] = useState({
         Title: '',
-        SectionType: 'Product', // Default to 'Product'
+        SectionType: '', // Default to 'Product'
         Items: [],
         DisplayOrder: '',
-        Status: 'Active'
+        Status: 'Active',
+        isBestSeller: false,
+        isFreshArrival: false
     });
+
     const [availableItems, setAvailableItems] = useState({ Product: [], Category: [], Subcategory: [] });
     const [isLoading, setIsLoading] = useState(false);
     const isFetchedRef = useRef(false);
     const navigate = useNavigate();
     const { sectionId } = useParams(); // Use to load the section in edit mode if needed
 
-
-
     useEffect(() => {
         if (!isFetchedRef.current) {
-            console.log("item1")
             const fetchItems = async () => {
-                debugger
                 try {
                     const products = await getAllProducts();
-                    const categories = await getAllCategories();
                     const subcategories = await getAllSubCategories();
 
                     setAvailableItems({
                         Product: products.data,
-                        Category: categories.data,
                         Subcategory: subcategories.data,
                     });
                 } catch (error) {
                     console.error('Error fetching items:', error);
                 }
             };
+
             const fetchSectiondata = async () => {
-                console.log("item2")
-                debugger
                 try {
                     const response = await getSectionById(sectionId);
                     const Section = response.data;
@@ -56,16 +50,18 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
                         SectionType: Section.SectionType,
                         Items: Section.Items,
                         DisplayOrder: Section.DisplayOrder,
-                        Status:Section.Status
+                        Status: Section.Status,
+                        isBestSeller: Section.isBestSeller || false,
+                        isFreshArrival: Section.isFreshArrival || false
                     });
                 } catch (err) {
-                    console.error('Error fetching category:', err);
+                    console.error('Error fetching section:', err);
                 } finally {
                     setIsLoading(false);
                 }
             };
+
             fetchItems();
-            // Trigger fetch only if data hasn't been fetched before
 
             if (isEditMode && sectionId) {
                 fetchSectiondata();
@@ -73,16 +69,15 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
                 setIsLoading(false);
             }
 
-            isFetchedRef.current = true; // Mark data as fetched
+            isFetchedRef.current = true;
         }
     }, [isEditMode, sectionId]);
 
     const handleChange = (e) => {
-        debugger
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
         setFormData((prevState) => ({
             ...prevState,
-            [name]: value
+            [name]: type === 'checkbox' ? checked : value
         }));
     };
 
@@ -96,25 +91,29 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
     };
 
     const handleSubmit = async (event) => {
-        debugger
         event.preventDefault();
         setIsLoading(true);
         const sectionData = { ...formData };
 
         try {
             if (isEditMode) {
-                const response = await updateSection(sectionId,sectionData); // Edit section
+                const response = await updateSection(sectionId, sectionData); // Edit section
                 console.log('Section updated successfully:', response.data);
-                if(response.status==200){
+                if (response.status === 200) {
                     navigate('/admin/HomepageSections');
                 }
             } else {
-                const response = await addsection(sectionData);// Create new section
+                const response = await addsection(sectionData); // Create new section
                 console.log('Section created successfully:', response.data);
             }
             navigate('/admin/HomepageSections');
         } catch (error) {
-            console.error('Error saving section:', error);
+            if (error.response && error.response.status === 409) {
+                const { message, suggestedNextDisplayOrder } = error.response.data;
+                alert(`${message}\nSuggested DisplayOrder: ${suggestedNextDisplayOrder}`);
+            } else {
+                alert('An error occurred while saving the section. Please try again.');
+            }
         } finally {
             setIsLoading(false);
         }
@@ -139,6 +138,7 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
                             <tbody>
                                 <tr>
                                     <td>
+                                        {/* Section Title - Always visible */}
                                         <div className="formlabel">Section Title</div>
                                         <input
                                             type="text"
@@ -149,21 +149,7 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
                                         />
                                     </td>
                                     <td>
-                                        <div className="formlabel">Section Type</div>
-                                        <select
-                                            name="SectionType"
-                                            value={formData.SectionType}
-                                            onChange={handleChange}
-                                            required
-                                        >
-                                            <option value="Product">Product</option>
-                                            <option value="Category">Category</option>
-                                            <option value="Subcategory">Subcategory</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
+                                        {/* Display Order - Always visible */}
                                         <div className="formlabel">Display Order</div>
                                         <input
                                             type="number"
@@ -174,39 +160,62 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
                                             required
                                         />
                                     </td>
-                                    <td>
-                                        <label htmlFor="status">Status:</label>
-                                        <select
-                                            name="Status"
-                                            value={formData.Status}
-                                            onChange={handleChange}
-                                            required
-                                        >
-                                            <option value="Active">Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                        </select>
-
-                                    </td>
                                 </tr>
-                                {!isEditMode && (
-                                    <tr>
-                                        <td colSpan="2">
-                                            <div className="formlabel">Select Items</div>
-                                            {availableItems[formData.SectionType]?.map((item) => (
-                                                <div key={item._id}>
-                                                    <input
-                                                        type="checkbox"
-                                                        value={item._id}
-                                                        checked={formData.Items.includes(item._id)}
-                                                        onChange={() => handleItemSelection(item._id)}
-                                                    />
-                                                    {item.Name || item.Title}
-                                                </div>
-                                            ))}
-                                        </td>
-                                    </tr>
+
+                                {/* Remaining fields - Only visible in edit mode */}
+                                {isEditMode && (
+                                    <>
+                                        <tr>
+                                            <td>
+                                                <div className="formlabel">Section Type</div>
+                                                <select
+                                                    name="SectionType"
+                                                    value={formData.SectionType}
+                                                    onChange={handleChange}
+                                                    required
+                                                >
+                                                    <option value="">Select Type</option>
+                                                    <option value="Product">Product</option>
+                                                    <option value="Subcategory">Subcategory</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <label htmlFor="status">Status:</label>
+                                                <select
+                                                    name="Status"
+                                                    value={formData.Status}
+                                                    onChange={handleChange}
+                                                    required
+                                                >
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+
+
+
+                                        {/* Item Selection */}
+                                        <tr>
+                                            <td colSpan="2">
+                                                <div className="formlabel">Select Items</div>
+                                                {availableItems[formData.SectionType]?.map((item) => (
+                                                    <div key={item._id}>
+                                                        <input
+                                                            type="checkbox"
+                                                            value={item._id}
+                                                            checked={formData.Items.includes(item._id)}
+                                                            onChange={() => handleItemSelection(item._id)}
+                                                        />
+                                                        {item.Name || item.Title}
+                                                    </div>
+                                                ))}
+                                            </td>
+                                        </tr>
+                                    </>
                                 )}
                             </tbody>
+
                         </table>
                         <div className="text-center">
                             <button type="submit" className="button" disabled={isLoading}>
@@ -224,3 +233,4 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
 };
 
 export default HomepageSectionForm;
+
