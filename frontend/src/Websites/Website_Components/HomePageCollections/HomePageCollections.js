@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllsectionsforwebsite } from '../../../Services/HomepageSectionService';
 import './Homecollection.css'
+import Productcard from '../Productcard/Productcard';
 
 const HomePageCollections = () => {
     const [sections, setSections] = useState([]);
@@ -37,28 +38,24 @@ const HomePageCollections = () => {
                 <div key={section._id} className="homepage-section">
                     <h2>{section.Title}</h2>
                     <div className="section-items">
+
                         {section.ItemsData.map((item) => (
                             <div key={item._id} className="section-item">
                                 {section.SectionType === 'Product' && (
-                                    <div>
-                                        <Link to={`/product/${item.Slug}`}>
-                                            <img
-                                                src={item.Product_Main_image}
-                                                alt={item.Name}
-                                            />
-                                        </Link>
-                                        <Link to={`/product/${item.Slug}`}>  <p>{item.Name}</p></Link>
-                                      
+                                    <div className='collection-display-main-wrapper'>
+                                         <Productcard
+                                    key={item._id}
+                                    product={item}                                  
+                                />  
                                     </div>
-                                )}
-                                {/* Category Section */}
+                                )}                           
                                 {section.SectionType === 'Category' && (
                                     <div>
                                         <img src={item.label_image} alt={item.Name} />
                                         <p>{item.Name}</p>
                                     </div>
                                 )}
-                                {/* Subcategory Section */}
+                             
                                 {section.SectionType === 'Subcategory' && (
                                     <div>
                                          <Link to={`/collections/${item.Slug}`}>
@@ -71,6 +68,8 @@ const HomePageCollections = () => {
 
                             </div>
                         ))}
+
+
                     </div>
                 </div>
             ))}

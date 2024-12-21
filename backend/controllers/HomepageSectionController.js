@@ -6,34 +6,47 @@ const mongoose = require('mongoose');
 
 const AddSection = async (req, res) => {
     try {
-        // Destructure data from the request body
-        const { Title, SectionType, Items, DisplayOrder, Status } = req.body;
+        const { Title, DisplayOrder } = req.body;
 
-        // Validate required fields
-        if (!Title || !SectionType || !DisplayOrder) {
-            return res.status(400).json({ message: "Title, SectionType, and DisplayOrder are required." });
+        // Check for required fields
+        if (!Title || !DisplayOrder) {
+            return res.status(400).json({ message: "Title and DisplayOrder are required." });
         }
 
-        // Create a new HomepageSection document
+        // Check if a section with the same DisplayOrder already exists
+        const existingSection = await HomepageSectionModel.findOne({ DisplayOrder });
+
+        if (existingSection) {
+            // Find the maximum DisplayOrder
+            const maxSection = await HomepageSectionModel.findOne().sort({ DisplayOrder: -1 }); // Sort descending
+            const suggestedNextDisplayOrder = maxSection ? maxSection.DisplayOrder + 1 : 1; // Default to 1 if no sections exist
+
+            return res.status(409).json({  // HTTP 409: Conflict
+                message: `A section with DisplayOrder ${DisplayOrder} already exists. Please choose a different DisplayOrder.`,
+                suggestedNextDisplayOrder,
+                existingSection
+            });
+        }
+
+        // If no conflict, create a new section
         const newSection = new HomepageSectionModel({
             Title,
-            SectionType,
-            Items,
             DisplayOrder,
-            Status
         });
-        // Save the new section to the database
+
         const savedSection = await newSection.save();
 
-        return res.status(201).json({ 
-            message: "Homepage section added successfully.", 
-            section: savedSection 
+        return res.status(201).json({
+            message: "Homepage section added successfully.",
+            section: savedSection
         });
+
     } catch (err) {
         console.error("Error:", err);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 
 const GetAllSections = async (req, res) => {
     try {
@@ -162,6 +175,56 @@ const GetAllCollectionsforWebsite = async (req, res) => {
 };
 
 
+const SectionsAddToSidenav = async (req, res) => {
+    try {
+        const { sections } = req.body; // Get sections from the request body
+        const selectedIds = sections.map(section => section._id); // Extract IDs of selected sections
+
+        const updatedSections = [];
+
+        // Update selected sections as Active
+        for (const section of sections) {
+            try {
+                const status = section.AddToSidenav ? 'Active' : 'Inactive';
+
+                // Update the section with the corresponding status
+                const updatedSection = await HomepageSectionModel.findByIdAndUpdate(
+                    section._id,
+                    {
+                        AddToSidenav: section.AddToSidenav, // Update AddToSidenav value
+                        Status: status,                   // Update Status based on checkbox
+                    },
+                    { new: true } // Return the updated section
+                );
+
+                updatedSections.push(updatedSection); // Add the updated section to the array
+                
+                const inactiveSections = await HomepageSectionModel.updateMany(
+                    { _id: { $nin: selectedIds } }, // Find sections not in the selected IDs
+                    {
+                        AddToSidenav: false,
+                        Status: 'Inactive',
+                    }
+                );
+    
+            } catch (error) {
+                console.error(`Error updating section with ID ${section._id}:`, error);
+                return res.status(500).json({ message: `Error updating section with ID ${section._id}` });
+            }
+        }
+
+       
+
+        // Return the response with all updated sections
+        return res.status(200).json({
+            message: 'Sections updated successfully.',
+            updatedSections,
+        });
+    } catch (error) {
+        console.error('Error updating sections:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
 
 
 
@@ -169,4 +232,7 @@ const GetAllCollectionsforWebsite = async (req, res) => {
 
 
 
-module.exports = { AddSection,GetAllSections,GetSectionById ,UpdateSection,DeleteSection,GetAllCollectionsforWebsite};
+
+
+
+module.exports = { AddSection,GetAllSections,GetSectionById ,UpdateSection,DeleteSection,GetAllCollectionsforWebsite,SectionsAddToSidenav};

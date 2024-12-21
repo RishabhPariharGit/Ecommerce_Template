@@ -64,3 +64,13 @@ export const getAllsections  = async () => {
       throw error;
     }
   };
+
+  export const updateSectionsAddToSidenav = async (sections) => {
+    try {
+      const response = await axios.put(`${API_URL}/SectionsAddToSidenav`, { sections });
+      return response;
+    } catch (error) {
+      console.error('Error Adding Section:', error);
+      throw error;
+    }
+  };
