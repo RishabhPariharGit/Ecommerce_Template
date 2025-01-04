@@ -2608,8 +2608,15 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
 .wrapper .sidebar ul{
  padding: 20px 0px;
+ overflow-y: scroll;
+ height: 80vh;
+ -ms-overflow-style: none;
+ scrollbar-width: none;
 }
 
+.wrapper .sidebar ul::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Webkit-based browsers */
+}
 
 /* grid styling start */
 .dashboard-grid {
@@ -2703,3 +2710,43 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
   
   
+
+.profile-dropdown-containerr {
+  position: relative; 
+}
+
+.dropdown-menuuu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease; /* Smooth dropdown open/close animation */
+}
+
+.dropdown-menuuu.open {
+  max-height: fit-content;
+}
+
+.dynamic-sections {
+  display: flex;
+  flex-direction: column;
+  /* gap: 8px;  */
+}
+
+.dropdown-itemmm {
+  padding: 1px 16px;
+  cursor: pointer;
+}
+
+.dropdown-itemmm:hover {
+  background-color: #3E97FF;
+}
+
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: .255em;
+  vertical-align: .255em;
+  content:none;
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-bottom: 0;
+  border-left: .3em solid transparent;
+}

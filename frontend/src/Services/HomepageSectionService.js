@@ -15,7 +15,7 @@ export const addsection = async (sectionData) => {
 
 export const getAllsections  = async () => {
     try {
-        debugger
+        
       const response = await axios.get(`${API_URL}/GetAllSections`);
       return response;
     } catch (error) {
@@ -26,7 +26,7 @@ export const getAllsections  = async () => {
 
   export const getSectionById = async (id) => {
     try {
-      debugger     
+           
         const response = await axios.get(`${API_URL}/HomePageSection/Edit/${id}`); 
         return response;
     } catch (error) {
@@ -56,7 +56,7 @@ export const getAllsections  = async () => {
 
   export const getAllsectionsforwebsite  = async () => {
     try {
-        debugger
+        
       const response = await axios.get(`${API_URL}/GetAllsectionsforwebsite`);
       return response;
     } catch (error) {

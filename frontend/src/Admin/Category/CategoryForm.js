@@ -76,7 +76,7 @@ const CategoryForm = ({ isEditMode = false }) => {
 
     const handleSubmitFile = async (e) => {
         e.preventDefault();
-        debugger
+        
         try {
             const formPayload = new FormData();
             formPayload.append('Name', formData.Name);

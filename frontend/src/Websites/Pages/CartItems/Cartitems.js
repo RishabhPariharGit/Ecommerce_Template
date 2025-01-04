@@ -11,7 +11,7 @@ const CartItems = () => {
   useEffect(() => {
     if (!isFetchedRef.current) {
       const fetchCartItems = async () => {
-        debugger
+        
         const token = Cookies.get('token'); // Get JWT token for authenticated users
         const guid = Cookies.get('guid'); // Get GUID for anonymous users
     
