@@ -23,7 +23,7 @@ const UserForm = ({ isEditMode = false }) => {
     const isFetchedRef = useRef(false);
 
     useEffect(() => {
-        debugger
+        
         if (!isFetchedRef.current) {
             const loadUser = async () => {
                 try {

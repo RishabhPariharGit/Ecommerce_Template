@@ -59,7 +59,7 @@ const ProductForm = ({ isEditMode = false }) => {
             };
             const loadProduct = async () => {
                 try {
-                    debugger
+                    
                     const response = await getProductBySlug(slug);
                     const product = response.data;
 

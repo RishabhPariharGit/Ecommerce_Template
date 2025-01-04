@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8080';
 
 export const addProduct = async (Product) => {
     try {
-      debugger
+      
       console.log(Product)
       const response = await axios.post(`${API_URL}/CreateProduct`, Product);
       return response;

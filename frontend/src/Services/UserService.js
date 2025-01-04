@@ -87,7 +87,7 @@ export const getUserProfile = async (token) => {
 
 export const getUserAddresses = async (token) => {
   try {
-    debugger
+    
     const response = await axios.get(`${API_URL}/User/addresses`, {
       headers: { Authorization: `Bearer ${token}` },
     });   
@@ -101,7 +101,7 @@ export const getUserAddresses = async (token) => {
 
 export const addUserAddress = async (token, addressdata) => {
   try {
-    debugger
+    
     const response = await axios.post(`${API_URL}/User/address`, addressdata,
     {
       headers: { Authorization: `Bearer ${token}` },
@@ -116,7 +116,7 @@ export const addUserAddress = async (token, addressdata) => {
 
 export const updateUserAddress = async (token, editingAddressId, newAddress) => {
   try {
-    debugger
+    
     const config = {
       headers: {
         Authorization: `Bearer ${token}`, 
