@@ -87,7 +87,7 @@ const SingleProductpage = () => {
 
 
     const handleAddToCart = async (product) => {
-        debugger
+        
         let token = Cookies.get('token'); // Retrieve JWT token
         let guid = Cookies.get('guid'); // Retrieve GUID for anonymous users
 

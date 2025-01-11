@@ -36,7 +36,7 @@ export default function Address() {
                     }
                     const response = await getUserAddresses(token);
                     setAddresses(response.data);
-                    debugger
+                    
                     const defaultAddress = response.data.find((address) => address.IsDefault);
                     if (defaultAddress) {
                         setSelectedAddress(defaultAddress._id); // Set the selected address to the default address
@@ -72,7 +72,7 @@ export default function Address() {
     const handleSaveAddress = async (e) => {
         e.preventDefault();
         try {
-            debugger
+            
             const token = Cookies.get('token');
             if (editingAddressId) {
                 const response = await updateUserAddress(token, editingAddressId, newAddress);

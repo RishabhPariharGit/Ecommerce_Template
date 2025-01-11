@@ -14,7 +14,7 @@ const HomepageSectionList = () => {
         if (!isFetchedRef.current) {
             const fetchSections = async () => {
                 try {
-                    debugger
+                    
                     const response = await getAllsections(); // Fetch all Sections from the service
                     setSections(response.data); // Assuming response.data contains an array of Sections
                     const preSelected = response.data.filter(section => section.AddToSidenav);
@@ -38,7 +38,7 @@ const HomepageSectionList = () => {
     };
   
     const handleCheckboxChange = (e, section) => {
-        debugger
+        
         const { checked } = e.target;
     
         // Update the Sections state to reflect the AddToSidenav change
@@ -58,12 +58,12 @@ const HomepageSectionList = () => {
     
     
     const handleCreate = () => {
-        debugger
+        
         navigate('/admin/HomepageSection/create');
     };
 
     const handleAddToSidenav = async () => {
-        debugger
+        
        
         try {
             const response = await updateSectionsAddToSidenav(selectedSections);
