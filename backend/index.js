@@ -13,6 +13,7 @@ const CartItemModel =require('./Models/CartItems')
 const ProductModel = require('./Models/Product');
 const WishlistModel=require('./Models/Wishlist ')
 const AddressModel=require('./Models/Address')
+const PagesModel=require('./Models/Pages')
 const HomepageSectionModel =require('./Models/HomepageSections ')
 
 
@@ -54,6 +55,7 @@ CartItemModel();
 WishlistModel();
 AddressModel();
 HomepageSectionModel();
+PagesModel();
 
 app.use('/', Router);
 

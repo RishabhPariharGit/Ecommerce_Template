@@ -3,6 +3,11 @@ const ProductStatus = {
     OUT_OF_STOCK: 'Out of Stock',
     INACTIVE: 'Inactive'
 };
+
+const GeneralStatus = {
+    ACTIVE: 'Active',
+    INACTIVE: 'Inactive'
+};
 const AllSize = {
     // General clothing sizes
     Clothing: {
@@ -70,5 +75,5 @@ const AllSize = {
 
 
 module.exports = {
-    ProductStatus,AllSize
+    ProductStatus,AllSize,GeneralStatus
 };

@@ -101,6 +101,12 @@ const Sidenav = () => {
                         </Link>
                     </li>
                     <li>
+                        <Link to="/admin/Pages">
+                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <span className="title">Pages</span>
+                        </Link>
+                    </li>
+                    <li>
                         <div
                             className="profile-dropdown-container"
                             onMouseEnter={() => setIsHovered(true)} // Trigger fetch when hovered

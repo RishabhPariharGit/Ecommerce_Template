@@ -13,6 +13,8 @@ import UserList from '../Admin/User/UserList';
 import UserForm from '../Admin/User/UserForm';
 import HomepageSectionForm from '../Admin/HomepageSections/HomepageSectionForm';
 import HomepageSectionList from '../Admin/HomepageSections/HomepageSectionList';
+import PagesList from '../Admin/Pages/PagesList';
+import PagesForm from '../Admin/Pages/Pagesform';
 
 const AdminRoutes = () => {
   return (
@@ -69,6 +71,30 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
+         <Route
+          path="/Pages"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <PagesList />
+            </AuthGuard>
+          }
+        />
+           <Route
+          path="/Pages/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <PagesForm />
+            </AuthGuard>
+          }
+        />
+         <Route
+          path="/Page/Edit/:slug"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <PagesForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
         <Route
           path="/Product/create"
           element={
@@ -106,6 +132,14 @@ const AdminRoutes = () => {
           element={
             <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
               <UserForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
+         <Route
+          path="/HomepageSections"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <HomepageSectionList />
             </AuthGuard>
           }
         />

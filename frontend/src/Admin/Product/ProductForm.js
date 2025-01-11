@@ -78,7 +78,9 @@ const ProductForm = ({ isEditMode = false }) => {
                             Product_image: product.Product_image || [],
                             Product_Main_image: product.Product_Main_image,
                             SizeType: product.SizeType || '',
-                            Sizes: product.Sizes || [] // Assuming product.Sizes is an array
+                            Sizes: product.Sizes || [] ,// Assuming product.Sizes is an array
+                            Status: product.Status
+
                         });
                         setPreviewSources(product.Product_image || []);
                         setSinglepreviewSource(product.Product_Main_image);
@@ -414,6 +416,22 @@ const ProductForm = ({ isEditMode = false }) => {
                                             required={!isEditMode}
                                         />
                                     </td>
+                                </tr>
+                                <tr>
+                                {isEditMode && (
+                                            <td>
+                                                 <label htmlFor="status">Status:</label>
+                                                <select
+                                                    name="Status"
+                                                    value={formData.Status}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                >
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </td>
+                                        )}
                                 </tr>
                                 <tr>
                                     <td>

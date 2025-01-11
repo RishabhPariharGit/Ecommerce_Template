@@ -16,7 +16,8 @@ const SubCategoryForm = ({ isEditMode = false }) => {
         Description: '',
         Slug: '',
         label_image: '',
-        CategoryId: ''
+        CategoryId: '',
+        Status:''
     });
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +47,8 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                             Description: category.Description,
                             Slug: category.Slug,
                             label_image: category.label_image,
-                            CategoryId: category.CategoryId || ''
+                            CategoryId: category.CategoryId || '',
+                            Status:category.Status
                         });
                         setPreviewSource(category.label_image);
                         isFetchedRef.current = true; // Mark as fetched after successful data load
@@ -111,6 +113,8 @@ const SubCategoryForm = ({ isEditMode = false }) => {
             formPayload.append('Slug', formData.Slug);
             formPayload.append('label_image', formData.label_image);
             formPayload.append('CategoryId', formData.CategoryId);
+            formPayload.append('Status', formData.Status);
+
 
             const response = isEditMode
                 ? await updatesubCategory(slug, formPayload)
@@ -203,6 +207,20 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                                                 ))}
                                             </select>
                                         </td>
+                                        {isEditMode && (
+                                            <td>
+                                                 <label htmlFor="status">Status:</label>
+                                                <select
+                                                    name="Status"
+                                                    value={formData.Status}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                >
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </td>
+                                        )}
                                     </tr>
                                     <tr>
                                         <td>

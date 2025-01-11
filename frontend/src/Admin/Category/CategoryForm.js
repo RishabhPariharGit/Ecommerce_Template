@@ -10,7 +10,8 @@ const CategoryForm = ({ isEditMode = false }) => {
         Name: '',
         Description: '',
         Slug: '',
-        label_image: ''
+        label_image: '',
+        Status:''
     });
     const [isLoading, setIsLoading] = useState(true);
     const { slug } = useParams();
@@ -29,7 +30,9 @@ const CategoryForm = ({ isEditMode = false }) => {
                         Name: category.Name,
                         Description: category.Description,
                         Slug: category.Slug,
-                        label_image: category.label_image
+                        label_image: category.label_image,
+                        Status: category.Status
+
                     });
                 } catch (err) {
                     console.error('Error fetching category:', err);
@@ -49,6 +52,7 @@ const CategoryForm = ({ isEditMode = false }) => {
     }, [isEditMode, slug]);
 
     const handleInputChange = (e) => {
+        debugger
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -82,6 +86,8 @@ const CategoryForm = ({ isEditMode = false }) => {
             formPayload.append('Name', formData.Name);
             formPayload.append('Description', formData.Description);
             formPayload.append('Slug', formData.Slug);
+            formPayload.append('Status', formData.Status);
+
 
             if (formData.label_image) {
                 formPayload.append('label_image', formData.label_image);
@@ -162,6 +168,20 @@ const CategoryForm = ({ isEditMode = false }) => {
                                                 required={!isEditMode}
                                             />
                                         </td>
+                                        {isEditMode && (
+                                            <td>
+                                                 <label htmlFor="status">Status:</label>
+                                                <select
+                                                    name="Status"
+                                                    value={formData.Status}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                >
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </td>
+                                        )}
                                     </tr>
                                     <tr>
                                         <td>
