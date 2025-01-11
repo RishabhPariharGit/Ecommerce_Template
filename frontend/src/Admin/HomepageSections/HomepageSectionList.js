@@ -76,7 +76,7 @@ const HomepageSectionList = () => {
             }
         } catch (error) {
             console.error('Error updating sections:', error);
-            alert('Failed to update sections.');
+        
         }
     };
     const handleDelete = async (sectionid) => {
