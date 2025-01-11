@@ -2,6 +2,7 @@ const CategoryModel = require('../Models/Category');
 const SubCategory = require('../Models/SubCategory');
 const ProductModel = require('../Models/Product')
 const fs = require('fs');
+const { GeneralStatus } = require('../Enum/Enum');
 
 const CreateCategory = async (req, res) => {
     const { Name, Description, Slug, label_image } = req.body;
@@ -31,7 +32,8 @@ const CreateCategory = async (req, res) => {
             Name,
             Description,
             label_image: uploadedImageUrl,
-            Slug
+            Slug,
+            Status: GeneralStatus.ACTIVE,
         });
         const savedCategory = await newCategory.save();
         res.status(201).json({
@@ -79,7 +81,7 @@ const GetCategoryBySlug = async (req, res) => {
 };
 const UpdateCategory = async (req, res) => {
     const { slug } = req.params;
-    const { Name, Description, label_image } = req.body;
+    const { Name, Description, label_image,Status } = req.body;
 
     try {        
         const existingCategory = await CategoryModel.findOne({ Slug: slug });
@@ -106,6 +108,7 @@ const UpdateCategory = async (req, res) => {
         existingCategory.Name = Name;
         existingCategory.Description = Description;
         existingCategory.label_image = uploadedImageUrl;
+        existingCategory.Status=Status;
         const updatedCategory = await existingCategory.save();
 
         res.status(200).json({

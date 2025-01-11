@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { GeneralStatus } = require('../Enum/Enum'); 
 const CategorySchema = new mongoose.Schema({
     Name: { 
         type: String, 
@@ -13,6 +14,11 @@ const CategorySchema = new mongoose.Schema({
     },
     Slug: {
         type: String,
+        required: true
+    },
+    Status: {
+        type: String,
+        enum: Object.values(GeneralStatus), // Using enum for product status
         required: true
     },
     Created_at: { 

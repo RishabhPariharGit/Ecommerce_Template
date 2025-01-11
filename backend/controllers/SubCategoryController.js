@@ -1,6 +1,7 @@
 const SubCategory = require('../Models/SubCategory')
 const SubCategoryModel = require('../Models/SubCategory');
 const ProductModel=require('../Models/Product')
+const { GeneralStatus } = require('../Enum/Enum');
 const fs = require('fs');  
 
 const CreateSubcategory = async (req, res) => {
@@ -35,7 +36,8 @@ const CreateSubcategory = async (req, res) => {
             Description,
             label_image: uploadedImageUrl,  
             Slug,
-            CategoryId
+            CategoryId,
+            Status: GeneralStatus.ACTIVE,
         });
         const savedSubcategory = await newSubcategory.save();
         res.status(201).json({
@@ -92,7 +94,7 @@ const GetSubCategoryBySlug = async (req, res) => {
 
 const UpdateSubCategory = async (req, res) => {
     const { slug } = req.params;
-    const { Name, Description, label_image, CategoryId } = req.body;
+    const { Name, Description, label_image, CategoryId,Status } = req.body;
 
     try {
         const existingsubCategory = await SubCategory.findOne({ Slug: slug });
@@ -122,6 +124,8 @@ const UpdateSubCategory = async (req, res) => {
         existingsubCategory.Description = Description;
         existingsubCategory.label_image = uploadedImageUrl;
         existingsubCategory.CategoryId = CategoryId;
+        existingsubCategory.Status = Status;
+
 
         // Save the updated subcategory
         const updatedSubCategory = await existingsubCategory.save();
