@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { GeneralStatus } = require('../Enum/Enum'); 
 const SubcategorySchema = new mongoose.Schema({
     Name: { 
         type: String, 
@@ -19,6 +19,11 @@ const SubcategorySchema = new mongoose.Schema({
     CategoryId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',  // Reference to Category table
+        required: true
+    },
+    Status: {
+        type: String,
+        enum: Object.values(GeneralStatus), // Using enum for product status
         required: true
     },
     Created_at: { 

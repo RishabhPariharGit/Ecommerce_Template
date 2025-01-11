@@ -22,9 +22,11 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
     const [availableItems, setAvailableItems] = useState({ Product: [], Category: [], Subcategory: [] });
     const [isLoading, setIsLoading] = useState(false);
     const isFetchedRef = useRef(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [sortOrder, setSortOrder] = useState("");
     const navigate = useNavigate();
     const { sectionId } = useParams(); // Use to load the section in edit mode if needed
-
+    const [ListLabel, setListLabel] = useState('');
     useEffect(() => {
         if (!isFetchedRef.current) {
             const fetchItems = async () => {
@@ -54,6 +56,12 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
                         isBestSeller: Section.isBestSeller || false,
                         isFreshArrival: Section.isFreshArrival || false
                     });
+                    if (Section.SectionType === "Product") {
+                        setListLabel("Product")
+                    } else if (Section.SectionType === "Subcategory") {
+                        setListLabel("Subcategory")
+
+                    }
                 } catch (err) {
                     console.error('Error fetching section:', err);
                 } finally {
@@ -74,11 +82,18 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
     }, [isEditMode, sectionId]);
 
     const handleChange = (e) => {
+        debugger
         const { name, value, type, checked } = e.target;
         setFormData((prevState) => ({
             ...prevState,
             [name]: type === 'checkbox' ? checked : value
         }));
+        if (value === "Product") {
+            setListLabel("Product")
+        } else if (value === "Subcategory") {
+            setListLabel("Subcategory")
+
+        }
     };
 
     const handleItemSelection = (itemId) => {
@@ -197,21 +212,99 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
 
                                         {/* Item Selection */}
                                         <tr>
-                                            <td colSpan="2">
-                                                <div className="formlabel">Select Items</div>
-                                                {availableItems[formData.SectionType]?.map((item) => (
-                                                    <div key={item._id}>
-                                                        <input
-                                                            type="checkbox"
-                                                            value={item._id}
-                                                            checked={formData.Items.includes(item._id)}
-                                                            onChange={() => handleItemSelection(item._id)}
-                                                        />
-                                                        {item.Name || item.Title}
-                                                    </div>
-                                                ))}
+                                            <td>
+                                                <div className="formlabel">Select {ListLabel}</div>
+
+                                                {/* Search Input */}
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Search items..."
+                                                        value={searchTerm}
+                                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                                        style={{ marginBottom: "10px", padding: "5px", width: "100%" }}
+                                                    />
+                                                </div>
+
+                                                {/* Sort Dropdown */}
+                                                <div style={{ marginBottom: "10px" }}>
+                                                    <label htmlFor="sortOrder" style={{ marginRight: "10px" }}>
+                                                        Sort By:
+                                                    </label>
+                                                    <select
+                                                        id="sortOrder"
+                                                        value={sortOrder}
+                                                        onChange={(e) => setSortOrder(e.target.value)}
+                                                        style={{ padding: "5px" }}
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option value="asc">A to Z</option>
+                                                        <option value="desc">Z to A</option>
+                                                    </select>
+                                                </div>
+
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Select</th>
+                                                            <th>Image</th>
+                                                            <th>Item</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {availableItems[formData.SectionType]
+                                                            ?.filter((item) =>
+                                                                (item.Name || item.Title)
+                                                                    ?.toLowerCase()
+                                                                    .includes(searchTerm.toLowerCase())
+                                                            )
+                                                            .sort((a, b) => {
+                                                            
+                                                                const nameA = (a.Name || a.Title || "").toLowerCase();
+                                                                const nameB = (b.Name || b.Title || "").toLowerCase();
+                                                                if (sortOrder === "asc") {
+                                                                    return nameA.localeCompare(nameB); // A to Z
+                                                                } else if (sortOrder === "desc") {
+                                                                    return nameB.localeCompare(nameA); // Z to A
+                                                                }
+                                                                return 0; // Default, no sorting
+                                                            })
+                                                            .map((item) => (
+                                                                <tr key={item._id}>
+                                                                    <td>
+                                                                        <input
+                                                                            type="checkbox"
+                                                                            value={item._id}
+                                                                            checked={formData.Items.includes(item._id)}
+                                                                            onChange={() => handleItemSelection(item._id)}
+                                                                        />
+                                                                    </td>
+                                                                    <td>
+                                                                        <img
+                                                                            src={
+                                                                                ListLabel === "Product"
+                                                                                    ? item.Product_Main_image
+                                                                                    : item.label_image
+                                                                            }
+                                                                            alt={item.Name || item.Title}
+                                                                            style={{
+                                                                                width: "50px",
+                                                                                height: "50px",
+                                                                                objectFit: "cover",
+                                                                            }}
+                                                                        />
+                                                                    </td>
+                                                                    <td>{item.Name || item.Title}</td>
+                                                                    <td>{item.Status}</td>
+                                                                </tr>
+                                                            ))}
+                                                    </tbody>
+                                                </table>
                                             </td>
                                         </tr>
+
+
                                     </>
                                 )}
                             </tbody>

@@ -55,6 +55,11 @@ const { AddSection,
   GetAllCollectionsforWebsite,
   SectionsAddToSidenav
  } = require("../controllers/HomepageSectionController");
+
+ const { CreatePage, GetAllPages
+ } = require("../controllers/PagesController");
+
+
 // User Ruote
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
@@ -118,4 +123,10 @@ router.put("/UpdateSection/:id", UpdateSection);
 router.delete('/DeleteSection/:id', DeleteSection);
 router.get("/GetAllsectionsforwebsite", GetAllCollectionsforWebsite);
 router.put("/SectionsAddToSidenav", SectionsAddToSidenav);
+
+
+//Pages Route
+router.post("/CreatePage", CreatePage);
+router.get("/GetAllPages", GetAllPages);
+
 module.exports = router;

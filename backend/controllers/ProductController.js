@@ -132,7 +132,7 @@ const CreateProduct = async (req, res) => {
 
 const UpdateProduct = async (req, res) => {
     const { slug } = req.params;
-    const { Name, Description, Price, Quantity, CategoryId, SubcategoryId, Product_image,Product_Main_image, SKU, Brand, Tags, SizeType, Sizes } = req.body;
+    const { Name, Description, Price, Quantity, CategoryId, SubcategoryId, Product_image,Product_Main_image, SKU, Brand, Tags, SizeType, Sizes ,Status} = req.body;
 
     try {
         // Find existing product
@@ -207,6 +207,8 @@ const UpdateProduct = async (req, res) => {
         existingProduct.Tags = Tags;
         existingProduct.SizeType = SizeType;
         existingProduct.Sizes = Sizes;
+        existingProduct.Status = Status;
+
 
         // Step 4: Save updated product
         const updatedProduct = await existingProduct.save();

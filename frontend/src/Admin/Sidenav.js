@@ -70,75 +70,82 @@ const Sidenav = () => {
                 </div>
 
                 <ul style={{ borderTop: 'solid 1px #EEE' }}>
-  <li>
-    <Link to="/admin/dashboard">
-      <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
-      <span className="title">Dashboard</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin/orders">
-      <FontAwesomeIcon icon={faShoppingCart} className="icon" />
-      <span className="title">Orders</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin/Category">
-      <FontAwesomeIcon icon={faTags} className="icon" />
-      <span className="title">Category</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin/SubCategory">
-      <FontAwesomeIcon icon={faBoxes} className="icon" />
-      <span className="title">SubCategory</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin/Products">
-      <FontAwesomeIcon icon={faTags} className="icon" />
-      <span className="title">Products</span>
-    </Link>
-  </li>
-  <li>
-    <div className="profile-dropdown-containerr">
-      <div
-        onClick={() => setIsHovered((prev) => !prev)} // Toggle dropdown on click
-        className="dropdown-toggle"
-      >
-        <Link to="/admin/HomepageSections">
-          <FontAwesomeIcon icon={faTags} className="icon" />
-          <span className="title">HomepageSections</span>
-        </Link>
-      </div>
-      <div className={`dropdown-menuuu ${isHovered ? "open" : ""}`}>
-        {isHovered && !isLoading && sections.length > 0 && (
-          <div className="dynamic-sections">
-            {sections.map((section) => (
-              <Link
-                key={section.id}
-                to={`/admin/HomepageSection/Edit/${section._id}`}
-                className="dropdown-itemmm"
-              >
-                <span className="dropdown-itemmm">{section.Title}</span>
-              </Link>
-            ))}
-          </div>
-        )}
-        {isLoading && <span className="dropdown-itemmm">Loading...</span>}
-        {error && <span className="dropdown-itemmm">{error}</span>}
-      </div>
-    </div>
-  </li>
-  <li>
-    <Link to="/admin/Users">
-      <FontAwesomeIcon icon={faUsers} className="icon" />
-      <span className="title">Users</span>
-    </Link>
-  </li>
-</ul>
+                    <li>
+                        <Link to="/admin/dashboard">
+                            <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
+                            <span className="title">Dashboard</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/orders">
+                            <FontAwesomeIcon icon={faShoppingCart} className="icon" />
+                            <span className="title">Orders</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/Category">
+                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <span className="title">Category</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/SubCategory">
+                            <FontAwesomeIcon icon={faBoxes} className="icon" />
+                            <span className="title">SubCategory</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/Products">
+                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <span className="title">Products</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/Pages">
+                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <span className="title">Pages</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <div
+                            className="profile-dropdown-container"
+                            onMouseEnter={() => setIsHovered(true)} // Trigger fetch when hovered
+                            onMouseLeave={() => setIsHovered(false)} // Reset hover state
+                        >
+                            <Link to="/admin/HomepageSections">
+                                <FontAwesomeIcon icon={faTags} className="icon" />
+                                <span className="title">HomepageSections</span>
+                            </Link>
+                            <div className="dropdown-menu">
+                                <Link to="/admin/HomepageSections">
+                                    <span className="dropdown-item">Allsections</span>
+                                </Link>
 
+                                {/* Show dynamic sections when hovered */}
+                                {isHovered && !isLoading && sections.length > 0 && (
+                                    <div className="dynamic-sections">
+                                        {sections.map((section) => (
+                                            <Link key={section.id} to={`/admin/HomepageSection/Edit/${section._id}`} className="dropdown-item">
+                                                <span className="dropdown-item">{section.Title}</span>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                                {/* Show loading indicator while fetching */}
+                                {isLoading && <span className="dropdown-item">Loading...</span>}
 
+                                {/* Show error message if fetching failed */}
+                                {error && <span className="dropdown-item">{error}</span>}
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <Link to="/admin/Users">
+                            <FontAwesomeIcon icon={faUsers} className="icon" />
+                            <span className="title">Users</span>
+                        </Link>
+                    </li>
+                </ul>
 
                 <div className="logout">
                     <div>
