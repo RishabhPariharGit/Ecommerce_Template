@@ -15,6 +15,8 @@ import HomepageSectionForm from '../Admin/HomepageSections/HomepageSectionForm';
 import HomepageSectionList from '../Admin/HomepageSections/HomepageSectionList';
 import PagesList from '../Admin/Pages/PagesList';
 import PagesForm from '../Admin/Pages/Pagesform';
+import CreateTemplateForm from '../Admin/Template/CreateTemplateForm';
+import TemplateList from '../Admin/Template/TemplateList';
 
 const AdminRoutes = () => {
   return (
@@ -164,6 +166,30 @@ const AdminRoutes = () => {
           element={
             <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
               <HomepageSectionForm isEditMode={true}/>
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Templates"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <TemplateList />
+            </AuthGuard>
+          }
+        />
+          <Route
+          path="/Template/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <CreateTemplateForm  isEditMode={false}/>
+            </AuthGuard>
+          }
+        />
+         <Route
+          path="/Template/Edit/:Id"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <CreateTemplateForm isEditMode={true}/>
             </AuthGuard>
           }
         />

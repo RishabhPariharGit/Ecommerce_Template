@@ -31,6 +31,11 @@ const pageSchema = new mongoose.Schema({
         enum: Object.values(GeneralStatus), // Using enum for product status
         required: true
     },
+    TemplateId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Template', // Reference to the Template schema
+      default: null, // Optional: default to null if no template is selected
+    },
     Created_at: {
       type: Date,
       default: Date.now,

@@ -1,45 +1,46 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getAllPages, deletePage } from '../../Services/PagesService';
+import { getAllTemplates,deleteTemplate } from '../../Services/TemplateService';
 import { useNavigate } from 'react-router-dom'; 
 import Navbar from '../AdminComponents/Navbar';
 
-const PagesList = () => {
-    const [Pages, setPages] = useState([]);
+const TemplateList = () => {
+    const [Templates, setTemplates] = useState([]);
     const navigate = useNavigate(); // Initialize navigate
     const isFetchedRef = useRef(false); // Track if data has already been fetched
     useEffect(() => {
         if (!isFetchedRef.current) {
-        const fetchPages = async () => {
+        const fetchTemplates = async () => {
             try {
-                const response = await getAllPages();
-                setPages(response.data); 
+                const response = await getAllTemplates();
+                setTemplates(response.data); 
             } catch (err) {
-                console.error('Error fetching Pages:', err);
+                console.error('Error fetching Templates:', err);
             }
         };
 
-        fetchPages();
+        fetchTemplates();
         isFetchedRef.current = true;
     }
     }, []);
 
-    const handleEdit = (PageSlug) => {
-        navigate(`/admin/Page/Edit/${PageSlug}`);
+    const handleEdit = (TemplateId) => {
+        
+        navigate(`/admin/Template/Edit/${TemplateId}`);
     };
 
     const handleCreate = () => {
+        
         // Navigate to the create page
-        navigate('/admin/Pages/create');
+        navigate('/admin/Template/create');
     };
 
-    const handleDelete = async (PageId) => {
-        
-        if (window.confirm("Are you sure you want to delete this Page? This will also delete all related subPages and products.")) {
+    const handleDelete = async (TemplateId) => {
+        if (window.confirm("Are you sure you want to delete this Template? This will also delete all related subTemplates and products.")) {
             try {
-                await deletePage(PageId); // Call the delete function
-                setPages(Pages.filter(Page => Page._id !== PageId)); // Remove the deleted Page from state
+               await deleteTemplate(TemplateId); // Call the delete function
+                setTemplates(Templates.filter(Template => Template._id !== TemplateId)); // Remove the deleted Page from state
             } catch (error) {
-                console.error('Error deleting Page:', error);
+                console.error('Error deleting Template:', error);
             }
         }
     };
@@ -50,10 +51,10 @@ const PagesList = () => {
            
             <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
-               <p>Pages</p> 
+               <p>Templates</p> 
                </div>
             <button className="button" onClick={handleCreate}>
-                        Create Page
+                        Create Template
                     </button>
                     
                 </div>
@@ -64,27 +65,27 @@ const PagesList = () => {
                         <thead>
                             <tr className="roundheader">
                                 <th>Name</th>
-                                <th>Description</th>
+                              
                                 <th className="buttoncolumn">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Pages.length > 0 ? (
-                                Pages.map((Page) => (
-                                    <tr key={Page.Slug}>
-                                        <td>{Page.Title}</td>
-                                        <td>{Page.Content}</td>
+                            {Templates.length > 0 ? (
+                                Templates.map((Template) => (
+                                    <tr key={Template._id}>
+                                        <td>{Template.name}</td>
+                                       
                                         <td>
                                         <div className='customization-main-btns'>
                                             <button
                                                 className="gridbutton"
-                                                onClick={() => handleEdit(Page.Slug)}
+                                                onClick={() => handleEdit(Template._id)}
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 className="gridbutton delete-button"
-                                                onClick={() => handleDelete(Page._id)} // Add delete button
+                                                onClick={() => handleDelete(Template._id)} // Add delete button
                                             >
                                                 Delete
                                             </button>
@@ -94,7 +95,7 @@ const PagesList = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="3">No Pages found</td>
+                                    <td colSpan="3">No Templates found</td>
                                 </tr>
                             )}
                         </tbody>
@@ -106,4 +107,4 @@ const PagesList = () => {
     );
 };
 
-export default PagesList;
+export default TemplateList;

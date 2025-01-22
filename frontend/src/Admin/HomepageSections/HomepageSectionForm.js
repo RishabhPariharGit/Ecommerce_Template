@@ -82,7 +82,7 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
     }, [isEditMode, sectionId]);
 
     const handleChange = (e) => {
-        debugger
+        
         const { name, value, type, checked } = e.target;
         setFormData((prevState) => ({
             ...prevState,

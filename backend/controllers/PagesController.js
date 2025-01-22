@@ -9,6 +9,7 @@ const CreatePage = async (req, res) => {
         Images,
         Visibility,
         Visibility_date,
+        TemplateId
     } = req.body;
 
     try {
@@ -61,6 +62,7 @@ const CreatePage = async (req, res) => {
             Content,
             Images: uploadedImages,
             Visibility,
+            TemplateId,
             Visibility_date: Visibility_date || null,
             Status: GeneralStatus.ACTIVE,
         });
@@ -78,9 +80,6 @@ const CreatePage = async (req, res) => {
     }
 };
 
-
-
-
 const GetAllPages = async (req, res) => {
     try {
         const Pages = await PagesModel.find();
@@ -94,7 +93,81 @@ const GetAllPages = async (req, res) => {
     }
 };
 
+const GetPageBySlug = async (req, res) => {
+    try {
+        const { Slug } = req.params;
+        const Page = await PagesModel.findOne({ Slug: { $regex: new RegExp(Slug, "i") } });
+        console.log("Page",Page)
+        if (!Page) {
+            return res.status(404).json({ message: 'Page not found' });
+        }
+
+        return res.status(200).json(Page);
+    } catch (err) {
+        console.error("Error:", err);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
 
 
+const UpdatePage = async (req, res) => {
+    try {
+        const { slug } = req.params;
+        const {
+            Title,
+            Content,
+            Images,
+            Visibility,
+            Visibility_date,
+            TemplateId
+        } = req.body;
 
-module.exports = { CreatePage,GetAllPages };
+        // Find the existing page by slug (case-insensitive)
+        const existingPage = await PagesModel.findOne({ Slug: { $regex: new RegExp(slug, "i") } });
+        if (!existingPage) {
+            return res.status(404).json({ message: 'Page not found' });
+        }
+
+        // Update the page fields
+        existingPage.Title = Title || existingPage.Title;
+        existingPage.Content = Content || existingPage.Content;
+        existingPage.Images = Images || existingPage.Images;
+        existingPage.Visibility = Visibility || existingPage.Visibility;
+        existingPage.Visibility_date = Visibility_date 
+            ? new Date(Visibility_date).toISOString().split("T")[0] 
+            : existingPage.Visibility_date;
+        existingPage.TemplateId = TemplateId || existingPage.TemplateId;
+
+        // Save the updated page
+        const updatedPage = await existingPage.save();
+        if (!updatedPage) {
+            return res.status(500).json({ message: 'Failed to update the page.' });
+        }
+        // If no template is associated, just update the page
+        return res.status(200).json({
+            message: 'Page updated successfully.',
+            page: updatedPage,
+        });
+    } catch (error) {
+        console.error('Error updating page:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+};
+
+const DeletePage = async (req, res) => { 
+    const { id } = req.params;
+    try {
+        const Page = await PagesModel.findById(id);
+        if (!Page) {
+            return res.status(404).json({ message: 'Page not found' });
+        }
+        await PagesModel.findByIdAndDelete(id);
+
+        res.status(200).json({ message: 'Page deleted successfully!' });
+    } catch (err) {
+        console.error("Error deleting Page:", err);
+        res.status(500).json({ message: 'Error deleting Page', error: err });
+    }
+};
+
+module.exports = { CreatePage,GetAllPages,GetPageBySlug,UpdatePage,DeletePage };
