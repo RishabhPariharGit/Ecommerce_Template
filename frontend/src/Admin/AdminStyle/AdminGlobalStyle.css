@@ -602,10 +602,10 @@ body {
 }
 
 @media (max-width:1200px) {
-  .wrapper .sidebar {
+  /* .wrapper .sidebar {
       width: 95%;
       display: none;
-  }
+  } */
 
   .wrapper.collapseSideBar .sidebar {
       width: 300px !important;
@@ -2845,3 +2845,20 @@ p.section-title {
       margin-top: 60px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

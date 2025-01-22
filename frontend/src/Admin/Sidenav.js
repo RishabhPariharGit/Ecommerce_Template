@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faShoppingCart, faTags, faBoxes, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { getAllsections } from '../Services/HomepageSectionService';
 
-const Sidenav = () => {
+const Sidenav = ({ isOpen, toggleSidenav }) => {
     const navigate = useNavigate();
     const [sections, setSections] = useState([]);
     const [error, setError] = useState(null);
@@ -42,7 +42,9 @@ const Sidenav = () => {
     };
 
     return (
-        <div>
+      <>
+        <div className={`sidenav ${isOpen ? 'open' : ''}`}>
+
             <div className="widedesktop">
                 <div className="top_navbar">
                     <div className="hamburger">
@@ -152,6 +154,7 @@ const Sidenav = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 
