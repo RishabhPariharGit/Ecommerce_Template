@@ -15,6 +15,8 @@ const WishlistModel=require('./Models/Wishlist ')
 const AddressModel=require('./Models/Address')
 const PagesModel=require('./Models/Pages')
 const HomepageSectionModel =require('./Models/HomepageSections ')
+const StyleModel =require('./Models/Style')
+const TemplateModel=require('./Models/Template')
 
 
 const cloudinary = require('cloudinary').v2;  
@@ -56,6 +58,8 @@ WishlistModel();
 AddressModel();
 HomepageSectionModel();
 PagesModel();
+StyleModel();
+TemplateModel();
 
 app.use('/', Router);
 

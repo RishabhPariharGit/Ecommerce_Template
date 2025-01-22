@@ -56,8 +56,19 @@ const { AddSection,
   SectionsAddToSidenav
  } = require("../controllers/HomepageSectionController");
 
- const { CreatePage, GetAllPages
+ const { CreatePage,
+   GetAllPages, 
+   GetPageBySlug,
+   UpdatePage,
+   DeletePage
  } = require("../controllers/PagesController");
+
+const {Createtemplate,
+  GetAllTemplate, 
+  GetTemplateById,
+   UpdateTemplate,
+   DeleteTemplate
+  } = require("../controllers/TemplateController");
 
 
 // User Ruote
@@ -128,5 +139,15 @@ router.put("/SectionsAddToSidenav", SectionsAddToSidenav);
 //Pages Route
 router.post("/CreatePage", CreatePage);
 router.get("/GetAllPages", GetAllPages);
+router.get("/Page/Edit/:Slug", GetPageBySlug);
+router.put("/UpdatePage/:slug", UpdatePage);
+router.delete('/DeletePage/:id', DeletePage);
+//Template
+
+router.post("/CreateTemplate", Createtemplate);
+router.get("/GetAllTemplate", GetAllTemplate);
+router.get("/Template/Edit/:id", GetTemplateById);
+router.put("/UpdateTemplate/:id", UpdateTemplate);
+router.delete('/DeleteTemplate/:id', DeleteTemplate);
 
 module.exports = router;

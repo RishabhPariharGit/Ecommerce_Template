@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { addPage,getPageBySlug } from '../../Services/PagesService';
+import { addPage, getPageBySlug ,updatePage} from '../../Services/PagesService';
+import { getAllTemplates } from '../../Services/TemplateService';
 import '../AdminStyle/AdminGlobalStyle.css';
-import { useNavigate ,useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../AdminComponents/Navbar';
 
 const PagesForm = ({ isEditMode = false }) => {
     const [previewSources, setPreviewSources] = useState([]);
+    const [templates, setTemplates] = useState([]);
     const [formData, setFormData] = useState({
         Title: '',
         Content: '',
         Images: [],
-        Slug:'',
+        Slug: '',
         Visibility: 'visible', // Default to 'Public'
         Visibility_date: '',
+        TemplateId: '', 
     });
     const { slug } = useParams();
     const navigate = useNavigate();
@@ -20,6 +23,7 @@ const PagesForm = ({ isEditMode = false }) => {
 
     useEffect(() => {
         if (!isFetchedRef.current) {
+            
             const loadCategory = async () => {
                 try {
                     const response = await getPageBySlug(slug);
@@ -35,12 +39,43 @@ const PagesForm = ({ isEditMode = false }) => {
                     });
                 } catch (err) {
                     console.error('Error fetching category:', err);
-                } 
+                }
             };
-
+            const loadTemplates = async () => {
+                try {
+                    
+                    const response = await getAllTemplates();
+                    setTemplates(response.data);
+                } catch (err) {
+                    console.error('Error loading templates:', err);
+                }
+            };
+            const loadpage = async () => {
+                try { 
+                    
+                    if (isEditMode && slug) {
+                        const response = await getPageBySlug(slug);
+                        const page = response.data;
+                        setFormData({
+                            Title: page.Title,
+                            Content: page.Content,
+                            Slug: page.Slug,
+                            Images: page.Images || [],
+                            Visibility: page.Visibility,
+                            Visibility_date: page.Visibility_date ? new Date(page.Visibility_date).toISOString().split("T")[0] : '',
+                            TemplateId: page.TemplateId || '',
+                        });
+                        setPreviewSources(page.Images || []);
+                    }
+                } catch (err) {
+                    console.error('Error fetching page data:', err);
+                }
+            };
             if (isEditMode && slug) {
-                loadCategory();
-            } 
+                loadCategory(); 
+                loadpage();         
+            }
+            loadTemplates();
 
             isFetchedRef.current = true; // Mark data as fetched
         }
@@ -85,8 +120,14 @@ const PagesForm = ({ isEditMode = false }) => {
         e.preventDefault();
 
         try {
-            await addPage(formData);
-            console.log('Page created successfully');
+            if(isEditMode){
+                await updatePage(slug,formData);
+                console.log('Page updated successfully');
+            }else{
+                await addPage(formData);
+                console.log('Page created successfully');
+            }
+           
             navigate('/admin/Pages');
         } catch (err) {
             console.error('Error submitting form:', err);
@@ -208,6 +249,25 @@ const PagesForm = ({ isEditMode = false }) => {
                                                 <p>No images selected</p>
                                             )}
                                         </div>
+                                    </td>
+                                </tr>
+                                  {/* Add template */}
+                                <tr>
+                                    <td colSpan="2">
+                                        <div className="formlabel">Select Template</div>
+                                        <select
+                                            name="TemplateId"
+                                            value={formData.TemplateId}
+                                            onChange={handleInputChange}
+                                            required
+                                        >
+                                            <option value="" disabled>Select a template</option>
+                                            {templates.map((template) => (
+                                                <option key={template._id} value={template._id}>
+                                                    {template.name}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </td>
                                 </tr>
 

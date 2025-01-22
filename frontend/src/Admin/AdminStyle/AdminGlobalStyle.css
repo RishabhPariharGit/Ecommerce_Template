@@ -2750,3 +2750,51 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
   border-bottom: 0;
   border-left: .3em solid transparent;
 }
+
+/* main template styling start */
+.main-template-main-wrapper{
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+}
+
+h3.main-template-main-head {
+  font-size: 18px;
+  padding: 10px 0px;
+  border-bottom: 1px solid grey;
+}
+
+
+.main-template-preview-main-wrapper{
+  width: 70%;
+  border: 1px solid #ccc;
+}
+.main-css-editor-main-wrapper{
+  width: 30%;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.main-css-editor-main-wrapper-fields-main-class {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* label.template-fields-main-head {
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 20px;
+} */
+h4.template-fields-subhead {
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 0px;
+}
+
+.template-select-section-fields {
+  display: flex;
+  gap: 12px;
+}
+/* template styling end */

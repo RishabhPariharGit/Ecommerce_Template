@@ -52,7 +52,7 @@ const CategoryForm = ({ isEditMode = false }) => {
     }, [isEditMode, slug]);
 
     const handleInputChange = (e) => {
-        debugger
+        
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
