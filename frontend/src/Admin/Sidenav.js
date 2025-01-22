@@ -3,7 +3,7 @@ import './AdminStyle/AdminGlobalStyle.css';
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faShoppingCart, faTags, faBoxes, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faShoppingCart, faTags, faShirt, faBoxes, faUsers,faFileClipboard } from '@fortawesome/free-solid-svg-icons';
 import { getAllsections } from '../Services/HomepageSectionService';
 
 const Sidenav = ({ isOpen, toggleSidenav }) => {
@@ -74,7 +74,7 @@ const Sidenav = ({ isOpen, toggleSidenav }) => {
                 <ul style={{ borderTop: 'solid 1px #EEE' }}>
                 <li>
     <Link to="/admin/dashboard">
-      <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
+      <FontAwesomeIcon icon={faHouse} className="icon" />
       <span className="title">Dashboard</span>
     </Link>
   </li>
@@ -98,16 +98,24 @@ const Sidenav = ({ isOpen, toggleSidenav }) => {
   </li>
   <li>
     <Link to="/admin/Products">
-      <FontAwesomeIcon icon={faTags} className="icon" />
+      <FontAwesomeIcon icon={faShirt} className="icon" />
       <span className="title">Products</span>
     </Link>
   </li>
                     <li>
                         <Link to="/admin/Pages">
-                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <FontAwesomeIcon icon={faFileClipboard} className="icon" />
                             <span className="title">Pages</span>
                         </Link>
                     </li>
+
+                    <li>
+                        <Link to="/admin/Templates">
+                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <span className="title">Templates</span>
+                        </Link>
+                    </li>
+
                     <li>
     <div className="profile-dropdown-containerr">
       <div

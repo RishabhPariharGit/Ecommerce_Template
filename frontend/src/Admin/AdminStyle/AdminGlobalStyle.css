@@ -2771,7 +2771,8 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
 
 h3.main-template-main-head {
   font-size: 18px;
-  padding: 10px 0px;
+  padding: 20px 10px;
+  margin-bottom: 0px;
   border-bottom: 1px solid grey;
 }
 
@@ -2793,11 +2794,6 @@ h3.main-template-main-head {
   gap: 20px;
 }
 
-/* label.template-fields-main-head {
-  font-size: 16px;
-  font-weight: 600;
-  padding-bottom: 20px;
-} */
 h4.template-fields-subhead {
   font-size: 16px;
   font-weight: 600;
@@ -2806,7 +2802,31 @@ h4.template-fields-subhead {
 
 .template-select-section-fields {
   display: flex;
-  gap: 12px;
+  gap: 15px;
+  align-items: center;
+}
+
+label.input-checkbox-mn-cls {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.editing-settings-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+label.main-label-cls.clr-mn-cls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+label.main-label-cls.clr-mn-cls input{
+  width: 30px;
+  height: 20px;
 }
 /* template styling end */
 

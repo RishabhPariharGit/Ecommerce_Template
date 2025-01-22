@@ -29,6 +29,7 @@ const CreateTemplateForm = ({ isEditMode = false }) => {
     },
     main: {
       backgroundColor: "#ffffff",
+      height:"100vh",
       color: "#000000",
       padding: "20px",
       margin: "10px",
@@ -179,7 +180,7 @@ useEffect(() => {
           <h4 className="template-fields-subhead">Select Sections to Include</h4>
 
           <div className="template-select-section-fields">
-          <label>
+          <label className="input-checkbox-mn-cls">
             <input
               type="checkbox"
               checked={selectedSections.header}
@@ -188,7 +189,7 @@ useEffect(() => {
             Header
           </label>
 
-          <label>
+          <label className="input-checkbox-mn-cls">
             <input
               type="checkbox"
               checked={selectedSections.main}
@@ -197,7 +198,7 @@ useEffect(() => {
             Main Content
           </label>
 
-          <label>
+          <label className="input-checkbox-mn-cls">
             <input
               type="checkbox"
               checked={selectedSections.footer}
@@ -216,15 +217,15 @@ useEffect(() => {
             onChange={(e) => setSelectedSection(e.target.value)}
           >
             <option value="header">Header</option>
-            <option value="footer">Footer</option>
             <option value="main">Main Content</option>
+            <option value="footer">Footer</option>
           </select>
         </label>
 
-        <div>
+        <div className="editing-settings-main">
           <h4 className="template-fields-subhead">Edit CSS for {selectedSection}</h4>
-          <label>
-            Background Color:
+          <label className="main-label-cls clr-mn-cls">
+            Background Color
             <input
               type="color"
               value={cssProperties[selectedSection].backgroundColor}
@@ -232,8 +233,8 @@ useEffect(() => {
             />
           </label>
 
-          <label>
-            Text Color:
+          <label className="main-label-cls clr-mn-cls">
+            Text Color
             <input
               type="color"
               value={cssProperties[selectedSection].color}
@@ -241,7 +242,7 @@ useEffect(() => {
             />
           </label>
 
-          <label>
+          <label className="main-label-cls">
             Padding:
             <input
               type="text"
@@ -250,7 +251,7 @@ useEffect(() => {
             />
           </label>
 
-          <label>
+          <label className="main-label-cls">
             Margin:
             <input
               type="text"
@@ -259,7 +260,7 @@ useEffect(() => {
             />
           </label>
 
-          <label>
+          <label className="main-label-cls">
             Font Size:
             <input
               type="number"
