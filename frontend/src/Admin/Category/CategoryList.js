@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getAllCategories, deleteCategory } from '../../Services/CategoryService'; // Import deleteCategory
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import Navbar from '../AdminComponents/Navbar';
+
 
 const CategoryList = () => {
     const [categories, setCategories] = useState([]);
@@ -46,7 +46,7 @@ const CategoryList = () => {
 
     return (
         <>
-       <Navbar/>
+      
             {/* <div className="pagetitle">
                 Categories
             </div> */}

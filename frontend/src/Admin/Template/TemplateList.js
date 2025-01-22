@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getAllTemplates,deleteTemplate } from '../../Services/TemplateService';
 import { useNavigate } from 'react-router-dom'; 
-import Navbar from '../AdminComponents/Navbar';
+
 
 const TemplateList = () => {
     const [Templates, setTemplates] = useState([]);
@@ -47,8 +47,7 @@ const TemplateList = () => {
 
     return (
         <>
-       <Navbar/>
-           
+    
             <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
                <p>Templates</p> 

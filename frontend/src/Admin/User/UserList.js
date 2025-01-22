@@ -1,7 +1,7 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { getAllUsers, deleteUser } from '../../Services/UserService'; // Adjust service functions for users
 import { useNavigate } from 'react-router-dom'; 
-import Navbar from '../AdminComponents/Navbar';
+
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -58,7 +58,7 @@ const UserList = () => {
             {/* <div className="pagetitle">
                 Users
             </div> */}
-<Navbar/>
+
             <div className="white-bg-btn">
             <div className='title-bread-crumbs'>
                <p>Users</p> 

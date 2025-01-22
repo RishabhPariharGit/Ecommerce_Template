@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getAllProducts,deleteProduct } from '../../Services/ProductService'; 
 import { useNavigate } from 'react-router-dom'; 
-import Navbar from '../AdminComponents/Navbar';
+
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -55,7 +55,7 @@ const ProductList = () => {
 
     return (
         <div>
-           <Navbar/>
+        
             <div className="white-bg-btn">
             <div className='title-bread-crumbs'>
                <p>Product List</p> 

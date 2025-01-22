@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../AdminStyle/AdminGlobalStyle.css';
 import '../AdminStyle/Color.css';
-import Navbar from '../AdminComponents/Navbar';
+
 import ResponsiveGrid from '../AdminComponents/ResponsiveGrid';
 
 
@@ -26,7 +26,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Navbar/>
+
       <ResponsiveGrid/>
       {/* <div className='main-admin-wrapper'>
     
