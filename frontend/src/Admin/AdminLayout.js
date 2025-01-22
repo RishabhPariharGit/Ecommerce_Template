@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidenav from './Sidenav';
 import './AdminStyle/AdminGlobalStyle.css';
+import Navbar from './AdminComponents/Navbar';
 
 const AdminLayout = ({ children }) => {
     return (
@@ -8,6 +9,7 @@ const AdminLayout = ({ children }) => {
             <div className='wrapper' id='wrapper'>
                 <Sidenav />
                 <div className="main-Content">
+                <Navbar />
                     {children}
                 </div>
             </div>

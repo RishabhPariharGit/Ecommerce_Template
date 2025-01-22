@@ -3,7 +3,7 @@ import { addPage, getPageBySlug ,updatePage} from '../../Services/PagesService';
 import { getAllTemplates } from '../../Services/TemplateService';
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from '../AdminComponents/Navbar';
+
 
 const PagesForm = ({ isEditMode = false }) => {
     const [previewSources, setPreviewSources] = useState([]);
@@ -139,7 +139,7 @@ const PagesForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-            <Navbar />
+          
             <div className="white-bg-btn">
                 <div className="title-bread-crumbs">
                     <p>{isEditMode ? 'Edit Page' : 'Create Page'}</p>

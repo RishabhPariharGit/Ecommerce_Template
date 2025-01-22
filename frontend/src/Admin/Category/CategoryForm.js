@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { addCategory, updateCategory, getCategoryBySlug } from '../../Services/CategoryService';
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from '../AdminComponents/Navbar';
+
 
 const CategoryForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
@@ -112,7 +112,7 @@ const CategoryForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-            <Navbar/>
+    
             <div className="white-bg-btn">
             <div className='title-bread-crumbs'>
                <p>Create Category</p> 
