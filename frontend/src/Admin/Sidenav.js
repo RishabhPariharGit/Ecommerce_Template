@@ -12,6 +12,7 @@ const Sidenav = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isHovered, setIsHovered] = useState(false); // Track hover state
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Track sidebar open/close state
     const isFetchedRef = useRef(false);
 
     const fetchSections = async () => {
@@ -45,7 +46,7 @@ const Sidenav = () => {
         <div>
             <div className="widedesktop">
                 <div className="top_navbar">
-                    <div className="hamburger">
+                    <div className="hamburger" onClick={() => setIsSidebarOpen((prev) => !prev)}>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -58,7 +59,7 @@ const Sidenav = () => {
                 </div>
             </div>
 
-            <div className="sidebar overflow-auto">
+            <div className={`sidebar overflow-auto ${isSidebarOpen ? 'open' : 'closed'}`}>
                 <div className="desktop">
                     <div className="top_navbar">
                         <div className="top_menu">
@@ -70,36 +71,36 @@ const Sidenav = () => {
                 </div>
 
                 <ul style={{ borderTop: 'solid 1px #EEE' }}>
-                <li>
-    <Link to="/admin/dashboard">
-      <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
-      <span className="title">Dashboard</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin/orders">
-      <FontAwesomeIcon icon={faShoppingCart} className="icon" />
-      <span className="title">Orders</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin/Category">
-      <FontAwesomeIcon icon={faTags} className="icon" />
-      <span className="title">Category</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin/SubCategory">
-      <FontAwesomeIcon icon={faBoxes} className="icon" />
-      <span className="title">SubCategory</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin/Products">
-      <FontAwesomeIcon icon={faTags} className="icon" />
-      <span className="title">Products</span>
-    </Link>
-  </li>
+                    <li>
+                        <Link to="/admin/dashboard">
+                            <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
+                            <span className="title">Dashboard</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/orders">
+                            <FontAwesomeIcon icon={faShoppingCart} className="icon" />
+                            <span className="title">Orders</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/Category">
+                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <span className="title">Category</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/SubCategory">
+                            <FontAwesomeIcon icon={faBoxes} className="icon" />
+                            <span className="title">SubCategory</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/Products">
+                            <FontAwesomeIcon icon={faTags} className="icon" />
+                            <span className="title">Products</span>
+                        </Link>
+                    </li>
                     <li>
                         <Link to="/admin/Pages">
                             <FontAwesomeIcon icon={faTags} className="icon" />
@@ -107,48 +108,50 @@ const Sidenav = () => {
                         </Link>
                     </li>
                     <li>
-    <div className="profile-dropdown-containerr">
-      <div
-        onClick={() => setIsHovered((prev) => !prev)} // Toggle dropdown on click
-        className="dropdown-toggle"
-      >
-        <Link to="/admin/HomepageSections">
-          <FontAwesomeIcon icon={faTags} className="icon" />
-          <span className="title">HomepageSections</span>
-        </Link>
-      </div>
-      <div className={`dropdown-menuuu ${isHovered ? "open" : ""}`}>
-        {isHovered && !isLoading && sections.length > 0 && (
-          <div className="dynamic-sections">
-            {sections.map((section) => (
-              <Link
-                key={section.id}
-                to={`/admin/HomepageSection/Edit/${section._id}`}
-                className="dropdown-itemmm"
-              >
-                <span className="dropdown-itemmm">{section.Title}</span>
-              </Link>
-            ))}
-          </div>
-        )}
-        {isLoading && <span className="dropdown-itemmm">Loading...</span>}
-        {error && <span className="dropdown-itemmm">{error}</span>}
-      </div>
-    </div>
-  </li>
-  <li>
-    <Link to="/admin/Users">
-      <FontAwesomeIcon icon={faUsers} className="icon" />
-      <span className="title">Users</span>
-    </Link>
-  </li>
+                        <div className="profile-dropdown-containerr">
+                            <div
+                                onClick={() => setIsHovered((prev) => !prev)} // Toggle dropdown on click
+                                className="dropdown-toggle"
+                            >
+                                <Link to="/admin/HomepageSections">
+                                    <FontAwesomeIcon icon={faTags} className="icon" />
+                                    <span className="title">HomepageSections</span>
+                                </Link>
+                            </div>
+                            <div className={`dropdown-menuuu ${isHovered ? 'open' : ''}`}>
+                                {isHovered && !isLoading && sections.length > 0 && (
+                                    <div className="dynamic-sections">
+                                        {sections.map((section) => (
+                                            <Link
+                                                key={section.id}
+                                                to={`/admin/HomepageSection/Edit/${section._id}`}
+                                                className="dropdown-itemmm"
+                                            >
+                                                <span className="dropdown-itemmm">{section.Title}</span>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                                {isLoading && <span className="dropdown-itemmm">Loading...</span>}
+                                {error && <span className="dropdown-itemmm">{error}</span>}
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <Link to="/admin/Users">
+                            <FontAwesomeIcon icon={faUsers} className="icon" />
+                            <span className="title">Users</span>
+                        </Link>
+                    </li>
                 </ul>
 
                 <div className="logout">
                     <div>
                         Logged in as <strong>User Name</strong>
                     </div>
-                    <button className='btn logout-btn' onClick={handleLogout}>Logout</button>
+                    <button className="btn logout-btn" onClick={handleLogout}>
+                        Logout
+                    </button>
                 </div>
             </div>
         </div>

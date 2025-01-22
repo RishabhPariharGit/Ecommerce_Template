@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getAllPages, deletePage } from '../../Services/PagesService';
 import { useNavigate } from 'react-router-dom'; 
-import Navbar from '../AdminComponents/Navbar';
 
 const PagesList = () => {
     const [Pages, setPages] = useState([]);
@@ -45,8 +44,7 @@ const PagesList = () => {
 
     return (
         <>
-       <Navbar/>
-           
+
             <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
                <p>Pages</p> 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getAllsections, deleteSection, updateSectionsAddToSidenav } from '../../Services/HomepageSectionService'; // Adjust service functions for Sections
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../AdminComponents/Navbar';
+
 
 const HomepageSectionList = () => {
     const [Sections, setSections] = useState([]);
@@ -95,94 +95,141 @@ const HomepageSectionList = () => {
 
     return (
         <>
-        <Navbar />
+       
         <div className="white-bg-btn">
             <div className="title-bread-crumbs">
                 <p>HomepageSections</p>
             </div>
-
+            <div>
             <button className="button" onClick={handleAddToSidenav}>
                 Add To SideNav
             </button>
             <button className="button" onClick={handleCreate}>
                 Create HomepageSection
             </button>
+            </div>
         </div>
         <div className="form-600">
             <div >
                 {error && <div className="error">{error}</div>} {/* Display error message */}
                 <div className="white-bg">
-                <h5>Active Sections</h5>
+                <p className="section-title">Active Sections</p>
                 <table className="tablestyle">
                     <thead>
-                        <tr className="roundheader">
-                            <th></th>
+                        <tr className="roundheader desktop">
+                            <th>Select</th>
                             <th>Name</th>
                             <th>SectionType</th>
                             <th>DisplayOrder</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {activeSections.length > 0 ? (
-                            activeSections.map((section) => (
-                                <tr key={section._id}>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedSections.some(item => item._id === section._id)}
-                                            onChange={(e) => handleCheckboxChange(e, section)}
-                                        />
-                                    </td>
-                                    <td>{section.Title}</td>
-                                    <td>{section.SectionType}</td>
-                                    <td>{section.DisplayOrder}</td>
-                                    <td>{section.Status}</td>
-                                    <td>
-                                        <div className="customization-main-btns">
-                                            <button
-                                                className="gridbutton"
-                                                onClick={() => handleEdit(section._id)}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="gridbutton delete-button"
-                                                onClick={() => handleDelete(section._id)} // Add delete button
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="5">No Active Sections found</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-                </div>
+    {activeSections.length > 0 ? (
+        activeSections.map((section) => (
+            <>
+                <tr className="desktop" key={section._id}>
+                    <td>
+                        <input
+                            type="checkbox"
+                            checked={selectedSections.some(item => item._id === section._id)}
+                            onChange={(e) => handleCheckboxChange(e, section)}
+                        />
+                    </td>
+                    <td>{section.Title}</td>
+                    <td>{section.SectionType}</td>
+                    <td>{section.DisplayOrder}</td>
+                    <td>{section.Status}</td>
+                    <td>
+                        <div className="customization-main-btns">
+                            <button
+                                className="gridbutton"
+                                onClick={() => handleEdit(section._id)}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                className="gridbutton delete-button"
+                                onClick={() => handleDelete(section._id)}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {/* Mobile row can be conditionally rendered here */}
+                <tr className="mobileportrait-mobilewide" key={`${section._id}-mobile`}>
+                    
+                    <td >
+                       <div><b>Select : </b> <input
+                            type="checkbox"
+                            checked={selectedSections.some(item => item._id === section._id)}
+                            onChange={(e) => handleCheckboxChange(e, section)}
+                        /></div>
+                       <div> <b>Name : </b>
+                       {section.Title}
+                       </div>
+                       <div><b>SectionType : </b>
+                       {section.SectionType}
+                       </div>
+                       <div><b>DisplayOrder : </b>
+                       {section.DisplayOrder}
+                       </div>
+                       <div><b>Status : </b>
+                       {section.Status}
+                       </div>
+
+                       <div className="customization-main-btns">
+                       <b>Action : </b>
+
+                            <button
+                                className="gridbutton"
+                                onClick={() => handleEdit(section._id)}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                className="gridbutton delete-button"
+                                onClick={() => handleDelete(section._id)}
+                            >
+                                Delete
+                            </button>
+                        </div>
+
+
+
+                    </td>
+                </tr>
+            </>
+        ))
+    ) : (
+        <tr>
+            <td colSpan="6">No Active Sections found</td>
+        </tr>
+    )}
+</tbody>
+ </table>
+ </div>
 
                 <div className="white-bg">
-                <h3>Inactive Sections</h3>
+                <p className='section-title'>Inactive Sections</p>
                 <table className="tablestyle">
                     <thead>
-                        <tr className="roundheader">
-                            <th></th>
+                        <tr className="desktop roundheader">
+                            <th>Select</th>
                             <th>Name</th>
                             <th>SectionType</th>
                             <th>DisplayOrder</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {inactiveSections.length > 0 ? (
                             inactiveSections.map((section) => (
-                                <tr key={section._id}>
+                                <>
+                                <tr className='desktop' key={section._id}>
                                     <td>
                                         <input
                                             type="checkbox"
@@ -211,6 +258,51 @@ const HomepageSectionList = () => {
                                         </div>
                                     </td>
                                 </tr>
+
+
+                                <tr className="mobileportrait-mobilewide">
+                                <td >
+                       <div><b>Select : </b> <input
+                            type="checkbox"
+                            checked={selectedSections.some(item => item._id === section._id)}
+                            onChange={(e) => handleCheckboxChange(e, section)}
+                        /></div>
+                       <div> <b>Name : </b>
+                       {section.Title}
+                       </div>
+                       <div><b>SectionType: </b>
+                       {section.SectionType}
+                       </div>
+                       <div><b>DisplayOrder : </b>
+                       {section.DisplayOrder}
+                       </div>
+                       <div><b>Status : </b>
+                       {section.Status}
+                       </div>
+
+                       <div className="customization-main-btns">
+                       <b>Action : </b>
+
+                            <button
+                                className="gridbutton"
+                                onClick={() => handleEdit(section._id)}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                className="gridbutton delete-button"
+                                onClick={() => handleDelete(section._id)}
+                            >
+                                Delete
+                            </button>
+                        </div>
+
+
+                    </td>
+
+                                </tr>
+                                </>
+
                             ))
                         ) : (
                             <tr>

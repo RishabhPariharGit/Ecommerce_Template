@@ -7,7 +7,7 @@ import {
 } from '../../Services/SubCategoryService';
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from '../AdminComponents/Navbar';
+
 
 const SubCategoryForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
@@ -136,7 +136,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
 
     return (
         <>
-   <Navbar/>      
+    
    <div className="white-bg-btn">
             <div className='title-bread-crumbs'>
                <p>Create Subcategory</p> 

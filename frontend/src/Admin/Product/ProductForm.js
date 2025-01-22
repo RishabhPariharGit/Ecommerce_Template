@@ -9,7 +9,7 @@ import { getAllSubCategoriesByCategoryId,getAllSubCategories } from '../../Servi
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import AllSize from './EnumDropdown'; // Import the enum
-import Navbar from '../AdminComponents/Navbar';
+
 
 const ProductForm = ({ isEditMode = false }) => {
     const [previewSources, setPreviewSources] = useState([]); // Array for preview
@@ -219,7 +219,7 @@ const ProductForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-            <Navbar/>
+     
             <div className="white-bg-btn">
             <div className='title-bread-crumbs'>
                <p>Create Product</p> 

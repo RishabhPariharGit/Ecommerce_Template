@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getAllSubCategories, deleteSubCategory } from '../../Services/SubCategoryService';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../AdminComponents/Navbar';
+
 
 const SubCategoryList = () => {
     const [subCategories, setSubCategories] = useState([]);
@@ -57,7 +57,7 @@ const SubCategoryList = () => {
 
     return (
         <div>
-            <Navbar />
+    
             <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
                     <p>Subcategories</p>

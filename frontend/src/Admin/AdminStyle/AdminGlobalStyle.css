@@ -1,6 +1,4 @@
 
-
-
 /* Main container for mobile navigation */
 
 
@@ -759,13 +757,23 @@ body {
 
 @media (min-width: 640px) {
   .form-600 {
-      width: 100% !important;
+      width: 100%;
       position: relative;
       /* left: 50%; */
-      /* margin-left: -300px; */
+      margin-left: -300px;
   margin: auto;
     }
 }
+
+@media (max-width: 580px) {
+  .white-bg-btn {
+    display: flex;
+    flex-direction: column;
+    text-align: left !important;
+    align-items: flex-start !important;
+}
+}
+
 
 @media (min-width: 490px) {
   .form-450 {
@@ -2749,4 +2757,37 @@ span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anc
   border-right: .3em solid transparent;
   border-bottom: 0;
   border-left: .3em solid transparent;
+}
+
+/* mobile responsiveness for table */
+.mobileportrait-mobilewide td div {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.mobileportrait-mobilewide td {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* align-items: center; */
+}
+/* mobile responsiveness for table end */
+
+/* section-title style start */
+p.section-title {
+  padding: 25px 0px 25px 15px;
+  font-weight: 600;
+  font-size: 20px;
+  border-bottom: 1px solid;
+}
+
+/* section-title style end */
+
+
+@media (min-width: 600px) and (max-width: 1200px) {
+  .css-1ygil4i-MuiToolbar-root {
+      min-height: 55px !important;
+      margin-top: 60px;
+  }
 }

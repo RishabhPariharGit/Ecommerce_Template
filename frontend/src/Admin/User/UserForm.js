@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { registerUser, getUserByUsername, updateUser } from '../../Services/UserService'; 
 import { useNavigate, useParams } from 'react-router-dom';
 import '../AdminStyle/AdminGlobalStyle.css';
-import Navbar from '../AdminComponents/Navbar';
+
 
 const UserForm = ({ isEditMode = false }) => {
     const [formData, setFormData] = useState({
@@ -87,7 +87,7 @@ const UserForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-            <Navbar/>
+         
             <div className="white-bg-btn">
             <div className='title-bread-crumbs'>
                <p>User Form</p> 

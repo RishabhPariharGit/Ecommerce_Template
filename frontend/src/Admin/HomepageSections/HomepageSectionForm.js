@@ -6,7 +6,7 @@ import { addsection, getSectionById, updateSection } from '../../Services/Homepa
 
 import axios from 'axios';
 import '../AdminStyle/AdminGlobalStyle.css';
-import Navbar from '../AdminComponents/Navbar';
+
 
 const HomepageSectionForm = ({ isEditMode = false }) => {
     const [formData, setFormData] = useState({
@@ -140,7 +140,7 @@ const HomepageSectionForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-            <Navbar />
+        
             <div className="white-bg-btn">
                 <div className="title-bread-crumbs">
                     <p>Homepage Sections Form</p>
