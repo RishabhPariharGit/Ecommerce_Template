@@ -4,6 +4,7 @@ import './AdminStyle/AdminGlobalStyle.css';
 import Navbar from './AdminComponents/Navbar';
 
 const AdminLayout = ({ children }) => {
+    
     return (
         <div className="body">
             <div className='wrapper' id='wrapper'>

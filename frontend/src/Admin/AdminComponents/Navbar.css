@@ -1,0 +1,87 @@
+/* General Styles */
+.navbar {
+    background-color: white;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 100;
+  }
+  
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .search-container {
+    flex: 1;
+    margin: 0 20px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Icons Section */
+  .icons-container {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .icon-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #3E97FF;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+  }
+  
+  /* Mobile Menu Styles */
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .Profile-menu {  
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: block;
+    }
+  
+    .search-container {
+      display: none;
+    }
+  
+    .Profile-menu {
+      display: flex;
+    }
+  
+    .icons-container {
+      gap: 10px;
+    }
+  }
+  
