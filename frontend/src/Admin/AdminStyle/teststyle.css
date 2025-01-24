@@ -1,0 +1,710 @@
+
+  /* Main container for mobile navigation */
+  
+  
+  /* .main-admin-wrapper {
+    display: flex;
+  } */
+  
+  
+  
+  /* Side navigation */
+  .side-nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    /* Initially hidden on mobile screens */
+    width: 250px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    transition: 0.3s ease;
+    z-index: 100;
+    border-right: 1px solid rgb(207, 207, 207);
+    padding: 10px 5px;
+  }
+  
+  .side-nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .side-nav ul li {
+    padding: 10px 10px;
+  }
+  
+  .side-nav ul li:hover {
+    background-color: #f4f4f4;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Overlay to dim the rest of the screen when nav is open */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    display: none;
+    /* Initially hidden */
+  }
+  
+  /* When the side navigation is open */
+  .side-nav.open {
+    left: 0;
+    /* Slide in when open */
+    border-right: 1px solid rgb(207, 207, 207);
+    padding: 10px 5px;
+  }
+  
+  .overlay.active {
+    display: block;
+    /* Show overlay when active */
+  }
+  
+  
+  
+  
+  /* Responsive Design for smaller screens */
+  @media (max-width: 949px) {
+    .side-nav {
+        width: 70%;
+        /* Adjust width for mobile */
+    }
+  }
+  
+  
+  /* Styling the logo */
+  .side-nav-logo {
+    width: 100px;
+    margin: 30px 5px;
+    display: block;
+  }
+  
+  .top-nav-logo {
+    display: none;
+    width: 100px;
+    margin: 0 auto;
+  }
+  
+  /* When the side navigation is open */
+  .side-nav.open {
+    left: 0;
+  }
+  
+  @media (min-width: 950px) {
+    .side-nav-logo {
+        width: 150px;
+        /* Adjust width for larger screens */
+    }
+  }
+  
+  
+  
+  
+  /* side upper wrapper styling start */
+  
+  .main-side-wrapper {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgb(207, 207, 207);
+    margin: 0px 0px;
+  }
+  
+  .main-side-upper-wrapper {
+    width: 100%;
+    height: 30vh;
+    border: 1px solid rgb(207, 207, 207);
+    margin: 10px 10px;
+  }
+  
+  .main-side-lower-wrapper {
+    width: 100%;
+    height: 70vh;
+    border: 1px solid rgb(207, 207, 207);
+    margin: 10px 10px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  /* body {
+    position: relative;
+    overflow-x: hidden;
+    font-size: 15px;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--backgrondcolor);
+  } */
+  
+  /* body.body-overflow .wrapper {
+        transition: all 0.3s ease 0s;
+        opacity: 1;
+        transition-delay: 0.1s;
+        background: #ffffff;
+    } */
+  
+  
+  
+  
+  
+  
+  
+  
+  .sidebar-submenu ul li a {
+    padding: 5px 10px 5px 20px !important;
+  }
+  
+  
+  
+  .sidebar-submenu ul li {
+    border-bottom: none !important;
+  }
+  
+  .wide {
+    max-width: 1635px;
+  }
+  
+ 
+  
+  
+  
+  
+  .logininfo {
+    color: #666 !important;
+    padding-top: 15px;
+  }
+  
+  .logininfo a {
+    color: #666 !important;
+  }
+  
+  .sidebar-submenu {
+    display: none;
+    border-top: solid 1px white;
+    background: #FFF;
+  }
+  
+  
+  .sidebar-submenu {
+    display: none;
+  }
+  
+  .sidebar-dropdown.active .sidebar-submenu {
+    display: block;
+  }
+  
+  .sidebar-submenu a {
+    color: white;
+  }
+  
+  .sidebar-submenu .title {
+    padding-left: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 14px !important;
+  }
+  
+  .sidebar::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .sidebar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px grey;
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  .sidebar::-webkit-scrollbar-thumb {
+    background: var(--SideNavTextColor);
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .sidebar::-webkit-scrollbar-thumb:hover {
+    background: white;
+  }
+  
+  /* sidebar heading */
+  .sidebar-heading {
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  
+  
+  
+  
+  
+  .arrow-func {
+    width: 7px;
+    height: 7px;
+    transition: .5s;
+    display: inline-block;
+    box-shadow: 2px -2px 0px black;
+    transform: rotate(45deg);
+    position: relative;
+    right: 5px;
+  }
+  
+  .sidebar-dropdown.active .arrow-func {
+    transform: rotate(135deg);
+    transition: .5s;
+  }
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  /* Start Page Layout */
+  
+  
+ 
+  
+  .scroll-tabel {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  
+  .scroll-tabel table thead {
+    position: sticky;
+    top: 0;
+  }
+  
+  .scroll-tabel table thead tr {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .scroll-tabel table tbody tr {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .scroll-tabel1 {
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+  
+  .scroll-tabel1 table thead {
+    position: sticky;
+    top: 0;
+  }
+  
+  .scroll-tabel1 table thead tr,
+  .scroll-tabel1 table tbody tr {
+    /*  display: table;*/
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  @media screen and (max-width: 1366px) {
+  
+    .scroll-tabel table thead tr th,
+    .scroll-tabel table tbody tr td {
+        font-size: 12px;
+        line-height: 14px
+    }
+  }
+  
+  .editremove {
+    width: 170px;
+  }
+  
+  .singlebutton {
+    width: 1px;
+  }
+  
+  .secondaryheaders th {
+    background-color: var(--secondarycolor);
+  }
+  
+   
+    /*Currentyl not in use we can use for validatin  like TR and I cn use it for table scroll */
+  /* Validation */
+  
+  .error-message {
+    color: var(--ErrorText);
+    text-align: center;
+  }
+  
+  .validation-message {
+    color: var(--ErrorText);
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    font-style: italic;
+  }
+  
+  .success-message {
+    color: var(--SuccessText);
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .required {
+    color: var(--ErrorText);
+  }
+  
+  .edit-currency .currency-sign {
+    top: 8px;
+  }
+  
+  .sidebar-dropdown {
+    border-bottom: 1px solid #fff;
+  }
+  
+   
+  
+    /*Currentyl not in use we can use for tabs like TR and I cn use it for table scroll */
+  /*Mutli Select Drop Down START */
+  .check-box-section {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .check-box-section input {
+    width: auto;
+    height: auto;
+  }
+  
+  .check-box-section .anchor {
+    padding: 5px;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+    color: black;
+  }
+  
+  .check-box-section span {
+    align-items: center;
+    display: flex;
+    gap: 5px;
+    padding-right: 5px;
+  }
+  
+  .check-box-section.dropdown-check-list {
+    position: relative;
+  }
+  
+  .check-box-section.dropdown-check-list ul.itm {
+    padding: 5px 5px 0px 5px;
+    width: 100%;
+  }
+  
+  .dropdown-check-list .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    padding: 3.9px;
+    right: 10px;
+    top: 35%;
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+  }
+  
+  .dropdown-check-list .anchor:active:after {
+    right: 8px;
+    top: 21%;
+  }
+  
+  .dropdown-check-list ul.itm {
+    padding: 0;
+    display: none;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 99;
+    position: absolute;
+    top: 42px;
+    background: #fff;
+    padding: 5px;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+  
+  .dropdown-check-list ul.itm li {
+    list-style: none;
+  }
+  
+  .dropdown-check-list.visible .itm {
+    display: block;
+    overflow-y: scroll;
+    height: 100px;
+  }
+  
+  .form-feild {
+    margin-bottom: 35px;
+    position: relative;
+  }
+  
+  .form-feild .dropdown-check-list .form-control {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px 20px;
+    appearance: none;
+    font-size: 12px;
+    overflow-y: hidden;
+  }
+  
+  /*Mutli Select Drop Down END */
+  
+  
+  
+    /*Currentyl not in use we can use for filters like TR and I cn use it for table scroll */
+
+  @media (max-width:500px) {
+    .filters input[type=text] {
+        width: 300px !important;
+    }
+  
+    .filters select {
+        width: 300px !important;
+    }
+  }
+  
+
+
+  /*Currentyl not in use we can use for tabs like TR and I cn use it for table scroll */
+  /* Tabs */
+  
+  Tabs
+  .tabbar {
+    text-align: center;
+  }
+  
+  .tabbar a {
+    text-decoration: none !important;
+  }
+  
+  .activetab {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--ActiveTabTextColor) !important;
+    display: inline-block;
+    cursor: pointer;
+    padding: 3px 9px;
+    background: var(--ActiveTabBackGroundColor);
+    border-radius: 15px;
+    margin-top: 10px;
+    border: 1px solid var(--ActiveTabBorderColor);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 2px;
+  }
+  
+  .inactivetab {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--InactiveTabTextColor);
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 3px 9px;
+    background: var(--InactiveTabBackGroundColor);
+    border-top-left-radius: 8px;
+    border-radius: 15px;
+    border: 1px solid var(--InactiveTabBorderColor);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: solid 1px #666;
+    margin-right: 2px;
+  }
+  
+  
+  .inactivetab a {
+    text-decoration: none !important;
+    color: var(--InactiveTabTextColor) !important;
+  }
+  
+  .inactivetab a:hover {
+    text-decoration: none !important;
+    color: var(--InactiveTabTextColor) !important;
+  }
+  
+  /*Section Headers and Titles*/
+  .sectionheader {
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px 0px;
+    width: 100%;
+    color: var(--SectionHeaderTextColor);
+  }
+  
+  .sectionheader a {
+    color: white !important;
+  }
+  
+  .sectiontitle {
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: var(--PageTitleColor);
+  }
+  
+  hr {
+    border-top: 1px solid white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  
+  .errormessage {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: lightcoral;
+  }
+  
+  .validation {
+    color: lightcoral;
+  }
+  
+  .popup-background {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #606060;
+    z-index: 100;
+    opacity: .5;
+  }
+  
+  .row-sec .button {
+    margin-bottom: 15px;
+  }
+  
+  
+  
+  .Email-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  /* Mobile Phones */
+  @media (max-width: 600px) {
+    .Email-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+  }
+  
+  /* Tablets */
+  @media (min-width: 601px) and (max-width: 768px) {
+    .Email-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+  }
+  
+  /* Small Laptops */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .Email-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+  }
+  
+  /* Desktops */
+  @media (min-width: 1025px) {
+    .Email-container {
+        flex-direction: row;
+        gap: 10px;
+    }
+  }
+  
+  
+  .scroll-tabel {
+    max-height: 730px;
+    overflow-y: scroll;
+  }
+  
+  .scroll-tabel table thead {
+    position: sticky;
+    top: 0;
+  }
+  
+  .scroll-tabel table thead tr {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .scroll-tabel table tbody tr {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .scroll-tabel1 {
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+  
+  .scroll-tabel1 table thead {
+    position: sticky;
+    top: 0;
+  }
+  
+  .scroll-tabel1 table thead tr,
+  .scroll-tabel1 table tbody tr {
+    /*  display: table;*/
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  @media screen and (max-width: 1366px) {
+  
+    .scroll-tabel table thead tr th,
+    .scroll-tabel table tbody tr td {
+        font-size: 12px;
+        line-height: 14px
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+
+
+  /*Navbar style of rishabh backup*/
+
+  header.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation4.MuiAppBar-root.MuiAppBar-colorPrimary.MuiAppBar-positionStatic.css-ptdwpq-MuiPaper-root-MuiAppBar-root {
+    background-color: rgb(255, 255, 255);
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  }
+  
+  input.MuiInputBase-input.css-yimnyd-MuiInputBase-input {
+    padding: 0px 50px;
+  }
+  
+  span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular.MuiBadge-overlapRectangular.MuiBadge-colorError.css-1enwswh-MuiBadge-badge {
+    background-color: #3E97FF;
+  }
