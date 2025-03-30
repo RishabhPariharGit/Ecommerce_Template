@@ -9,19 +9,27 @@ const SubCategoryList = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const isFetchedRef = useRef(false);
+
     useEffect(() => {
         if (!isFetchedRef.current) {
             const fetchSubCategories = async () => {
                 try {
                     const response = await getAllSubCategories();
-                    setSubCategories(response.data);
-                    setError(null);
+
+                    if (response.data ) {
+                        setSubCategories(response.data);
+                        setError(null);
+                    } else {
+                        setSubCategories([]); // Set empty array if no data is found
+                        setError('No subcategories found.');
+                    }
                 } catch (err) {
                     console.error('Error fetching subcategories:', err);
                     setError('Failed to fetch subcategories. Please try again later.');
                 } finally {
                     setIsLoading(false);
                 }
+
             };
 
             fetchSubCategories();
@@ -42,8 +50,15 @@ const SubCategoryList = () => {
         const confirmDelete = window.confirm('Are you sure you want to delete this subcategory?');
         if (confirmDelete) {
             try {
-                await deleteSubCategory(subCategoryId); // Call the delete function
-                setSubCategories(prev => prev.filter(subCategory => subCategory._id !== subCategoryId)); // Update state
+                const response = await deleteSubCategory(subCategoryId); 
+
+                if (response.data && response.data.message) {
+                    alert(response.data.message); 
+                    setSubCategories(prev => prev.filter(subCategory => subCategory._id !== subCategoryId));
+                } else {
+                    alert('Subcategory deleted successfully!');
+                }
+               
             } catch (err) {
                 console.error('Error deleting subcategory:', err);
                 setError('Failed to delete subcategory. Please try again later.');
@@ -51,13 +66,10 @@ const SubCategoryList = () => {
         }
     };
 
-    // if (isLoading) {
-    //     return <div>Loading subcategories...</div>;
-    // }
-
+   
     return (
         <div>
-          
+
             <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
                     <p>Subcategories</p>

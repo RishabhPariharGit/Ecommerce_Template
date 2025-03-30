@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const CommonFieldsSchema = require('./CommonFields');
 
 const cartItemSchema = new Schema({
   UserId: { 
@@ -30,14 +31,7 @@ const cartItemSchema = new Schema({
     type: Number, 
     required: true 
   },
-  CreatedAt: { 
-    type: Date, 
-    default: Date.now 
-  },
-  UpdatedAt: { 
-    type: Date, 
-    default: Date.now 
-  }
+  audit: CommonFieldsSchema
 });
 
 // Update the `UpdatedAt` field automatically on save

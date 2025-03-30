@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ toggleSidenav }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -10,12 +10,12 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      <div className="navbar-container">
-        {/* Mobile Menu Icon */}
-        <button className="menu-toggle" >
+      <div className="navbar-container ">
+     <div>
+        <button className="menu-toggle"onClick={toggleSidenav} >
           ☰
         </button>
-
+        </div>
         {/* Search Box */}
         <div className="search-container">
           <input

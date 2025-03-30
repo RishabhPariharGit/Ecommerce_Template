@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const CommonFieldsSchema = require('./CommonFields');
 
 const UserSchema = mongoose.Schema({
   Name: { type: String, required: true, trim: true },
@@ -10,8 +11,7 @@ const UserSchema = mongoose.Schema({
   AgreedToTerms: { type: Boolean },  // Agreement to Terms (must be true for account creation)
   IsAdmin: { type: Boolean, default: false },
   IsSystemAdmin: { type: Boolean, default: false },
-  CreatedAt: { type: Date, default: Date.now },
-  UpdatedAt: { type: Date, default: Date.now }
+  audit: CommonFieldsSchema
 });
 
 const UserModel = mongoose.model("User", UserSchema);

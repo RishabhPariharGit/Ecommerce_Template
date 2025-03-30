@@ -222,12 +222,10 @@ const ProductForm = ({ isEditMode = false }) => {
            
             <div className="white-bg-btn">
             <div className='title-bread-crumbs'>
-               <p>Create Product</p> 
+               <p>{isEditMode ? 'Edit Product' : 'Create a New Product'}</p> 
                </div>
             </div>
-            {/* <div className="pagetitle">
-                {isEditMode ? 'Edit Product' : 'Create a New Product'}
-            </div> */}
+           
             <div className="form-800">
                 <div className="white-bg">
                     <form onSubmit={handleSubmitFile}>
@@ -256,6 +254,8 @@ const ProductForm = ({ isEditMode = false }) => {
                                         />
                                     </td>
                                 </tr>
+
+
 
                                 {/* Price and Quantity */}
                                 <tr>
@@ -307,7 +307,7 @@ const ProductForm = ({ isEditMode = false }) => {
 
                                 {/* Description */}
                                 <tr>
-                                    <td colSpan="2">
+                                    <td >
                                         <div className="formlabel">Description</div>
                                         <textarea
                                             name="Description"

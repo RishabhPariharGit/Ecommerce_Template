@@ -17,7 +17,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
         Slug: '',
         label_image: '',
         CategoryId: '',
-        Status:''
+        Status: ''
     });
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -31,13 +31,20 @@ const SubCategoryForm = ({ isEditMode = false }) => {
             const fetchCategories = async () => {
                 try {
                     const response = await getAllCategories();
-                    setCategories(response.data);
+
+                    if (response.data) {
+                        setCategories(response.data);
+                    } else {
+                        setCategories([]);
+                        console.warn('No categories found.');
+                    }
                 } catch (err) {
                     console.error('Error fetching categories:', err);
                 }
+
             };
             const fetchData = async () => {
-                
+
                 try {
                     if (isEditMode && slug && !isFetchedRef.current) {
                         const response = await getSubCategoryBySlug(slug);
@@ -48,13 +55,13 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                             Slug: category.Slug,
                             label_image: category.label_image,
                             CategoryId: category.CategoryId || '',
-                            Status:category.Status
+                            Status: category.Status
                         });
                         setPreviewSource(category.label_image);
                         isFetchedRef.current = true; // Mark as fetched after successful data load
                     }
 
-                   
+
                 } catch (err) {
                     console.error('Error fetching category:', err);
                 } finally {
@@ -107,20 +114,16 @@ const SubCategoryForm = ({ isEditMode = false }) => {
         }
 
         try {
-            const formPayload = new FormData();
-            formPayload.append('Name', formData.Name);
-            formPayload.append('Description', formData.Description);
-            formPayload.append('Slug', formData.Slug);
-            formPayload.append('label_image', formData.label_image);
-            formPayload.append('CategoryId', formData.CategoryId);
-            formPayload.append('Status', formData.Status);
-
-
             const response = isEditMode
-                ? await updatesubCategory(slug, formPayload)
-                : await addSubCategory(formPayload);
+                ? await updatesubCategory(slug, formData)
+                : await addSubCategory(formData);
 
-            console.log(`${isEditMode ? 'Updated' : 'Created'} successfully:`, response.data);
+            if (response && response.message) {
+                alert(response.message);
+            } else {
+                alert('Something went wrong. Please try again.');
+            }
+
             navigate('/admin/SubCategory');
         } catch (err) {
             console.error('Error submitting form:', err);
@@ -137,11 +140,11 @@ const SubCategoryForm = ({ isEditMode = false }) => {
     return (
         <>
 
-   <div className="white-bg-btn">
-            <div className='title-bread-crumbs'>
-               <p>Create Subcategory</p> 
-               </div>
-            </div>   
+            <div className="white-bg-btn">
+                <div className='title-bread-crumbs'>
+                    <p>Create Subcategory</p>
+                </div>
+            </div>
             {/* <div className="pagetitle">
                 {isEditMode ? 'Edit Subcategory' : 'Create a New Subcategory'}
             </div> */}
@@ -209,7 +212,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                                         </td>
                                         {isEditMode && (
                                             <td>
-                                                 <label htmlFor="status">Status:</label>
+                                                <label htmlFor="status">Status:</label>
                                                 <select
                                                     name="Status"
                                                     value={formData.Status}
@@ -266,7 +269,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                     </div>
                 </div>
             </div>
-            </>
+        </>
     );
 };
 

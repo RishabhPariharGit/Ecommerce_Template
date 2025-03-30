@@ -4,6 +4,7 @@ const User = require('../Models/User');
 
 const authMiddleware = async (req, res, next) => {
   try {
+    debugger
     const token = req.cookies.token || req.header('Authorization')?.replace('Bearer ', '');
     if (!token) {
       return res.status(401).json({ message: 'Authorization token is missing' });

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faShoppingCart, faTags, faBoxes, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { getAllsections } from '../Services/HomepageSectionService';
 
-const Sidenav = () => {
+const Sidenav = ({ closeSidenav }) => {
   const navigate = useNavigate();
   const [sections, setSections] = useState([]);
   const [error, setError] = useState(null);
@@ -71,39 +71,51 @@ const Sidenav = () => {
 
         <ul style={{ borderTop: 'solid 1px #EEE' }}>
           <li>
-            <Link to="/admin/dashboard">
+            <Link to="/admin/dashboard" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
               <span className="title">Dashboard</span>
             </Link>
           </li>
           <li>
-            <Link to="/admin/orders">
+            <Link to="/admin/orders" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faShoppingCart} className="icon" />
               <span className="title">Orders</span>
             </Link>
           </li>
           <li>
-            <Link to="/admin/Category">
+            <Link to="/admin/Category" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faTags} className="icon" />
               <span className="title">Category</span>
             </Link>
           </li>
           <li>
-            <Link to="/admin/SubCategory">
+            <Link to="/admin/SubCategory" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faBoxes} className="icon" />
               <span className="title">SubCategory</span>
             </Link>
           </li>
           <li>
-            <Link to="/admin/Products">
+            <Link to="/admin/Products" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faTags} className="icon" />
               <span className="title">Products</span>
             </Link>
           </li>
           <li>
-            <Link to="/admin/Pages">
+            <Link to="/admin/Pages" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faTags} className="icon" />
               <span className="title">Pages</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin/Templates" onClick={closeSidenav}>
+              <FontAwesomeIcon icon={faTags} className="icon" />
+              <span className="title">Templates</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin/SectionsLayouts" onClick={closeSidenav}>
+              <FontAwesomeIcon icon={faTags} className="icon" />
+              <span className="title">SectionsLayouts</span>
             </Link>
           </li>
           <li>
@@ -112,7 +124,7 @@ const Sidenav = () => {
                 onClick={() => setIsHovered((prev) => !prev)} // Toggle dropdown on click
                 className="dropdown-toggle"
               >
-                <Link to="/admin/HomepageSections">
+                <Link to="/admin/HomepageSections" onClick={closeSidenav}>
                   <FontAwesomeIcon icon={faTags} className="icon" />
                   <span className="title">HomepageSections</span>
                 </Link>
@@ -137,7 +149,7 @@ const Sidenav = () => {
             </div>
           </li>
           <li>
-            <Link to="/admin/Users">
+            <Link to="/admin/Users" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faUsers} className="icon" />
               <span className="title">Users</span>
             </Link>

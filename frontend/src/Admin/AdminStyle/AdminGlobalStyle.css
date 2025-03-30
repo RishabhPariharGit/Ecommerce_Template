@@ -730,10 +730,10 @@ html[xmlns] .clearfix {
 }
 
 @media (max-width:1200px) {
-  .wrapper .sidebar {
+  /* .wrapper .sidebar {
       width: 95%;
       display: none;
-  }
+  } */
 
   .wrapper.collapseSideBar .sidebar {
       width: 300px !important;
@@ -2199,7 +2199,7 @@ select {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease;
-    /* Smooth dropdown open/close animation */
+    
   }
   
   .dropdown-menuuu.open {
@@ -2209,7 +2209,7 @@ select {
   .dynamic-sections {
     display: flex;
     flex-direction: column;
-    /* gap: 8px;  */
+    
   }
   
   .dropdown-itemmm {
@@ -2233,53 +2233,87 @@ select {
   }
   
   /* main template styling start */
-  .main-template-main-wrapper {
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 20px;
-  }
-  
-  h3.main-template-main-head {
-    font-size: 18px;
-    padding: 10px 0px;
-    border-bottom: 1px solid grey;
-  }
-  
-  
-  .main-template-preview-main-wrapper {
-    width: 70%;
-    border: 1px solid #ccc;
-  }
-  
-  .main-css-editor-main-wrapper {
-    width: 30%;
-    border: 1px solid #ccc;
-    background-color: white;
-  }
-  
-  .main-css-editor-main-wrapper-fields-main-class {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  /* label.template-fields-main-head {
-    font-size: 16px;
-    font-weight: 600;
-    padding-bottom: 20px;
-  } */
-  h4.template-fields-subhead {
-    font-size: 16px;
-    font-weight: 600;
-    padding-bottom: 0px;
-  }
-  
-  .template-select-section-fields {
-    display: flex;
-    gap: 12px;
-  }
-  
+ 
+.main-template-main-wrapper{
+
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+
+}
+
+h3.main-template-main-head {
+
+  font-size: 18px;
+  padding: 20px 10px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid grey;
+
+}
+
+.main-template-preview-main-wrapper{
+  width: 70%;
+  border: 1px solid #ccc;
+}
+
+.main-css-editor-main-wrapper{
+  width: 30%;
+ border: 1px solid #ccc;
+  background-color: white;
+}
+
+.main-css-editor-main-wrapper-fields-main-class {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h4.template-fields-subhead {
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 0px;
+
+}
+
+
+
+.template-select-section-fields {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+
+
+label.input-checkbox-mn-cls {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+
+
+.editing-settings-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+
+label.main-label-cls.clr-mn-cls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+
+
+label.main-label-cls.clr-mn-cls input{
+  width: 30px;
+  height: 20px;
+}
   /* template styling end */
   
   
@@ -2322,6 +2356,59 @@ select {
   /*rishabh Changes End*/
 
 
+  /*Added style for sidenav hide show*/
 
+/* Sidebar container visibility */
+.sidenav-container {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Hidden by default for mobile and tablet */
+  width: 220px;
+  height: 100%;
 
-  
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.sidenav-container.visible {
+  left: 0; /* Show the sidenav */
+}
+
+/* Overlay for tablet and mobile */
+.sidenav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Desktop view: Always show sidenav */
+@media (min-width: 1200px) {
+  .sidenav-container {
+    position: static;
+    left: 0; /* Sidenav always visible on desktop */
+    height: auto;
+    transition: none;
+  }
+
+  .sidenav-overlay {
+    display: none; /* No overlay for desktop view */
+  }
+}
+
+/* Main content adjustments */
+.main-Content {
+  margin-left: 0; /* Default for mobile/tablet */
+  transition: margin-left 0.3s ease;
+}
+
+@media (min-width: 1200px) {
+  .main-Content {
+    margin-left: 250px; /* Adjust for visible sidenav on desktop */
+  }
+}
+
+  /*Added style for sidenav hide show*/
