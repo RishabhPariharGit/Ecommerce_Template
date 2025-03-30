@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { GeneralStatus } = require('../Enum/Enum'); 
+const CommonFieldsSchema = require('./CommonFields');
 const pageSchema = new mongoose.Schema({
 
     Title: {
@@ -26,24 +27,10 @@ const pageSchema = new mongoose.Schema({
       default: 'hidden',
     },
     Visibility_date: Date,
-    Status: {
-        type: String,
-        enum: Object.values(GeneralStatus), // Using enum for product status
-        required: true
-    },
-    TemplateId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Template', // Reference to the Template schema
-      default: null, // Optional: default to null if no template is selected
-    },
-    Created_at: {
-      type: Date,
-      default: Date.now,
-    },
-    Updated_at: {
-      type: Date,
-      default: Date.now,
-    },
+    
+   
+    audit: CommonFieldsSchema
+    
   });
   
 

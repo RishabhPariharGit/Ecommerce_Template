@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const CommonFieldsSchema = require('./CommonFields');
 const AddressSchema = new mongoose.Schema({
   UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   Name: { type: String, required: true },
@@ -11,6 +11,7 @@ const AddressSchema = new mongoose.Schema({
   State: { type: String, required: true },
   IsDefault: { type: Boolean, default: false },
   Type: { type: String, enum: ['Home', 'Work'], required: true },
+  audit: CommonFieldsSchema
 });
 
 

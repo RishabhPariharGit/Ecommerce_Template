@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { ProductStatus, AllSize } = require('../Enum/Enum'); // Importing enums
+const CommonFieldsSchema = require('./CommonFields');
 
 const ProductSchema = new mongoose.Schema({
     Name: { 
@@ -69,30 +70,14 @@ const ProductSchema = new mongoose.Schema({
             message: 'Invalid size(s) for the selected SizeType.'
         }
     },
-    Status: {
-        type: String,
-        enum: Object.values(ProductStatus), // Using enum for product status
-        required: true
-    },
     Tags: {
         type: String,
         required: true
     },
-    Created_at: { 
-        type: Date, 
-        default: Date.now 
-    },
-    Updated_at: { 
-        type: Date, 
-        default: Date.now 
-    }
+    audit: CommonFieldsSchema
 });
 
-// Pre-save middleware to update the 'Updated_at' timestamp on modification
-ProductSchema.pre('save', function (next) {
-    this.Updated_at = Date.now();
-    next();
-});
+
 
 const ProductModel = mongoose.model('Product', ProductSchema);
 

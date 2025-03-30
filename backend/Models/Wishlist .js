@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const CommonFieldsSchema = require('./CommonFields');
 
 const wishlistSchema = new Schema({
   UserId: { 
@@ -12,10 +13,7 @@ const wishlistSchema = new Schema({
     ref: 'Product', 
     required: true 
   },
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
-  }
+  audit: CommonFieldsSchema
 });
 
 module.exports = mongoose.model('Wishlist', wishlistSchema);

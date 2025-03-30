@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const CommonFieldsSchema = require('./CommonFields');
 const RoleSchema = new mongoose.Schema({
     RoleName: {
         type: String,
@@ -11,7 +11,8 @@ const RoleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,  
         ref: 'User',  
         required: true 
-    }
+    },
+    audit: CommonFieldsSchema
 });
 
 const RoleModel = mongoose.model("Role", RoleSchema);

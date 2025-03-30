@@ -11,7 +11,7 @@ const CategoryForm = ({ isEditMode = false }) => {
         Description: '',
         Slug: '',
         label_image: '',
-        Status:''
+        Status: ''
     });
     const [isLoading, setIsLoading] = useState(true);
     const { slug } = useParams();
@@ -25,6 +25,12 @@ const CategoryForm = ({ isEditMode = false }) => {
             const loadCategory = async () => {
                 try {
                     const response = await getCategoryBySlug(slug);
+
+                    if (!response.data) {
+                        console.error('Category data is null or not found');
+                        // Handle error state here, e.g., show a message or redirect
+                        return;
+                    }
                     const category = response.data;
                     setFormData({
                         Name: category.Name,
@@ -32,13 +38,13 @@ const CategoryForm = ({ isEditMode = false }) => {
                         Slug: category.Slug,
                         label_image: category.label_image,
                         Status: category.Status
-
                     });
                 } catch (err) {
                     console.error('Error fetching category:', err);
                 } finally {
                     setIsLoading(false);
                 }
+
             };
 
             if (isEditMode && slug) {
@@ -52,7 +58,7 @@ const CategoryForm = ({ isEditMode = false }) => {
     }, [isEditMode, slug]);
 
     const handleInputChange = (e) => {
-        
+
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -79,28 +85,21 @@ const CategoryForm = ({ isEditMode = false }) => {
     };
 
     const handleSubmitFile = async (e) => {
+        debugger
         e.preventDefault();
-        
+
         try {
-            const formPayload = new FormData();
-            formPayload.append('Name', formData.Name);
-            formPayload.append('Description', formData.Description);
-            formPayload.append('Slug', formData.Slug);
-            formPayload.append('Status', formData.Status);
-
-
-            if (formData.label_image) {
-                formPayload.append('label_image', formData.label_image);
+            let response;
+            if (isEditMode) {
+                response = await updateCategory(slug, formData);
             } else {
-                formPayload.append('label_image', '');
+                response = await addCategory(formData);
             }
 
-            if (isEditMode) {
-                await updateCategory(slug, formPayload);
-                console.log('Category updated successfully');
+            if (response && response.data) {
+                alert(response.message); // Show API response message in an alert
             } else {
-                await addCategory(formPayload);
-                console.log('Category created successfully');
+                alert('Unexpected response from the server');
             }
             navigate('/admin/Category');
         } catch (err) {
@@ -112,11 +111,11 @@ const CategoryForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-    
+
             <div className="white-bg-btn">
-            <div className='title-bread-crumbs'>
-               <p>Create Category</p> 
-               </div>
+                <div className='title-bread-crumbs'>
+                    <p>Create Category</p>
+                </div>
             </div>
             {/* <div className="pagetitle">{isEditMode ? 'Edit Category' : 'Create a New Category'}</div> */}
             <div className="form-800">
@@ -170,7 +169,7 @@ const CategoryForm = ({ isEditMode = false }) => {
                                         </td>
                                         {isEditMode && (
                                             <td>
-                                                 <label htmlFor="status">Status:</label>
+                                                <label htmlFor="status">Status:</label>
                                                 <select
                                                     name="Status"
                                                     value={formData.Status}

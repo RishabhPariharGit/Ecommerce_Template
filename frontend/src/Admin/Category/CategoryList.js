@@ -9,18 +9,23 @@ const CategoryList = () => {
     const isFetchedRef = useRef(false); // Track if data has already been fetched
     useEffect(() => {
         if (!isFetchedRef.current) {
-        const fetchCategories = async () => {
-            try {
-                const response = await getAllCategories();
-                setCategories(response.data); 
-            } catch (err) {
-                console.error('Error fetching categories:', err);
-            }
-        };
+            const fetchCategories = async () => {
+                try {
+                    debugger
+                    const response = await getAllCategories();
+                    if (response && response.data) {
+                        setCategories(response.data);
+                    } else {
+                        setCategories([]); // Ensure categories is always an array
+                    }
+                } catch (err) {
+                    console.error('Error fetching categories:', err);
+                }
+            };
 
-        fetchCategories();
-        isFetchedRef.current = true;
-    }
+            fetchCategories();
+            isFetchedRef.current = true;
+        }
     }, []);
 
     const handleEdit = (categorySlug) => {
@@ -46,20 +51,15 @@ const CategoryList = () => {
 
     return (
         <>
-      
-            {/* <div className="pagetitle">
-                Categories
-            </div> */}
-
             <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
-               <p>Categories</p> 
-               </div>
-            <button className="button" onClick={handleCreate}>
-                        Create Category
-                    </button>
-                    
+                    <p>Categories</p>
                 </div>
+                <button className="button" onClick={handleCreate}>
+                    Create Category
+                </button>
+
+            </div>
 
             <div className="form-600">
                 <div className="white-bg">
@@ -72,25 +72,25 @@ const CategoryList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {categories.length > 0 ? (
+                            {Array.isArray(categories) && categories.length > 0 ? (
                                 categories.map((category) => (
                                     <tr key={category.Slug}>
                                         <td>{category.Name}</td>
                                         <td>{category.Description}</td>
                                         <td>
-                                        <div className='customization-main-btns'>
-                                            <button
-                                                className="gridbutton"
-                                                onClick={() => handleEdit(category.Slug)}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="gridbutton delete-button"
-                                                onClick={() => handleDelete(category._id)} // Add delete button
-                                            >
-                                                Delete
-                                            </button>
+                                            <div className='customization-main-btns'>
+                                                <button
+                                                    className="gridbutton"
+                                                    onClick={() => handleEdit(category.Slug)}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    className="gridbutton delete-button"
+                                                    onClick={() => handleDelete(category._id)}
+                                                >
+                                                    Delete
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -101,10 +101,11 @@ const CategoryList = () => {
                                 </tr>
                             )}
                         </tbody>
+
                     </table>
                 </div>
             </div>
-      
+
         </>
     );
 };

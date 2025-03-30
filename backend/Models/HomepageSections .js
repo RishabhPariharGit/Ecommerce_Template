@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const CommonFieldsSchema = require('./CommonFields');
 
 const HomepageSectionSchema = new mongoose.Schema({
     Title: {
@@ -24,26 +25,11 @@ const HomepageSectionSchema = new mongoose.Schema({
     { type: Boolean, 
     default: false
      },
+     audit: CommonFieldsSchema
   
-    Status: {
-        type: String,
-        enum: ['Active', 'Inactive']
-       
-    },
-    Created_at: {
-        type: Date,
-        default: Date.now,
-    },
-    Updated_at: {
-        type: Date,
-        default: Date.now,
-    },
 });
 
-HomepageSectionSchema.pre('save', function (next) {
-    this.Updated_at = Date.now();
-    next();
-});
+
 
 const HomepageSectionModel = mongoose.model('HomepageSection', HomepageSectionSchema);
 

@@ -63,17 +63,18 @@ const { AddSection,
    DeletePage
  } = require("../controllers/PagesController");
 
-const {Createtemplate,
-  GetAllTemplate, 
-  GetTemplateById,
-   UpdateTemplate,
-   DeleteTemplate
-  } = require("../controllers/TemplateController");
+
+
+
 
 
 // User Ruote
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
+
+
+router.use(authMiddleware);
+// User Ruote
 router.get("/User/Edit/:Username", GetUserByUsername);
 router.get("/GetAllUsers", GetAllUsers);
 router.put("/UpdateUser/:Username", UpdateUser);
@@ -142,12 +143,6 @@ router.get("/GetAllPages", GetAllPages);
 router.get("/Page/Edit/:Slug", GetPageBySlug);
 router.put("/UpdatePage/:slug", UpdatePage);
 router.delete('/DeletePage/:id', DeletePage);
-//Template
 
-router.post("/CreateTemplate", Createtemplate);
-router.get("/GetAllTemplate", GetAllTemplate);
-router.get("/Template/Edit/:id", GetTemplateById);
-router.put("/UpdateTemplate/:id", UpdateTemplate);
-router.delete('/DeleteTemplate/:id', DeleteTemplate);
 
 module.exports = router;

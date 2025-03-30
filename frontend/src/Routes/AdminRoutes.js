@@ -13,10 +13,7 @@ import UserList from '../Admin/User/UserList';
 import UserForm from '../Admin/User/UserForm';
 import HomepageSectionForm from '../Admin/HomepageSections/HomepageSectionForm';
 import HomepageSectionList from '../Admin/HomepageSections/HomepageSectionList';
-import PagesList from '../Admin/Pages/PagesList';
-import PagesForm from '../Admin/Pages/Pagesform';
-import CreateTemplateForm from '../Admin/Template/CreateTemplateForm';
-import TemplateList from '../Admin/Template/TemplateList';
+
 
 const AdminRoutes = () => {
   return (
@@ -73,46 +70,7 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-         <Route
-          path="/Pages"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <PagesList />
-            </AuthGuard>
-          }
-        />
-           <Route
-          path="/Pages/create"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <PagesForm />
-            </AuthGuard>
-          }
-        />
-         <Route
-          path="/Page/Edit/:slug"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <PagesForm isEditMode={true} />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/Product/create"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <ProductForm isEditMode={false} />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/Product/Edit/:slug"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <ProductForm isEditMode={true} />
-            </AuthGuard>
-          }
-        />
+   
         <Route
           path="/Users"
           element={
@@ -137,7 +95,7 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-         <Route
+        <Route
           path="/HomepageSections"
           element={
             <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
@@ -165,31 +123,7 @@ const AdminRoutes = () => {
           path="/HomepageSection/Edit/:sectionId"
           element={
             <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <HomepageSectionForm isEditMode={true}/>
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/Templates"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <TemplateList />
-            </AuthGuard>
-          }
-        />
-          <Route
-          path="/Template/create"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <CreateTemplateForm  isEditMode={false}/>
-            </AuthGuard>
-          }
-        />
-         <Route
-          path="/Template/Edit/:Id"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <CreateTemplateForm isEditMode={true}/>
+              <HomepageSectionForm isEditMode={true} />
             </AuthGuard>
           }
         />

@@ -1,11 +1,9 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:8080';
+import api from './Api_Intersecptor/Api_intersecptor';
 
 
 export const registerUser = async (userData) => {
   try {
-    const response = await axios.post(`${API_URL}/RegisterUser`, userData);
+    const response = await api.post('/RegisterUser', userData);
     return response;
   } catch (error) {
     console.error('Error registering user:', error);
@@ -16,7 +14,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (credentials) => {
   try {
-    const response = await axios.post(`${API_URL}/LoginUser`, credentials, {
+    const response = await api.post('/LoginUser', credentials, {
       withCredentials: true // Include cookies in the request
     });
     return response;
@@ -30,7 +28,7 @@ export const getAllUsers  = async () => {
   try {
     
    
-    const response = await axios.get(`${API_URL}/GetAllUsers`);
+    const response = await api.get('/GetAllUsers');
     return response;
   } catch (error) {
     console.error('Error add Category:', error);
@@ -41,7 +39,7 @@ export const getAllUsers  = async () => {
 export const deleteUser = async (UserId) => {
   try {
     
-    const response = await axios.delete(`${API_URL}/DeleteUser/${UserId}`);
+    const response = await api.delete(`/DeleteUser/${UserId}`);
     return response;
   } catch (error) {
     console.error('Error deleting category:', error);
@@ -52,7 +50,7 @@ export const deleteUser = async (UserId) => {
 export const getUserByUsername = async (Username) => {
   try {
 
-    const response = await axios.get(`${API_URL}/User/Edit/${Username}`)
+    const response = await api.get(`/User/Edit/${Username}`)
     return response
   } catch (error) {
     console.error('Error fetching subcategories:', error);
@@ -62,7 +60,7 @@ export const getUserByUsername = async (Username) => {
 
 export const updateUser = async (Username, UserData) => {
   try {
-    const response = await axios.put(`${API_URL}/UpdateUser/${Username}`, UserData); 
+    const response = await api.put(`/UpdateUser/${Username}`, UserData); 
     return response;
   } catch (error) {
     console.error('Error updating category:', error);
@@ -73,7 +71,7 @@ export const updateUser = async (Username, UserData) => {
 export const getUserProfile = async (token) => {
   try {
     
-    const response = await axios.get(`${API_URL}/UserProfile`, {
+    const response = await api.get('/UserProfile', {
       headers: {
         Authorization: `Bearer ${token}`, 
       },
@@ -88,7 +86,7 @@ export const getUserProfile = async (token) => {
 export const getUserAddresses = async (token) => {
   try {
     
-    const response = await axios.get(`${API_URL}/User/addresses`, {
+    const response = await api.get('/User/addresses', {
       headers: { Authorization: `Bearer ${token}` },
     });   
     return response; 
@@ -102,7 +100,7 @@ export const getUserAddresses = async (token) => {
 export const addUserAddress = async (token, addressdata) => {
   try {
     
-    const response = await axios.post(`${API_URL}/User/address`, addressdata,
+    const response = await api.post('/User/address', addressdata,
     {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -122,8 +120,8 @@ export const updateUserAddress = async (token, editingAddressId, newAddress) => 
         Authorization: `Bearer ${token}`, 
       },
     };
-    const response = await axios.put(
-      `${API_URL}/updateUserAddress/${editingAddressId}`, 
+    const response = await api.put(
+      `/updateUserAddress/${editingAddressId}`, 
       newAddress,
       config
     );
@@ -142,8 +140,8 @@ export const deleteUserAddress = async (token, id) => {
         Authorization: `Bearer ${token}`, 
       },
     };
-    const response = await axios.delete(
-      `${API_URL}/deleteUserAddress/${id}`,
+    const response = await api.delete(
+      `/deleteUserAddress/${id}`,
       config 
     );
     return response.data; 
@@ -155,7 +153,7 @@ export const deleteUserAddress = async (token, id) => {
 
 export const UpdateDefaultAddress = async (addressId) => {
   try {
-    const response = await axios.put(`${API_URL}/addresses/default/${addressId}`); 
+    const response = await api.put(`/addresses/default/${addressId}`); 
     return response;
   } catch (error) {
     console.error('Error updating category:', error);

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { GeneralStatus } = require('../Enum/Enum'); 
+const CommonFieldsSchema = require('./CommonFields');
+
 const SubcategorySchema = new mongoose.Schema({
     Name: { 
         type: String, 
@@ -21,25 +23,9 @@ const SubcategorySchema = new mongoose.Schema({
         ref: 'Category',  // Reference to Category table
         required: true
     },
-    Status: {
-        type: String,
-        enum: Object.values(GeneralStatus), // Using enum for product status
-        required: true
-    },
-    Created_at: { 
-        type: Date, 
-        default: Date.now 
-    },
-    Updated_at: { 
-        type: Date, 
-        default: Date.now 
-    }
+    audit: CommonFieldsSchema
 });
 
-SubcategorySchema.pre('save', function (next) {
-    this.Updated_at = Date.now();
-    next();
-});
 
 const SubcategoryModel = mongoose.model('Subcategory', SubcategorySchema);
 

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { GeneralStatus } = require('../Enum/Enum'); 
+const CommonFieldsSchema = require('./CommonFields');
+
 const CategorySchema = new mongoose.Schema({
     Name: { 
         type: String, 
@@ -16,25 +18,7 @@ const CategorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Status: {
-        type: String,
-        enum: Object.values(GeneralStatus), // Using enum for product status
-        required: true
-    },
-    Created_at: { 
-        type: Date, 
-        default: Date.now 
-    },
-    Updated_at: { 
-        type: Date, 
-        default: Date.now 
-    }
-});
-
-
-CategorySchema.pre('save', function (next) {
-    this.Updated_at = Date.now();
-    next();
+    audit: CommonFieldsSchema
 });
 
 

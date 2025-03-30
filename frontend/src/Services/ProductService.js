@@ -1,14 +1,10 @@
-//Product Service
-
-import axios from 'axios';
-import Cookies from 'js-cookie'; 
-const API_URL = 'http://localhost:8080';
+import api from './Api_Intersecptor/Api_intersecptor';
 
 export const addProduct = async (Product) => {
     try {
       
       console.log(Product)
-      const response = await axios.post(`${API_URL}/CreateProduct`, Product);
+      const response = await api.post('/CreateProduct', Product);
       return response;
     } catch (error) {
       console.error('Error add Category:', error);
@@ -17,7 +13,7 @@ export const addProduct = async (Product) => {
   };
   export const updateProduct = async (slug, ProductData) => {
     try {
-      const response = await axios.put(`${API_URL}/UpdateProduct/${slug}`, ProductData); 
+      const response = await api.put(`/UpdateProduct/${slug}`, ProductData); 
       return response;
     } catch (error) {
       console.error('Error updating category:', error);
@@ -27,7 +23,7 @@ export const addProduct = async (Product) => {
   export const getProductBySlug = async (Slug) => {
     try {
   
-      const response = await axios.get(`${API_URL}/Product/Edit/${Slug}`)
+      const response = await api.get(`/Product/Edit/${Slug}`)
       return response
     } catch (error) {
       console.error('Error fetching subcategories:', error);
@@ -38,7 +34,7 @@ export const addProduct = async (Product) => {
     try {
       
      
-      const response = await axios.get(`${API_URL}/GetAllProducts`);
+      const response = await api.get('/GetAllProducts');
       return response;
     } catch (error) {
       console.error('Error add Category:', error);
@@ -48,7 +44,7 @@ export const addProduct = async (Product) => {
   export const deleteProduct = async (ProductId) => {
     try {
       
-      const response = await axios.delete(`${API_URL}/DeleteProduct/${ProductId}`);
+      const response = await api.delete(`/DeleteProduct/${ProductId}`);
       return response;
     } catch (error) {
       console.error('Error deleting category:', error);
@@ -58,7 +54,7 @@ export const addProduct = async (Product) => {
   export const getAllProductsBySlug = async (Slug) => {
     try {
       
-        const response = await axios.get(`${API_URL}/AllProducts/${Slug}`); 
+        const response = await api.get(`/AllProducts/${Slug}`); 
         console.log(response)
         return response;
     } catch (error) {
