@@ -1,88 +1,73 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { addCategory, updateCategory, getCategoryBySlug } from '../../Services/CategoryService/CategoryService_Admin';
+import { addAnnouncement, updateAnnouncement, getAnnouncementById } from '../../Services/AnnouncementService/AnnouncementService_Admin';
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-const CategoryForm = ({ isEditMode = false }) => {
+const AnnouncementForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
     const [formData, setFormData] = useState({
-        Name: '',
-        Description: '',
-        Slug: '',
-        label_image: '',
+        Text: '',
+        ShowInSite: false,
         Status: ''
     });
     const [isLoading, setIsLoading] = useState(true);
-    const { slug } = useParams();
+    const { Id } = useParams();
     const navigate = useNavigate();
 
-    const isFetchedRef = useRef(false); // Track if data has already been fetched
+    const isFetchedRef = useRef(false);
 
-    // Load category data if in edit mode
     useEffect(() => {
         if (!isFetchedRef.current) {
-            const loadCategory = async () => {
+            const loadAnnouncement = async () => {
                 try {
-                    const response = await getCategoryBySlug(slug);
-
+                    const response = await getAnnouncementById(Id);
                     if (!response.data) {
-                        console.error('Category data is null or not found');
-                        // Handle error state here, e.g., show a message or redirect
+                        console.error('Announcement data is null or not found');
                         return;
                     }
-                    const category = response.data;
+                    const Announcement = response.data;
                     setFormData({
-                        Name: category.Name,
-                        Description: category.Description,
-                        Slug: category.Slug,
-                        label_image: category.label_image,
-                        Status: category.audit.status
+                        Text: Announcement.Text,
+                        ShowInSite: Boolean(Announcement.ShowInSite), // Ensure it's a boolean
+                        Status: Announcement.audit.status
                     });
                 } catch (err) {
-                    console.error('Error fetching category:', err);
+                    console.error('Error fetching Announcement:', err);
                 } finally {
                     setIsLoading(false);
                 }
-
             };
-
-            if (isEditMode && slug) {
-                loadCategory();
+    
+            if (isEditMode && Id) {
+                loadAnnouncement();
             } else {
                 setIsLoading(false);
             }
-
+    
             isFetchedRef.current = true; // Mark data as fetched
         }
-    }, [isEditMode, slug]);
+    }, [isEditMode, Id]);
+    
 
     const handleInputChange = (e) => {
-
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, type, checked, value } = e.target;
+        
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value, // Correctly handle checkbox value
+        }));
     };
+    
+
 
     const handleCancel = () => {
-        navigate('/admin/Category');
+        navigate('/admin/Announcements');
     };
 
-    const handleFileInputChange = (e) => {
-        const file = e.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-            previewFile(file);
-        } else {
-            alert('Please upload a valid image file.');
-        }
-    };
 
-    const previewFile = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setPreviewSource(reader.result);
-            setFormData((prevData) => ({ ...prevData, label_image: reader.result }));
-        };
-    };
+
+
 
     const handleSubmitFile = async (e) => {
         debugger
@@ -91,17 +76,17 @@ const CategoryForm = ({ isEditMode = false }) => {
         try {
             let response;
             if (isEditMode) {
-                response = await updateCategory(slug, formData);
+                response = await updateAnnouncement(Id, formData);
             } else {
-                response = await addCategory(formData);
+                response = await addAnnouncement(formData);
             }
 
             if (response && response.data) {
-                alert(response.message); // Show API response message in an alert
+                alert(response.message);
             } else {
                 alert('Unexpected response from the server');
             }
-            navigate('/admin/Category');
+            navigate('/admin/Announcements');
         } catch (err) {
             console.error('Error submitting form:', err);
         }
@@ -114,10 +99,9 @@ const CategoryForm = ({ isEditMode = false }) => {
 
             <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
-                    <p>Create Category</p>
+                    <p>{isEditMode ? 'Edit Announcement' : 'Create a New Announcement'}</p>
                 </div>
             </div>
-            {/* <div className="pagetitle">{isEditMode ? 'Edit Category' : 'Create a New Category'}</div> */}
             <div className="form-800">
                 <div className="white-bg">
                     <div className='input-form'>
@@ -126,47 +110,29 @@ const CategoryForm = ({ isEditMode = false }) => {
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <div className="formlabel">Name</div>
+                                            <div className="formlabel">Text</div>
                                             <input
                                                 type="text"
-                                                name="Name"
-                                                value={formData.Name}
+                                                name="Text"
+                                                value={formData.Text}
                                                 onChange={handleInputChange}
                                                 required
                                             />
                                         </td>
                                         <td>
-                                            <div className="formlabel">Slug</div>
+                                            <div className="formlabel">Visible in Website</div>
                                             <input
-                                                type="text"
-                                                name="Slug"
-                                                value={formData.Slug}
-                                                onChange={handleInputChange}
-                                                required
-                                                disabled={isEditMode}
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan="2">
-                                            <div className="formlabel">Description</div>
-                                            <textarea
-                                                name="Description"
-                                                value={formData.Description}
+                                                type="checkbox"
+                                                name="ShowInSite"
+                                                checked={formData.ShowInSite}  // Use checked instead of value
                                                 onChange={handleInputChange}
                                             />
+
                                         </td>
                                     </tr>
+
                                     <tr>
-                                        <td>
-                                            <div className="formlabel">Image</div>
-                                            <input
-                                                type="file"
-                                                name="label_image"
-                                                onChange={handleFileInputChange}
-                                                required={!isEditMode}
-                                            />
-                                        </td>
+
                                         {isEditMode && (
                                             <td>
                                                 <label htmlFor="status">Status:</label>
@@ -182,17 +148,7 @@ const CategoryForm = ({ isEditMode = false }) => {
                                             </td>
                                         )}
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            {(previewSource || (isEditMode && formData.label_image)) && (
-                                                <img
-                                                    src={previewSource || formData.label_image}
-                                                    alt="Selected"
-                                                    style={{ height: '180px' }}
-                                                />
-                                            )}
-                                        </td>
-                                    </tr>
+
                                     <tr>
 
                                         <td>
@@ -226,4 +182,4 @@ const CategoryForm = ({ isEditMode = false }) => {
     );
 };
 
-export default CategoryForm;
+export default AnnouncementForm;

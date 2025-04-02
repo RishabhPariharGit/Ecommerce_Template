@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ShoppingCartOutlined, FavoriteBorderOutlined, PersonOutline, LoginOutlined, LogoutOutlined } from '@mui/icons-material';
 import './Navbar.css';
-import { getAllCategories } from '../../../Services/CategoryService';
+import { getAllCategoryforSite } from '../../../Services/CategoryService/CategoryService_Website';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -19,7 +19,8 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await getAllCategories();
+        const response = await getAllCategoryforSite();
+        console.log("response", response.data)
         setCategories(response.data);
       } catch (err) {
         console.error('Error fetching categories:', err);
@@ -91,18 +92,18 @@ const Navbar = () => {
   const handleLoginClick = () => {
     navigate('/login');
   };
-  
+
   const handleProfileClick = () => {
     navigate('/UserProfile');
   };
-  const handleAddtocartclick = () => {    
-      navigate('/Checkout/cart'); 
+  const handleAddtocartclick = () => {
+    navigate('/Checkout/cart');
   };
   const handleWishlistclick = () => {
-    
-    const token = Cookies.get('token');  
+
+    const token = Cookies.get('token');
     if (token) {
-      navigate('/Wishlist'); 
+      navigate('/Wishlist');
     } else {
       navigate('/login');
     }
@@ -119,7 +120,7 @@ const Navbar = () => {
           <div className="custom-roww v-center">
             <div className="header-item item-left">
               <div className="logo">
-              <Link to="/">Customlogo</Link>
+                <Link to="/">Customlogo</Link>
               </div>
             </div>
             <div className="header-item item-center">
@@ -133,45 +134,48 @@ const Navbar = () => {
                   <div className="mobile-menu-close">×</div>
                 </div>
                 <ul className="menu-main">
-                  {categories.map((category) => (
+                  {Array.isArray(categories) && categories.map((category) => (
                     <li key={category._id} className="menu-item-has-children">
                       <Link to={`/collections/${category.Slug}`}>{category.Name}</Link>
-                      <div className="sub-menu">
-                        <ul>
-                          {category.subcategories.map((sub) => (
-                            <li key={sub._id}>
-                              <Link to={`/collections/${sub.Slug}`}>{sub.Name}</Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {Array.isArray(category.subcategories) && category.subcategories.length > 0 && (
+                        <div className="sub-menu">
+                          <ul>
+                            {category.subcategories.map((sub) => (
+                              <li key={sub._id}>
+                                <Link to={`/collections/${sub.Slug}`}>{sub.Name}</Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </li>
                   ))}
+
                 </ul>
               </nav>
             </div>
             <div className="header-item item-right">
-            <div className='cstm-right-icons'>
-            <button className="btn" onClick={handleAddtocartclick}>
-        <ShoppingCartOutlined /> {/* Outlined Cart Icon */}
-      </button>
-      <button className="btn" onClick={handleWishlistclick}>
-        <FavoriteBorderOutlined /> {/* Outlined Wishlist Icon */}
-      </button>
-      <div  className="profile-dropdown-container">
-        <button className="btn profile-btn">
-          <PersonOutline /> {/* Outlined User Profile Icon */}
-        </button>
-        <div className="dropdown-menu">
-          <button className="dropdown-item" onClick={handleLoginClick}>
-            <LoginOutlined /> Login1
-          </button>
-          <button className="dropdown-item" onClick={handleLogout}>
-            <LogoutOutlined /> Logout
-          </button>
-        </div>
-      </div>
-    </div>
+              <div className='cstm-right-icons'>
+                <button className="btn" onClick={handleAddtocartclick}>
+                  <ShoppingCartOutlined /> {/* Outlined Cart Icon */}
+                </button>
+                <button className="btn" onClick={handleWishlistclick}>
+                  <FavoriteBorderOutlined /> {/* Outlined Wishlist Icon */}
+                </button>
+                <div className="profile-dropdown-container">
+                  <button className="btn profile-btn">
+                    <PersonOutline /> {/* Outlined User Profile Icon */}
+                  </button>
+                  <div className="dropdown-menu">
+                    <button className="dropdown-item" onClick={handleLoginClick}>
+                      <LoginOutlined /> Login1
+                    </button>
+                    <button className="dropdown-item" onClick={handleLogout}>
+                      <LogoutOutlined /> Logout
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -60,6 +60,9 @@ const CreateProduct = async (req, res) => {
     } = req.body;
 
     try {
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: 'Unauthorized: User not found' });
+        }
         const existingProduct = await ProductModel.findOne({ Slug });
         if (existingProduct) {
             return res.status(400).json({ message: 'Slug must be unique' });
@@ -115,14 +118,20 @@ const CreateProduct = async (req, res) => {
             Tags,
             SizeType,
             Sizes: Sizes || [],
-            Status: ProductStatus.ACTIVE,
+            audit: {
+                createdDate: new Date(),
+                createdBy: req.user._id,  
+                updatedDate: new Date(),
+                updatedBy: req.user._id, 
+                status: ProductStatus.ACTIVE
+            },
         });
 
         const savedProduct = await newProduct.save();
 
         res.status(201).json({
             message: 'Product created successfully!',
-            Product: savedProduct,
+            data: savedProduct,
         });
     } catch (err) {
         console.error("Error creating Product:", err);
@@ -135,10 +144,13 @@ const UpdateProduct = async (req, res) => {
     const { Name, Description, Price, Quantity, CategoryId, SubcategoryId, Product_image,Product_Main_image, SKU, Brand, Tags, SizeType, Sizes ,Status} = req.body;
 
     try {
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: 'Unauthorized: User not found' });
+        } 
         // Find existing product
         const existingProduct = await ProductModel.findOne({ Slug: slug });
         if (!existingProduct) {
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({ message: 'Product not found', data:null });
         }
 
         const cloudinary = req.app.locals.cloudinary;
@@ -187,9 +199,9 @@ const UpdateProduct = async (req, res) => {
                     folder: 'products'
                 });
                 uploadedImageUrl = result.secure_url;
-            } catch (error) {
-                console.log(error);
-                return res.status(500).json({ message: 'Error uploading image to Cloudinary', error });
+            } catch (err) {
+                
+                return res.status(500).json({ message: 'Error uploading image to Cloudinary', data: null, error: err });
             }
         }
 
@@ -207,7 +219,9 @@ const UpdateProduct = async (req, res) => {
         existingProduct.Tags = Tags;
         existingProduct.SizeType = SizeType;
         existingProduct.Sizes = Sizes;
-        existingProduct.Status = Status;
+        existingProduct.audit.status = Status;
+        existingProduct.audit.updatedDate = new Date();
+        existingProduct.audit.updatedBy = req.user._id;
 
 
         // Step 4: Save updated product
@@ -215,12 +229,12 @@ const UpdateProduct = async (req, res) => {
 
         res.status(200).json({
             message: 'Product updated successfully!',
-            Product: updatedProduct
+            data: updatedProduct
         });
 
     } catch (err) {
         console.error("Error updating product:", err);
-        res.status(500).json({ message: 'Error updating product', error: err });
+        res.status(500).json({ message: 'Error updating product', data: null, error: err });
     }
 };
 
@@ -228,50 +242,54 @@ const GetAllProducts = async (req, res) => {
     try {
         const Products = await ProductModel.find();
         if (!Products || Products.length === 0) {
-            return res.status(404).json({ message: 'No Products found' });
+            return res.status(404).json({ message: 'No Products found', data: [] });
         }
-        return res.status(200).json(Products);
+        return res.status(200).json({ message: "Products retrieved successfully", data: Products });
     } catch (err) {
         console.error("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error", data: null });
     }
 };
+
 
 const GetProductBySlug = async (req, res) => {
     try {
         const { Slug } = req.params;
-        const Product = await ProductModel.findOne({ Slug: { $regex: new RegExp(Slug, "i") } });
-        console.log("Product",Product)
+        const Product = await ProductModel.findOne({ Slug: { $regex: new RegExp(`^${Slug}$`, "i") } });
+
+        console.log("Product:", Product);
+
         if (!Product) {
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({ message: 'Product not found', data: null });
         }
 
-        return res.status(200).json(Product);
+        return res.status(200).json({ message: "Product retrieved successfully", data: Product });
     } catch (err) {
         console.error("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error", data: null });
     }
 };
+
 const DeleteProduct = async (req, res) => {
     const { id } = req.params;
-    const session = await ProductModel.startSession(); // Start a new session for the transaction
+    const session = await ProductModel.startSession(); 
     session.startTransaction();
 
     try {
-        const product = await ProductModel.findById(id).session(session); // Include session in the find query
+        const product = await ProductModel.findById(id).session(session);
 
         if (!product) {
             await session.abortTransaction();
             session.endSession();
-            return res.status(404).json({ message: 'Product not found' });
+            return res.status(404).json({ message: 'Product not found', data: null });
         }
 
         const cloudinary = req.app.locals.cloudinary;
-        
-        // Delete images from Cloudinary
-        if (Array.isArray(product.Product_image)) {
+
+        // Delete images from Cloudinary if they exist
+        if (Array.isArray(product.Product_image) && product.Product_image.length > 0) {
             const deletePromises = product.Product_image.map((imageUrl) => {
-                const public_id = imageUrl.split('/').pop().split('.')[0];
+                const public_id = imageUrl.split('/').pop().split('.')[0]; 
                 return cloudinary.uploader.destroy(`products/${public_id}`);
             });
             await Promise.all(deletePromises);
@@ -288,13 +306,13 @@ const DeleteProduct = async (req, res) => {
         await session.commitTransaction();
         session.endSession();
 
-        res.status(200).json({ message: 'Product and associated items deleted successfully!' });
+        return res.status(200).json({ message: 'Product and associated items deleted successfully!', data: null });
     } catch (err) {
         await session.abortTransaction();
         session.endSession();
 
         console.error("Error deleting product:", err);
-        res.status(500).json({ message: 'Error deleting product', error: err });
+        return res.status(500).json({ message: 'Error deleting product', data: null, error: err.message });
     }
 };
 
@@ -303,28 +321,35 @@ const DeleteProduct = async (req, res) => {
 const GetAllProductsBySlug = async (req, res) => {
     try {
         const { slug } = req.params;
+
+        // Check for category first
         let category = await CategoryModel.findOne({ Slug: slug });
 
         if (category) {
             const products = await ProductModel.find({ CategoryId: category._id });
-            return res.json(products);
+            return res.status(200).json({ message: "Products retrieved successfully", data: products });
         }
+
+        // Check for subcategory if category is not found
         const subcategory = await SubcategoryModel.findOne({ Slug: slug });
 
         if (subcategory) {
             const products = await ProductModel.find({ SubcategoryId: subcategory._id });
-            return res.json(products);
+            return res.status(200).json({ message: "Products retrieved successfully", data: products });
         }
-        res.status(404).json({ message: 'Category or Subcategory not found' });
+
+        // If neither category nor subcategory is found
+        return res.status(404).json({ message: "Category or Subcategory not found", data: [] });
 
     } catch (error) {
-        console.error('Error fetching products:', error);
-        res.status(500).json({ message: 'Server error' });
+        console.error("Error fetching products:", error);
+        return res.status(500).json({ message: "Server error", data: null, error: error.message });
     }
 };
 
 
+
 module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug, DeleteProduct, GetAllProductsBySlug };
 
-``
+
 

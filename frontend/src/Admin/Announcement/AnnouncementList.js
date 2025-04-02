@@ -1,50 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getAllCategories, deleteCategory } from '../../Services/CategoryService/CategoryService_Admin'; // Import deleteCategory
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { getAllAnnouncements, deleteAnnouncement } from '../../Services/AnnouncementService/AnnouncementService_Admin'; 
+import { useNavigate } from 'react-router-dom';
 
-
-const CategoryList = () => {
-    const [categories, setCategories] = useState([]);
-    const navigate = useNavigate(); // Initialize navigate
-    const isFetchedRef = useRef(false); // Track if data has already been fetched
+const AnnouncementList = () => {
+    const [Announcements, setAnnouncements] = useState([]);
+    const navigate = useNavigate(); 
+    const isFetchedRef = useRef(false); 
     useEffect(() => {
         if (!isFetchedRef.current) {
-            const fetchCategories = async () => {
+            const fetchAnnouncements = async () => {
                 try {
                     debugger
-                    const response = await getAllCategories();
+                    const response = await getAllAnnouncements();
                     if (response && response.data) {
-                        setCategories(response.data);
+                        setAnnouncements(response.data);
                     } else {
-                        setCategories([]); // Ensure categories is always an array
+                        setAnnouncements([]); 
                     }
                 } catch (err) {
-                    console.error('Error fetching categories:', err);
+                    console.error('Error fetching Announcements:', err);
                 }
             };
 
-            fetchCategories();
+            fetchAnnouncements();
             isFetchedRef.current = true;
         }
     }, []);
 
-    const handleEdit = (categorySlug) => {
-        // Navigate to the edit page with the category slug
-        navigate(`/admin/Category/edit/${categorySlug}`);
+    const handleEdit = (AnnouncementId) => {
+        navigate(`/admin/Announcement/edit/${AnnouncementId}`);
     };
 
     const handleCreate = () => {
         // Navigate to the create page
-        navigate('/admin/Category/create');
+        navigate('/admin/Announcement/create');
     };
 
-    const handleDelete = async (categoryId) => {
-        if (window.confirm("Are you sure you want to delete this category? This will also delete all related subcategories and products.")) {
+    const handleDelete = async (AnnouncementId) => {
+        if (window.confirm("Are you sure you want to delete this Announcement? This will also delete all related subAnnouncements and products.")) {
             try {
-                await deleteCategory(categoryId); // Call the delete function
-                setCategories(categories.filter(category => category._id !== categoryId)); // Remove the deleted category from state
+                await deleteAnnouncement(AnnouncementId); 
+                setAnnouncements(Announcements.filter(Announcement => Announcement._id !== AnnouncementId)); 
             } catch (error) {
-                console.error('Error deleting category:', error);
+                console.error('Error deleting Announcement:', error);
             }
         }
     };
@@ -53,10 +51,10 @@ const CategoryList = () => {
         <>
             <div className="white-bg-btn">
                 <div className='title-bread-crumbs'>
-                    <p>Categories</p>
+                    <p>Announcements</p>
                 </div>
                 <button className="button" onClick={handleCreate}>
-                    Create Category
+                    Create Announcement
                 </button>
 
             </div>
@@ -66,28 +64,30 @@ const CategoryList = () => {
                     <table className="tablestyle">
                         <thead>
                             <tr className="roundheader">
-                                <th>Name</th>
-                                <th>Description</th>
+                                <th>Text</th>
+                                <th>Status</th>
+                                <th>Visisblein Site</th>
                                 <th className="buttoncolumn">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.isArray(categories) && categories.length > 0 ? (
-                                categories.map((category) => (
-                                    <tr key={category.Slug}>
-                                        <td>{category.Name}</td>
-                                        <td>{category.Description}</td>
+                            {Array.isArray(Announcements) && Announcements.length > 0 ? (
+                                Announcements.map((Announcement) => (
+                                    <tr key={Announcement.Id}>
+                                        <td>{Announcement.Text}</td>
+                                        <td>{Announcement.Status}</td>
+                                        <td>{Announcement.ShowInSite}</td>
                                         <td>
                                             <div className='customization-main-btns'>
                                                 <button
                                                     className="gridbutton"
-                                                    onClick={() => handleEdit(category.Slug)}
+                                                    onClick={() => handleEdit(Announcement._id)}
                                                 >
                                                     Edit
                                                 </button>
                                                 <button
                                                     className="gridbutton delete-button"
-                                                    onClick={() => handleDelete(category._id)}
+                                                    onClick={() => handleDelete(Announcement._id)}
                                                 >
                                                     Delete
                                                 </button>
@@ -97,7 +97,7 @@ const CategoryList = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="3">No categories found</td>
+                                    <td colSpan="3">No Announcements found</td>
                                 </tr>
                             )}
                         </tbody>
@@ -110,4 +110,4 @@ const CategoryList = () => {
     );
 };
 
-export default CategoryList;
+export default AnnouncementList;

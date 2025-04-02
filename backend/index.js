@@ -4,7 +4,9 @@ const connectDB = require('./Configuration/Connection');
 const UserModel = require('./Models/User');
 const RoleModel = require('./Models/Role');
 const CategoryModel = require('./Models/Category');
-const Router = require("./Routes/AllRoutes");
+const AdminRouter = require("./Routes/AdminRoute");
+const WebsiteRoute = require("./Routes/WebsiteRoute");
+
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
@@ -15,7 +17,7 @@ const WishlistModel=require('./Models/Wishlist ')
 const AddressModel=require('./Models/Address')
 const PagesModel=require('./Models/Pages')
 const HomepageSectionModel =require('./Models/HomepageSections ')
-
+const AnnouncementModel =require('./Models/Announcement')
 
 
 const cloudinary = require('cloudinary').v2;  
@@ -57,9 +59,11 @@ WishlistModel();
 AddressModel();
 HomepageSectionModel();
 PagesModel();
+AnnouncementModel(); 
 
 
-app.use('/', Router);
+app.use('/admin', AdminRouter);
+app.use('/', WebsiteRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

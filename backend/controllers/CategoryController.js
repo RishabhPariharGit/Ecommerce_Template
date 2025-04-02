@@ -8,6 +8,9 @@ const CreateCategory = async (req, res) => {
     const { Name, Description, Slug, label_image } = req.body;
     
     try {
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: 'Unauthorized: User not found' });
+        }
         // Check if category with the given slug already exists
         const existingCategory = await CategoryModel.findOne({ Slug });
         if (existingCategory) {
@@ -46,7 +49,13 @@ const CreateCategory = async (req, res) => {
             Description,
             label_image: uploadedImageUrl,
             Slug,
-            Status: GeneralStatus.ACTIVE,
+            audit: {
+                createdDate: new Date(),
+                createdBy: req.user._id,  
+                updatedDate: new Date(),
+                updatedBy: req.user._id, 
+                status: GeneralStatus.ACTIVE
+            }
         });
 
         const savedCategory = await newCategory.save();
@@ -130,7 +139,10 @@ const UpdateCategory = async (req, res) => {
     const { slug } = req.params;
     const { Name, Description, label_image, Status } = req.body;
 
-    try {        
+    try { 
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: 'Unauthorized: User not found' });
+        }        
         const existingCategory = await CategoryModel.findOne({ Slug: slug });
         if (!existingCategory) {
             return res.status(404).json({ 
@@ -164,7 +176,9 @@ const UpdateCategory = async (req, res) => {
         existingCategory.Name = Name;
         existingCategory.Description = Description;
         existingCategory.label_image = uploadedImageUrl;
-        existingCategory.Status = Status;
+        existingCategory.audit.status = Status;
+        existingCategory.audit.updatedDate = new Date();
+        existingCategory.audit.updatedBy = req.user._id;
 
         const updatedCategory = await existingCategory.save();
 
@@ -247,7 +261,41 @@ const DeleteCategory = async (req, res) => {
 
 
 
-module.exports = { GetAllCategories, CreateCategory, GetCategoryBySlug, UpdateCategory, DeleteCategory };
+
+const GetAll_Active_Categories = async (req, res) => {
+    try {
+        const categories = await CategoryModel.find();
+        if (!categories || categories.length === 0) {
+            return res.status(404).json({ 
+                message: 'No categories found', 
+                data: [] // Ensure data is always present
+            });
+        }
+
+        const subcategories = await SubCategory.find();
+        const categoryWithSubcategories = categories.map((category) => {
+            const relatedSubcategories = subcategories.filter(
+                (sub) => sub.CategoryId.toString() === category._id.toString()
+            );
+            return { ...category._doc, subcategories: relatedSubcategories };
+        });
+
+        return res.status(200).json({
+            message: "Successfully retrieved categories",
+            data: categoryWithSubcategories
+        });
+
+    } catch (err) {
+        console.error("Error:", err);
+        return res.status(500).json({ 
+            message: "Internal Server Error", 
+            data: [] 
+        });
+    }
+};
+
+
+module.exports = { GetAllCategories, CreateCategory, GetCategoryBySlug, UpdateCategory, DeleteCategory, GetAll_Active_Categories };
 
 
 

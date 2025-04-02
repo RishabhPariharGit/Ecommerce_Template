@@ -13,6 +13,8 @@ import UserList from '../Admin/User/UserList';
 import UserForm from '../Admin/User/UserForm';
 import HomepageSectionForm from '../Admin/HomepageSections/HomepageSectionForm';
 import HomepageSectionList from '../Admin/HomepageSections/HomepageSectionList';
+import AnnouncementList from '../Admin/Announcement/AnnouncementList';
+import AnnouncementForm from '../Admin/Announcement/AnnouncementForm';
 
 
 const AdminRoutes = () => {
@@ -70,7 +72,22 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-   
+        <Route
+          path="/Product/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ProductForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Product/Edit/:slug"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ProductForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
         <Route
           path="/Users"
           element={
@@ -124,6 +141,31 @@ const AdminRoutes = () => {
           element={
             <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
               <HomepageSectionForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
+
+        <Route
+          path="Announcements"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <AnnouncementList />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Announcement/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <AnnouncementForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Announcement/Edit/:Id"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <AnnouncementForm isEditMode={true} />
             </AuthGuard>
           }
         />
