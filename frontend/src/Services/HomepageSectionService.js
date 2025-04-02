@@ -1,4 +1,4 @@
-import api from './Api_Intersecptor/Api_intersecptor';
+import api from './Api_Intersecptor/AxiosAdmin';
 
 
 

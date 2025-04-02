@@ -1,7 +1,7 @@
-import api from './Api_Intersecptor/Api_intersecptor';
+import api from '../Api_Intersecptor/AxiosAdmin';
 import Cookies from 'js-cookie'; 
-// Add Category
-export const addCategory = async (CategoryData) => {
+// Add Announcement
+export const addAnnouncement = async (AnnouncementData) => {
     try {
         debugger
           const token = Cookies.get('token');
@@ -13,16 +13,16 @@ export const addCategory = async (CategoryData) => {
           if (token) {
             headers.Authorization = `Bearer ${token}`;
           }
-        const response = await api.post('/CreateCategory', CategoryData);
+        const response = await api.post('/CreateAnnouncement', AnnouncementData);
         return response.data;
     } catch (error) {
-        console.error('Error adding category:', error);
+        console.error('Error adding Announcement:', error);
         throw error;
     }
 };
 
 // Get All Categories
-export const getAllCategories = async () => {
+export const getAllAnnouncements = async () => {
     try {
         const token = Cookies.get('token');
           const headers = {
@@ -31,16 +31,35 @@ export const getAllCategories = async () => {
           if (token) {
             headers.Authorization = `Bearer ${token}`;
           }
-        const response = await api.get('/GetAllCategory');
+        const response = await api.get('/GetAllAnnouncement');
         return response.data;
     } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching Announcements:', error);
         throw error;
     }
 };
 
-// Get Category by Slug
-export const getCategoryBySlug = async (Slug) => {
+// Get Announcement by Slug
+export const getAnnouncementById = async (Id) => {
+    try {
+        debugger
+        const token = Cookies.get('token');
+        const headers = {
+          withCredentials: true,
+        };
+        if (token) {
+          headers.Authorization = `Bearer ${token}`;
+        }
+        const response = await api.get(`/Announcement/Edit/${Id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching Announcement by Id:', error);
+        throw error;
+    }
+};
+
+// Update Announcement
+export const updateAnnouncement = async (Id, AnnouncementData) => {
     try {
         const token = Cookies.get('token');
         const headers = {
@@ -49,16 +68,16 @@ export const getCategoryBySlug = async (Slug) => {
         if (token) {
           headers.Authorization = `Bearer ${token}`;
         }
-        const response = await api.get(`/Category/Edit/${Slug}`);
+        const response = await api.put(`/UpdateAnnouncement/${Id}`, AnnouncementData);
         return response.data;
     } catch (error) {
-        console.error('Error fetching category by slug:', error);
+        console.error('Error updating Announcement:', error);
         throw error;
     }
 };
 
-// Update Category
-export const updateCategory = async (slug, CategoryData) => {
+// Delete Announcement
+export const deleteAnnouncement = async (AnnouncementId) => {
     try {
         const token = Cookies.get('token');
         const headers = {
@@ -67,28 +86,11 @@ export const updateCategory = async (slug, CategoryData) => {
         if (token) {
           headers.Authorization = `Bearer ${token}`;
         }
-        const response = await api.put(`/UpdateCategory/${slug}`, CategoryData);
+        const response = await api.delete(`/DeleteAnnouncement/${AnnouncementId}`);
         return response.data;
     } catch (error) {
-        console.error('Error updating category:', error);
+        console.error('Error deleting Announcement:', error);
         throw error;
     }
 };
 
-// Delete Category
-export const deleteCategory = async (categoryId) => {
-    try {
-        const token = Cookies.get('token');
-        const headers = {
-          withCredentials: true,
-        };
-        if (token) {
-          headers.Authorization = `Bearer ${token}`;
-        }
-        const response = await api.delete(`/DeleteCategory/${categoryId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error deleting category:', error);
-        throw error;
-    }
-};

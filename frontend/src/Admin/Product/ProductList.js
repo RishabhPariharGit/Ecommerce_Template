@@ -5,22 +5,23 @@ import { useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); // Loading state
-    const [error, setError] = useState(null); // Error state
-    const navigate = useNavigate(); // Initialize navigate
+    const [isLoading, setIsLoading] = useState(true); 
+    const [error, setError] = useState(null); 
+    const navigate = useNavigate(); 
     const isFetchedRef = useRef(false);
+
     useEffect(() => {
         if (!isFetchedRef.current) {
         const fetchProducts = async () => {
             try {
-                const response = await getAllProducts(); // Fetch all products from the service
-                setProducts(response.data); // Assuming response.data contains an array of products
-                setError(null); // Clear any previous error
+                const response = await getAllProducts(); 
+                setProducts(response.data); 
+                setError(null); 
             } catch (err) {
                 console.error('Error fetching products:', err);
                 setError('Failed to fetch products. Please try again later.');
             } finally {
-                setIsLoading(false); // Stop loading regardless of success or error
+                setIsLoading(false); 
             }
         };
 
@@ -30,32 +31,31 @@ const ProductList = () => {
     }, []);
 
     const handleEdit = (productSlug) => {
-        navigate(`/admin/Product/edit/${productSlug}`); // Navigate to edit page with slug
+        navigate(`/admin/Product/edit/${productSlug}`); 
     };
 
     const handleCreate = (e) => {
-        e.preventDefault(); // Prevent form submission side effects
+        e.preventDefault(); 
         navigate('/admin/Product/create');
     };
     
     const handleDelete = async (ProductId) => {
-        if (window.confirm("Are you sure you want to delete this category? This will also delete all related subcategories and products.")) {
+        if (window.confirm("Are you sure you want to delete this Product?")) {
             try {
-                await deleteProduct(ProductId); // Call the delete function
-                setProducts(products.filter(product => product._id !== ProductId)); // Remove the deleted category from state
+              const response  = await deleteProduct(ProductId); 
+              if(response){
+                alert(response.message)
+                setProducts(products.filter(product => product._id !== ProductId)); 
+              }
+                
             } catch (error) {
                 console.error('Error deleting category:', error);
             }
         }
     };
-    // if (isLoading) {
-    //     return <div>Loading products...</div>; 
-        
-    // }
-
+    
     return (
         <div>
-        
             <div className="white-bg-btn">
             <div className='title-bread-crumbs'>
                <p>Product List</p> 
@@ -68,7 +68,7 @@ const ProductList = () => {
             <div className="form-600">
                 <div className="white-bg">
                     
-                    {error && <div className="error">{error}</div>} {/* Display error message */}
+                    {error && <div className="error">{error}</div>} 
                     <table className="tablestyle">
                         <thead>
                             <tr className="roundheader">

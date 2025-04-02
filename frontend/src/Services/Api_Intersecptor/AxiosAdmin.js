@@ -2,7 +2,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie'; 
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:8080/admin';
 
 const api = axios.create({
   baseURL: API_URL,

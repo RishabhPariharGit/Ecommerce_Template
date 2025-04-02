@@ -64,6 +64,13 @@ const { AddSection,
  } = require("../controllers/PagesController");
 
 
+ const { CreateAnnouncement,
+  GetAllAnnouncements,
+  GetAnnouncementById,
+  UpdateAnnouncement,
+  DeleteAnnouncement,
+  GetAll_Active_Announcements
+ } = require("../controllers/AnnouncementController");
 
 
 
@@ -144,5 +151,13 @@ router.get("/Page/Edit/:Slug", GetPageBySlug);
 router.put("/UpdatePage/:slug", UpdatePage);
 router.delete('/DeletePage/:id', DeletePage);
 
+
+//Annoouncement Route
+router.post("/CreateAnnouncement", CreateAnnouncement);
+router.get("/GetAllAnnouncement", GetAllAnnouncements);
+
+router.get("/Announcement/Edit/:Id", GetAnnouncementById);
+router.put("/UpdateAnnouncement/:Id", UpdateAnnouncement);
+router.delete('/DeleteAnnouncement/:id', DeleteAnnouncement);
 
 module.exports = router;

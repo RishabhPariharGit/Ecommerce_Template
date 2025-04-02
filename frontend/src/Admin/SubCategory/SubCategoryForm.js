@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getAllCategories } from '../../Services/CategoryService';
+import { getAllCategories } from '../../Services/CategoryService/CategoryService_Admin';
 import {
     addSubCategory,
     updatesubCategory,
@@ -55,7 +55,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                             Slug: category.Slug,
                             label_image: category.label_image,
                             CategoryId: category.CategoryId || '',
-                            Status: category.Status
+                            Status: category.audit.status
                         });
                         setPreviewSource(category.label_image);
                         isFetchedRef.current = true; // Mark as fetched after successful data load

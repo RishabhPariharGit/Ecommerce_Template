@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getAllCategories } from '../../Services/CategoryService';
+import { getAllCategories } from '../../Services/CategoryService/CategoryService_Admin';
 import {
     addProduct,
     updateProduct,
     getProductBySlug
 } from '../../Services/ProductService';
-import { getAllSubCategoriesByCategoryId,getAllSubCategories } from '../../Services/SubCategoryService';
+import { getAllSubCategoriesByCategoryId, getAllSubCategories } from '../../Services/SubCategoryService';
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import AllSize from './EnumDropdown'; // Import the enum
+import AllSize from './EnumDropdown';
 
 
 const ProductForm = ({ isEditMode = false }) => {
-    const [previewSources, setPreviewSources] = useState([]); // Array for preview
+    const [previewSources, setPreviewSources] = useState([]);
     const [SinglepreviewSource, setSinglepreviewSource] = useState('');
     const [formData, setFormData] = useState({
         Name: '',
@@ -28,7 +28,7 @@ const ProductForm = ({ isEditMode = false }) => {
         Brand: '',
         Tags: '',
         SizeType: '',
-        Sizes: [] // Store selected sizes here
+        Sizes: []
     });
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
@@ -36,15 +36,22 @@ const ProductForm = ({ isEditMode = false }) => {
     const { slug } = useParams();
     const navigate = useNavigate();
 
-    const isFetchedRef = useRef(false); // Prevent multiple API calls
+    const isFetchedRef = useRef(false);
 
-    // API calls with useEffect and ref to avoid multiple calls
+
     useEffect(() => {
+        debugger
         if (!isFetchedRef.current) {
+            debugger
             const fetchCategories = async () => {
                 try {
                     const response = await getAllCategories();
-                    setCategories(response.data);
+                    if(response){
+                        setCategories(response.data);
+
+                    }else{
+                        setCategories([]); 
+                    }
                 } catch (err) {
                     console.error('Error fetching categories:', err);
                 }
@@ -52,14 +59,19 @@ const ProductForm = ({ isEditMode = false }) => {
             const fetchSubCategories = async () => {
                 try {
                     const response = await getAllSubCategories();
-                    setSubcategories(response.data);
+                    if(response){
+                        setSubcategories(response.data);
+                    }
+                    else{
+                        setSubcategories([]);
+                    }
                 } catch (err) {
                     console.error('Error fetching categories:', err);
                 }
             };
             const loadProduct = async () => {
                 try {
-                    
+                    debugger
                     const response = await getProductBySlug(slug);
                     const product = response.data;
 
@@ -78,8 +90,8 @@ const ProductForm = ({ isEditMode = false }) => {
                             Product_image: product.Product_image || [],
                             Product_Main_image: product.Product_Main_image,
                             SizeType: product.SizeType || '',
-                            Sizes: product.Sizes || [] ,// Assuming product.Sizes is an array
-                            Status: product.Status
+                            Sizes: product.Sizes || [],// Assuming product.Sizes is an array
+                            Status: product.audit.status
 
                         });
                         setPreviewSources(product.Product_image || []);
@@ -101,7 +113,7 @@ const ProductForm = ({ isEditMode = false }) => {
     }, [isEditMode, slug]);
 
     const handleSizeTypeChange = (e) => {
-        setFormData({ ...formData, SizeType: e.target.value, Sizes: [] }); // Reset sizes on type change
+        setFormData({ ...formData, SizeType: e.target.value, Sizes: [] });
     };
 
     const handleSizeChange = (size) => {
@@ -175,7 +187,12 @@ const ProductForm = ({ isEditMode = false }) => {
         if (value) {
             try {
                 const response = await getAllSubCategoriesByCategoryId(value);
-                setSubcategories(response.data);
+                if (response) {
+                    setSubcategories(response.data);
+                } else {
+                    setSubcategories([]);
+                }
+
             } catch (err) {
                 console.error('Error fetching subcategories:', err);
             }
@@ -191,26 +208,22 @@ const ProductForm = ({ isEditMode = false }) => {
 
     const handleSubmitFile = async (e) => {
 
-        e.preventDefault(); // Prevent the default form submission behavior
+        e.preventDefault();
 
         try {
-            const formPayload = new FormData(); // Initialize FormData
-
-            // Call appropriate API based on edit mode
+            let response ;
             if (isEditMode) {
-                await updateProduct(slug, formData);
-                console.log('Product updated successfully');
+                response= await updateProduct(slug, formData);
             } else {
-                await addProduct(formData);
-                console.log('Product created successfully');
+                response= await addProduct(formData);  
             }
-
-            // Navigate to product listing page on success
+            if(response){
+                alert(response.message);
+               }
             navigate('/admin/Products');
         } catch (err) {
             console.error('Error submitting form:', err);
 
-            // Display error message to user
             alert('Failed to submit the form. Please try again.');
         }
     };
@@ -219,13 +232,13 @@ const ProductForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-           
+
             <div className="white-bg-btn">
-            <div className='title-bread-crumbs'>
-               <p>{isEditMode ? 'Edit Product' : 'Create a New Product'}</p> 
-               </div>
+                <div className='title-bread-crumbs'>
+                    <p>{isEditMode ? 'Edit Product' : 'Create a New Product'}</p>
+                </div>
             </div>
-           
+
             <div className="form-800">
                 <div className="white-bg">
                     <form onSubmit={handleSubmitFile}>
@@ -328,7 +341,7 @@ const ProductForm = ({ isEditMode = false }) => {
                                             required
                                         >
                                             <option value="">Select Category</option>
-                                            {categories.map((cat) => (
+                                            {Array.isArray(categories) && categories.map((cat) => (
                                                 <option key={cat._id} value={cat._id}>
                                                     {cat.Name}
                                                 </option>
@@ -343,11 +356,12 @@ const ProductForm = ({ isEditMode = false }) => {
                                             onChange={handleInputChange}
                                         >
                                             <option value="">Select Subcategory</option>
-                                            {subcategories.map((sub) => (
+                                            {Array.isArray(subcategories) && subcategories.map((sub) => (
                                                 <option key={sub._id} value={sub._id}>
                                                     {sub.Name}
                                                 </option>
                                             ))}
+
                                         </select>
                                     </td>
                                 </tr>
@@ -418,20 +432,20 @@ const ProductForm = ({ isEditMode = false }) => {
                                     </td>
                                 </tr>
                                 <tr>
-                                {isEditMode && (
-                                            <td>
-                                                 <label htmlFor="status">Status:</label>
-                                                <select
-                                                    name="Status"
-                                                    value={formData.Status}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                >
-                                                    <option value="Active">Active</option>
-                                                    <option value="Inactive">Inactive</option>
-                                                </select>
-                                            </td>
-                                        )}
+                                    {isEditMode && (
+                                        <td>
+                                            <label htmlFor="status">Status:</label>
+                                            <select
+                                                name="Status"
+                                                value={formData.Status}
+                                                onChange={handleInputChange}
+                                                required
+                                            >
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                            </select>
+                                        </td>
+                                    )}
                                 </tr>
                                 <tr>
                                     <td>
@@ -443,38 +457,38 @@ const ProductForm = ({ isEditMode = false }) => {
                                             onChange={handleFileInputChange}
                                             multiple
                                         />
-                                         {/* Preview Image Section */}
-                                    <div className="image-preview-section">
-                                        {previewSources && previewSources.length > 0 ? (
-                                            previewSources.map((source, index) => (
-                                                <div key={index} style={{ position: 'relative', display: 'inline-block', margin: '5px' }}>
-                                                    <img
-                                                        src={source}
-                                                        alt={`Preview ${index + 1}`}
-                                                        style={{ maxWidth: '100px' }}
-                                                    />
-                                                    <button
-                                                        onClick={(event) => handleRemoveImage(index, event)}
-                                                        style={{
-                                                            position: 'absolute',
-                                                            top: '0',
-                                                            right: '0',
-                                                            background: 'red',
-                                                            color: 'white',
-                                                            border: 'none',
-                                                            borderRadius: '50%',
-                                                            cursor: 'pointer',
-                                                            padding: '2px 5px'
-                                                        }}
-                                                    >
-                                                        &times;
-                                                    </button>
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <p>No images available</p>
-                                        )}
-                                    </div>
+                                        {/* Preview Image Section */}
+                                        <div className="image-preview-section">
+                                            {previewSources && previewSources.length > 0 ? (
+                                                previewSources.map((source, index) => (
+                                                    <div key={index} style={{ position: 'relative', display: 'inline-block', margin: '5px' }}>
+                                                        <img
+                                                            src={source}
+                                                            alt={`Preview ${index + 1}`}
+                                                            style={{ maxWidth: '100px' }}
+                                                        />
+                                                        <button
+                                                            onClick={(event) => handleRemoveImage(index, event)}
+                                                            style={{
+                                                                position: 'absolute',
+                                                                top: '0',
+                                                                right: '0',
+                                                                background: 'red',
+                                                                color: 'white',
+                                                                border: 'none',
+                                                                borderRadius: '50%',
+                                                                cursor: 'pointer',
+                                                                padding: '2px 5px'
+                                                            }}
+                                                        >
+                                                            &times;
+                                                        </button>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <p>No images available</p>
+                                            )}
+                                        </div>
                                     </td>
 
                                     <td>
@@ -487,7 +501,7 @@ const ProductForm = ({ isEditMode = false }) => {
                                         )}
                                     </td>
                                 </tr>
-                               
+
                                 <tr>
                                     <td>
                                         <div>
@@ -501,7 +515,7 @@ const ProductForm = ({ isEditMode = false }) => {
                                             </button>
                                         </div>
                                     </td>
-                                    
+
                                 </tr>
                             </tbody>
                         </table>

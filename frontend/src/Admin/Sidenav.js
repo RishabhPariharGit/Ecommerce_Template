@@ -101,21 +101,9 @@ const Sidenav = ({ closeSidenav }) => {
             </Link>
           </li>
           <li>
-            <Link to="/admin/Pages" onClick={closeSidenav}>
+            <Link to="/admin/Announcements" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faTags} className="icon" />
-              <span className="title">Pages</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin/Templates" onClick={closeSidenav}>
-              <FontAwesomeIcon icon={faTags} className="icon" />
-              <span className="title">Templates</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin/SectionsLayouts" onClick={closeSidenav}>
-              <FontAwesomeIcon icon={faTags} className="icon" />
-              <span className="title">SectionsLayouts</span>
+              <span className="title">Announcement</span>
             </Link>
           </li>
           <li>

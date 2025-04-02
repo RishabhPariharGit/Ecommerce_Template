@@ -1,11 +1,11 @@
-import api from './Api_Intersecptor/Api_intersecptor';
+import api from './Api_Intersecptor/AxiosAdmin';
 
 export const addProduct = async (Product) => {
     try {
       
       console.log(Product)
       const response = await api.post('/CreateProduct', Product);
-      return response;
+      return response.data ;
     } catch (error) {
       console.error('Error add Category:', error);
       throw error;
@@ -14,7 +14,7 @@ export const addProduct = async (Product) => {
   export const updateProduct = async (slug, ProductData) => {
     try {
       const response = await api.put(`/UpdateProduct/${slug}`, ProductData); 
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Error updating category:', error);
       throw error;
@@ -22,9 +22,9 @@ export const addProduct = async (Product) => {
   };
   export const getProductBySlug = async (Slug) => {
     try {
-  
+  debugger
       const response = await api.get(`/Product/Edit/${Slug}`)
-      return response
+      return response.data;
     } catch (error) {
       console.error('Error fetching subcategories:', error);
       throw error;
@@ -35,7 +35,8 @@ export const addProduct = async (Product) => {
       
      
       const response = await api.get('/GetAllProducts');
-      return response;
+      console.log("return response.data;", response.data);
+      return response.data;
     } catch (error) {
       console.error('Error add Category:', error);
       throw error;
@@ -45,7 +46,7 @@ export const addProduct = async (Product) => {
     try {
       
       const response = await api.delete(`/DeleteProduct/${ProductId}`);
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Error deleting category:', error);
       throw error;
@@ -55,8 +56,8 @@ export const addProduct = async (Product) => {
     try {
       
         const response = await api.get(`/AllProducts/${Slug}`); 
-        console.log(response)
-        return response;
+      
+        return response.data;
     } catch (error) {
         console.error('Error fetching subcategories:', error);
         throw error;

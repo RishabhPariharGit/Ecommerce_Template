@@ -8,6 +8,9 @@ const CreateSubcategory = async (req, res) => {
     const { Name, Description, Slug, label_image, CategoryId } = req.body;
 
     try {
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: 'Unauthorized: User not found' });
+        }
         const existingSubcategory = await SubCategory.findOne({ Slug });
         if (existingSubcategory) {
             return res.status(400).json({ message: 'Slug must be unique', data: null });
@@ -37,7 +40,13 @@ const CreateSubcategory = async (req, res) => {
             label_image: uploadedImageUrl,
             Slug,
             CategoryId,
-            Status: GeneralStatus.ACTIVE,
+            audit: {
+                createdDate: new Date(),
+                createdBy: req.user._id,  
+                updatedDate: new Date(),
+                updatedBy: req.user._id, 
+                status: GeneralStatus.ACTIVE
+            }
         });
 
         const savedSubcategory = await newSubcategory.save();
@@ -109,6 +118,9 @@ const UpdateSubCategory = async (req, res) => {
     const { Name, Description, label_image, CategoryId, Status } = req.body;
 
     try {
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: 'Unauthorized: User not found' });
+        } 
         const existingSubCategory = await SubCategory.findOne({ Slug: slug });
         if (!existingSubCategory) {
             return res.status(404).json({ message: 'Subcategory not found', data: null });
@@ -138,7 +150,9 @@ const UpdateSubCategory = async (req, res) => {
         existingSubCategory.Description = Description;
         existingSubCategory.label_image = uploadedImageUrl;
         existingSubCategory.CategoryId = CategoryId;
-        existingSubCategory.Status = Status;
+        existingSubCategory.audit.status = Status;
+        existingSubCategory.audit.updatedDate = new Date();
+        existingSubCategory.audit.updatedBy = req.user._id;
 
         // Save the updated subcategory
         const updatedSubCategory = await existingSubCategory.save();

@@ -1,4 +1,4 @@
-import api from './Api_Intersecptor/Api_intersecptor';
+import api from './Api_Intersecptor/AxiosAdmin';
 import Cookies from 'js-cookie'; 
 
 export const addSubCategory = async (SubCategoryData) => {
@@ -29,7 +29,7 @@ export const addSubCategory = async (SubCategoryData) => {
         headers.Authorization = `Bearer ${token}`;
       }
       const response = await api.post(`/AllSubCategoriesByCategoryId`, { CategoryId }); 
-      return response
+      return response.data;
     } catch (error) {
       console.error('Error fetching subcategories:', error);
       throw error;

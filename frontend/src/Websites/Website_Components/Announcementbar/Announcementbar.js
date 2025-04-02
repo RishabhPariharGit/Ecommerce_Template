@@ -1,39 +1,66 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './Announcementbar.css';
+import { getAllAnnouncementsforSite } from '../../../Services/AnnouncementService/AnnouncementService_Website';
 
 const Announcementbar = () => {
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
+ 
+  const [Announcements, setAnnouncements] = useState([]);
+  const swiperRef = useRef(null); 
+
+  useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const response = await getAllAnnouncementsforSite();
+        console.log("Announcements:", response);
+        if (response && response.data) {
+          setAnnouncements(response.data);
+        } else {
+          setAnnouncements([]);
+          alert("No announcements available");
+        }
+      } catch (err) {
+        console.error("Error fetching announcements:", err);
+      }
+    };
+
+    fetchAnnouncements();
+  }, []);
+
+
 
   return (
     <div className='Announcement-main-wrapper'>
       <Swiper
         modules={[Navigation, Autoplay]}
         autoplay={{
-          delay: 3000,  
+          delay: 3000,
           disableOnInteraction: false,
         }}
         loop={true}
-        speed={800}  
-        navigation={{
-          prevEl: prevRef.current,
-          nextEl: nextRef.current,
-        }}
+        speed={800}
+        onSwiper={(swiper) => swiperRef.current = swiper} // Store swiper instance in ref
         className='swiper-container'
       >
-        <SwiperSlide>
-          <p>Up to 50% off on selected products</p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <p>Free Shipping on orders above 500/-</p>
-        </SwiperSlide>
+        {Array.isArray(Announcements) && Announcements.length > 0 ? (
+          Announcements.map((ann) => (
+            <SwiperSlide key={ann._id}>
+              <p>{ann.Text}</p>
+            </SwiperSlide>
+          ))
+        ) : (
+          <SwiperSlide>
+            <p>No announcements available</p>
+          </SwiperSlide>
+        )}
       </Swiper>
+
+
     </div>
   );
-}
+};
 
 export default Announcementbar;
