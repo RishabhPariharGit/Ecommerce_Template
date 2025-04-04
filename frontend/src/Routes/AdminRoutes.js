@@ -11,10 +11,11 @@ import ProductList from '../Admin/Product/ProductList';
 import ProductForm from '../Admin/Product/ProductForm';
 import UserList from '../Admin/User/UserList';
 import UserForm from '../Admin/User/UserForm';
-import HomepageSectionForm from '../Admin/HomepageSections/HomepageSectionForm';
-import HomepageSectionList from '../Admin/HomepageSections/HomepageSectionList';
+
 import AnnouncementList from '../Admin/Announcement/AnnouncementList';
 import AnnouncementForm from '../Admin/Announcement/AnnouncementForm';
+import ImageSliderList from '../Admin/ImageSlider/ImageSliderList';
+import ImageSliderForm from '../Admin/ImageSlider/ImageSliderForm';
 
 
 const AdminRoutes = () => {
@@ -112,38 +113,8 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-        <Route
-          path="/HomepageSections"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <HomepageSectionList />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/HomepageSections"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <HomepageSectionList />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/HomepageSection/create"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <HomepageSectionForm isEditMode={false} />
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/HomepageSection/Edit/:sectionId"
-          element={
-            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
-              <HomepageSectionForm isEditMode={true} />
-            </AuthGuard>
-          }
-        />
+       
+       
 
         <Route
           path="Announcements"
@@ -166,6 +137,32 @@ const AdminRoutes = () => {
           element={
             <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
               <AnnouncementForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
+
+
+        <Route
+          path="ImageSliders"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ImageSliderList />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/ImageSlider/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ImageSliderForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/ImageSlider/Edit/:Id"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ImageSliderForm isEditMode={true} />
             </AuthGuard>
           }
         />

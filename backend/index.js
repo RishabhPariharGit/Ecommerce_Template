@@ -1,15 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const connectDB = require('./Configuration/Connection');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const fileUpload = require('express-fileupload');
+
 const UserModel = require('./Models/User');
 const RoleModel = require('./Models/Role');
 const CategoryModel = require('./Models/Category');
 const AdminRouter = require("./Routes/AdminRoute");
 const WebsiteRoute = require("./Routes/WebsiteRoute");
-
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const fileUpload = require('express-fileupload');
 const SubcategoryModel = require('./Models/SubCategory');
 const CartItemModel =require('./Models/CartItems')
 const ProductModel = require('./Models/Product');
@@ -18,7 +18,7 @@ const AddressModel=require('./Models/Address')
 const PagesModel=require('./Models/Pages')
 const HomepageSectionModel =require('./Models/HomepageSections ')
 const AnnouncementModel =require('./Models/Announcement')
-
+const ImageSliderModel =require('./Models/ImageSlider')
 
 const cloudinary = require('cloudinary').v2;  
 require('dotenv').config();
@@ -60,6 +60,7 @@ AddressModel();
 HomepageSectionModel();
 PagesModel();
 AnnouncementModel(); 
+ImageSliderModel();
 
 
 app.use('/admin', AdminRouter);

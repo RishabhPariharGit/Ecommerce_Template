@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getProductBySlug } from '../../../Services/ProductService';
+import { getProductBySlug } from '../../../Services/ProductService/ProductService_admin';
 import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
 import { addProductToCart, getCartItems } from '../../../Services/AddToCartService';
