@@ -1,4 +1,4 @@
-import api from './Api_Intersecptor/AxiosAdmin';
+import api from '../Api_Intersecptor/AxiosAdmin';
 
 export const addProduct = async (Product) => {
     try {
@@ -50,16 +50,5 @@ export const addProduct = async (Product) => {
     } catch (error) {
       console.error('Error deleting category:', error);
       throw error;
-    }
-  };
-  export const getAllProductsBySlug = async (Slug) => {
-    try {
-      
-        const response = await api.get(`/AllProducts/${Slug}`); 
-      
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching subcategories:', error);
-        throw error;
     }
   };

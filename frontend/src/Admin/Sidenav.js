@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faShoppingCart, faTags, faBoxes, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { getAllsections } from '../Services/HomepageSectionService';
+
 
 const Sidenav = ({ closeSidenav }) => {
   const navigate = useNavigate();
@@ -14,26 +14,10 @@ const Sidenav = ({ closeSidenav }) => {
   const [isHovered, setIsHovered] = useState(false); // Track hover state
   const isFetchedRef = useRef(false);
 
-  const fetchSections = async () => {
-    try {
-      setIsLoading(true);
-      const response = await getAllsections(); // Fetch all sections from the service
-      setSections(response.data); // Assuming response.data contains an array of sections
-      setError(null); // Clear any previous error
-    } catch (err) {
-      console.error('Error fetching Sections:', err);
-      setError('Failed to fetch Sections. Please try again later.');
-    } finally {
-      setIsLoading(false); // Stop loading regardless of success or error
-    }
-  };
+  
 
-  useEffect(() => {
-    if (isHovered && !isFetchedRef.current) {
-      fetchSections();
-      isFetchedRef.current = true;
-    }
-  }, [isHovered]);
+ 
+   
 
   const handleLogout = () => {
     Cookies.remove('token');
@@ -107,35 +91,12 @@ const Sidenav = ({ closeSidenav }) => {
             </Link>
           </li>
           <li>
-            <div className="profile-dropdown-containerr">
-              <div
-                onClick={() => setIsHovered((prev) => !prev)} // Toggle dropdown on click
-                className="dropdown-toggle"
-              >
-                <Link to="/admin/HomepageSections" onClick={closeSidenav}>
-                  <FontAwesomeIcon icon={faTags} className="icon" />
-                  <span className="title">HomepageSections</span>
-                </Link>
-              </div>
-              <div className={`dropdown-menuuu ${isHovered ? "open" : ""}`}>
-                {isHovered && !isLoading && sections.length > 0 && (
-                  <div className="dynamic-sections">
-                    {sections.map((section) => (
-                      <Link
-                        key={section.id}
-                        to={`/admin/HomepageSection/Edit/${section._id}`}
-                        className="dropdown-itemmm"
-                      >
-                        <span className="dropdown-itemmm">{section.Title}</span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-                {isLoading && <span className="dropdown-itemmm">Loading...</span>}
-                {error && <span className="dropdown-itemmm">{error}</span>}
-              </div>
-            </div>
+            <Link to="/admin/ImageSliders" onClick={closeSidenav}>
+              <FontAwesomeIcon icon={faTags} className="icon" />
+              <span className="title">ImageSlider</span>
+            </Link>
           </li>
+        
           <li>
             <Link to="/admin/Users" onClick={closeSidenav}>
               <FontAwesomeIcon icon={faUsers} className="icon" />

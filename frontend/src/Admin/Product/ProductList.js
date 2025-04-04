@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getAllProducts,deleteProduct } from '../../Services/ProductService'; 
+import { getAllProducts,deleteProduct } from '../../Services/ProductService/ProductService_admin'; 
 import { useNavigate } from 'react-router-dom'; 
 
 

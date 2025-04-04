@@ -47,14 +47,7 @@ const {AddToWishlist,
   GetWishListItems,
   DeleteWishlistItem}= require("../Controllers/WishListItemController");
 
-const { AddSection,
-  GetAllSections,
-  GetSectionById,
-  UpdateSection,
-  DeleteSection,
-  GetAllCollectionsforWebsite,
-  SectionsAddToSidenav
- } = require("../controllers/HomepageSectionController");
+
 
  const { CreatePage,
    GetAllPages, 
@@ -68,11 +61,16 @@ const { AddSection,
   GetAllAnnouncements,
   GetAnnouncementById,
   UpdateAnnouncement,
-  DeleteAnnouncement,
-  GetAll_Active_Announcements
+  DeleteAnnouncement
  } = require("../controllers/AnnouncementController");
 
 
+ const { CreateImageSlider,
+  GetAllImageSliders,
+  GetImageSliderById,
+  UpdateImageSlider,
+  DeleteImageSlider
+ } = require("../controllers/ImageSliderController");
 
 
 // User Ruote
@@ -118,7 +116,7 @@ router.get("/GetAllProducts", GetAllProducts);
 router.get("/Product/Edit/:Slug", GetProductBySlug);
 router.put("/UpdateProduct/:slug", UpdateProduct);
 router.delete('/DeleteProduct/:id', DeleteProduct);
-router.get("/AllProducts/:slug", GetAllProductsBySlug);
+
 
 
 // Add To cart
@@ -134,14 +132,7 @@ router.post('/AddToWishlist', AddToWishlist);
 router.get("/GetWishListItems", GetWishListItems);
 router.delete('/removeWishListItem/:id', DeleteWishlistItem);
 
-//HomePagesection Route
-router.post("/AddSection", AddSection);
-router.get("/GetAllSections", GetAllSections);
-router.get("/HomePageSection/Edit/:id", GetSectionById);
-router.put("/UpdateSection/:id", UpdateSection);
-router.delete('/DeleteSection/:id', DeleteSection);
-router.get("/GetAllsectionsforwebsite", GetAllCollectionsforWebsite);
-router.put("/SectionsAddToSidenav", SectionsAddToSidenav);
+
 
 
 //Pages Route
@@ -155,9 +146,16 @@ router.delete('/DeletePage/:id', DeletePage);
 //Annoouncement Route
 router.post("/CreateAnnouncement", CreateAnnouncement);
 router.get("/GetAllAnnouncement", GetAllAnnouncements);
-
 router.get("/Announcement/Edit/:Id", GetAnnouncementById);
 router.put("/UpdateAnnouncement/:Id", UpdateAnnouncement);
 router.delete('/DeleteAnnouncement/:id', DeleteAnnouncement);
+
+
+//ImageSlider Route
+router.post("/CreateImageSlider", CreateImageSlider);
+router.get("/GetAllImageSlider", GetAllImageSliders);
+router.get("/ImageSlider/Edit/:Id", GetImageSliderById);
+router.put("/UpdateImageSlider/:Id", UpdateImageSlider);
+router.delete('/DeleteImageSlider/:id', DeleteImageSlider);
 
 module.exports = router;

@@ -4,7 +4,7 @@ import {
     addProduct,
     updateProduct,
     getProductBySlug
-} from '../../Services/ProductService';
+} from '../../Services/ProductService/ProductService_admin';
 import { getAllSubCategoriesByCategoryId, getAllSubCategories } from '../../Services/SubCategoryService';
 import '../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
