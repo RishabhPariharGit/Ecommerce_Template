@@ -2,7 +2,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Announcementbar from '../Announcementbar/Announcementbar';
-import Navbar from '../Navbar/Navbar';
+import Navbar from '../../Website_Components/PrimaryComponents/Navbar/Navbar';
 
 
 const Layout = () => {

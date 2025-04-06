@@ -1,21 +1,21 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import AuthGuard from '../Services/AuthGuard';
-import CategoryForm from '../Admin/Category/CategoryForm';
-import Dashboard from '../Admin/Admin Dashboard/Dashboard';
-import AdminLayout from '../Admin/AdminLayout';
-import CategoryList from '../Admin/Category/CategoryList';
-import SubCategoryList from '../Admin/SubCategory/SubCategoryList';
-import SubCategoryForm from '../Admin/SubCategory/SubCategoryForm';
-import ProductList from '../Admin/Product/ProductList';
-import ProductForm from '../Admin/Product/ProductForm';
-import UserList from '../Admin/User/UserList';
-import UserForm from '../Admin/User/UserForm';
+import AuthGuard from '../Services/AdminServices/Allservices/AuthGuard';
+import Dashboard from '../Admin/Tabs/AdminDashboard/Dashboard';
+import AdminLayout from '../Admin/Layout/AdminLayout';
+import CategoryList from '../Admin/Tabs/CategoryManagement/Category/CategoryList';
+import CategoryForm from '../Admin/Tabs/CategoryManagement/Category/CategoryForm';
+import SubCategoryList from '../Admin/Tabs/CategoryManagement/SubCategory/SubCategoryList';
+import SubCategoryForm from '../Admin/Tabs/CategoryManagement/SubCategory/SubCategoryForm';
+import ProductList from '../Admin/Tabs/ProductManagement/ProductList';
+import ProductForm from '../Admin/Tabs/ProductManagement/ProductForm';
+import UserList from '../Admin/Tabs/UserManagement/UserList';
+import UserForm from '../Admin/Tabs/UserManagement/UserForm';
 
-import AnnouncementList from '../Admin/Announcement/AnnouncementList';
-import AnnouncementForm from '../Admin/Announcement/AnnouncementForm';
-import ImageSliderList from '../Admin/ImageSlider/ImageSliderList';
-import ImageSliderForm from '../Admin/ImageSlider/ImageSliderForm';
+import AnnouncementList from '../Admin/Tabs/CMS/Sections/Announcement/AnnouncementList';
+import AnnouncementForm from '../Admin/Tabs/CMS/Sections/Announcement/AnnouncementForm';
+import ImageSliderList from '../Admin/Tabs/CMS/Sections/ImageSlider/ImageSliderList';
+import ImageSliderForm from '../Admin/Tabs/CMS/Sections/ImageSlider/ImageSliderForm';
 
 
 const AdminRoutes = () => {

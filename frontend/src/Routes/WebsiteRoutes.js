@@ -1,16 +1,16 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import SignUp from '../Shared/Auth/SignUp';
-import LogIn from '../Shared/Auth/Login';
-import Home from '../Websites/Pages/Home/Home';
-import SingleProductpage from '../Websites/Pages/Product/SingleProductpage';
-import Contact from '../Websites/Pages/Contact/Contact';
-import Textoverimage from '../Websites/Website_Components/Textoverimage/Textoverimage';
-import MainProductPage from '../Websites/Pages/MainProductPage/MainProductPage'
-import UserProfile from '../Websites/Pages/UserProfile/UserProfile'
-import CartItems from '../Websites/Pages/CartItems/Cartitems'
-import WishlistItems from '../Websites/Pages/WishlistItems/WishlistItems';
-import Address from '../Websites/Pages/Address/Address'
+import SignUp from '../Websites/Auth/AuthPages/Signup/SignUp';
+import LogIn from '../Websites/Auth/AuthPages/Login/Login';
+import Home from '../Websites/Pages/Home/Homepg';
+import SingleProductpage from '../Websites/Pages/Product/SingleProductPage';
+import Contact from '../Websites/Pages/Contact/Contactpg';
+import Textoverimage from '../Websites/Website_Components/SecondaryComponents/Textoverimage/Textoverimage';
+import MainProductPage from '../Websites/Pages/Collection/Collectionpg'
+import UserProfile from '../Websites/Pages/UserProfile/UserProfilepg'
+import CartItems from '../Websites/Pages/Cart/Cartpg'
+import WishlistItems from '../Websites/Pages/Wishlist/Wishlistpg';
+import Address from '../Websites/Pages/Address/Addresspg'
 import Layout from '../Websites/Website_Components/Layout/Layout';
 import PaymentPage from '../Websites/Pages/PaymentPage/PaymentPage';
 

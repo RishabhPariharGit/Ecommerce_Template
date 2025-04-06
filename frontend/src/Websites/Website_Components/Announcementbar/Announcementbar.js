@@ -4,7 +4,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './Announcementbar.css';
-import { getAllAnnouncementsforSite } from '../../../Services/AnnouncementService/AnnouncementService_Website';
+import { getAllAnnouncementsforSite } from '../../../Services/WebsiteServices/AllServices/AnnouncementService';
 
 const Announcementbar = () => {
  

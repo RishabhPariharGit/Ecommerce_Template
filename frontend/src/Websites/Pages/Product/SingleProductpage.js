@@ -1,19 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getProductBySlug } from '../../../Services/ProductService/ProductService_admin';
+import { getProductBySlug } from '../../../Services/AdminServices/Allservices/ProductService';
 import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
-import { addProductToCart, getCartItems } from '../../../Services/AddToCartService';
-import { addProductToWishlist, getWishListItems } from '../../../Services/WishlistService';
-import './SingleProductpage.css';
-import ImageGallery from "../../Website_Components/ImageGallery/ImageGallery";
-import ProductDetails from "../../Website_Components/ProductDetails/ProductDetails";
+import { addProductToCart, getCartItems }
+ from '../../../Services/WebsiteServices/AllServices/AddToCartService';
+import { addProductToWishlist, getWishListItems } 
+from '../../../Services/WebsiteServices/AllServices/WishlistService';
+import './SingleProductPage.css';
+import ImageGallery from "../../Website_Components/SecondaryComponents/ImageGallery/ImageGallery";
+import ProductDetails from 
+"../../Website_Components/ProductPageComponents/ProductSideDescription/ProductSideDescription";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import ProductUsps from '../../Website_Components/ProductPageComponents/ProductUsps';
 import ImageWithText from '../../Website_Components/ProductPageComponents/ImageWithText';
-import ProductReviews from '../../Website_Components/ProductPageComponents/ProductReviews';
-import Footer from '../../Website_Components/Footer/Footer';
+// import ProductReviews from '../../../Website_Components/SecondaryComponents/';
+import Footer from '../../Website_Components/PrimaryComponents/Footer/Footer';
 
 
 const SingleProductpage = () => {
@@ -202,7 +205,7 @@ const SingleProductpage = () => {
                 </div>
                 <ProductUsps/>
                 <ImageWithText/>
-                <ProductReviews/>
+                {/* <ProductReviews/> */}
                 <Footer/>
             </div>
         </>
