@@ -1,0 +1,28 @@
+.slider-text-clss-cstm {
+    position: absolute !important;
+    top: 0px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 70px !important;
+}
+
+.slider-text-clss-cstm h2{
+    font-weight: 900 !important;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: white; /* Change to any color */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+.swiper-button-next {
+  right: 10px;
+}

@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
 const {
-  RegisterUser,
-  LoginUser,
   GetUserByUsername,
   GetAllUsers,
   UpdateUser,
@@ -74,8 +72,7 @@ const {AddToWishlist,
 
 
 // User Ruote
-router.post("/RegisterUser", RegisterUser);
-router.post("/LoginUser", LoginUser);
+
 
 
 router.use(authMiddleware);

@@ -12,6 +12,15 @@ const {
    GetAll_Active_subCategories
  } = require("../Controllers/SubCategoryController");
 
+const {
+  RegisterUser,
+  LoginUser 
+} = require('../Controllers/UserController');
+
+
+
+router.post("/RegisterUser", RegisterUser);
+router.post("/LoginUser", LoginUser);
 
 router.get("/GetAllActiveAnnouncement", GetAll_Active_Announcements);
 
