@@ -206,5 +206,32 @@ const DeleteSubCategory = async (req, res) => {
 };
 
 
+const GetAll_Active_subCategories = async (req, res) => {
+    try {
+        const subcategories = await SubCategory.find();
+        if (!subcategories || subcategories.length === 0) {
+            return res.status(404).json({ 
+                message: 'No categories found', 
+                data: [] // Ensure data is always present
+            });
+        }
 
-module.exports = { CreateSubcategory,GetAllSubCategories,GetAllSubCategoriesByCategoryId,GetSubCategoryBySlug,UpdateSubCategory,DeleteSubCategory };
+       
+
+        return res.status(200).json({
+            message: "Successfully retrieved categories",
+            data: subcategories
+        });
+
+    } catch (err) {
+        console.error("Error:", err);
+        return res.status(500).json({ 
+            message: "Internal Server Error", 
+            data: [] 
+        });
+    }
+};
+
+
+module.exports = { CreateSubcategory,GetAllSubCategories,GetAllSubCategoriesByCategoryId,
+    GetSubCategoryBySlug,UpdateSubCategory,DeleteSubCategory,GetAll_Active_subCategories };
