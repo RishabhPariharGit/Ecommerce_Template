@@ -8,7 +8,15 @@ const { GetAll_Active_Categories } = require("../controllers/CategoryController"
 const { GetAll_Active_ImageSliders } = require("../controllers/ImageSliderController");
 const { GetAllProductsBySlug } = require("../Controllers/ProductController");
 
+const {
+  RegisterUser,
+  LoginUser 
+} = require('../Controllers/UserController');
 
+
+
+router.post("/RegisterUser", RegisterUser);
+router.post("/LoginUser", LoginUser);
 
 router.get("/GetAllActiveAnnouncement", GetAll_Active_Announcements);
 
