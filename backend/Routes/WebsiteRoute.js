@@ -4,9 +4,15 @@ const router = express.Router();
 
 const { GetAll_Active_Announcements
    } = require("../controllers/AnnouncementController");
+
 const { GetAll_Active_Categories } = require("../controllers/CategoryController");
+
 const { GetAll_Active_ImageSliders } = require("../controllers/ImageSliderController");
-const { GetAllProductsBySlug } = require("../Controllers/ProductController");
+
+const { GetAllProductsBySlug ,
+  GetAll_Active_Product,
+  GetProductBySlug} = require("../Controllers/ProductController");
+
 const {
    GetAllSubCategoriesByCategoryId,
    GetAll_Active_subCategories
@@ -18,21 +24,28 @@ const {
 } = require('../Controllers/UserController');
 
 
-
+//Uer Route
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
 
+//Announcement Route
 router.get("/GetAllActiveAnnouncement", GetAll_Active_Announcements);
 
 
+//Category Route
 router.get("/GetAllActiveCategory", GetAll_Active_Categories);
 
+//ImageSlider Route
 router.get("/GetAllActiveImageSlider", GetAll_Active_ImageSliders);
 
+//Product Route
+router.post("/AllProducts/:slug", GetAllProductsBySlug);
+router.get("/GetAllActiveProduct", GetAll_Active_Product);
+router.get("/Product/Edit/:Slug", GetProductBySlug);
 
-router.get("/AllProducts/:slug", GetAllProductsBySlug);
-
+//SubCategory Route
 router.post("/AllSubCategoriesByCategoryId", GetAllSubCategoriesByCategoryId);
 router.get("/GetAllActiveSubCategory", GetAll_Active_subCategories);
+
 
 module.exports = router;

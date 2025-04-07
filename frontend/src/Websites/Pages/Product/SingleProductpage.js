@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getProductBySlug } from '../../../Services/AdminServices/Allservices/ProductService';
+import { getProductBySlug } from '../../../Services/WebsiteServices/AllServices/ProductService';
 import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
 import { addProductToCart, getCartItems }
@@ -28,13 +28,7 @@ const SingleProductpage = () => {
     const navigate = useNavigate();
     const { slug } = useParams();
 
-    const styles = {
-        // container: { display: "flex", gap: "20px", padding: "20px" },
-        // leftSection: { display: "flex", flexDirection: "row" },
-        // rightSection: { textAlign: "center" },
-        // mainImage: { width: "100%", maxHeight: "400px", objectFit: "contain" },
-        // imageWrapper: { position: "relative" },
-    };
+  
 
     useEffect(() => {
         if (!isFetchedRef.current) {
@@ -42,7 +36,16 @@ const SingleProductpage = () => {
                 try {
                     const response = await getProductBySlug(slug);
                     if (response?.data) {
-                        setProduct(response.data);
+                 
+                        const updatedProduct = {
+                            ...response.data,
+                            Product_image: [
+                                response.data.Product_Main_image,
+                                ...response.data.Product_image,
+                            ]
+                        };
+                    
+                        setProduct(updatedProduct);
                     } else {
                         alert('Product not found!');
                         navigate('/');

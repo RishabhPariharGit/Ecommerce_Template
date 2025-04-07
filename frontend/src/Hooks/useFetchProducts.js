@@ -1,17 +1,34 @@
 import { useState, useEffect, useRef } from 'react';
-import { getAllProductsBySlug } from '../Services/WebsiteServices/AllServices/ProductService';
+import { getAllProductsBySlug, getAllProduct } from '../Services/WebsiteServices/AllServices/ProductService';
 
 const useFetchProducts = (slug) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const isFetchedRef = useRef(false); 
+    const isFetchedRef = useRef(false);
     useEffect(() => {
-        if (!isFetchedRef.current) {
+
         const fetchProducts = async () => {
+            debugger
             setLoading(true);
             try {
-                const response = await getAllProductsBySlug(slug);
+                var response;
+                if (slug == 'all-products' || slug == 'view-all') {
+                    debugger
+                    response = await getAllProduct();
+
+                } else {
+                    let finalSlug = slug;
+
+                    if (slug.startsWith('view-all-')) {
+                        debugger
+                        finalSlug = slug.replace('view-all-', '');
+                    }
+
+                    response = await getAllProductsBySlug(finalSlug);
+                    
+                }
+
                 setProducts(response.data);
                 setError(null); // Clear previous errors
             } catch (err) {
@@ -24,11 +41,10 @@ const useFetchProducts = (slug) => {
 
         fetchProducts();
         isFetchedRef.current = true;
-    }
+
     }, [slug]); // Re-fetch on slug change
 
     return { products, loading, error };
 };
 
 export default useFetchProducts;
- 

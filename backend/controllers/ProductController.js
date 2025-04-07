@@ -347,9 +347,31 @@ const GetAllProductsBySlug = async (req, res) => {
     }
 };
 
+const GetAll_Active_Product = async (req, res) => {
+    try {
+        const Products = await ProductModel.find();
+        if (!Products || Products.length === 0) {
+            return res.status(404).json({ 
+                message: 'No Products found', 
+                data: [] // Ensure data is always present
+            });
+        }
+        return res.status(200).json({
+            message: "Successfully retrieved Products",
+            data: Products
+        });
+
+    } catch (err) {
+        console.error("Error:", err);
+        return res.status(500).json({ 
+            message: "Internal Server Error", 
+            data: [] 
+        });
+    }
+};
 
 
-module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug, DeleteProduct, GetAllProductsBySlug };
+module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug, DeleteProduct, GetAllProductsBySlug,GetAll_Active_Product };
 
 
 
