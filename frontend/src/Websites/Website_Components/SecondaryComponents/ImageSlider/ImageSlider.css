@@ -19,6 +19,19 @@
   transform: translateY(-50%);
 }
 
+.swiper-buttons-wrapper-main-class {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    /* height: 100%; */
+    position: absolute;
+    align-items: flex-end;
+    z-index: 99999;
+    bottom: 50px;
+    right: 50px;
+
+}
+
 .swiper-button-prev {
   left: 10px;
 }
@@ -26,3 +39,4 @@
 .swiper-button-next {
   right: 10px;
 }
+
