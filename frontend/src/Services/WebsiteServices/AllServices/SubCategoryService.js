@@ -6,7 +6,7 @@ import api from '../Api_Intersecptor/AxiosWebsite';
 
 export const getAllSubCategoryforSite = async () => {
     try {
-        debugger
+   
         const response = await api.get('/GetAllActiveSubCategory');
         console.log("response.data",response.data)
         return response.data;
@@ -19,7 +19,7 @@ export const getAllSubCategoryforSite = async () => {
 
 export const getAllSubCategoriesByCategoryId = async (CategoryId) => {
     try {
-        debugger
+       
       const response = await api.post(`/AllSubCategoriesByCategoryId`, { CategoryId }); 
       return response.data;
     } catch (error) {

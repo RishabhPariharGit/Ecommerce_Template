@@ -45,20 +45,30 @@ const Navbar = () => {
   }, []);
 
   // Fetch subcategories when hovering on a category
-  const handleCategoryHover = async (categoryId) => {
-    debugger
+  const handleCategoryHover = async (categoryId,categorySlug) => {
+  
     try{
       if (categoryId === 'all') {
         const res = await getAllSubCategoryforSite();
         if (res && res.data) {
-          setSubCategoriesMap({ all: res.data }); // ✅ FIXED HERE
+          const allsubCategories = [
+            { _id: 'all', Name: 'View All', Slug: 'view-all' },
+            ...res.data
+          ];
+          setSubCategoriesMap({ all: allsubCategories }); // ✅ FIXED HERE
         } else {
           setSubCategoriesMap({ all: [] });
         }
       } else {
+        
         const res = await getAllSubCategoriesByCategoryId(categoryId);
         if (res && res.data) {
-          setSubCategoriesMap({ [categoryId]: res.data }); // ✅ Also update this for consistency
+         
+          const allsubCategories = [
+            { _id: 'all', Name: 'View All', Slug: `view-all-${categorySlug}` },
+            ...res.data
+          ];
+          setSubCategoriesMap({ [categoryId]: allsubCategories }); // ✅ Also update this for consistency
         } else {
           setSubCategoriesMap({ [categoryId]: [] });
         }
@@ -173,7 +183,7 @@ const Navbar = () => {
                       <li
                         key={category._id}
                         className="menu-item-has-children"
-                        onMouseEnter={() => handleCategoryHover(category._id)}
+                        onMouseEnter={() => handleCategoryHover(category._id, category.Slug)}
                       >
                         <Link to={`/collections/${category.Slug}`}>{category.Name}</Link>
 
