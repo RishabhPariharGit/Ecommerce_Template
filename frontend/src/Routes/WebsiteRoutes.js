@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import SignUp from '../Websites/Auth/AuthPages/Signup/SignUp';
 import LogIn from '../Websites/Auth/AuthPages/Login/Login';
 import Home from '../Websites/Pages/Home/Homepg';
-import SingleProductpage from '../Websites/Pages/Product/SingleProductPage';
+import SingleProductpage from '../Websites/Pages/Product/SingleProductpage';
 import Contact from '../Websites/Pages/Contact/Contactpg';
 import Textoverimage from '../Websites/Website_Components/SecondaryComponents/Textoverimage/Textoverimage';
 import MainProductPage from '../Websites/Pages/Collection/Collectionpg'
