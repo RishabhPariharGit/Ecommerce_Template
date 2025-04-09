@@ -2,36 +2,49 @@ const { ProductStatus, AllSize } = require('../Enum/Enum');
 const ProductModel = require('../Models/Product');
 const SubcategoryModel = require('../Models/SubCategory')
 const CategoryModel = require('../Models/Category')
-const CartItemModel = require('../Models/CartItems'); 
+const CartItemModel = require('../Models/CartItems');
 const WishlistItemModel = require('../Models/Wishlist ');
 const fs = require('fs');
 
-const validateSizes = (sizeType, sizes) => {
-    const validSizes = AllSize[sizeType];
+const validateSizes = (sizeType, gender, sizes) => {
+    const validSizes = AllSize[sizeType]?.[gender];
+
     if (sizes && Array.isArray(sizes)) {
         switch (sizeType) {
             case 'Clothing':
-                return sizes.every(size => Object.values(validSizes).includes(size));
+                return sizes.every(size => validSizes.includes(size));
             case 'Shoes':
-                return sizes.every(size => Object.values(validSizes).includes(size));
+                return sizes.every(size => validSizes.includes(size));
+            case 'Pants': {
+                const waistSizes = AllSize.Pants?.[gender]?.Waist || [];
+                const lengthSizes = AllSize.Pants?.[gender]?.Length || [];
 
-            case 'Pants':
-                return sizes.every(size => validSizes.Waist.includes(size));
+                const waistSelections = sizes.filter(size => size.startsWith('W-') && waistSizes.includes(size.replace('W-', '')));
+                const lengthSelections = sizes.filter(size => size.startsWith('L-') && lengthSizes.includes(size.replace('L-', '')));
+
+                // Combine both valid waist and length sizes
+                const validSizes = [...waistSelections, ...lengthSelections];
+
+                return validSizes;
+            }
+
+
+
             case 'Dresses':
-                return sizes.every(size => validSizes.Standard.includes(size) || validSizes.Numeric.includes(size));
+                return sizes.every(size => validSizes?.Standard?.includes(size) || validSizes?.Numeric?.includes(size));
             case 'Accessories':
-                return sizes.every(size => validSizes.Belts.includes(size) || validSizes.Hats.includes(size));
+                return sizes.every(size => validSizes?.Belts?.includes(size) || validSizes?.Hats?.includes(size));
             case 'Rings':
                 return sizes.every(size => validSizes.includes(size));
             case 'Gloves':
                 return sizes.every(size => validSizes.includes(size));
             case 'Bras':
-                return sizes.every(size => validSizes.Band.includes(size) || validSizes.Cup.includes(size));
+                return sizes.every(size => validSizes?.Band?.includes(size) || validSizes?.Cup?.includes(size));
             case 'KidsClothing':
                 return sizes.every(size =>
-                    validSizes.Baby.includes(size) ||
-                    validSizes.Toddler.includes(size) ||
-                    validSizes.Kids.includes(size)
+                    validSizes?.Baby?.includes(size) ||
+                    validSizes?.Toddler?.includes(size) ||
+                    validSizes?.Kids?.includes(size)
                 );
             default:
                 return false; // Invalid SizeType
@@ -40,6 +53,8 @@ const validateSizes = (sizeType, sizes) => {
         return sizes === undefined;
     }
 };
+
+
 
 const CreateProduct = async (req, res) => {
     const {
@@ -56,53 +71,64 @@ const CreateProduct = async (req, res) => {
         Brand,
         Tags,
         SizeType,
-        Sizes
+        Sizes,
+        Gender // Added Gender
     } = req.body;
 
     try {
         if (!req.user || !req.user._id) {
             return res.status(401).json({ message: 'Unauthorized: User not found' });
         }
+
         const existingProduct = await ProductModel.findOne({ Slug });
         if (existingProduct) {
             return res.status(400).json({ message: 'Slug must be unique' });
         }
 
+        // Validate SizeType and Gender
         if (!SizeType || !AllSize[SizeType]) {
             return res.status(400).json({ message: `Invalid SizeType: ${SizeType}` });
         }
 
-        if (!validateSizes(SizeType, Sizes)) {
-            return res.status(400).json({ message: `Invalid Sizes for SizeType: ${SizeType}` });
+        if (!Gender || !['Men', 'Women', 'Kids'].includes(Gender)) {
+            return res.status(400).json({ message: `Invalid Gender: ${Gender}` });
         }
+
+        // Validate Sizes based on SizeType and Gender
+        if (!validateSizes(SizeType, Gender, Sizes)) {
+            return res.status(400).json({ message: `Invalid Sizes for SizeType: ${SizeType} and Gender: ${Gender}` });
+        }
+
+        // Validate Product images
         if (!Array.isArray(Product_image) || Product_image.length === 0) {
             return res.status(400).json({ message: 'Product_image must be a non-empty array of images.' });
         }
+
         const cloudinary = req.app.locals.cloudinary;
         const imageUploadPromises = Product_image.map((image) => {
             return cloudinary.uploader.upload(image, { folder: 'products' });
         });
         const uploadResults = await Promise.all(imageUploadPromises);
         const imageUrls = uploadResults.map(result => result.secure_url);
-        //upload single main image
 
+        // Upload the main product image
         let uploadedImageUrl = '';
         if (Product_Main_image) {
             const filePath = Product_Main_image;
             try {
                 const result = await cloudinary.uploader.upload(filePath, {
                     folder: 'products'
-                })
+                });
                 uploadedImageUrl = result.secure_url;
-
             } catch (error) {
-                console.log(error)
+                console.log(error);
                 return res.status(500).json({ message: 'Error uploading image to Cloudinary', error });
             }
         } else {
-            return res.status(400).json({ message: 'Image file is required' });
+            return res.status(400).json({ message: 'Main image file is required' });
         }
 
+        // Create new product instance
         const newProduct = new ProductModel({
             Name,
             Description,
@@ -118,17 +144,20 @@ const CreateProduct = async (req, res) => {
             Tags,
             SizeType,
             Sizes: Sizes || [],
+            Gender,  // Store Gender in the product
             audit: {
                 createdDate: new Date(),
-                createdBy: req.user._id,  
+                createdBy: req.user._id,
                 updatedDate: new Date(),
-                updatedBy: req.user._id, 
+                updatedBy: req.user._id,
                 status: ProductStatus.ACTIVE
-            },
+            }
         });
 
+        // Save product to database
         const savedProduct = await newProduct.save();
 
+        // Respond with success message
         res.status(201).json({
             message: 'Product created successfully!',
             data: savedProduct,
@@ -139,18 +168,19 @@ const CreateProduct = async (req, res) => {
     }
 };
 
+
 const UpdateProduct = async (req, res) => {
     const { slug } = req.params;
-    const { Name, Description, Price, Quantity, CategoryId, SubcategoryId, Product_image,Product_Main_image, SKU, Brand, Tags, SizeType, Sizes ,Status} = req.body;
+    const { Name, Description, Price, Quantity, CategoryId, SubcategoryId, Product_image, Product_Main_image, SKU, Brand, Gender, Tags, SizeType, Sizes, Status } = req.body;
 
     try {
         if (!req.user || !req.user._id) {
             return res.status(401).json({ message: 'Unauthorized: User not found' });
-        } 
+        }
         // Find existing product
         const existingProduct = await ProductModel.findOne({ Slug: slug });
         if (!existingProduct) {
-            return res.status(404).json({ message: 'Product not found', data:null });
+            return res.status(404).json({ message: 'Product not found', data: null });
         }
 
         const cloudinary = req.app.locals.cloudinary;
@@ -200,7 +230,7 @@ const UpdateProduct = async (req, res) => {
                 });
                 uploadedImageUrl = result.secure_url;
             } catch (err) {
-                
+
                 return res.status(500).json({ message: 'Error uploading image to Cloudinary', data: null, error: err });
             }
         }
@@ -212,17 +242,32 @@ const UpdateProduct = async (req, res) => {
         existingProduct.Quantity = Quantity;
         existingProduct.CategoryId = CategoryId;
         existingProduct.SubcategoryId = SubcategoryId;
-        existingProduct.Product_image = updatedImageUrls; 
-        existingProduct.Product_Main_image = uploadedImageUrl; 
+        existingProduct.Product_image = updatedImageUrls;
+        existingProduct.Product_Main_image = uploadedImageUrl;
         existingProduct.SKU = SKU;
         existingProduct.Brand = Brand;
         existingProduct.Tags = Tags;
-        existingProduct.SizeType = SizeType;
-        existingProduct.Sizes = Sizes;
+
         existingProduct.audit.status = Status;
         existingProduct.audit.updatedDate = new Date();
         existingProduct.audit.updatedBy = req.user._id;
 
+        // Handle gender and size type
+        if (Gender) {
+            existingProduct.Gender = Gender; // Ensure Gender is being saved if it's passed
+        }
+        if (SizeType) {
+            existingProduct.SizeType = SizeType; // Update SizeType if provided
+        }
+        const validSizes = validateSizes(SizeType, Gender, Sizes);
+
+        if (!validSizes || validSizes.length === 0) {
+            return res.status(400).json({
+                message: `Invalid Sizes for SizeType: ${SizeType} and Gender: ${Gender}`
+            });
+        }
+
+        existingProduct.Sizes = validSizes;
 
         // Step 4: Save updated product
         const updatedProduct = await existingProduct.save();
@@ -272,7 +317,7 @@ const GetProductBySlug = async (req, res) => {
 
 const DeleteProduct = async (req, res) => {
     const { id } = req.params;
-    const session = await ProductModel.startSession(); 
+    const session = await ProductModel.startSession();
     session.startTransaction();
 
     try {
@@ -289,7 +334,7 @@ const DeleteProduct = async (req, res) => {
         // Delete images from Cloudinary if they exist
         if (Array.isArray(product.Product_image) && product.Product_image.length > 0) {
             const deletePromises = product.Product_image.map((imageUrl) => {
-                const public_id = imageUrl.split('/').pop().split('.')[0]; 
+                const public_id = imageUrl.split('/').pop().split('.')[0];
                 return cloudinary.uploader.destroy(`products/${public_id}`);
             });
             await Promise.all(deletePromises);
@@ -351,8 +396,8 @@ const GetAll_Active_Product = async (req, res) => {
     try {
         const Products = await ProductModel.find();
         if (!Products || Products.length === 0) {
-            return res.status(404).json({ 
-                message: 'No Products found', 
+            return res.status(404).json({
+                message: 'No Products found',
                 data: [] // Ensure data is always present
             });
         }
@@ -363,15 +408,15 @@ const GetAll_Active_Product = async (req, res) => {
 
     } catch (err) {
         console.error("Error:", err);
-        return res.status(500).json({ 
-            message: "Internal Server Error", 
-            data: [] 
+        return res.status(500).json({
+            message: "Internal Server Error",
+            data: []
         });
     }
 };
 
 
-module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug, DeleteProduct, GetAllProductsBySlug,GetAll_Active_Product };
+module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug, DeleteProduct, GetAllProductsBySlug, GetAll_Active_Product };
 
 
 
