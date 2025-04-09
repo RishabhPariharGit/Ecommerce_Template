@@ -1,0 +1,50 @@
+
+  
+  .flex.justify-center.mt-4.gap-4.main-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 25px;
+    gap: 10px;
+  }
+  
+  img.object-contain.max-h-full.max-w-full.main-img-mn{
+    width: 100%;
+  }
+  
+  .main-slider-mn-wrpr {
+    margin: 0px 30px;
+  }
+
+  .swiper-slide.swiper-slide-active.Main-swiper-mn-wrapper-clctn {
+    display: none;
+}
+  
+  button.px-4.py-2.bg-gray-200.rounded.hover\:bg-gray-300.transition.previous-btn{
+    background-color: #fffffff0;
+    color: rgb(0, 0, 0);
+    padding: 5px 10px;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+  
+  button.px-4.py-2.bg-gray-200.rounded.hover\:bg-gray-300.transition.next-btn.swiper-button-disabled {
+    background-color: #fffffff0;
+    color: rgb(168, 168, 168);
+    padding: 5px 10px;
+    border: 1px solid rgb(181, 181, 181);
+  
+  }
+  
+  button.px-4.py-2.bg-gray-200.rounded.hover\:bg-gray-300.transition.next-btn{
+    background-color: #fffffff0;
+    color: rgb(0, 0, 0);
+    padding: 5px 10px;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+  
+  .arrowbackcstmclss, .arrowforwardcstmclss {
+    width: 12px !important;
+  }
+  
+  
