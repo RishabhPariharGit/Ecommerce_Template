@@ -2,7 +2,7 @@ import api from '../Api_Intersecptor/AxiosAdmin';
 
 export const addProduct = async (Product) => {
     try {
-      
+      debugger
       console.log(Product)
       const response = await api.post('/CreateProduct', Product);
       return response.data ;
