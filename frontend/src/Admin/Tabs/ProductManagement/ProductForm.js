@@ -29,6 +29,7 @@ const ProductForm = ({ isEditMode = false }) => {
         Brand: '',
         Tags: '',
         SizeType: '',
+        Gender: '',
         Sizes: []
     });
     const [categories, setCategories] = useState([]);
@@ -47,11 +48,11 @@ const ProductForm = ({ isEditMode = false }) => {
             const fetchCategories = async () => {
                 try {
                     const response = await getAllCategories();
-                    if(response){
+                    if (response) {
                         setCategories(response.data);
 
-                    }else{
-                        setCategories([]); 
+                    } else {
+                        setCategories([]);
                     }
                 } catch (err) {
                     console.error('Error fetching categories:', err);
@@ -60,10 +61,10 @@ const ProductForm = ({ isEditMode = false }) => {
             const fetchSubCategories = async () => {
                 try {
                     const response = await getAllSubCategories();
-                    if(response){
+                    if (response) {
                         setSubcategories(response.data);
                     }
-                    else{
+                    else {
                         setSubcategories([]);
                     }
                 } catch (err) {
@@ -91,7 +92,8 @@ const ProductForm = ({ isEditMode = false }) => {
                             Product_image: product.Product_image || [],
                             Product_Main_image: product.Product_Main_image,
                             SizeType: product.SizeType || '',
-                            Sizes: product.Sizes || [],// Assuming product.Sizes is an array
+                            Sizes: product.Sizes || [],
+                            Gender: product.Gender,
                             Status: product.audit.status
 
                         });
@@ -113,19 +115,7 @@ const ProductForm = ({ isEditMode = false }) => {
         }
     }, [isEditMode, slug]);
 
-    const handleSizeTypeChange = (e) => {
-        setFormData({ ...formData, SizeType: e.target.value, Sizes: [] });
-    };
 
-    const handleSizeChange = (size) => {
-        setFormData((prevData) => {
-            const newSizes = prevData.Sizes.includes(size)
-                ? prevData.Sizes.filter((s) => s !== size)
-                : [...prevData.Sizes, size];
-
-            return { ...prevData, Sizes: newSizes };
-        });
-    };
     const handleRemoveImage = (index, event) => {
         event.preventDefault();
         setPreviewSources((prevSources) => prevSources.filter((_, i) => i !== index));
@@ -135,10 +125,6 @@ const ProductForm = ({ isEditMode = false }) => {
         }));
     };
 
-
-    const clothingSizes = Object.values(AllSize.Clothing);
-    const ShoeSizes = Object.values(AllSize.Shoes);
-    const sizeTypes = Object.keys(AllSize);
 
     const handleFileInputChange = (e) => {
         const files = Array.from(e.target.files); // Convert file list to an array
@@ -208,19 +194,19 @@ const ProductForm = ({ isEditMode = false }) => {
     };
 
     const handleSubmitFile = async (e) => {
-
+        debugger
         e.preventDefault();
 
         try {
-            let response ;
+            let response;
             if (isEditMode) {
-                response= await updateProduct(slug, formData);
+                response = await updateProduct(slug, formData);
             } else {
-                response= await addProduct(formData);  
+                response = await addProduct(formData);
             }
-            if(response){
+            if (response) {
                 alert(response.message);
-               }
+            }
             navigate('/admin/Products');
         } catch (err) {
             console.error('Error submitting form:', err);
@@ -230,6 +216,39 @@ const ProductForm = ({ isEditMode = false }) => {
     };
 
     const handleCancel = () => navigate('/admin/Products');
+
+
+    const handleSizeChange = (type, size) => {
+        const fullSize = `${type}-${size}`; // e.g., 'W-30' or 'L-30'
+
+        setFormData((prevData) => {
+            const newSizes = prevData.Sizes.includes(fullSize)
+                ? prevData.Sizes.filter((s) => s !== fullSize)
+                : [...prevData.Sizes, fullSize];
+
+            return { ...prevData, Sizes: newSizes };
+        });
+    };
+
+
+
+    const genderOptions = ['Men', 'Women', 'Kids'];
+
+    // Filter available size types based on the selected gender and size type
+    const availableSizeTypes = Object.keys(AllSize).filter((type) =>
+        formData.Gender && AllSize[type][formData.Gender]
+    );
+
+    // Get available sizes based on selected size type and gender
+    const availableSizes = formData.SizeType && formData.Gender
+        ? AllSize[formData.SizeType][formData.Gender] || []
+        : [];
+
+    // For Pants, split Waist and Length if necessary
+    const pantsSizes = formData.SizeType === 'Pants' && formData.Gender ? AllSize.Pants[formData.Gender] : {};
+    const availableWaistSizes = pantsSizes.Waist || [];
+    const availableLengthSizes = pantsSizes.Length || [];
+
 
     return (
         <div>
@@ -366,51 +385,88 @@ const ProductForm = ({ isEditMode = false }) => {
                                         </select>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <div className="formlabel">Gender</div>
+                                        <select name="Gender" value={formData.Gender} onChange={handleInputChange}>
+                                            <option value="">Select Gender</option>
+                                            {genderOptions.map((gender) => (
+                                                <option key={gender} value={gender}>{gender}</option>
+                                            ))}
+                                        </select>
+                                    </td>
+                                </tr>
                                 {/* Size Type and Sizes */}
                                 <tr>
                                     <td>
                                         <div className="formlabel">Size Type</div>
-                                        <select
-                                            name="SizeType"
-                                            value={formData.SizeType}
-                                            onChange={handleSizeTypeChange}
-                                        >
+                                        <select name="SizeType" value={formData.SizeType} onChange={handleInputChange} disabled={!formData.Gender}>
                                             <option value="">Select Size Type</option>
-                                            {sizeTypes.map((type) => (
-                                                <option key={type} value={type}>
-                                                    {type}
-                                                </option>
+                                            {availableSizeTypes.map((type) => (
+                                                <option key={type} value={type}>{type}</option>
                                             ))}
                                         </select>
                                     </td>
                                     <td>
                                         <div className="formlabel">Sizes</div>
-                                        {formData.SizeType === 'Clothing' &&
-                                            clothingSizes.map((size) => (
-                                                <label key={size}>
-                                                    <input
-                                                        type="checkbox"
-                                                        value={size}
-                                                        checked={formData.Sizes.includes(size)}
-                                                        onChange={() => handleSizeChange(size)}
-                                                    />
-                                                    {size}
-                                                </label>
-                                            ))}
-                                        {formData.SizeType === 'Shoes' &&
-                                            ShoeSizes.map((size) => (
-                                                <label key={size}>
-                                                    <input
-                                                        type="checkbox"
-                                                        value={size}
-                                                        checked={formData.Sizes.includes(size)}
-                                                        onChange={() => handleSizeChange(size)}
-                                                    />
-                                                    {size}
-                                                </label>
-                                            ))}
+                                        {formData.SizeType === 'Pants' && formData.Gender ? (
+                                            <div>
+                                                <div><strong>Waist Sizes</strong></div>
+                                                {availableWaistSizes.length > 0 ? (
+                                                    availableWaistSizes.map((size) => (
+                                                        <label key={size}>
+                                                            <input
+                                                                type="checkbox"
+                                                                value={`W-${size}`}
+                                                                checked={formData.Sizes.includes(`W-${size}`)}
+                                                                onChange={() => handleSizeChange('W', size)} // ✅ add 'W'
+                                                            />
+
+                                                            {size}
+                                                        </label>
+                                                    ))
+                                                ) : (
+                                                    <div style={{ color: '#888' }}>Select gender and size type to see waist sizes</div>
+                                                )}
+
+                                                <div><strong>Length Sizes</strong></div>
+                                                {availableLengthSizes.length > 0 ? (
+                                                    availableLengthSizes.map((size) => (
+                                                        <label key={size}>
+                                                            <input
+                                                                type="checkbox"
+                                                                value={`L-${size}`}
+                                                                checked={formData.Sizes.includes(`L-${size}`)}
+                                                                onChange={() => handleSizeChange('L', size)} // ✅ add 'L'
+                                                            />
+
+                                                            {size}
+                                                        </label>
+                                                    ))
+                                                ) : (
+                                                    <div style={{ color: '#888' }}>Select gender and size type to see length sizes</div>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            availableSizes.length > 0 ? (
+                                                availableSizes.map((size) => (
+                                                    <label key={size}>
+                                                        <input
+                                                            type="checkbox"
+                                                            value={size}
+                                                            checked={formData.Sizes.includes(size)}
+                                                            onChange={() => handleSizeChange(size)}
+                                                        />
+                                                        {size}
+                                                    </label>
+                                                ))
+                                            ) : (
+                                                <div style={{ color: '#888' }}>Select gender and size type to see sizes</div>
+                                            )
+                                        )}
                                     </td>
                                 </tr>
+
                                 {/* Tags and Product Image */}
                                 <tr>
                                     <td>
