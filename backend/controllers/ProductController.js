@@ -392,9 +392,24 @@ const GetAllProductsBySlug = async (req, res) => {
     }
 };
 
-const GetAll_Active_Product = async (req, res) => {
+const GetAllProductsByGender = async (req, res) => {
     try {
-        const Products = await ProductModel.find();
+        const { Gender } = req.params;
+
+     
+  
+            const products = await ProductModel.find({ Gender: Gender,"audit.status": "Active" });
+            return res.status(200).json({ message: "Products retrieved successfully", data: products });
+
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        return res.status(500).json({ message: "Server error", data: null, error: error.message });
+    }
+};
+
+const GetAll_Active_Product = async (req, res) =>  {
+    try {
+        const Products = await ProductModel.find({"audit.status": "Active"});
         if (!Products || Products.length === 0) {
             return res.status(404).json({
                 message: 'No Products found',
@@ -418,7 +433,10 @@ const GetAll_Active_Product = async (req, res) => {
 
 
 
-module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug, DeleteProduct, GetAllProductsBySlug, GetAll_Active_Product };
+
+
+module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug,
+     DeleteProduct, GetAllProductsBySlug, GetAll_Active_Product ,GetAllProductsByGender};
 
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getAllProductsBySlug, getAllProduct } from '../Services/WebsiteServices/AllServices/ProductService';
+import { getAllProductsBySlug, getAllProduct,getAllProductsByGender } from '../Services/WebsiteServices/AllServices/ProductService';
 
 const useFetchProducts = (slug) => {
     const [products, setProducts] = useState([]);
@@ -17,6 +17,10 @@ const useFetchProducts = (slug) => {
                     debugger
                     response = await getAllProduct();
 
+                }
+                else if (slug == "Men" || slug == "Women" || slug == "Kids") 
+                {
+                    response = await getAllProductsByGender(slug);
                 } else {
                     let finalSlug = slug;
 
@@ -26,7 +30,7 @@ const useFetchProducts = (slug) => {
                     }
 
                     response = await getAllProductsBySlug(finalSlug);
-                    
+
                 }
 
                 setProducts(response.data);
