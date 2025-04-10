@@ -24,6 +24,10 @@ const {
   LoginUser 
 } = require('../Controllers/UserController');
 
+const {AddToCart,
+  GetCartItems,
+  DeleteCartItem,
+  MergeCartItems}= require("../Controllers/CartItemController")
 
 //Uer Route
 router.post("/RegisterUser", RegisterUser);
@@ -49,5 +53,11 @@ router.post("/AllProducts_By_Gender/:Gender", GetAllProductsByGender);
 router.post("/AllSubCategoriesByCategoryId", GetAllSubCategoriesByCategoryId);
 router.get("/GetAllActiveSubCategory", GetAll_Active_subCategories);
 
+
+// Add To cart
+router.post('/AddToCart', AddToCart);
+router.get("/GetCartItems", GetCartItems);
+router.delete('/removeCartItem/:id', DeleteCartItem);
+router.post('/mergeCartItems', MergeCartItems);
 
 module.exports = router;

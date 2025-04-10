@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 // Add Product to Cart
 export const addProductToCart = async (ProductData) => {
     try {
+        debugger
         const guid = Cookies.get('guid'); // Retrieve GUID if available
         const token = Cookies.get('token'); // Retrieve Token if available
 
@@ -34,9 +35,10 @@ export const addProductToCart = async (ProductData) => {
 };
 
 // Get Cart Items
-export const getCartItems = async () => {
+export const getCartItems = async (headers) => {
     try {
-        const response = await api.get('/GetCartItems', { withCredentials: true });
+        debugger
+        const response = await api.get('/GetCartItems', { headers });
         return response.data;
     } catch (error) {
         console.error('Error fetching cart items:', error);
@@ -47,6 +49,7 @@ export const getCartItems = async () => {
 // Remove Cart Item
 export const removeCartItem = async (ItemId) => {
     try {
+        debugger
         const response = await api.delete(`/removeCartItem/${ItemId}`, { withCredentials: true });
         return response.data;
     } catch (error) {

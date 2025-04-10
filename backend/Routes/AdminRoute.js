@@ -37,10 +37,7 @@ const {
   GetAllProductsBySlug
 } = require("../Controllers/ProductController");
 
-const {AddToCart,
-  GetCartItems,
-  DeleteCartItem,
-  MergeCartItems}= require("../Controllers/CartItemController")
+
 const {AddToWishlist,
   GetWishListItems,
   DeleteWishlistItem}= require("../Controllers/WishListItemController");
@@ -116,11 +113,7 @@ router.delete('/DeleteProduct/:id', DeleteProduct);
 
 
 
-// Add To cart
-router.post('/AddToCart', AddToCart);
-router.get("/GetCartItems", GetCartItems);
-router.delete('/removeCartItem/:id', DeleteCartItem);
-router.post('/mergeCartItems', MergeCartItems);
+
 
 
 

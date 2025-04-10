@@ -52,6 +52,7 @@ const MainProductPage = () => {
     }, []);
 
     const handleAddToCart = async (product) => {
+        debugger
         let token = Cookies.get('token');
         let guid = Cookies.get('guid');
 
@@ -69,12 +70,13 @@ const MainProductPage = () => {
             if (guid) {
                 payload.GUID = guid;
             }
-
+           
             const response = await addProductToCart(payload);
-
-            if (response.status === 201) {
-                alert('Product added to cart successfully!');
+           
+            if (response) {
+             
                 setCartProductIds(prev => new Set([...prev, product._id]));
+                alert(response.message);
             } else {
                 alert('Failed to add product to cart.');
             }
