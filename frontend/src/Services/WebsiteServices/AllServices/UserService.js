@@ -14,7 +14,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (credentials) => {
   try {
-    debugger
+    
     const response = await api.post('/LoginUser', credentials, {
       withCredentials: true // Include cookies in the request
     });

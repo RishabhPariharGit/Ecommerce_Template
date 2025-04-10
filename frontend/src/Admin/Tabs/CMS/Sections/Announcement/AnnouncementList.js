@@ -10,7 +10,7 @@ const AnnouncementList = () => {
         if (!isFetchedRef.current) {
             const fetchAnnouncements = async () => {
                 try {
-                    debugger
+                    
                     const response = await getAllAnnouncements();
                     if (response && response.data) {
                         setAnnouncements(response.data);

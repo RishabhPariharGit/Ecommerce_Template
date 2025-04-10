@@ -2,7 +2,7 @@ import api from '../Api_Intersecptor/AxiosAdmin';
 
 export const addProduct = async (Product) => {
     try {
-      debugger
+      
       console.log(Product)
       const response = await api.post('/CreateProduct', Product);
       return response.data ;
@@ -22,7 +22,7 @@ export const addProduct = async (Product) => {
   };
   export const getProductBySlug = async (Slug) => {
     try {
-  debugger
+  
       const response = await api.get(`/Product/Edit/${Slug}`)
       return response.data;
     } catch (error) {

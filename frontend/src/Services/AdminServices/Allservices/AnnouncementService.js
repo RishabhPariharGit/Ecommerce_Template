@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 // Add Announcement
 export const addAnnouncement = async (AnnouncementData) => {
     try {
-        debugger
+        
           const token = Cookies.get('token');
       
           const headers = {
@@ -42,7 +42,7 @@ export const getAllAnnouncements = async () => {
 // Get Announcement by Slug
 export const getAnnouncementById = async (Id) => {
     try {
-        debugger
+        
         const token = Cookies.get('token');
         const headers = {
           withCredentials: true,

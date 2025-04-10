@@ -5,7 +5,7 @@ import api from '../Api_Intersecptor/AxiosWebsite';
 
 export const getAllProductsBySlug = async (Slug) => {
     try {
-      debugger
+      
         const response = await api.post(`/AllProducts/${Slug}`); 
       console.log("proiductdata",response.data)
         return response.data;
@@ -17,7 +17,7 @@ export const getAllProductsBySlug = async (Slug) => {
 
   export const getAllProductsByGender = async (Gender) => {
     try {
-      debugger
+      
         const response = await api.post(`/AllProducts_By_Gender/${Gender}`); 
       
         return response.data;
@@ -40,7 +40,7 @@ export const getAllProductsBySlug = async (Slug) => {
 
 export const getProductBySlug = async (Slug) => {
     try {
-  debugger
+  
       const response = await api.get(`/Product/Edit/${Slug}`)
       return response.data;
     } catch (error) {

@@ -42,9 +42,9 @@ const ProductForm = ({ isEditMode = false }) => {
 
 
     useEffect(() => {
-        debugger
+        
         if (!isFetchedRef.current) {
-            debugger
+            
             const fetchCategories = async () => {
                 try {
                     const response = await getAllCategories();
@@ -73,7 +73,7 @@ const ProductForm = ({ isEditMode = false }) => {
             };
             const loadProduct = async () => {
                 try {
-                    debugger
+                    
                     const response = await getProductBySlug(slug);
                     const product = response.data;
 
@@ -194,7 +194,7 @@ const ProductForm = ({ isEditMode = false }) => {
     };
 
     const handleSubmitFile = async (e) => {
-        debugger
+        
         e.preventDefault();
 
         try {
