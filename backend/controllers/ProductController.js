@@ -407,7 +407,7 @@ const GetAllProductsByGender = async (req, res) => {
     }
 };
 
-const GetAll_Active_Product = async (req, res) => {
+const GetAll_Active_Product = async (req, res) =>  {
     try {
         const Products = await ProductModel.find({"audit.status": "Active"});
         if (!Products || Products.length === 0) {
