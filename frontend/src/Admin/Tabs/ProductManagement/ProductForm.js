@@ -230,7 +230,15 @@ const ProductForm = ({ isEditMode = false }) => {
         });
     };
 
+    const handleSize = ( size) => {
+        setFormData((prevData) => {
+            const newSizes = prevData.Sizes.includes(size)
+                ? prevData.Sizes.filter((s) => s !== size)
+                : [...prevData.Sizes, size];
 
+            return { ...prevData, Sizes: newSizes };
+        });
+    };
 
     const genderOptions = ['Men', 'Women', 'Kids'];
 
@@ -455,7 +463,7 @@ const ProductForm = ({ isEditMode = false }) => {
                                                             type="checkbox"
                                                             value={size}
                                                             checked={formData.Sizes.includes(size)}
-                                                            onChange={() => handleSizeChange(size)}
+                                                            onChange={() => handleSize(size)}
                                                         />
                                                         {size}
                                                     </label>
