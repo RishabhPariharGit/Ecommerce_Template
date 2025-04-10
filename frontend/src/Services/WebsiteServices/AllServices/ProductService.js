@@ -7,7 +7,7 @@ export const getAllProductsBySlug = async (Slug) => {
     try {
       debugger
         const response = await api.post(`/AllProducts/${Slug}`); 
-      
+      console.log("proiductdata",response.data)
         return response.data;
     } catch (error) {
         console.error('Error fetching subcategories:', error);

@@ -1,5 +1,5 @@
 // components/ImageSlider.jsx
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect,useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -8,32 +8,38 @@ import "swiper/css/pagination";
 import './ProductCardSlider.css';
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import {getAllProductsBySlug} from '../../../../../Services/WebsiteServices/AllServices/ProductService'
 
 const ProductCardSlider = () => {
-  const images = [
-
-    "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/e319610f-b638-4dfb-9b73-765b7c58d9a8/GIANNIS+IMMORTALITY+4+%28GS%29.png",
-    "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/e2d424e5-1f38-496b-9a2c-4df46d8a63d1/GIANNIS+IMMORTALITY+4+EP.png",
-    "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/e319610f-b638-4dfb-9b73-765b7c58d9a8/GIANNIS+IMMORTALITY+4+%28GS%29.png",
-    "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/2d2c6d83-30ff-4d6d-8a2d-88a54adf31da/GIANNIS+IMMORTALITY+4+EP.png",
-    "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/842dbddc-4f83-4008-8916-f43ac2b24763/GIANNIS+IMMORTALITY+4+%28GS%29.png",
-    "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/79e9aa5f-1876-43c5-9304-d45f027cc33a/GIANNIS+IMMORTALITY+4+%28GS%29.png",
-    "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/e2d424e5-1f38-496b-9a2c-4df46d8a63d1/GIANNIS+IMMORTALITY+4+EP.png",
-  ];
+ 
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const swiperRef = useRef(null);
+  const [products, setproducts] = useState([]);
+  const isFetchedRef = useRef(false);
 
-  useEffect(() => {
-    if (swiperRef.current && swiperRef.current.params) {
-      swiperRef.current.params.navigation.prevEl = prevRef.current;
-      swiperRef.current.params.navigation.nextEl = nextRef.current;
-      swiperRef.current.navigation.destroy();
-      swiperRef.current.navigation.init();
-      swiperRef.current.navigation.update();
-    }
-  }, []);
+    useEffect(() => {
+      debugger
+        if (!isFetchedRef.current) {
+            const fetchProduct = async () => {
+                try {
+                    const response = await getAllProductsBySlug("sweat-shirt");
+                    debugger
+                    if (response?.data) {
+                      setproducts(response.data);
+                    } else {
+                      setproducts([]);
+                    }
+                } catch (err) {
+                    console.error('Error fetching product:', err);
+                    alert('Failed to fetch product. Please try again.');
+                }
+            };
+            fetchProduct();
+            isFetchedRef.current = true;
+        }
+    }, []);
 
   return (
     <>
@@ -67,12 +73,12 @@ const ProductCardSlider = () => {
           spaceBetween={30}
           slidesPerView={3}
         >
-          {images.map((src, index) => (
-            <SwiperSlide className="Main-swiper-mn-wrapper-clctn" key={index}>
+          {products.map((src) => (
+            <SwiperSlide className="Main-swiper-mn-wrapper-clctn" key={src._id}>
               <div className="w-full h-[400px] flex justify-center items-center bg-white rounded-xl shadow-md px-4">
                 <img
-                  src={src}
-                  alt={`Slide ${index + 1}`}
+                  src={src.Product_Main_image}
+                  alt={`Slide`}
                   className="object-contain max-h-full max-w-full main-img-mn"
                 />
               </div>
