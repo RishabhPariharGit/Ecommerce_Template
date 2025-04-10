@@ -9,12 +9,12 @@ const useFetchProducts = (slug) => {
     useEffect(() => {
 
         const fetchProducts = async () => {
-            debugger
+            
             setLoading(true);
             try {
                 var response;
                 if (slug == 'all-products' || slug == 'view-all') {
-                    debugger
+                    
                     response = await getAllProduct();
 
                 }
@@ -25,7 +25,7 @@ const useFetchProducts = (slug) => {
                     let finalSlug = slug;
 
                     if (slug.startsWith('view-all-')) {
-                        debugger
+                        
                         finalSlug = slug.replace('view-all-', '');
                     }
 

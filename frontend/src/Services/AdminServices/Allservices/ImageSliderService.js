@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 // Add ImageSlider
 export const addImageSlider = async (ImageSliderData) => {
     try {
-        debugger
+        
           const token = Cookies.get('token');
       
           const headers = {
@@ -42,7 +42,7 @@ export const getAllImageSliders = async () => {
 // Get ImageSlider by Slug
 export const getImageSliderById = async (Id) => {
     try {
-        debugger
+        
         const token = Cookies.get('token');
         const headers = {
           withCredentials: true,

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 // Add Category
 export const addCategory = async (CategoryData) => {
     try {
-        debugger
+        
           const token = Cookies.get('token');
       
           const headers = {
@@ -42,7 +42,7 @@ export const getAllCategories = async () => {
 // Get Category by Slug
 export const getCategoryBySlug = async (Slug) => {
     try {
-        debugger
+        
         const token = Cookies.get('token');
         const headers = {
           withCredentials: true,

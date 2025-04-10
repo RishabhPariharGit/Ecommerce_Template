@@ -1,11 +1,23 @@
 
   
   .flex.justify-center.mt-4.gap-4.main-btn-wrapper {
+    margin: 60px 15px 15px 15px !important;
     display: flex;
-    justify-content: flex-end;
-    padding-bottom: 25px;
+    justify-content: space-between;
+    padding-bottom: 30px;
     gap: 10px;
   }
+
+  .main-heading-product-card-slider h2{
+    font-size: 44px;
+    font-weight: 900;
+  }
+
+  .main-product-card-slider-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
   
   img.object-contain.max-h-full.max-w-full.main-img-mn{
     width: 100%;
@@ -47,4 +59,10 @@
     width: 12px !important;
   }
   
-  
+  /* p.products-card-name-main-class {
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    padding: 5px;
+} */

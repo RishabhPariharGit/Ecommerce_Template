@@ -11,7 +11,7 @@ const ImageSliderList = () => {
         if (!isFetchedRef.current) {
             const fetchImageSliders = async () => {
                 try {
-                    debugger
+                    
                     const response = await getAllImageSliders();
                     if (response && response.data) {
                         setImageSliders(response.data);

@@ -11,7 +11,7 @@ const CategoryList = () => {
         if (!isFetchedRef.current) {
             const fetchCategories = async () => {
                 try {
-                    debugger
+                    
                     const response = await getAllCategories();
                     if (response && response.data) {
                         setCategories(response.data);

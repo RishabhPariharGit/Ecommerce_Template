@@ -11,7 +11,7 @@
     width: 100%;
 }
 
-.swiper-slide p {
+ p.main-announcement-bar-text {
     color: white;
     text-align: center;
     font-size: 14px;

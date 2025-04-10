@@ -38,7 +38,7 @@ export const addSubCategory = async (SubCategoryData) => {
 
   export const getAllSubCategories  = async () => {
     try {
-      debugger
+      
       const token = Cookies.get('token');
           const headers = {
             withCredentials: true,

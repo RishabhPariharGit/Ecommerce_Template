@@ -48,7 +48,7 @@ const Announcementbar = () => {
         {Array.isArray(Announcements) && Announcements.length > 0 ? (
           Announcements.map((ann) => (
             <SwiperSlide key={ann._id}>
-              <p>{ann.Text}</p>
+              <p className='main-announcement-bar-text'>{ann.Text}</p>
             </SwiperSlide>
           ))
         ) : (
