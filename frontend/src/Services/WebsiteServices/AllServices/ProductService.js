@@ -10,11 +10,22 @@ export const getAllProductsBySlug = async (Slug) => {
       
         return response.data;
     } catch (error) {
-        console.error('Error fetching subcategories:', error);
+        console.error('Error fetching Products:', error);
         throw error;
     }
   };
 
+  export const getAllProductsByGender = async (Gender) => {
+    try {
+      debugger
+        const response = await api.post(`/AllProducts_By_Gender/${Gender}`); 
+      
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching Products:', error);
+        throw error;
+    }
+  };
 
   export const getAllProduct = async () => {
     try {

@@ -11,7 +11,8 @@ const { GetAll_Active_ImageSliders } = require("../controllers/ImageSliderContro
 
 const { GetAllProductsBySlug ,
   GetAll_Active_Product,
-  GetProductBySlug} = require("../Controllers/ProductController");
+  GetProductBySlug,
+  GetAllProductsByGender} = require("../Controllers/ProductController");
 
 const {
    GetAllSubCategoriesByCategoryId,
@@ -42,6 +43,7 @@ router.get("/GetAllActiveImageSlider", GetAll_Active_ImageSliders);
 router.post("/AllProducts/:slug", GetAllProductsBySlug);
 router.get("/GetAllActiveProduct", GetAll_Active_Product);
 router.get("/Product/Edit/:Slug", GetProductBySlug);
+router.post("/AllProducts_By_Gender/:Gender", GetAllProductsByGender);
 
 //SubCategory Route
 router.post("/AllSubCategoriesByCategoryId", GetAllSubCategoriesByCategoryId);
