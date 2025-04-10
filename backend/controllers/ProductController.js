@@ -416,6 +416,8 @@ const GetAll_Active_Product = async (req, res) => {
 };
 
 
+
+
 module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug, DeleteProduct, GetAllProductsBySlug, GetAll_Active_Product };
 
 

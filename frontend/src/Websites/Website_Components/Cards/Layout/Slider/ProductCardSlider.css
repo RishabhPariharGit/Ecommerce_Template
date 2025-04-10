@@ -16,7 +16,7 @@
   }
 
   .swiper-slide.swiper-slide-active.Main-swiper-mn-wrapper-clctn {
-    display: none;
+    /* display: none; */
 }
   
   button.px-4.py-2.bg-gray-200.rounded.hover\:bg-gray-300.transition.previous-btn{
