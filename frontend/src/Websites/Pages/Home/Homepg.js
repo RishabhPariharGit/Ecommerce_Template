@@ -5,6 +5,7 @@ import Textoverimage from '../../Website_Components/SecondaryComponents/Textover
 import ImageSlider from '../../Website_Components/SecondaryComponents/ImageSlider/ImageSlider';
 import Footer from '../../Website_Components/PrimaryComponents/Footer/Footer';
 import ProductCardSlider from '../../Website_Components/Cards/Layout/Slider/ProductCardSlider';
+import CollectionCardSlider from '../../Website_Components/Cards/Layout/Slider/CollectionCardSlider';
 
 
 
@@ -13,6 +14,7 @@ const Home = () => {
     <>
     <ImageSlider/>
     <ProductCardSlider/>
+    <CollectionCardSlider/>
     <Textoverimage/>
     <Testimonialsnew/>
     <Newsletter/>
