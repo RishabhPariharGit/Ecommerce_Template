@@ -52,7 +52,7 @@ const MainProductPage = () => {
     }, []);
 
     const handleAddToCart = async (product) => {
-        debugger
+        
         let token = Cookies.get('token');
         let guid = Cookies.get('guid');
 

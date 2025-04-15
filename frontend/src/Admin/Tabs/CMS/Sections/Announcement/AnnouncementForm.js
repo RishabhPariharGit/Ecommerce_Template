@@ -97,11 +97,11 @@ const AnnouncementForm = ({ isEditMode = false }) => {
     return (
         <div>
 
-            <div className="white-bg-btn">
-                <div className='title-bread-crumbs'>
-                    <p>{isEditMode ? 'Edit Announcement' : 'Create a New Announcement'}</p>
+            
+                <div className='pagetitle'>
+                    {isEditMode ? 'Edit Announcement' : 'Create a New Announcement'}
                 </div>
-            </div>
+           
             <div className="form-800">
                 <div className="white-bg">
                     <div className='input-form'>

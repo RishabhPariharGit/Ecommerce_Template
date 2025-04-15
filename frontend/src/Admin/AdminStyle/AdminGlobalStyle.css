@@ -8,20 +8,20 @@
 
 .pagetitle {
   font-weight: bold;
-  font-size: 25px;
-  padding-top: 8px;
+  font-size: 22px;
+  padding-top: 10px;
   padding-bottom: 8px;
   text-align: left;
   text-align: center;
   margin-left: 15px;
   color: rgb(0, 0, 0);
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  width: 100%;
-  background-color: #FFFFFF;
   z-index: 10;
   position: sticky;
   height: 57px;
   overflow: hidden;
+  position: relative;
+  top: 20px;
+
 }
 
 
@@ -574,9 +574,10 @@ html[xmlns] .clearfix {
 }
 
 .wrapper .sidebar {
+  color: white  ;
   position: fixed;
   background: #202B46;
-  /* width: 250px; */
+  width: 235px;
   height: 100%;
   transition: all .3s ease;
   box-shadow: rgb(0 0 0 / 5%) 0px 15px 25px, rgb(0 0 0 / 5%) 0px 5px 10px;
@@ -1777,7 +1778,7 @@ select {
   border: 1px solid #d1d1d1;
   border-radius: 5px;
   width: 100%;
-  height: 35px;
+  height: 30px;
   font-weight: 500;
 }
 
@@ -1825,14 +1826,7 @@ select {
 }
 
 
-.white-bg {
-  background: #fff;
-  
-  margin-bottom: 15px;
-  z-index: 0;
-  border-radius: 5px;
-  border: 1px solid gray;
-}
+
 
 .white-bg ul {
   padding-left: 15px;
@@ -2040,14 +2034,7 @@ select {
     border-top: none !important;
   }
   
-  .white-bg-btn {
-    width: 100%;
-    display: flex;
-    text-align: right;
-    padding: 30px 30px 0px 30px;
-    align-items: center;
-    justify-content: space-between;
-  }
+  
   
   .white-bg-btn p {
     font-size: 18px;
@@ -2412,3 +2399,211 @@ label.main-label-cls.clr-mn-cls input{
 }
 
   /*Added style for sidenav hide show*/
+
+
+
+
+/*added by pallavi for table */
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .create-btn {
+    padding: 8px 12px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .search-input {
+   
+    padding: 6px;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .responsive-table-container {
+    overflow-x: auto;
+  }
+  
+  .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .responsive-table th,
+  .responsive-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .responsive-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+    position: relative;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    padding: 4px 8px;
+    margin: 0 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .edit-btn {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 8px;
+  }
+  
+  .editable-cell {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 4px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .resizer {
+    display: inline-block;
+    background: #ccc;
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateX(50%);
+    touch-action: none;
+  }
+  
+  
+  .isResizing {
+    background-color: #ccc;
+  }
+
+
+  .white-bg {
+    background: #fff;
+   
+    margin-bottom: 15px;
+    z-index: 0;
+    border-radius: 7px;
+    border: 1px solid #80808075;
+  }
+  
+
+  .white-bg-btn {
+    width: 100%;
+    display: flex;
+    text-align: right;
+    padding: 30px 0px 0px 1px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .table-main-div{
+    margin: 30px;
+  }
+
+  .table-sub-head p{
+    font-weight: 500;
+    font-size: 17px;
+
+  }
+  .table-sub-head {
+    padding: 15px;
+
+  }
+
+  .table-top-bar{
+    display: flex;
+    padding: 14px;
+    justify-content: space-between;
+  }
+.entries-dropdown{
+    display: flex;
+}
+  
+.gridbutton {
+    background-color: white;
+    color: #666;
+    margin: 0px 10px 0px 0px;
+    padding: 2px 8px;
+    border: 1px solid black;
+  }
+  
+
+  .sort-icon {
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.Pagination-btn{
+  background-color: white;
+ color: black;
+
+}
+
+
+
+
+
+
+
+/*added by pallavi for sidenav */
+
+.sidenav-list {
+  padding-top: 20px;
+}
+
+
+.sidenav-button .MuiTypography-root {
+  font-size: 13px !important;
+  font-weight: 200 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  color: white !important;
+}
+
+.sidenav-subbutton {
+  padding-left: 32px !important;
+}
+
+.sidenav-icon {
+  color: white !important;
+}
+
+
+/*added by pallavi for sidenav */
+
+
+
+
+
+
+
+
+
+

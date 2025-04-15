@@ -113,11 +113,11 @@ const ImageSliderForm = ({ isEditMode = false }) => {
     return (
         <div>
 
-            <div className="white-bg-btn">
-                <div className='title-bread-crumbs'>
-                    <p>{isEditMode ? 'Edit ImageSlider' : 'Create a New ImageSlider'}</p>
+            
+                <div className='pagetitle'>
+                    {isEditMode ? 'Edit ImageSlider' : 'Create a New ImageSlider'}
                 </div>
-            </div>
+           
           
             <div className="form-800">
                 <div className="white-bg">

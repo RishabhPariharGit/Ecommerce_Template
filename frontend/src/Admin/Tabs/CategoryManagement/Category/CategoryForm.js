@@ -112,11 +112,11 @@ const CategoryForm = ({ isEditMode = false }) => {
     return (
         <div>
 
-            <div className="white-bg-btn">
-                <div className='title-bread-crumbs'>
-                    <p>Create Category</p>
+           
+                <div className='pagetitle'>
+                    Create Category
                 </div>
-            </div>
+            
             {/* <div className="pagetitle">{isEditMode ? 'Edit Category' : 'Create a New Category'}</div> */}
             <div className="form-800">
                 <div className="white-bg">
