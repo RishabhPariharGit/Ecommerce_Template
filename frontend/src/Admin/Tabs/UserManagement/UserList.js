@@ -1,124 +1,274 @@
-import React, { useEffect, useState,useRef } from 'react';
-import { getAllUsers, deleteUser } from '../../../Services/WebsiteServices/AllServices/UserService'; // Adjust service functions for users
-import { useNavigate } from 'react-router-dom'; 
+import React, { useEffect, useState, useRef, useMemo } from 'react';
+import {
+    getAllUsers,
+    deleteUser,
+} from '../../../Services/AdminServices/Allservices/UserService';
+import { useNavigate } from 'react-router-dom';
+import {
+    useReactTable,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getSortedRowModel,
+    getPaginationRowModel,
+    flexRender,
+} from '@tanstack/react-table';
 
+const EditableCell = ({ initialValue, row, column }) => {
+    const [value, setValue] = useState(initialValue);
+
+    const onBlur = () => {
+        row.original[column.id] = value;
+        // Optionally sync to backend
+    };
+
+    return (
+        <input
+            className="editable-cell"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onBlur={onBlur}
+        />
+    );
+};
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); // Loading state
-    const [error, setError] = useState(null); // Error state
-    const navigate = useNavigate(); // Initialize navigate
-    const isFetchedRef = useRef(false); 
+    const [globalFilter, setGlobalFilter] = useState('');
+    const [sorting, setSorting] = useState([]);
+    const [pageSize, setPageSize] = useState(5);
+    const isFetchedRef = useRef(false);
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (!isFetchedRef.current) {
-        const fetchUsers = async () => {
-            try {
-                const response = await getAllUsers(); // Fetch all users from the service
-                setUsers(response.data); // Assuming response.data contains an array of users
-                setError(null); // Clear any previous error
-            } catch (err) {
-                console.error('Error fetching users:', err);
-                setError('Failed to fetch users. Please try again later.');
-            } finally {
-                setIsLoading(false); // Stop loading regardless of success or error
-            }
-        };
+            const fetchUsers = async () => {
+                try {
+                    const response = await getAllUsers();
+                    setUsers(response?.data || []);
+                } catch (error) {
+                    console.error('Error fetching users:', error);
+                }
+            };
 
-        fetchUsers();
-        isFetchedRef.current = true;
-    }
+            fetchUsers();
+            isFetchedRef.current = true;
+        }
     }, []);
 
     const handleEdit = (Username) => {
-        
-        navigate(`/admin/User/Edit/${Username}`); // Navigate to edit page with user ID
+        navigate(`/admin/User/Edit/${Username}`);
     };
 
     const handleCreate = () => {
-        navigate('/admin/User/create'); // Navigate to create user page
+        navigate('/admin/User/create');
     };
 
-    const handleDelete = async (userId) => {
-        if (window.confirm("Are you sure you want to delete this user?")) {
+    const handleDelete = async (id) => {
+        if (window.confirm('Are you sure you want to delete this user?')) {
             try {
-                await deleteUser(userId); // Call the delete function
-                setUsers(users.filter(user => user._id !== userId)); // Remove the deleted user from state
+                await deleteUser(id);
+                setUsers((prev) => prev.filter((user) => user._id !== id));
             } catch (error) {
                 console.error('Error deleting user:', error);
             }
         }
     };
 
-    // if (isLoading) {
-    //     return <div>Loading users...</div>; 
-    // }
+    const columns = useMemo(
+        () => [
+            {
+                accessorKey: 'Name',
+                header: 'Name',
+                enableSorting: true,
+                cell: ({ getValue, row, column }) => (
+                    <EditableCell initialValue={getValue()} row={row} column={column} />
+                ),
+            },
+            {
+                accessorKey: 'Username',
+                header: 'Username',
+                enableSorting: true,
+                cell: ({ getValue, row, column }) => (
+                    <EditableCell initialValue={getValue()} row={row} column={column} />
+                ),
+            },
+            {
+                accessorKey: 'Email',
+                header: 'Email',
+                enableSorting: true,
+                cell: ({ getValue, row, column }) => (
+                    <EditableCell initialValue={getValue()} row={row} column={column} />
+                ),
+            },
+            {
+                accessorKey: 'Role',
+                header: 'Role',
+                enableSorting: true,
+                cell: ({ getValue, row, column }) => (
+                    <EditableCell initialValue={getValue()} row={row} column={column} />
+                ),
+            },
+            {
+                id: 'actions',
+                header: 'Actions',
+                cell: ({ row }) => (
+                    <div className="customization-main-btns">
+                        <button
+                            className="gridbutton"
+                            onClick={() => handleEdit(row.original.Username)}
+                        >
+                            Edit
+                        </button>
+                        <button
+                            className="gridbutton delete-button"
+                            onClick={() => handleDelete(row.original._id)}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                ),
+            },
+        ],
+        []
+    );
+
+    const table = useReactTable({
+        data: users,
+        columns,
+        state: {
+            globalFilter,
+            sorting,
+        },
+        onSortingChange: setSorting,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: {
+                pageSize: pageSize,
+            },
+        },
+    });
 
     return (
-        <>
-            {/* <div className="pagetitle">
-                Users
-            </div> */}
-
+        <div className="table-main-div">
             <div className="white-bg-btn">
-            <div className='title-bread-crumbs'>
-               <p>Users</p> 
-               </div>
-            <button className="button" onClick={handleCreate}>
-                        Create User
-                    </button>
-                    </div>
-            <div className="form-600">
+                <p>Users</p>
+                <button className="button" onClick={handleCreate}>
+                    Create User
+                </button>
+            </div>
+
+            <div className="white-bg">
+                <div className="table-sub-head">
+                    <p>All Users</p>
+                </div>
+                <hr />
+                <div className="p-4">
                 <div className="white-bg">
-                
-                    {error && <div className="error">{error}</div>} {/* Display error message */}
-                    <table className="tablestyle">
-                        <thead>
-                            <tr className="roundheader">
-                                <th>Name</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th className="buttoncolumn">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users.length > 0 ? (
-                                users.map((user) => (
-                                    <tr key={user._id}>
-                                        <td>{user.Name}</td>
-                                        <td>{user.Username}</td>
-                                        <td>{user.Email}</td>
-                                        <td>
-                    {user.Roles.join(", ")}
-                </td>
-                                        <td>
-                                        <div className='customization-main-btns'>
-                                            <button
-                                                className="gridbutton"
-                                                onClick={() => handleEdit(user.Username)}
+                    <div className="table-top-bar">
+                        <div className="entries-dropdown flex items-center gap-3">
+                            <span>Show</span>
+                            <select
+                                value={table.getState().pagination.pageSize}
+                                onChange={(e) => {
+                                    const newSize = Number(e.target.value);
+                                    table.setPageSize(newSize);
+                                    setPageSize(newSize);
+                                }}
+                            >
+                                <option value={5}>5</option>
+                                <option value={10}>10</option>
+                                <option value={25}>25</option>
+                                <option value={50}>50</option>
+                            </select>
+                            <span>entries</span>
+                        </div>
+
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            value={globalFilter}
+                            onChange={(e) => setGlobalFilter(e.target.value)}
+                            className="search-input"
+                        />
+                    </div>
+
+                    <div className="responsive-table-container">
+                        <table className="responsive-table">
+                            <thead>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <tr key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => (
+                                            <th
+                                                key={header.id}
+                                                onClick={header.column.getToggleSortingHandler()}
                                             >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="gridbutton delete-button"
-                                                onClick={() => handleDelete(user._id)} // Add delete button
-                                            >
-                                                Delete
-                                            </button>
-                                            </div>
+                                                {flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                                {header.column.getCanSort() && (
+                                                    <span className="sort-icon">
+                                                        {header.column.getIsSorted() === 'asc' && '▲'}
+                                                        {header.column.getIsSorted() === 'desc' && '▼'}
+                                                        {!header.column.getIsSorted() && '↕'}
+                                                    </span>
+                                                )}
+                                            </th>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </thead>
+                            <tbody>
+                                {table.getRowModel().rows.length > 0 ? (
+                                    table.getRowModel().rows.map((row) => (
+                                        <tr key={row.id}>
+                                            {row.getVisibleCells().map((cell) => (
+                                                <td key={cell.id}>
+                                                    {flexRender(
+                                                        cell.column.columnDef.cell,
+                                                        cell.getContext()
+                                                    )}
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={columns.length} style={{ textAlign: 'center', padding: '20px' }}>
+                                            No users found
                                         </td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="5">No users found</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="text-end">
+                        <button
+                            className="button Pagination-btn"
+                            onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}
+                        >
+                            &lt;
+                        </button>
+                        <span>
+                            Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                        </span>
+                        <button
+                            className="button Pagination-btn"
+                            onClick={() => table.nextPage()}
+                            disabled={!table.getCanNextPage()}
+                        >
+                            &gt;
+                        </button>
+                    </div>
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

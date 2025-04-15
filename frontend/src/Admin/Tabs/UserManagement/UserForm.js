@@ -89,11 +89,11 @@ const UserForm = ({ isEditMode = false }) => {
     return (
         <div>
            
-            <div className="white-bg-btn">
-            <div className='title-bread-crumbs'>
-               <p>User Form</p> 
+           
+            <div className='pagetitle'>
+              User Form
                </div>
-            </div>
+      
             {/* <div className="pagetitle">{isEditMode ? 'Edit User' : 'Create a New User'}</div> */}
             <div className="form-800">
                 <div className="white-bg">
@@ -198,7 +198,7 @@ const UserForm = ({ isEditMode = false }) => {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="text-center">
+                        <div >
                         <button type="submit" className="button" disabled={isLoading}>
                             {isEditMode ? 'Update User' : 'Add User'}
                         </button>

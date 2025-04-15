@@ -30,7 +30,7 @@ export const getAllUsers  = async () => {
     
    
     const response = await api.get('/GetAllUsers');
-    return response;
+    return response.data;
   } catch (error) {
     console.error('Error add Category:', error);
     throw error;

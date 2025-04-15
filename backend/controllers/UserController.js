@@ -109,7 +109,7 @@ const GetAllUsers = async (req, res) => {
                 Roles: userRoles.map(role => role.RoleName) 
             };
         });
-        return res.status(200).json(usersWithRoles);
+        return res.status(200).json({data:usersWithRoles});
     } catch (err) {
         console.error("Error:", err);       
         return res.status(500).json({ message: "Internal Server Error" });

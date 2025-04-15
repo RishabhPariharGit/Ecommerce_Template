@@ -140,11 +140,11 @@ const SubCategoryForm = ({ isEditMode = false }) => {
     return (
         <>
 
-            <div className="white-bg-btn">
-                <div className='title-bread-crumbs'>
-                    <p>Create Subcategory</p>
+          
+                <div className='pagetitle'>
+                    Create Subcategory
                 </div>
-            </div>
+            
             {/* <div className="pagetitle">
                 {isEditMode ? 'Edit Subcategory' : 'Create a New Subcategory'}
             </div> */}
@@ -234,11 +234,21 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                                                 onChange={handleFileInputChange}
                                                 required={!isEditMode}
                                             />
+                                            {(previewSource || (isEditMode && formData.label_image)) && (
+                                                <div>
+ <img
+                                src={previewSource || formData.label_image}
+                                alt="Selected"
+                                style={{ height: '300px', marginTop: '20px' }}
+                            />
+                                                </div>
+                           
+                        )}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colSpan="2">
-                                            <div className="text-center">
+                                        <td >
+                                            <div >
                                                 <button
                                                     type="submit"
                                                     className="button"
@@ -259,13 +269,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                                 </tbody>
                             </table>
                         </form>
-                        {(previewSource || (isEditMode && formData.label_image)) && (
-                            <img
-                                src={previewSource || formData.label_image}
-                                alt="Selected"
-                                style={{ height: '300px', marginTop: '20px' }}
-                            />
-                        )}
+                        
                     </div>
                 </div>
             </div>
