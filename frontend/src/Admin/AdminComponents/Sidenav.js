@@ -229,26 +229,26 @@ const Sidenav = ({ closeSidenav }) => {
 
         {/* Logout */}
         <Box sx={{ px: 2, pt: 3 }}>
-  <Typography variant="body2" sx={{ mb: 1, color: 'common.white' }}>
-    Logged in as <strong>User Name</strong>
-  </Typography>
+          <Typography variant="body2" sx={{ mb: 1, color: 'common.white' }}>
+            Logged in as <strong>User Name</strong>
+          </Typography>
 
-  <Button
-    variant="outlined"
-    fullWidth
-    onClick={handleLogout}
-    sx={{
-      color: 'white',
-      borderColor: 'white',
-      '&:hover': {
-        backgroundColor: 'rgba(255,255,255,0.1)',
-        borderColor: 'white',
-      }
-    }}
-  >
-    Logout
-  </Button>
-</Box>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={handleLogout}
+            sx={{
+              color: 'white',
+              borderColor: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                borderColor: 'white',
+              }
+            }}
+          >
+            Logout
+          </Button>
+        </Box>
 
 
       </div>

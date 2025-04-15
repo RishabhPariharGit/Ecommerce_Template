@@ -178,22 +178,30 @@ const UserForm = ({ isEditMode = false }) => {
                                 )}
                                 <tr>
                                     <td>
-                                        <div className="formlabel">Is Admin</div>
+                                        <div>
                                         <input
                                             type="checkbox"
                                             name="IsAdmin"
                                             checked={formData.IsAdmin}
                                             onChange={handleInputChange}
                                         />
+                                         <span className="formlabel">Is Admin</span>
+                                        </div>
+                                       
+                                        
                                     </td>
                                     <td>
-                                        <div className="formlabel">Is System Admin</div>
+                                        <div>
                                         <input
                                             type="checkbox"
                                             name="IsSystemAdmin"
                                             checked={formData.IsSystemAdmin}
                                             onChange={handleInputChange}
                                         />
+                                        <span className="formlabel pl-2">Is System Admin</span>
+                                        </div>
+                                 
+                                        
                                     </td>
                                 </tr>
                             </tbody>
