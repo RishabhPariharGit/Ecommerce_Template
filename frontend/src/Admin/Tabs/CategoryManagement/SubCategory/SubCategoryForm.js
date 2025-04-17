@@ -140,11 +140,11 @@ const SubCategoryForm = ({ isEditMode = false }) => {
     return (
         <>
 
-          
-                <div className='pagetitle'>
-                    Create Subcategory
-                </div>
-            
+
+            <div className='pagetitle'>
+                Create Subcategory
+            </div>
+
             {/* <div className="pagetitle">
                 {isEditMode ? 'Edit Subcategory' : 'Create a New Subcategory'}
             </div> */}
@@ -236,14 +236,14 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                                             />
                                             {(previewSource || (isEditMode && formData.label_image)) && (
                                                 <div>
- <img
-                                src={previewSource || formData.label_image}
-                                alt="Selected"
-                                style={{ height: '300px', marginTop: '20px' }}
-                            />
+                                                    <img
+                                                        src={previewSource || formData.label_image}
+                                                        alt="Selected"
+                                                        style={{ height: '300px', marginTop: '20px' }}
+                                                    />
                                                 </div>
-                           
-                        )}
+
+                                            )}
                                         </td>
                                     </tr>
                                     <tr>
@@ -269,7 +269,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                                 </tbody>
                             </table>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>

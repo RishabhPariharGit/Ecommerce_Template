@@ -5,7 +5,7 @@ const fs = require('fs');
 const { GeneralStatus } = require('../Enum/Enum');
 
 const CreateCategory = async (req, res) => {
-    const { Name, Description, Slug, label_image } = req.body;
+    const { Name, Description, Slug, label_image ,Show_In_Nav} = req.body;
     
     try {
         if (!req.user || !req.user._id) {
@@ -48,6 +48,7 @@ const CreateCategory = async (req, res) => {
             Name,
             Description,
             label_image: uploadedImageUrl,
+            Show_In_Nav:Show_In_Nav,
             Slug,
             audit: {
                 createdDate: new Date(),
@@ -137,12 +138,13 @@ const GetCategoryBySlug = async (req, res) => {
 
 const UpdateCategory = async (req, res) => {
     const { slug } = req.params;
-    const { Name, Description, label_image, Status } = req.body;
+    const { Name, Description, label_image, Status,Show_In_Nav } = req.body;
 
     try { 
         if (!req.user || !req.user._id) {
             return res.status(401).json({ message: 'Unauthorized: User not found' });
-        }        
+        } 
+            
         const existingCategory = await CategoryModel.findOne({ Slug: slug });
         if (!existingCategory) {
             return res.status(404).json({ 
@@ -176,6 +178,7 @@ const UpdateCategory = async (req, res) => {
         existingCategory.Name = Name;
         existingCategory.Description = Description;
         existingCategory.label_image = uploadedImageUrl;
+        existingCategory.Show_In_Nav = Show_In_Nav;
         existingCategory.audit.status = Status;
         existingCategory.audit.updatedDate = new Date();
         existingCategory.audit.updatedBy = req.user._id;
@@ -264,7 +267,7 @@ const DeleteCategory = async (req, res) => {
 
 const GetAll_Active_Categories = async (req, res) => {
     try {
-        const categories = await CategoryModel.find();
+        const categories = await CategoryModel.find({ Show_In_Nav: true,"audit.status": "Active" });
         if (!categories || categories.length === 0) {
             return res.status(404).json({ 
                 message: 'No categories found', 

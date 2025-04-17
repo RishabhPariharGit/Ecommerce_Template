@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import ShoppingCartOutlined from '@mui/icons-material/ShoppingCartOutlined';
-import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
-import PersonOutline from '@mui/icons-material/PersonOutline';
-import LoginOutlined from '@mui/icons-material/LoginOutlined';
-import LogoutOutlined from '@mui/icons-material/LogoutOutlined';
-
+import {
+  ShoppingCartOutlined,
+  FavoriteBorderOutlined,
+  PersonOutline,
+  LoginOutlined,
+  LogoutOutlined
+} from '@mui/icons-material';
 import './Navbar.css';
 import {
   getAllCategoryforSite
@@ -20,6 +21,7 @@ const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subCategoriesMap, setSubCategoriesMap] = useState({}); // To store fetched subcategories
+  const [Genders, SetGender] = useState({});
   const navigate = useNavigate();
 
   // Fetch categories on mount
@@ -44,9 +46,9 @@ const Navbar = () => {
   }, []);
 
   // Fetch subcategories when hovering on a category
-  const handleCategoryHover = async (categoryId,categorySlug) => {
-  
-    try{
+  const handleCategoryHover = async (categoryId, categorySlug) => {
+
+    try {
       if (categoryId === 'all') {
         const res = await getAllSubCategoryforSite();
         if (res && res.data) {
@@ -59,10 +61,10 @@ const Navbar = () => {
           setSubCategoriesMap({ all: [] });
         }
       } else {
-        
+
         const res = await getAllSubCategoriesByCategoryId(categoryId);
         if (res && res.data) {
-         
+
           const allsubCategories = [
             { _id: 'all', Name: 'View All', Slug: `view-all-${categorySlug}` },
             ...res.data
@@ -72,14 +74,18 @@ const Navbar = () => {
           setSubCategoriesMap({ [categoryId]: [] });
         }
       }
-      
-    }catch(err){
-    console.log("error during fetching subcategory",err)
-    }
-    
 
-   
+    } catch (err) {
+      console.log("error during fetching subcategory", err)
+    }
+
+
   };
+
+
+  const handleGenderHover = async () => {
+    SetGender(["Men", "Women", "Kids"])
+  }
 
   // DOM related mobile menu behavior
   useEffect(() => {
@@ -200,6 +206,24 @@ const Navbar = () => {
                           )}
                       </li>
                     ))}
+
+                  <li 
+                    className="menu-item-has-children"
+                  onMouseEnter={handleGenderHover}>
+                   <Link to={`/collections/all-products`}>Gender</Link>
+
+                    {Genders.length > 0 && (
+                      <div className="sub-menu">
+                        <ul>
+                          {Genders.map((gender) => (
+                            <li key={gender}>
+                              <Link to={`/collections/${gender}`}>{gender}</Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </li>
                 </ul>
               </nav>
             </div>

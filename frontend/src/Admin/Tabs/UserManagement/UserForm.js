@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { registerUser, getUserByUsername, updateUser } 
-from '../../../Services/WebsiteServices/AllServices/UserService'; 
+import { registerUser, getUserByUsername, updateUser }
+    from '../../../Services/WebsiteServices/AllServices/UserService';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../AdminStyle/AdminGlobalStyle.css';
 
@@ -24,7 +24,7 @@ const UserForm = ({ isEditMode = false }) => {
     const isFetchedRef = useRef(false);
 
     useEffect(() => {
-        
+
         if (!isFetchedRef.current) {
             const loadUser = async () => {
                 try {
@@ -88,12 +88,12 @@ const UserForm = ({ isEditMode = false }) => {
 
     return (
         <div>
-           
-           
+
+
             <div className='pagetitle'>
-              User Form
-               </div>
-      
+                User Form
+            </div>
+
             {/* <div className="pagetitle">{isEditMode ? 'Edit User' : 'Create a New User'}</div> */}
             <div className="form-800">
                 <div className="white-bg">
@@ -146,29 +146,29 @@ const UserForm = ({ isEditMode = false }) => {
                                     </td>
                                 </tr>
                                 {!isEditMode && (
-    <tr>
-        <td>
-            <div className="formlabel">Password</div>
-            <input
-                type="password"
-                name="Password"
-                value={formData.Password}
-                onChange={handleInputChange}
-            />
-        </td>
-        <td>
-            <div className="formlabel">Confirm Password</div>
-            <input
-                type="password"
-                name="ConfirmPassword"
-                value={formData.ConfirmPassword}
-                onChange={handleInputChange}
-            />
-        </td>
-    </tr>
-)}
+                                    <tr>
+                                        <td>
+                                            <div className="formlabel">Password</div>
+                                            <input
+                                                type="password"
+                                                name="Password"
+                                                value={formData.Password}
+                                                onChange={handleInputChange}
+                                            />
+                                        </td>
+                                        <td>
+                                            <div className="formlabel">Confirm Password</div>
+                                            <input
+                                                type="password"
+                                                name="ConfirmPassword"
+                                                value={formData.ConfirmPassword}
+                                                onChange={handleInputChange}
+                                            />
+                                        </td>
+                                    </tr>
+                                )}
 
-                                
+
                                 {passwordError && (
                                     <tr>
                                         <td colSpan="2" style={{ color: 'red', textAlign: 'center' }}>
@@ -179,40 +179,40 @@ const UserForm = ({ isEditMode = false }) => {
                                 <tr>
                                     <td>
                                         <div>
-                                        <input
-                                            type="checkbox"
-                                            name="IsAdmin"
-                                            checked={formData.IsAdmin}
-                                            onChange={handleInputChange}
-                                        />
-                                         <span className="formlabel">Is Admin</span>
+                                            <input
+                                                type="checkbox"
+                                                name="IsAdmin"
+                                                checked={formData.IsAdmin}
+                                                onChange={handleInputChange}
+                                            />
+                                            <span className="formlabel">Is Admin</span>
                                         </div>
-                                       
-                                        
+
+
                                     </td>
                                     <td>
                                         <div>
-                                        <input
-                                            type="checkbox"
-                                            name="IsSystemAdmin"
-                                            checked={formData.IsSystemAdmin}
-                                            onChange={handleInputChange}
-                                        />
-                                        <span className="formlabel pl-2">Is System Admin</span>
+                                            <input
+                                                type="checkbox"
+                                                name="IsSystemAdmin"
+                                                checked={formData.IsSystemAdmin}
+                                                onChange={handleInputChange}
+                                            />
+                                            <span className="formlabel pl-2">Is System Admin</span>
                                         </div>
-                                 
-                                        
+
+
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div >
-                        <button type="submit" className="button" disabled={isLoading}>
-                            {isEditMode ? 'Update User' : 'Add User'}
-                        </button>
-                        <button type="button" className="button cancel-button" onClick={handleCancel}>
-                            Cancel
-                        </button>
+                            <button type="submit" className="button" disabled={isLoading}>
+                                {isEditMode ? 'Update User' : 'Add User'}
+                            </button>
+                            <button type="button" className="button cancel-button" onClick={handleCancel}>
+                                Cancel
+                            </button>
                         </div>
                     </form>
                 </div>
