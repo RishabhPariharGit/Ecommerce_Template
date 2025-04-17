@@ -11,7 +11,8 @@ const CategoryForm = ({ isEditMode = false }) => {
         Description: '',
         Slug: '',
         label_image: '',
-        Status: ''
+        Status: '',
+        Show_In_Nav: false
     });
     const [isLoading, setIsLoading] = useState(true);
     const { slug } = useParams();
@@ -37,6 +38,7 @@ const CategoryForm = ({ isEditMode = false }) => {
                         Description: category.Description,
                         Slug: category.Slug,
                         label_image: category.label_image,
+                        Show_In_Nav:category.Show_In_Nav,
                         Status: category.audit.status
                     });
                 } catch (err) {
@@ -58,8 +60,11 @@ const CategoryForm = ({ isEditMode = false }) => {
     }, [isEditMode, slug]);
 
     const handleInputChange = (e) => {
-
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value,
+        });
     };
 
     const handleCancel = () => {
@@ -85,9 +90,9 @@ const CategoryForm = ({ isEditMode = false }) => {
     };
 
     const handleSubmitFile = async (e) => {
-        
-        e.preventDefault();
 
+        e.preventDefault();
+debugger
         try {
             let response;
             if (isEditMode) {
@@ -112,11 +117,11 @@ const CategoryForm = ({ isEditMode = false }) => {
     return (
         <div>
 
-           
-                <div className='pagetitle'>
-                    Create Category
-                </div>
-            
+
+            <div className='pagetitle'>
+                Create Category
+            </div>
+
             {/* <div className="pagetitle">{isEditMode ? 'Edit Category' : 'Create a New Category'}</div> */}
             <div className="form-800">
                 <div className="white-bg">
@@ -166,6 +171,16 @@ const CategoryForm = ({ isEditMode = false }) => {
                                                 onChange={handleFileInputChange}
                                                 required={!isEditMode}
                                             />
+                                            <div className='pt-2'>
+                                            {(previewSource || (isEditMode && formData.label_image)) && (
+                                                <img
+                                                    src={previewSource || formData.label_image}
+                                                    alt="Selected"
+                                                    style={{ height: '180px' }}
+                                                />
+                                            )}
+                                            </div>
+                                           
                                         </td>
                                         {isEditMode && (
                                             <td>
@@ -183,14 +198,19 @@ const CategoryForm = ({ isEditMode = false }) => {
                                         )}
                                     </tr>
                                     <tr>
-                                        <td>
-                                            {(previewSource || (isEditMode && formData.label_image)) && (
-                                                <img
-                                                    src={previewSource || formData.label_image}
-                                                    alt="Selected"
-                                                    style={{ height: '180px' }}
+                                       
+                                    <td>
+                                            <div>
+                                                <input
+                                                    type="checkbox"
+                                                    name="Show_In_Nav"
+                                                    checked={formData.Show_In_Nav}
+                                                    onChange={handleInputChange}
                                                 />
-                                            )}
+
+                                                <span className="formlabel pl-10 ">Show In Navbar</span>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     <tr>

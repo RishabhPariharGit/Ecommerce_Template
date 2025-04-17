@@ -14,6 +14,10 @@ const CategorySchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
+    Show_In_Nav: { 
+        type:Boolean,
+        default: false
+    },
     Slug: {
         type: String,
         required: true
