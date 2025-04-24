@@ -11,6 +11,9 @@ const CreateSubcategory = async (req, res) => {
         if (!req.user || !req.user._id) {
             return res.status(401).json({ message: 'Unauthorized: User not found' });
         }
+        if (!Array.isArray(CategoryId) || CategoryId.length === 0) {
+            return res.status(400).json({ message: 'At least one CategoryId is required', data: null });
+        }
         const existingSubcategory = await SubCategory.findOne({ Slug });
         if (existingSubcategory) {
             return res.status(400).json({ message: 'Slug must be unique', data: null });
@@ -82,7 +85,7 @@ const GetAllSubCategories = async (req, res) => {
 const GetAllSubCategoriesByCategoryId = async (req, res) => {
     try {
         const { CategoryId } = req.body; 
-        const subcategories = await SubCategory.find({ CategoryId });
+        const subcategories = await SubCategory.find({ CategoryId,"audit.status": "Active" });
 
         if (!subcategories || subcategories.length === 0) {
             return res.status(404).json({ message: 'No subcategories found', data: null });
@@ -206,9 +209,9 @@ const DeleteSubCategory = async (req, res) => {
 };
 
 
-const GetAll_Active_subCategories = async (req, res) => {
+const   GetAll_Active_subCategories = async (req, res) => {
     try {
-        const subcategories = await SubCategory.find();
+        const subcategories = await SubCategory.find({"audit.status": "Active"});
         if (!subcategories || subcategories.length === 0) {
             return res.status(404).json({ 
                 message: 'No categories found', 

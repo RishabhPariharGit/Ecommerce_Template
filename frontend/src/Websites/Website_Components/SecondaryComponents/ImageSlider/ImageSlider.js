@@ -34,7 +34,7 @@ const MainHomebanner = () => {
             {Array.isArray(images) && images.length > 0 && (
                 <>
                     <Swiper
-                        modules={[A11y, Pagination, Navigation]}
+                        modules={[A11y, Pagination, Navigation,Autoplay]}
                         spaceBetween={1}
                         slidesPerView={1}
                         loop={true}

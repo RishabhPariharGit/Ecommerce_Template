@@ -12,8 +12,8 @@ import {
     getPaginationRowModel,
     flexRender,
 } from '@tanstack/react-table';
+import { toast } from 'react-toastify'; // ✅ Import toast
 
-// Editable Cell
 const EditableCell = ({ initialValue, row, column }) => {
     const [value, setValue] = useState(initialValue);
 
@@ -46,8 +46,10 @@ const SubCategoryList = () => {
                 try {
                     const response = await getAllSubCategories();
                     setSubCategories(response?.data || []);
+                    toast.success('Subcategories loaded successfully'); // ✅ Success toast
                 } catch (err) {
                     console.error('Error fetching subcategories:', err);
+                    toast.error('Failed to load subcategories'); // ❌ Error toast
                 }
             };
             fetchSubCategories();
@@ -68,8 +70,10 @@ const SubCategoryList = () => {
             try {
                 await deleteSubCategory(id);
                 setSubCategories((prev) => prev.filter((s) => s._id !== id));
+                toast.success('Subcategory deleted successfully'); // ✅ Success toast
             } catch (err) {
                 console.error('Error deleting subcategory:', err);
+                toast.error('Failed to delete subcategory'); // ❌ Error toast
             }
         }
     };
@@ -90,8 +94,8 @@ const SubCategoryList = () => {
                 ),
             },
             {
-                accessorKey: 'Description',
-                header: 'Description',
+                accessorKey: 'audit.status',
+                header: 'Status',
                 enableSorting: true,
                 enableResizing: true,
                 cell: ({ getValue, row, column }) => (
@@ -102,6 +106,7 @@ const SubCategoryList = () => {
                     />
                 ),
             },
+            
             {
                 id: 'actions',
                 header: 'Actions',

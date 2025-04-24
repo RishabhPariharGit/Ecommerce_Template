@@ -10,7 +10,7 @@ import { getAllSubCategoriesByCategoryId, getAllSubCategories } from '../../../S
 import '../../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import AllSize from './EnumDropdown';
-
+import Select from 'react-select';
 
 const ProductForm = ({ isEditMode = false }) => {
     const [previewSources, setPreviewSources] = useState([]);
@@ -21,7 +21,7 @@ const ProductForm = ({ isEditMode = false }) => {
         Price: '',
         Quantity: '',
         CategoryId: '',
-        SubcategoryId: '',
+        SubcategoryId: [],
         Product_image: [],
         Product_Main_image: '',
         Slug: '',
@@ -37,7 +37,17 @@ const ProductForm = ({ isEditMode = false }) => {
     const [isLoading, setIsLoading] = useState(true);
     const { slug } = useParams();
     const navigate = useNavigate();
-
+    const SubcategoryOptions = subcategories.map(Subcat => ({
+        value: Subcat._id,
+        label: Subcat.Name
+    }));
+    const handleSubCategoryChange = (selectedOptions) => {
+        const selectedIds = selectedOptions.map(option => option.value);
+        setFormData({
+            ...formData,
+            SubcategoryId: selectedIds
+        });
+    };
     const isFetchedRef = useRef(false);
 
 
@@ -379,19 +389,17 @@ const ProductForm = ({ isEditMode = false }) => {
                                         </td>
                                         <td>
                                             <div className="formlabel">Subcategory</div>
-                                            <select
-                                                name="SubcategoryId"
-                                                value={formData.SubcategoryId}
-                                                onChange={handleInputChange}
-                                            >
-                                                <option value="">Select Subcategory</option>
-                                                {Array.isArray(subcategories) && subcategories.map((sub) => (
-                                                    <option key={sub._id} value={sub._id}>
-                                                        {sub.Name}
-                                                    </option>
-                                                ))}
-
-                                            </select>
+                                            <Select
+                                                isMulti
+                                                options={SubcategoryOptions}
+                                                value={SubcategoryOptions.filter(option =>
+                                                    formData.SubcategoryId.includes(option.value)
+                                                )}
+                                                onChange={handleSubCategoryChange}
+                                                className="basic-multi-select"
+                                                classNamePrefix="select"
+                                                placeholder="Select Categories"
+                                            />
                                         </td>
                                     </tr>
                                     <tr>

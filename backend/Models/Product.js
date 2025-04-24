@@ -23,11 +23,11 @@ const ProductSchema = new mongoose.Schema({
         ref: 'Category',  
         required: true
     },
-    SubcategoryId: {
+    SubcategoryId: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Subcategory', 
         required: false
-    },
+    }],
     Product_Main_image: { 
         type: String, 
         required: true 

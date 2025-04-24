@@ -7,8 +7,8 @@ import {
 } from '../../../../Services/AdminServices/Allservices/SubCategoryService';
 import '../../../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
-
-
+import Select from 'react-select';
+import { toast } from 'react-toastify';
 const SubCategoryForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
     const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
         Description: '',
         Slug: '',
         label_image: '',
-        CategoryId: '',
+        CategoryId: [],
         Status: ''
     });
     const [categories, setCategories] = useState([]);
@@ -24,7 +24,17 @@ const SubCategoryForm = ({ isEditMode = false }) => {
     const { slug } = useParams();
     const navigate = useNavigate();
     const isFetchedRef = useRef(false); // Track if data has already been fetched
-
+    const categoryOptions = categories.map(cat => ({
+        value: cat._id,
+        label: cat.Name
+    }));
+    const handleCategoryChange = (selectedOptions) => {
+        const selectedIds = selectedOptions.map(option => option.value);
+        setFormData({
+            ...formData,
+            CategoryId: selectedIds
+        });
+    };
     // Fetch subcategory and category data only once
     useEffect(() => {
         if (!isFetchedRef.current) {
@@ -93,9 +103,10 @@ const SubCategoryForm = ({ isEditMode = false }) => {
         if (file && file.type.startsWith('image/')) {
             previewFile(file);
         } else {
-            alert('Please upload a valid image file.');
+            toast.error('Please upload a valid image file.');
         }
     };
+
 
     const previewFile = (file) => {
         const reader = new FileReader();
@@ -107,9 +118,10 @@ const SubCategoryForm = ({ isEditMode = false }) => {
     };
 
     const handleSubmitFile = async (e) => {
+        debugger
         e.preventDefault();
         if (!formData.CategoryId) {
-            alert('Please select a category.');
+            toast.error('Please select a category.');
             return;
         }
 
@@ -118,18 +130,20 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                 ? await updatesubCategory(slug, formData)
                 : await addSubCategory(formData);
 
-            if (response && response.message) {
-                alert(response.message);
+            if (response && response.data) {
+                toast.success(response.message);
+                setTimeout(() => {
+                    navigate('/admin/SubCategory');
+                }, 3500); // Wait for 2 seconds so user sees the toast
             } else {
-                alert('Something went wrong. Please try again.');
+                toast.error(response.message);
             }
-
-            navigate('/admin/SubCategory');
         } catch (err) {
             console.error('Error submitting form:', err);
-            alert('Failed to submit the form. Please try again.');
+            toast.error('Failed to submit the form. Please try again.');
         }
     };
+
 
     const handleCancel = () => {
         navigate('/admin/SubCategory');
@@ -141,13 +155,11 @@ const SubCategoryForm = ({ isEditMode = false }) => {
         <>
 
 
-            <div className='pagetitle'>
-                Create Subcategory
-            </div>
+         
 
-            {/* <div className="pagetitle">
+            <div className="pagetitle">
                 {isEditMode ? 'Edit Subcategory' : 'Create a New Subcategory'}
-            </div> */}
+            </div>
             <div className="form-800">
                 <div className="white-bg">
                     <div className="input-form">
@@ -196,19 +208,18 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                                     <tr>
                                         <td>
                                             <div className="formlabel">Category</div>
-                                            <select
-                                                name="CategoryId"
-                                                value={formData.CategoryId}
-                                                onChange={handleInputChange}
-                                                required
-                                            >
-                                                <option value="">Select Category</option>
-                                                {categories.map((category) => (
-                                                    <option key={category._id} value={category._id}>
-                                                        {category.Name}
-                                                    </option>
-                                                ))}
-                                            </select>
+                                            <Select
+                                                isMulti
+                                                options={categoryOptions}
+                                                value={categoryOptions.filter(option =>
+                                                    formData.CategoryId.includes(option.value)
+                                                )}
+                                                onChange={handleCategoryChange}
+                                                className="basic-multi-select"
+                                                classNamePrefix="select"
+                                                placeholder="Select Categories"
+                                            />
+
                                         </td>
                                         {isEditMode && (
                                             <td>

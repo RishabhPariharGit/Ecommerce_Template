@@ -12,6 +12,10 @@ import {
     getPaginationRowModel,
     flexRender,
 } from '@tanstack/react-table';
+import { toast } from 'react-toastify';
+
+
+
 
 const EditableCell = ({ initialValue, row, column }) => {
     const [value, setValue] = useState(initialValue);
@@ -45,9 +49,17 @@ const CategoryList = () => {
             const fetchCategories = async () => {
                 try {
                     const response = await getAllCategories();
-                    setCategories(response?.data || []);
+                    if(response.data){
+                        setCategories(response.data);
+                        toast.success('Categories loaded successfully');
+                    }else{
+                        setCategories([]);
+                        toast.error(response.message || 'Failed to load categories');
+                    }
+                    
                 } catch (err) {
                     console.error('Error fetching categories:', err);
+                    toast.error('An error occurred while fetching categories');
                 }
             };
 
@@ -71,13 +83,16 @@ const CategoryList = () => {
             )
         ) {
             try {
-                await deleteCategory(categoryId);
+                const response = await deleteCategory(categoryId);
                 setCategories((prev) => prev.filter((c) => c._id !== categoryId));
+                toast.success(response.message || 'Category deleted successfully');
             } catch (error) {
                 console.error('Error deleting category:', error);
+                toast.error(error.response?.data?.message || 'Failed to delete category');
             }
         }
     };
+    
 
     const columns = useMemo(
         () => [
@@ -145,6 +160,7 @@ const CategoryList = () => {
 
     return (
         <>
+
             <div className="table-main-div">
                 <div className="white-bg-btn">
                     <p>Categories</p>

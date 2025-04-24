@@ -18,11 +18,12 @@ const SubcategorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    CategoryId: {
+    CategoryId: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',  // Reference to Category table
+        ref: 'Category',
         required: true
-    },
+    }],
+    
     audit: CommonFieldsSchema
 });
 

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Sidenav from '../AdminComponents/Sidenav';
 import '../AdminStyle/AdminGlobalStyle.css';
 import Navbar from '../AdminComponents/Navbar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const AdminLayout = ({ children }) => {
   const [isSidenavVisible, setIsSidenavVisible] = useState(false); // Sidebar starts hidden for mobile/tablet
@@ -55,6 +58,7 @@ const AdminLayout = ({ children }) => {
           onClick={() => setIsSidenavVisible(false)}
         ></div>
       )}
+       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

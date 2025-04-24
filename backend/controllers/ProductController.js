@@ -8,13 +8,27 @@ const fs = require('fs');
 
 const validateSizes = (sizeType, gender, sizes) => {
     const validSizes = AllSize[sizeType]?.[gender];
+    console.log(sizes)
+    console.log(validSizes)
 
     if (sizes && Array.isArray(sizes)) {
         switch (sizeType) {
             case 'Clothing':
-                return sizes.every(size => validSizes.includes(size));
+           
+                if (sizes.every(size => validSizes.includes(size))) {
+                    return sizes; // return the actual valid sizes
+                } else {
+                    return false; // to trigger the error response
+                }
+
             case 'Shoes':
-                return sizes.every(size => validSizes.includes(size));
+          
+                if (sizes.every(size => validSizes.includes(size))) {
+                    return sizes; // return the actual valid sizes
+                } else {
+                    return false; // to trigger the error response
+                }
+
             case 'Pants': {
                 const waistSizes = AllSize.Pants?.[gender]?.Waist || [];
                 const lengthSizes = AllSize.Pants?.[gender]?.Length || [];
@@ -176,6 +190,9 @@ const UpdateProduct = async (req, res) => {
     try {
         if (!req.user || !req.user._id) {
             return res.status(401).json({ message: 'Unauthorized: User not found' });
+        }
+        if (!Array.isArray(SubcategoryId) || SubcategoryId.length === 0) {
+            return res.status(400).json({ message: 'At least one SubcategoryId is required', data: null });
         }
         // Find existing product
         const existingProduct = await ProductModel.findOne({ Slug: slug });
@@ -396,10 +413,10 @@ const GetAllProductsByGender = async (req, res) => {
     try {
         const { Gender } = req.params;
 
-     
-  
-            const products = await ProductModel.find({ Gender: Gender,"audit.status": "Active" });
-            return res.status(200).json({ message: "Products retrieved successfully", data: products });
+
+
+        const products = await ProductModel.find({ Gender: Gender, "audit.status": "Active" });
+        return res.status(200).json({ message: "Products retrieved successfully", data: products });
 
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -407,9 +424,9 @@ const GetAllProductsByGender = async (req, res) => {
     }
 };
 
-const GetAll_Active_Product = async (req, res) =>  {
+const GetAll_Active_Product = async (req, res) => {
     try {
-        const Products = await ProductModel.find({"audit.status": "Active"});
+        const Products = await ProductModel.find({ "audit.status": "Active" });
         if (!Products || Products.length === 0) {
             return res.status(404).json({
                 message: 'No Products found',
@@ -435,8 +452,10 @@ const GetAll_Active_Product = async (req, res) =>  {
 
 
 
-module.exports = { CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug,
-     DeleteProduct, GetAllProductsBySlug, GetAll_Active_Product ,GetAllProductsByGender};
+module.exports = {
+    CreateProduct, UpdateProduct, GetAllProducts, GetProductBySlug,
+    DeleteProduct, GetAllProductsBySlug, GetAll_Active_Product, GetAllProductsByGender
+};
 
 
 

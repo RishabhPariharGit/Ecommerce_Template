@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { addCategory, updateCategory, getCategoryBySlug } from '../../../../Services/AdminServices/Allservices/CategoryService';
 import '../../../AdminStyle/AdminGlobalStyle.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 const CategoryForm = ({ isEditMode = false }) => {
@@ -28,7 +29,7 @@ const CategoryForm = ({ isEditMode = false }) => {
                     const response = await getCategoryBySlug(slug);
 
                     if (!response.data) {
-                        console.error('Category data is null or not found');
+                        toast.error(response.message);
                         // Handle error state here, e.g., show a message or redirect
                         return;
                     }
@@ -38,11 +39,11 @@ const CategoryForm = ({ isEditMode = false }) => {
                         Description: category.Description,
                         Slug: category.Slug,
                         label_image: category.label_image,
-                        Show_In_Nav:category.Show_In_Nav,
+                        Show_In_Nav: category.Show_In_Nav,
                         Status: category.audit.status
                     });
                 } catch (err) {
-                    console.error('Error fetching category:', err);
+                    toast.error('Error fetching category:', err);
                 } finally {
                     setIsLoading(false);
                 }
@@ -76,7 +77,7 @@ const CategoryForm = ({ isEditMode = false }) => {
         if (file && file.type.startsWith('image/')) {
             previewFile(file);
         } else {
-            alert('Please upload a valid image file.');
+            toast.error('Please upload a valid image file.');
         }
     };
 
@@ -92,7 +93,7 @@ const CategoryForm = ({ isEditMode = false }) => {
     const handleSubmitFile = async (e) => {
 
         e.preventDefault();
-debugger
+        debugger
         try {
             let response;
             if (isEditMode) {
@@ -102,13 +103,15 @@ debugger
             }
 
             if (response && response.data) {
-                alert(response.message); // Show API response message in an alert
+                toast.success(response.message);
+                setTimeout(() => {
+                    navigate('/admin/Category');
+                }, 3500); // Wait for 2 seconds so user sees the toast
             } else {
-                alert('Unexpected response from the server');
+                toast.error(response.message);
             }
-            navigate('/admin/Category');
         } catch (err) {
-            console.error('Error submitting form:', err);
+            toast.error('Error submitting form:', err);
         }
     };
 
@@ -172,15 +175,15 @@ debugger
                                                 required={!isEditMode}
                                             />
                                             <div className='pt-2'>
-                                            {(previewSource || (isEditMode && formData.label_image)) && (
-                                                <img
-                                                    src={previewSource || formData.label_image}
-                                                    alt="Selected"
-                                                    style={{ height: '180px' }}
-                                                />
-                                            )}
+                                                {(previewSource || (isEditMode && formData.label_image)) && (
+                                                    <img
+                                                        src={previewSource || formData.label_image}
+                                                        alt="Selected"
+                                                        style={{ height: '180px' }}
+                                                    />
+                                                )}
                                             </div>
-                                           
+
                                         </td>
                                         {isEditMode && (
                                             <td>
@@ -198,8 +201,8 @@ debugger
                                         )}
                                     </tr>
                                     <tr>
-                                       
-                                    <td>
+
+                                        <td>
                                             <div>
                                                 <input
                                                     type="checkbox"
