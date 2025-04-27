@@ -7,12 +7,12 @@ const AddToWishlist = async (req, res) => {
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: No token provided.' });
     }
-    const decoded = jwt.verify(token, 'SECRET'); 
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); 
     const UserId = decoded.userId;
     const {  ProductId } = req.body;
     const existingEntry = await Wishlist.findOne({ UserId, ProductId });
     if (existingEntry) {
-      return res.status(400).json({ message: 'Product is already in wishlist' });
+      return res.status(200).json({data: existingEntry, message: 'Product is already in wishlist' });
     }
 
     const newWishlistEntry = new Wishlist({ UserId, ProductId });
@@ -30,7 +30,7 @@ const GetWishListItems = async (req, res) => {
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: No token provided.' });
     }
-    const decoded = jwt.verify(token, 'SECRET'); 
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); 
     const UserId = decoded.userId; 
 
     const WishlistItems = await Wishlist.find({ UserId }).populate('ProductId'); 

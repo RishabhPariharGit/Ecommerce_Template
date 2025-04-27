@@ -46,6 +46,17 @@ export const getCartItems = async (headers) => {
     }
 };
 
+export const getCartItemsCount = async (headers) => {
+    try {
+        debugger
+        const response = await api.get('/GetCartItemsCount', { headers });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+        throw error;
+    }
+};
+
 // Remove Cart Item
 export const removeCartItem = async (ItemId) => {
     try {
