@@ -11,7 +11,7 @@ const CollectionCard = ({
             <div className='image-and-icons-main-wrapper'>
             <Link to={`/product/${product.Slug}`}>
                 <img
-                    src={product.Product_Main_image}
+                    src={product.label_image}
                     alt={product.Name}               
                 />
                  </Link>

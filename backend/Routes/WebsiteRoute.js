@@ -16,7 +16,8 @@ const { GetAllProductsBySlug ,
 
 const {
    GetAllSubCategoriesByCategoryId,
-   GetAll_Active_subCategories
+   GetAll_Active_subCategories,
+   GetAllSubCategoriesByCategorySlug
  } = require("../Controllers/SubCategoryController");
 
 const {
@@ -51,6 +52,7 @@ router.post("/AllProducts_By_Gender/:Gender", GetAllProductsByGender);
 
 //SubCategory Route
 router.post("/AllSubCategoriesByCategoryId", GetAllSubCategoriesByCategoryId);
+router.post("/AllSubCategoriesByCategorySlug", GetAllSubCategoriesByCategorySlug);
 router.get("/GetAllActiveSubCategory", GetAll_Active_subCategories);
 
 

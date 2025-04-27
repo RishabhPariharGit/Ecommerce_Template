@@ -27,3 +27,14 @@ export const getAllSubCategoriesByCategoryId = async (CategoryId) => {
       throw error;
     }
   };
+
+  export const getAllSubCategoriesByCategorySlug = async (Slug) => {
+    try {
+       
+      const response = await api.post(`/AllSubCategoriesByCategorySlug`, { Slug }); 
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching subcategories:', error);
+      throw error;
+    }
+  };

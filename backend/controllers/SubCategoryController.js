@@ -1,5 +1,6 @@
 const SubCategory = require('../Models/SubCategory')
 const SubCategoryModel = require('../Models/SubCategory');
+const CategoryModel = require('../Models/Category');
 const ProductModel=require('../Models/Product')
 const { GeneralStatus } = require('../Enum/Enum');
 const fs = require('fs');  
@@ -98,6 +99,27 @@ const GetAllSubCategoriesByCategoryId = async (req, res) => {
     }
 };
 
+
+const GetAllSubCategoriesByCategorySlug = async (req, res) => {
+    try {
+        const { Slug } = req.body; 
+
+        const category = await CategoryModel.findOne({ Slug });
+        if(category){
+            const subcategories = await SubCategory.find({CategoryId: category._id,"audit.status": "Active" });
+            if (!subcategories || subcategories.length === 0) { 
+                return res.status(404).json({ message: 'No subcategories found', data: null });
+            }else{
+                return res.status(200).json({ message: 'Subcategories retrieved successfully', data: subcategories });
+            }
+        }else{
+            return res.status(404).json({ message: 'No Category  found', data: null });
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        return res.status(500).json({ message: "Internal Server Error", data: null, error: err });
+    }
+};
 
 const GetSubCategoryBySlug = async (req, res) => {
     try {
@@ -237,4 +259,4 @@ const   GetAll_Active_subCategories = async (req, res) => {
 
 
 module.exports = { CreateSubcategory,GetAllSubCategories,GetAllSubCategoriesByCategoryId,
-    GetSubCategoryBySlug,UpdateSubCategory,DeleteSubCategory,GetAll_Active_subCategories };
+    GetSubCategoryBySlug,UpdateSubCategory,DeleteSubCategory,GetAll_Active_subCategories ,GetAllSubCategoriesByCategorySlug};

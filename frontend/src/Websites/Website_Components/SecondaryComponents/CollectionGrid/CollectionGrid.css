@@ -1,0 +1,104 @@
+.main-heading-collection-grid {
+    padding-bottom: 45px;
+}
+
+.main-heading-collection-grid h2{
+    font-size: 44px;
+    font-weight: 900;
+  }
+
+
+.main-collection-grid-mn-wrpr {
+    margin: 60px 45px;
+  }
+
+.flex.justify-center.mt-4.gap-4.main-btn-wrapper {
+    margin: 60px 15px 15px 15px !important;
+    padding-bottom: 30px;
+}
+
+.main-collection-grid-primary-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: auto auto;          /* two rows */
+    gap: 10px;
+    width: 100%; /* adjust according to your need */
+    margin: 0 auto;
+  }
+  
+  .collection-display-one,
+  .collection-display-two,
+  .collection-display-three,
+  .collection-display-four,
+  .collection-display-five {
+    /* border: 2px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Make 1st and 2nd blocks span two columns */
+  .collection-display-one {
+    grid-column: 1 / 2; /* first column */
+    grid-row: 1;
+    height: 400px;
+    border-radius: 15px;
+  }
+
+  .collection-display-one img {
+    width: 100%;
+    object-fit: cover;
+    height: inherit;
+    padding: 1px 0px;
+    border-radius: 15px;
+}
+  
+  .collection-display-two {
+    grid-column: 2 / 4; /* second and third column */
+    grid-row: 1;
+    height: 400px;
+    border-radius: 15px;
+  }
+
+  .collection-display-two img {
+    width: 100%;
+    object-fit: cover;
+    height: inherit;
+    padding: 1px 0px;
+    border-radius: 15px;
+}
+  
+  /* Bottom three blocks */
+  .collection-display-three,
+  .collection-display-four,
+  .collection-display-five {
+    height: 550px;
+    border-radius: 15px;
+  }
+  
+
+  .collection-display-three img{
+    width: 100%;
+    object-fit: cover;
+    height: inherit;
+    padding: 1px 0px;
+    border-radius: 15px;
+  }
+
+  .collection-display-four img{
+    width: 100%;
+    object-fit: cover;
+    height: inherit;
+    padding: 1px 0px;
+    border-radius: 15px;
+  }
+
+  .collection-display-five img{
+    width: 100%;
+    object-fit: cover;
+    height: inherit;
+    padding: 1px 0px;
+    border-radius: 15px;
+  }

@@ -10,7 +10,7 @@ import './ProductCardSlider.css';
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
-import {getAllProductsBySlug} from '../../../../../Services/WebsiteServices/AllServices/ProductService'
+import {getAllSubCategoriesByCategorySlug} from '../../../../../Services/WebsiteServices/AllServices/SubCategoryService'
 import Productcard from '../../View/Productcard/Productcard';
 import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { addProductToWishlist, getWishListItems } from '../../../../../Services/WebsiteServices/AllServices/WishlistService';
 import { addProductToCart } from '../../../../../Services/WebsiteServices/AllServices/AddToCartService';
 import CollectionCard from "../../View/CollectionCard/CollectionCard";
-const CollectionCardSlider = () => {
+const CollectionCardSlider = ({ Slug }) => {
  
 
   const prevRef = useRef(null);
@@ -32,9 +32,9 @@ const [cartProductIds, setCartProductIds] = useState(new Set());
     useEffect(() => {
       
         if (!isFetchedRef.current) {
-            const fetchProduct = async () => {
+            const fetchSubCategory = async () => {
                 try {
-                    const response = await getAllProductsBySlug("sweat-shirt");
+                    const response = await getAllSubCategoriesByCategorySlug(Slug);
                     
                     if (response?.data) {
                       setproducts(response.data);
@@ -46,7 +46,7 @@ const [cartProductIds, setCartProductIds] = useState(new Set());
                     alert('Failed to fetch product. Please try again.');
                 }
             };
-            fetchProduct();
+            fetchSubCategory();
             isFetchedRef.current = true;
         }
     }, []);
