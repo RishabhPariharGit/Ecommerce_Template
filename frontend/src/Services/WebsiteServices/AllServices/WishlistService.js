@@ -21,7 +21,7 @@ export const addProductToWishlist = async (ProductData) => {
       );
   
       console.log(response);
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Error adding product to Wishlist:', error);
       throw error;

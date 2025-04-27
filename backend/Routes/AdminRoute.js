@@ -38,9 +38,7 @@ const {
 } = require("../Controllers/ProductController");
 
 
-const {AddToWishlist,
-  GetWishListItems,
-  DeleteWishlistItem}= require("../Controllers/WishListItemController");
+
 
 
 
@@ -110,17 +108,6 @@ router.get("/GetAllProducts", GetAllProducts);
 router.get("/Product/Edit/:Slug", GetProductBySlug);
 router.put("/UpdateProduct/:slug", UpdateProduct);
 router.delete('/DeleteProduct/:id', DeleteProduct);
-
-
-
-
-
-
-
-//WishlistItem Route
-router.post('/AddToWishlist', AddToWishlist);
-router.get("/GetWishListItems", GetWishListItems);
-router.delete('/removeWishListItem/:id', DeleteWishlistItem);
 
 
 

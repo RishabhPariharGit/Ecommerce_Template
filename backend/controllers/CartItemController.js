@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const CartItem = require('../Models/CartItems'); 
 const Product = require('../Models/Product'); 
-
+const mongoose = require('mongoose');
 
 const AddToCart = async (req, res) => {
   try {
@@ -48,7 +48,7 @@ const AddToCart = async (req, res) => {
       cartItem.Quantity += Quantity;
       cartItem.TotalPrice = cartItem.Quantity * product.Price;
       const result = await cartItem.save();
-      return res.status(201).json({ message: 'Cart updated successfully.', cartItem });
+      return res.status(201).json({ message: 'Product added to cart successfully.', cartItem });
     } else {
       // Create a new cart entry
       cartItem = new CartItem({
@@ -153,4 +153,51 @@ console.log(GUID)
   }
 };
 
-module.exports = { AddToCart ,GetCartItems ,DeleteCartItem,MergeCartItems};
+
+
+
+const GetCartItemsCount = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    const guid = req.headers['x-anonymous-id'];
+
+    if (!token && !guid) {
+      return res.status(400).json({ message: 'Unauthorized: Token or GUID is required.' });
+    }
+
+    let filter = {};
+
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const UserId = decoded.userId;
+      filter.UserId = new mongoose.Types.ObjectId(UserId);  // 👈 convert to ObjectId
+    } else if (guid) {
+      filter.GUID = guid;
+    }
+
+    const result = await CartItem.aggregate([
+      { $match: filter },
+      {
+        $group: {
+          _id: null,
+          totalQuantity: { $sum: '$Quantity' }
+        }
+      }
+    ]);
+
+    const totalQuantity = result.length > 0 ? result[0].totalQuantity : 0;
+
+    return res.status(200).json({
+      message: "Successfully retrieved total quantity",
+      data: totalQuantity
+    });
+
+  } catch (error) {
+    console.error('Error fetching cart item count:', error);
+    return res.status(500).json({ message: 'Server error.' });
+  }
+};
+
+
+
+module.exports = { AddToCart ,GetCartItems ,DeleteCartItem,MergeCartItems,GetCartItemsCount};

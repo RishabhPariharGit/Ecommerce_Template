@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import {
   ShoppingCartOutlined,
   FavoriteBorderOutlined,
@@ -14,14 +14,17 @@ import {
   getAllSubCategoryforSite,
   getAllSubCategoriesByCategoryId
 } from '../../../../Services/WebsiteServices/AllServices/SubCategoryService';
+import { getCartItemsCount } from '../../../../Services/WebsiteServices/AllServices/AddToCartService';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { CartContext } from '../../../../Context/CartContext';
 
 const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subCategoriesMap, setSubCategoriesMap] = useState({}); // To store fetched subcategories
   const [Genders, SetGender] = useState({});
+  const { cartCount } = useContext(CartContext);
   const navigate = useNavigate();
 
   // Fetch categories on mount
@@ -42,6 +45,7 @@ const Navbar = () => {
         console.error('Error fetching categories:', err);
       }
     };
+
     fetchCategories();
   }, []);
 
@@ -230,6 +234,7 @@ const Navbar = () => {
 
             <div className="header-item item-right">
               <div className="cstm-right-icons">
+                {cartCount}
                 <button className="btn" onClick={handleAddtocartclick}>
                   <ShoppingCartOutlined />
                 </button>
