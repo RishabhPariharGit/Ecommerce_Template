@@ -27,7 +27,13 @@ const {
 const {AddToCart,
   GetCartItems,
   DeleteCartItem,
-  MergeCartItems}= require("../Controllers/CartItemController")
+  MergeCartItems,
+  GetCartItemsCount}= require("../Controllers/CartItemController")
+
+
+  const {AddToWishlist,
+    GetWishListItems,
+    DeleteWishlistItem}= require("../Controllers/WishListItemController");
 
 //Uer Route
 router.post("/RegisterUser", RegisterUser);
@@ -57,7 +63,15 @@ router.get("/GetAllActiveSubCategory", GetAll_Active_subCategories);
 // Add To cart
 router.post('/AddToCart', AddToCart);
 router.get("/GetCartItems", GetCartItems);
+router.get("/GetCartItemsCount", GetCartItemsCount);
 router.delete('/removeCartItem/:id', DeleteCartItem);
 router.post('/mergeCartItems', MergeCartItems);
+
+
+
+//WishlistItem Route
+router.post('/AddToWishlist', AddToWishlist);
+router.get("/GetWishListItems", GetWishListItems);
+router.delete('/removeWishListItem/:id', DeleteWishlistItem);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef,useContext  } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,6 +7,7 @@ import { addProductToCart, getCartItems } from '../../../Services/WebsiteService
 import { addProductToWishlist, getWishListItems } from '../../../Services/WebsiteServices/AllServices/WishlistService';
 import './Collectionpg.css';
 import Productcard from '../../Website_Components/Cards/View/Productcard/Productcard';
+import { CartContext } from '../../../Context/CartContext';
 
 const MainProductPage = () => {
     const { slug } = useParams();
@@ -15,10 +16,12 @@ const MainProductPage = () => {
     const [cartProductIds, setCartProductIds] = useState(new Set());
     const [wishlistedProductIds, setWishlistedProductIds] = useState(new Set());
     const isFetchedRef = useRef(false);
+    const { fetchCartCount } = useContext(CartContext);
 
     useEffect(() => {
         if (!isFetchedRef.current) {
             const fetchCartItems = async () => {
+                debugger
                 const token = Cookies.get('token');
                 if (!token) return;
                 try {
@@ -31,6 +34,7 @@ const MainProductPage = () => {
             };
 
             const fetchWishListItems = async () => {
+                debugger
                 const token = Cookies.get('token');
                 if (!token) {
                     console.error('No token found');
@@ -51,6 +55,7 @@ const MainProductPage = () => {
         }
     }, []);
 
+    
     const handleAddToCart = async (product) => {
         
         let token = Cookies.get('token');
@@ -77,6 +82,7 @@ const MainProductPage = () => {
              
                 setCartProductIds(prev => new Set([...prev, product._id]));
                 alert(response.message);
+                fetchCartCount();
             } else {
                 alert('Failed to add product to cart.');
             }
@@ -98,8 +104,8 @@ const MainProductPage = () => {
                 ProductId: product._id,
                 Quantity: 1,
             });
-            if (response.status === 201) {
-                alert('Product added to wishlist successfully!');
+            if (response ) {
+                alert(response.message);
                 setWishlistedProductIds(prev => new Set(prev).add(product._id));
             } else {
                 alert('Failed to add product to wishlist.');
