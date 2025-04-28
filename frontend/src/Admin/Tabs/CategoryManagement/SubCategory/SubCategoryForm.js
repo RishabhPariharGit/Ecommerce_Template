@@ -17,7 +17,9 @@ const SubCategoryForm = ({ isEditMode = false }) => {
         Slug: '',
         label_image: '',
         CategoryId: [],
-        Status: ''
+        Status: '',
+        ISLandscape :false,
+        Show_In_Colletion_Grid:false,
     });
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +67,9 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                             Slug: category.Slug,
                             label_image: category.label_image,
                             CategoryId: category.CategoryId || '',
-                            Status: category.audit.status
+                            Status: category.audit.status,
+                            ISLandscape :category.ISLandscape,
+                            Show_In_Colletion_Grid:category.Show_In_Colletion_Grid
                         });
                         setPreviewSource(category.label_image);
                         isFetchedRef.current = true; // Mark as fetched after successful data load
@@ -92,9 +96,10 @@ const SubCategoryForm = ({ isEditMode = false }) => {
     }, [isEditMode, slug]);
 
     const handleInputChange = (e) => {
+        const { name, value, type, checked } = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: type === 'checkbox' ? checked : value,
         });
     };
 
@@ -235,6 +240,34 @@ const SubCategoryForm = ({ isEditMode = false }) => {
                                                 </select>
                                             </td>
                                         )}
+                                    </tr>
+                                    <tr>
+                                    <td>
+                                            <div>
+                                                <input
+                                                    type="checkbox"
+                                                    name="ISLandscape"
+                                                    checked={formData.ISLandscape}
+                                                    onChange={handleInputChange}
+                                                />
+
+                                                <span className="formlabel pl-10 ">ISLandscape</span>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <input
+                                                    type="checkbox"
+                                                    name="Show_In_Colletion_Grid"
+                                                    checked={formData.Show_In_Colletion_Grid}
+                                                    onChange={handleInputChange}
+                                                />
+
+                                                <span className="formlabel pl-10 ">Show In Colletion Grid</span>
+                                            </div>
+
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>

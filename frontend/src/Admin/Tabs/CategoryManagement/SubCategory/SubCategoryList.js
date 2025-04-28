@@ -94,6 +94,33 @@ const SubCategoryList = () => {
                 ),
             },
             {
+                accessorKey: 'CategoryId',
+                header: 'Category Name',
+                enableSorting: true,
+                enableResizing: true,
+                cell: ({ row }) => {
+                  // Join category names from CategoryId array
+                  const categoryNames = row.original.CategoryId
+                    ? row.original.CategoryId.map(category => category.Name).join(", ")
+                    : 'No Categories';
+                  
+                  return <span>{categoryNames}</span>;  // Display category names
+                },
+              },
+            {
+                accessorKey: 'Show_In_Colletion_Grid',
+                header: 'Show_In_Colletion_Grid',
+                enableSorting: true,
+                enableResizing: true,
+                cell: ({ getValue, row, column }) => (
+                    <EditableCell
+                        initialValue={getValue()}
+                        row={row}
+                        column={column}
+                    />
+                ),
+            },
+            {
                 accessorKey: 'audit.status',
                 header: 'Status',
                 enableSorting: true,
