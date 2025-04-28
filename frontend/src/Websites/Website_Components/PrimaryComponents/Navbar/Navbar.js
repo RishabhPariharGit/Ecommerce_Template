@@ -234,7 +234,7 @@ const Navbar = () => {
 
             <div className="header-item item-right">
               <div className="cstm-right-icons">
-                {cartCount}
+                <div className='cart-count-mn-class'>{cartCount}</div>
                 <button className="btn" onClick={handleAddtocartclick}>
                   <ShoppingCartOutlined />
                 </button>

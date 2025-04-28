@@ -36,10 +36,12 @@ a{
 .custom-header-cls{
 	display: block;
 	width: 100%;
-	position: relative;
-	z-index: 99;
+	position: sticky;
+    z-index: 1000;
+    top: 35px;
 	padding:15px;
     border-bottom: 1px solid #d2d2d2;
+	background-color: white;
 }
 .custom-header-cls .item-left{
 	flex:0 0 17%;
@@ -472,4 +474,16 @@ ul.menu-main {
 
 .cstm-right-icons button:hover{
 background-color: #d2d2d22d !important; 
+}
+
+.cart-count-mn-class {
+    width: fit-content;
+    color: white;
+    height: fit-content;
+	position: relative;
+	left: 10px;
+    border-radius: 3px;
+    font-size: 11px;
+    padding: 1px 6px;
+    background-color: black;
 }

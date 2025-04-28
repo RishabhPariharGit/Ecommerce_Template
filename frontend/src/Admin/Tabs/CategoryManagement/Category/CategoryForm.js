@@ -93,7 +93,7 @@ const CategoryForm = ({ isEditMode = false }) => {
     const handleSubmitFile = async (e) => {
 
         e.preventDefault();
-        debugger
+        
         try {
             let response;
             if (isEditMode) {

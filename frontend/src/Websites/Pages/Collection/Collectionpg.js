@@ -21,7 +21,7 @@ const MainProductPage = () => {
     useEffect(() => {
         if (!isFetchedRef.current) {
             const fetchCartItems = async () => {
-                debugger
+                
                 const token = Cookies.get('token');
                 if (!token) return;
                 try {
@@ -34,7 +34,7 @@ const MainProductPage = () => {
             };
 
             const fetchWishListItems = async () => {
-                debugger
+                
                 const token = Cookies.get('token');
                 if (!token) {
                     console.error('No token found');
