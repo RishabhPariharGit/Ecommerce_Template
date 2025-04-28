@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { getCartItems, removeCartItem } from '../../../Services/WebsiteServices/AllServices/AddToCartService';
 import './Cartpg.css'
+import Footer from '../../Website_Components/PrimaryComponents/Footer/Footer';
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -88,6 +89,7 @@ const CartItems = () => {
   }
 
   return (
+    <>
     <div className="cart-items-main-wrapper">
     <div className="cart-items-main-heading">
       <h2>Your Cart Items</h2>
@@ -129,13 +131,17 @@ const CartItems = () => {
       {/* Total and Checkout Section */}
       <div className='main-cart-items-left-half-wrapper-main-class'>
       <div className="cart-total">
-        <h3>Total : <span>$ {calculateTotal()}</span></h3>
+      <h5>Item Toal Price : <span id='item-total-p'>$ {calculateTotal()}</span></h5>
+      <h5>Discount : <span id='item-total-disc'>$ {calculateTotal()}</span></h5>
+        <h3>Total : <span id='item-total-bill'>$ {calculateTotal()}</span></h3>
         <p>Tax included and shipping calculated at checkout</p>
         <button className="checkout-button"  onClick={() => handleCheckout()} >Checkout</button>
       </div>
       </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
