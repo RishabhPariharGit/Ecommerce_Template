@@ -6,7 +6,7 @@ const { GeneralStatus } = require('../Enum/Enum');
 const fs = require('fs');  
 
 const CreateSubcategory = async (req, res) => {
-    const { Name, Description, Slug, label_image, CategoryId } = req.body;
+    const { Name, Description, Slug, label_image, CategoryId,Show_In_Colletion_Grid,ISLandscape } = req.body;
 
     try {
         if (!req.user || !req.user._id) {
@@ -44,6 +44,8 @@ const CreateSubcategory = async (req, res) => {
             label_image: uploadedImageUrl,
             Slug,
             CategoryId,
+            Show_In_Colletion_Grid,
+            ISLandscape,
             audit: {
                 createdDate: new Date(),
                 createdBy: req.user._id,  
@@ -64,23 +66,28 @@ const CreateSubcategory = async (req, res) => {
     }
 };
 
+
+
 const GetAllSubCategories = async (req, res) => {
     try {
-        const subcategories = await SubCategory.find();
+       
+        const subcategories = await SubCategory.find()
+          .populate('CategoryId', 'Name'); 
         
         if (!subcategories || subcategories.length === 0) {
-            return res.status(404).json({ message: 'No subcategories found', data: null });
+          return res.status(404).json({ message: 'No subcategories found', data: null });
         }
-
+    
         return res.status(200).json({
-            message: "Successfully retrieved subcategories",
-            data: subcategories
-        })
-    } catch (err) {
+          message: "Successfully retrieved subcategories with category information",
+          data: subcategories
+        });
+      } catch (err) {
         console.error("Error:", err);
         return res.status(500).json({ message: "Internal Server Error", data: null, error: err });
-    }
+      }
 };
+
 
 
 const GetAllSubCategoriesByCategoryId = async (req, res) => {
@@ -140,7 +147,7 @@ const GetSubCategoryBySlug = async (req, res) => {
 
 const UpdateSubCategory = async (req, res) => {
     const { slug } = req.params;
-    const { Name, Description, label_image, CategoryId, Status } = req.body;
+    const { Name, Description, label_image, CategoryId, Status ,Show_In_Colletion_Grid,ISLandscape} = req.body;
 
     try {
         if (!req.user || !req.user._id) {
@@ -176,6 +183,8 @@ const UpdateSubCategory = async (req, res) => {
         existingSubCategory.label_image = uploadedImageUrl;
         existingSubCategory.CategoryId = CategoryId;
         existingSubCategory.audit.status = Status;
+        existingSubCategory.Show_In_Colletion_Grid  =Show_In_Colletion_Grid;
+        existingSubCategory.ISLandscape  =ISLandscape;
         existingSubCategory.audit.updatedDate = new Date();
         existingSubCategory.audit.updatedBy = req.user._id;
 

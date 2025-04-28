@@ -23,7 +23,14 @@ const SubcategorySchema = new mongoose.Schema({
         ref: 'Category',
         required: true
     }],
-    
+    Show_In_Colletion_Grid: { 
+        type:Boolean,
+        default: false
+    },
+    ISLandscape: { 
+        type:Boolean,
+        default: false
+    },
     audit: CommonFieldsSchema
 });
 
