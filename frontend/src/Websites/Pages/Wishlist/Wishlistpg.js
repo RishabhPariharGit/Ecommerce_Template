@@ -1,12 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef,useContext } from 'react';
 import Cookies from 'js-cookie';
 import { getWishListItems,removeWishListItem } from '../../../Services/WebsiteServices/AllServices/WishlistService';
+import { addProductToCart } from '../../../Services/WebsiteServices/AllServices/AddToCartService';
+import { CartContext } from '../../../Context/CartContext';
+import { WishlistContext } from '../../../Context/WishlistContext';
+ import './Wishlistpage.css'
 
 const WishlistItems = () => {
   const [WishListItems, setWishListItems] = useState([]); // Ensure default as an array
   const [loading, setLoading] = useState(true);
   const isFetchedRef = useRef(false);
-
+  const { fetchCartCount } = useContext(CartContext);
+  const { fetchWishlistCount } = useContext(WishlistContext);
   useEffect(() => {
     if (!isFetchedRef.current) {
       const fetchWishListItems = async () => {
@@ -40,10 +45,37 @@ const WishlistItems = () => {
 
       // Update local state to remove the item
       setWishListItems((prevItems) => prevItems.filter(item => item._id !== itemId));
+      fetchWishlistCount();
     } catch (error) {
       console.error('Error removing wishlist item:', error);
     }
   };
+  const handleAddToCart = async (product) => {
+        debugger
+   
+    try {
+        const payload = {
+            ProductId: product.ProductId._id,
+            Quantity: 1,
+        };
+
+       
+        const response = await addProductToCart(payload);
+       
+        if (response) {
+         
+            alert(response.message);
+            handleRemove(product._id)
+            fetchCartCount();
+        } else {
+            alert('Failed to add product to cart.');
+        }
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+        alert('An error occurred. Please try again.');
+    }
+};
+
  
   if (loading) {
     return <div>Loading wishlist items...</div>;
@@ -51,24 +83,36 @@ const WishlistItems = () => {
 
   return (
     <div className="wishlist-items">
-      <h2>Your Wishlist Items</h2>
-      <ul>
-        {Array.isArray(WishListItems) && WishListItems.map((item) => (
-          <li key={item._id} className="wishlist-item">
-            <div className="wishlist-item-details">
-             
-              <p><strong>Product:</strong> {item.ProductId.Name}</p>
-              <p><strong>Quantity:</strong> {item.Quantity}</p>
-              <p><strong>Description:</strong> {item.Description}</p>
-              <p><strong>Price:</strong> ${item.Price}</p>
-              <p><strong>Total:</strong> ${item.Price * item.Quantity}</p>
-              <button onClick={() => handleRemove(item._id)} className="remove-button">Remove</button>
-            </div>
-           
-          </li>
-        ))}
-      </ul>
-    </div>
+  <div className='wishlist-heading'>Your Wishlist Items</div>
+  <div className="wishlist-card-container">
+    {Array.isArray(WishListItems) && WishListItems.map((item) => (
+      <div key={item._id} className="wishlist-card">
+        <button 
+          onClick={() => handleRemove(item._id)} 
+          className="remove-icon"
+        >
+          &times;
+        </button>
+        <img
+          src={item.ProductId.Product_Main_image}
+          alt={item.ProductId.Name}
+          className="wishlist-card-image"
+        />
+        <div className="wishlist-card-details">
+          <h3>{item.ProductId.Name}</h3>
+          <p><strong>Price:</strong> ₹{item.ProductId.Price}</p>
+        </div>
+        <div className="wishlist-card-actions">
+          <button className="button" onClick={() => handleAddToCart(item)}>
+            Add To Bag
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+  
   );
 };
 

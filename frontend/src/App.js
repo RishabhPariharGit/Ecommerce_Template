@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WebsiteRoutes from './Routes/WebsiteRoutes';
 import AdminRoutes from './Routes/AdminRoutes';
 import { CartProvider } from './Context/CartContext';
-
+import { WishlistProvider } from './Context/WishlistContext';
 
 
 function App() {
@@ -13,9 +13,11 @@ function App() {
         <Route 
           path="/*" 
           element={
+            <WishlistProvider>
             <CartProvider>
               <WebsiteRoutes />
             </CartProvider>
+            </WishlistProvider>
           } 
         />
         <Route path="/admin/*" element={<AdminRoutes />} />
