@@ -1,11 +1,11 @@
 .cart-items-main-heading {
     text-align: center;
-    padding: 40px 0px;
+    padding: 70px 0px;
 }
 
 .cart-items-main-heading h2{
-    font-size: 44px;
-    font-weight: 900;
+    font-size: 40px;
+    font-weight: 600;
 }
 
 .primary-wrapper-cart-divide-in-two {
@@ -16,9 +16,10 @@
 
 .main-cart-items-right-half-wrapper-main-class {
     width: 50%;
-    height: 55vh;
+    height: 70vh;
     overflow-y: scroll;
     padding: 0px 10px;
+    margin-bottom: 70px;
 }
 
 .main-cart-items-left-half-wrapper-main-class{
@@ -97,19 +98,32 @@ button.remove-button{
 }
 
 .main-cart-items-left-half-wrapper-main-class .cart-total h3{
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 800;
     margin-bottom: 0px;
     
 }
 
-.main-cart-items-left-half-wrapper-main-class .cart-total span{
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: 1.5px;
-    margin-left: 25px;
+.main-cart-items-left-half-wrapper-main-class .cart-total h5{
+    font-size: 16px;
+    /* font-weight: 800; */
+    margin-bottom: 0px;
+    
 }
+
 
 .main-cart-items-left-half-wrapper-main-class .cart-total p{
     font-size: 14px;
+}
+
+span#item-total-p {
+    margin-left: 20px;
+}
+
+span#item-total-disc {
+    margin-left: 20px;
+}
+
+span#item-total-bill{
+    margin-left: 14px;
 }
