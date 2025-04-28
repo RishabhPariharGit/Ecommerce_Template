@@ -48,7 +48,7 @@ export const getCartItems = async (headers) => {
 
 export const getCartItemsCount = async (headers) => {
     try {
-        debugger
+        
         const response = await api.get('/GetCartItemsCount', { headers });
         return response.data;
     } catch (error) {

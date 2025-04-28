@@ -123,7 +123,7 @@ const SubCategoryForm = ({ isEditMode = false }) => {
     };
 
     const handleSubmitFile = async (e) => {
-        debugger
+        
         e.preventDefault();
         if (!formData.CategoryId) {
             toast.error('Please select a category.');

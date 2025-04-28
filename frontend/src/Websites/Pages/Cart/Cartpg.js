@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { getCartItems, removeCartItem } from '../../../Services/WebsiteServices/AllServices/AddToCartService';
+import './Cartpg.css'
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -87,35 +88,52 @@ const CartItems = () => {
   }
 
   return (
-    <div className="cart-items">
+    <div className="cart-items-main-wrapper">
+    <div className="cart-items-main-heading">
       <h2>Your Cart Items</h2>
-      <ul>
+      <p>Keep Shopping with us we are the number one shopping destination for you, Happy Shopping!</p>
+      </div>
+
+         
+      <div className='primary-wrapper-cart-divide-in-two'>
+      <div className='main-cart-items-right-half-wrapper-main-class'>
+      <ul className='main-cart-card-wrapper-mn-class'>
         {cartItems.map((item) => (
           <li key={item._id} className="cart-item">
             <div className="cart-item-details">
               {item.ProductId.Product_Main_image && (
-                <img 
+                <div className='cart-card-main-image-wrapper'>                <img 
                   src={item.ProductId.Product_Main_image} 
                   alt={item.ProductId.Name} 
                   className="cart-item-image" 
-                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                 />
+                </div>
               )}
-              <p><strong>Product:</strong> {item.ProductId.Name}</p>
+              <div className='product-cart-card-info-wrapper'>
+              <div className='product-cart-card-info-wrapper-name-and-quantity'>
+              <p>{item.ProductId.Name}</p>
               <p><strong>Quantity:</strong> {item.Quantity}</p>
-              <p><strong>Description:</strong> {item.Description}</p>
-              <p><strong>Price:</strong> ${item.Price}</p>
+              </div>
+              <div className='product-cart-card-info-wrapper-price-and-remove'>
+              <p><strong>Item Price:</strong> ${item.Price}</p>
               <p><strong>Total:</strong> ${item.Price * item.Quantity}</p>
               <button onClick={() => handleRemove(item._id)} className="remove-button">Remove</button>
+              </div>
+              </div>
             </div>
           </li>
         ))}
       </ul>
+      </div>
 
       {/* Total and Checkout Section */}
+      <div className='main-cart-items-left-half-wrapper-main-class'>
       <div className="cart-total">
-        <h3>Total: ${calculateTotal()}</h3>
+        <h3>Total : <span>$ {calculateTotal()}</span></h3>
+        <p>Tax included and shipping calculated at checkout</p>
         <button className="checkout-button"  onClick={() => handleCheckout()} >Checkout</button>
+      </div>
+      </div>
       </div>
     </div>
   );

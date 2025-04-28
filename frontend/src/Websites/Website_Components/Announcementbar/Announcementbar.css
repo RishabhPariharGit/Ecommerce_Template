@@ -1,6 +1,8 @@
 .Announcement-main-wrapper {
     background-color: #000000;
-    position: relative;
+    position: sticky;
+    z-index: 1000;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
