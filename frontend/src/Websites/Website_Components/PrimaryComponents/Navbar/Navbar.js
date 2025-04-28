@@ -18,6 +18,7 @@ import { getCartItemsCount } from '../../../../Services/WebsiteServices/AllServi
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { CartContext } from '../../../../Context/CartContext';
+import { WishlistContext } from '../../../../Context/WishlistContext';
 
 const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -25,6 +26,9 @@ const Navbar = () => {
   const [subCategoriesMap, setSubCategoriesMap] = useState({}); // To store fetched subcategories
   const [Genders, SetGender] = useState({});
   const { cartCount } = useContext(CartContext);
+  const { wishlistCount } = useContext(WishlistContext);
+
+
   const navigate = useNavigate();
 
   // Fetch categories on mount
@@ -238,6 +242,8 @@ const Navbar = () => {
                 <button className="btn" onClick={handleAddtocartclick}>
                   <ShoppingCartOutlined />
                 </button>
+                <div className='cart-count-mn-class'>{wishlistCount}</div>
+
                 <button className="btn" onClick={handleWishlistclick}>
                   <FavoriteBorderOutlined />
                 </button>

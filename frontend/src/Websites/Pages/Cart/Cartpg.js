@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef ,useContext} from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { getCartItems, removeCartItem } from '../../../Services/WebsiteServices/AllServices/AddToCartService';
 import './Cartpg.css'
+import { CartContext } from '../../../Context/CartContext';
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const isFetchedRef = useRef(false);
   const navigate = useNavigate();
+  const { fetchCartCount } = useContext(CartContext);
   useEffect(() => {
     if (!isFetchedRef.current) {
       const fetchCartItems = async () => {
@@ -57,6 +59,7 @@ const CartItems = () => {
     try {      
       await removeCartItem(itemId);
       setCartItems((prevItems) => prevItems.filter(item => item._id !== itemId));
+      fetchCartCount();
     } catch (error) {
       console.error('Error removing cart item:', error);
     }

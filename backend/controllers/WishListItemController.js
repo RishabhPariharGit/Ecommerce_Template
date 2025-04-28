@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Wishlist = require('../Models/Wishlist ');
+const mongoose = require('mongoose');
 
 const AddToWishlist = async (req, res) => {
   try {
@@ -43,6 +44,41 @@ const GetWishListItems = async (req, res) => {
     return res.status(500).json({ message: 'Server error.' });
   }
 };
+
+const GetWishlistCount = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+      return res.status(400).json({ message: 'Unauthorized: Token is required.' });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const UserId = decoded.userId;
+
+    const result = await Wishlist.aggregate([
+      { $match: { UserId: new mongoose.Types.ObjectId(UserId) } },
+      {
+        $group: {
+          _id: null,
+          totalItems: { $sum: 1 }  // 👈 count documents
+        }
+      }
+    ]);
+
+    const totalItems = result.length > 0 ? result[0].totalItems : 0;
+
+    return res.status(200).json({
+      message: "Successfully retrieved total wishlist items",
+      data: totalItems
+    });
+
+  } catch (error) {
+    console.error('Error fetching wishlist item count:', error);
+    return res.status(500).json({ message: 'Server error.' });
+  }
+};
+
 const DeleteWishlistItem = async (req, res) => {
   const { id } = req.params; 
   console.log("id", req.params);
@@ -61,4 +97,4 @@ const DeleteWishlistItem = async (req, res) => {
   }
 };
 
-module.exports = {AddToWishlist,GetWishListItems,DeleteWishlistItem};
+module.exports = {AddToWishlist,GetWishListItems,DeleteWishlistItem,GetWishlistCount};

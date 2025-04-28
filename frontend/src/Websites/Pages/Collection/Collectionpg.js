@@ -8,6 +8,7 @@ import { addProductToWishlist, getWishListItems } from '../../../Services/Websit
 import './Collectionpg.css';
 import Productcard from '../../Website_Components/Cards/View/Productcard/Productcard';
 import { CartContext } from '../../../Context/CartContext';
+import { WishlistContext } from '../../../Context/WishlistContext';
 
 const MainProductPage = () => {
     const { slug } = useParams();
@@ -17,7 +18,7 @@ const MainProductPage = () => {
     const [wishlistedProductIds, setWishlistedProductIds] = useState(new Set());
     const isFetchedRef = useRef(false);
     const { fetchCartCount } = useContext(CartContext);
-
+    const { fetchWishlistCount } = useContext(WishlistContext);
     useEffect(() => {
         if (!isFetchedRef.current) {
             const fetchCartItems = async () => {
@@ -107,6 +108,7 @@ const MainProductPage = () => {
             if (response ) {
                 alert(response.message);
                 setWishlistedProductIds(prev => new Set(prev).add(product._id));
+                fetchWishlistCount();
             } else {
                 alert('Failed to add product to wishlist.');
             }
