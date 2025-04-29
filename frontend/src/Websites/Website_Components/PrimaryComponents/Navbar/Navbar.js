@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   ShoppingCartOutlined,
   FavoriteBorderOutlined,
@@ -6,6 +6,11 @@ import {
   LoginOutlined,
   LogoutOutlined
 } from '@mui/icons-material';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
+
+
+
 import './Navbar.css';
 import {
   getAllCategoryforSite
@@ -14,19 +19,20 @@ import {
   getAllSubCategoryforSite,
   getAllSubCategoriesByCategoryId
 } from '../../../../Services/WebsiteServices/AllServices/SubCategoryService';
-import { getCartItemsCount } from '../../../../Services/WebsiteServices/AllServices/AddToCartService';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { CartContext } from '../../../../Context/CartContext';
 import { WishlistContext } from '../../../../Context/WishlistContext';
 
 const Navbar = () => {
+
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subCategoriesMap, setSubCategoriesMap] = useState({}); // To store fetched subcategories
   const [Genders, SetGender] = useState({});
   const { cartCount } = useContext(CartContext);
   const { wishlistCount } = useContext(WishlistContext);
+  const token = Cookies.get('token');
 
 
   const navigate = useNavigate();
@@ -157,7 +163,7 @@ const Navbar = () => {
   }, []);
 
   const handleLoginClick = () => navigate('/login');
-  const handleProfileClick = () => navigate('/UserProfile');
+  const handleProfileClick = () => navigate('/My/Profile');
   const handleAddtocartclick = () => navigate('/Checkout/cart');
   const handleWishlistclick = () => {
     const token = Cookies.get('token');
@@ -215,10 +221,10 @@ const Navbar = () => {
                       </li>
                     ))}
 
-                  <li 
+                  <li
                     className="menu-item-has-children"
-                  onMouseEnter={handleGenderHover}>
-                   <Link to={`/collections/all-products`}>Gender</Link>
+                    onMouseEnter={handleGenderHover}>
+                    <Link to={`/collections/all-products`}>Gender</Link>
 
                     {Genders.length > 0 && (
                       <div className="sub-menu">
@@ -252,13 +258,23 @@ const Navbar = () => {
                     <PersonOutline />
                   </button>
                   <div className="dropdown-menu">
-                    <button className="dropdown-item" onClick={handleLoginClick}>
-                      <LoginOutlined /> Login
+                    <button className="dropdown-item" onClick={handleProfileClick}>
+                      <AccountCircleOutlinedIcon />  Account
                     </button>
-                    <button className="dropdown-item" onClick={handleLogout}>
-                      <LogoutOutlined /> Logout
+                    <button className="dropdown-item" onClick={() => navigate('/My/Orders')}>
+                      <ListAltOutlinedIcon />  Orders
                     </button>
+                    {!token ? (
+                      <button className="dropdown-item" onClick={handleLoginClick}>
+                        <LoginOutlined /> Login
+                      </button>
+                    ) : (
+                      <button className="dropdown-item" onClick={handleLogout}>
+                        <LogoutOutlined /> Logout
+                      </button>
+                    )}
                   </div>
+
                 </div>
               </div>
             </div>

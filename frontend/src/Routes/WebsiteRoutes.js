@@ -13,6 +13,7 @@ import WishlistItems from '../Websites/Pages/Wishlist/Wishlistpg';
 import Address from '../Websites/Pages/Address/Addresspg'
 import Layout from '../Websites/Website_Components/Layout/Layout';
 import PaymentPage from '../Websites/Pages/PaymentPage/PaymentPage';
+import Orders from '../Websites/Pages/Orders/Orders';
 
 const WebsiteRoutes = () => {
   return (
@@ -25,7 +26,8 @@ const WebsiteRoutes = () => {
       <Route path="/collections/:slug" element={<MainProductPage />} />
       <Route path="/textoverimage" element={<Textoverimage />} />     
       <Route path="/product/:slug" element={<SingleProductpage />} />
-      <Route path="/UserProfile" element={<UserProfile />} />
+      <Route path="/My/Profile" element={<UserProfile />} />
+      <Route path="/My/Orders" element={<Orders />} />
       <Route path="/Checkout/cart" element={<CartItems />} />
       <Route path="/Checkout/address" element={<Address />} />
       <Route path="/Wishlist" element={<WishlistItems />} />

@@ -29,15 +29,12 @@ const UserProfile = () => {
     }
     }, []);
   
-    if (!userData) {
-      return <div>Loading user data...</div>;
-    }
+   
 
   return (
     <div className="user-profile">
       <h2>User Profile</h2>
-      <p><strong>Name:</strong> {userData.Name}</p>
-      <p><strong>Email:</strong> {userData.Email}</p>
+     
     </div>
   );
 };
