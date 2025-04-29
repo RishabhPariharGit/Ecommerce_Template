@@ -19,15 +19,18 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
+        padding: 8px 0px;
     }
     
     p.main-abt {
         font-size: 22px;
         font-weight: 600;
+        margin-bottom: 10px;
     }
     
     p.main-quick{
         font-size: 22px;
         font-weight: 600; 
+        margin-bottom: 10px;
     }
     
