@@ -7,6 +7,8 @@ import Footer from '../../Website_Components/PrimaryComponents/Footer/Footer';
 import ProductCardSlider from '../../Website_Components/Cards/Layout/Slider/ProductCardSlider';
 import CollectionCardSlider from '../../Website_Components/Cards/Layout/Slider/CollectionCardSlider';
 import CollectionGrid from '../../Website_Components/SecondaryComponents/CollectionGrid/CollectionGrid';
+import ScrollingText from '../../Website_Components/SecondaryComponents/ScrollingText/ScrollingText';
+import ScrollingTextBig from '../../Website_Components/SecondaryComponents/ScollingTextBig/ScrollingTextBig';
 
 
 
@@ -14,7 +16,9 @@ const Home = () => {
   return (
     <>
     <ImageSlider/>
+    <ScrollingText/>
     <CollectionCardSlider Slug="summer-collection" />
+    <ScrollingTextBig/>
     <CollectionGrid/>
     <ProductCardSlider/>
     <CollectionCardSlider Slug="Topwear" />
