@@ -35,63 +35,59 @@ const UserProfile = () => {
 
   return (
     <>
-    <div className="account-container">
-      <div className="sidebar">
-        <h3>Account</h3>
-        <ul>
-          <li>Overview</li>
-          <li>Orders & Returns</li>
-          <li>Coupons</li>
-          <li>Myntra Credit</li>
-          <li>Profile</li>
-          <li>Saved Cards</li>
-          <li>Saved UPI</li>
-          <li>Addresses</li>
-          <li>Delete Account</li>
-        </ul>
-      </div>
+      <div className="account-container">
+        <div className='col-md-3'>
+          <div className="sidebar">
 
-      <div class="page-profile">
-        <div class="profile-card">
-          <div class="profile-infoLabel">Profile Details</div>
-          <table class="profile-infoTable">
-            <tbody>
-              <tr>
-                <td className='heading'>Full Name</td>
-                <td>Pallavi Hanwat</td>
+            <ul>
+              <li>Profile</li>
+              <li>Orders & Returns</li>
+              <li>Addresses</li>
+              <li>FAQ</li>
+            </ul>
+          </div>
+        </div>
+        <div class="page-profile className='col-md-9'">
+          <div class="profile-card">
+            <div class="profile-infoLabel">Profile Details</div>
+            <table class="profile-infoTable">
+              <tbody>
+                <tr>
+                  <td className='heading'>Full Name</td>
+                  <td>Pallavi Hanwat</td>
                 </tr>
                 <tr>
                   <td className='heading'>Mobile Number</td>
                   <td>7566203077</td>
-                  </tr>
-                  <tr>
-                    <td className='heading'>Email ID</td>
-                    <td>- not added -</td>
-                    </tr>
-                    <tr>
-                      <td className='heading'>Gender</td>
-                      <td>FEMALE</td>
-                      </tr>
-                      <tr>
-                        <td className='heading'>Date of Birth</td>
-                        <td>- not added -</td>
-                        </tr>
-                        <tr>
-                          <td className='heading'>Location</td>
-                          <td>- not added -</td>
-                          </tr>
-                          <tr>
-                            <td className='heading'>Alternate Mobile</td>
-                            <td>- not added -</td>
-                            </tr>
-                            <tr>
-                              <td className='heading'>Hint Name</td>
-                              <td>- not added -</td>
-                              </tr>
-                              </tbody>
-                              </table>
-                              <div class="profile-editButton"> EDIT </div></div></div>
-    </div>
+                </tr>
+                <tr>
+                  <td className='heading'>Email ID</td>
+                  <td>- not added -</td>
+                </tr>
+                <tr>
+                  <td className='heading'>Gender</td>
+                  <td>FEMALE</td>
+                </tr>
+                <tr>
+                  <td className='heading'>Date of Birth</td>
+                  <td>- not added -</td>
+                </tr>
+                <tr>
+                  <td className='heading'>Location</td>
+                  <td>- not added -</td>
+                </tr>
+                <tr>
+                  <td className='heading'>Alternate Mobile</td>
+                  <td>- not added -</td>
+                </tr>
+                <tr>
+                  <td className='heading'>Hint Name</td>
+                  <td>- not added -</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="profile-editButton"> EDIT </div></div></div>
+      </div>
     </>
 
   );
