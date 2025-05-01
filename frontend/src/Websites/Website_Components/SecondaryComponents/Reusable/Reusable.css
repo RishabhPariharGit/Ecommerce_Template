@@ -1,0 +1,17 @@
+.section-heading-main-wrapper {
+    text-align: center;
+    padding: 40px 0px;
+  }
+  
+  .section-main-heading p{
+    font-weight: 700;
+    font-size: 34px;
+    margin: 0px;
+  }
+  
+  .section-main-sub-heading p{
+    padding: 15px;
+    width: 50%;
+    margin: auto;
+    line-height: 26px;
+  }
