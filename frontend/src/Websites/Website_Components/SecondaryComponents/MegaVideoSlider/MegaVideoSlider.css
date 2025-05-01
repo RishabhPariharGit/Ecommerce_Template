@@ -1,0 +1,56 @@
+.mega-video-slider-container {
+    width: 100%;
+    padding: 120px 60px 40px 60px;
+    box-sizing: border-box;
+  }
+  
+  .mega-video-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    /* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); */
+  }
+  
+  .mega-video-element {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .mega-video-title {
+    margin-top: 16px;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .mega-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  
+  .mega-play-button {
+    font-size: 2rem;
+    background: #d2d2d2;
+    border: none;
+    color: white;
+    padding: 6px 18px;
+    border: 2px solid white;
+    cursor: pointer;
+    border-radius: 35px;
+}

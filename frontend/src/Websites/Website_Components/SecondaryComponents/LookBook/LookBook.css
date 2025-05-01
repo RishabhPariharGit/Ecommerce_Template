@@ -1,0 +1,141 @@
+.lookbook-main-heading-primary-wrapper {
+    padding-top: 100px;
+    padding-bottom: 20px;
+}
+
+.look-book-main-heading-main-wrapper p {
+    font-size: 44px;
+    font-weight: 900 !important;
+    text-align: center;
+}
+
+.look-book-main-sub-heading-main-wrapper p{
+    text-align: center;
+}
+.dot-point-1 {
+    top: 50%;
+    left: 25%;
+    cursor: pointer;
+  }
+
+  .dot-point-2 {
+    top: 60%;
+    left: 70%;
+    cursor: pointer;
+  }
+
+  .dot-point-3{
+    top: 69%;
+    left: 20%;
+    cursor: pointer;
+  }
+
+  .focus-point-one {
+    /* HTML: <div class="loader"></div> */
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #000;
+    box-shadow: 0 0 0 0 #0004;
+    animation: l1 1s infinite;
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @keyframes l1 {
+      100% {box-shadow: 0 0 0 30px #0000}
+  }
+   
+  
+  .main-lookbook-desc-wrapper-mn-class {
+    visibility: hidden;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 300px;
+    padding: 15px;
+    position: absolute;
+    z-index: 1;
+    top: -25px;
+    left: 25px;
+    text-align: left;
+  }
+
+
+  p.main-lookbook-desc-wrapper-mn-class-heading {
+    font-size: 15px;
+    font-weight: 600;
+    padding-bottom: 5px;
+}
+
+p.main-lookbook-desc-wrapper-mn-class-description {
+    padding-bottom: 10px;
+    color: grey;
+    font-size: 14px;
+}
+
+.main-lookbook-desc-wrapper-mn-class button{
+    background-color: black;
+    color: white;
+    padding: 4px 8px;
+    border: 1px solid black;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+  
+  .focus-point-one:hover .main-lookbook-desc-wrapper-mn-class {
+    visibility: visible !important;
+  }
+  
+
+  .main-lookbook-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 55px;
+  }
+
+  .main-lookbook-img-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .main-lookbook-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .main-lookbook-wrapper {
+      flex-direction: column;
+    }
+
+    .main-lookbook-img-wrapper {
+      width: 100%;
+    }
+
+    .focus-point-one {
+      width: 15px;
+      height: 15px;
+    }
+
+    .focus-point-one:hover {
+      width: 22px;
+      height: 22px;
+      border: 1px solid white;
+      font-weight: 600;
+    }
+
+    .focus-point-one span {
+      font-size: 10px;
+    }
+  }
