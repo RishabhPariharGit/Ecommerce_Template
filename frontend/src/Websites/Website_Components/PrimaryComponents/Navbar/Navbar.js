@@ -163,7 +163,6 @@ const Navbar = () => {
   }, []);
 
   const handleLoginClick = () => navigate('/login');
-  const handleProfileClick = () => navigate('/My/Profile');
   const handleAddtocartclick = () => navigate('/Checkout/cart');
   const handleWishlistclick = () => {
     const token = Cookies.get('token');
@@ -258,7 +257,7 @@ const Navbar = () => {
                     <PersonOutline />
                   </button>
                   <div className="dropdown-menu">
-                    <button className="dropdown-item" onClick={handleProfileClick}>
+                    <button className="dropdown-item" onClick={() => navigate('/My/Profile')}>
                       <AccountCircleOutlinedIcon />  Account
                     </button>
                     <button className="dropdown-item" onClick={() => navigate('/My/Orders')}>

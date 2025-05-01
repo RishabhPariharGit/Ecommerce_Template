@@ -6,38 +6,34 @@
     
   }
   
-  .sidebar {
+  .profile-sidebar {
     border-radius: 10px;
     border: 1px solid gray;
     margin: 15px;
     flex: 0 0 220px;
     padding: 20px;
 }
-  .sidebar h3 {
+  .profile-sidebar h3 {
     margin-bottom: 20px;
     font-size: 18px;
   }
   
-  .sidebar ul {
+  .profile-sidebar ul {
     list-style: none;
     padding: 0;
   }
   
-  .sidebar ul li {
+  .profile-sidebar ul li {
     padding: 10px 0;
     cursor: pointer;
     font-size: 14px;
     color: #333;
   }
   
-  .sidebar ul li:hover {
+  .profile-sidebar ul li:hover {
     color: #ff3e6c;
   }
   
- 
- 
-
-
  .page-profile {
     width: 76%;
     margin: 15px;
@@ -100,13 +96,37 @@ border-radius: 5px;
 width: fit-content;
 font-size: 12px;
 }
-* {
-margin: 0;
-list-style: none;
-padding: 0;
-text-decoration: none;
-font-family: 'Montserrat', sans-serif;
+
+.profile-logoutbtn{
+    cursor: pointer;
+    padding: 10px 80px;
+    text-align: center;
+    font-weight: 800;
+    background-color: white;
+    margin: 30px 24px;
+    color: black;
+    margin-top: 2px;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: fit-content;
+    font-size: 15px;
+
 }
+
 .heading{
     font-weight: bold;
+}
+
+.Account-item {
+    
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    gap: 12px;
+    border-bottom: 1px solid #8080805e;
 }
