@@ -22,7 +22,9 @@ const {
 
 const {
   RegisterUser,
-  LoginUser 
+  LoginUser ,
+  GetUserProfile,
+  UpdateUser
 } = require('../Controllers/UserController');
 
 const {AddToCart,
@@ -39,6 +41,8 @@ const {AddToCart,
 //Uer Route
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
+router.get('/UserProfile', GetUserProfile);
+router.put("/UpdateUser/:Username", UpdateUser);
 
 //Announcement Route
 router.get("/GetAllActiveAnnouncement", GetAll_Active_Announcements);
