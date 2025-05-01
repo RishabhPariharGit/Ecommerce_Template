@@ -417,4 +417,4 @@ const UpdateDefaultAddress = async (req, res) => {
 };
 
 module.exports = { RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser, 
-    DeleteUser,GetUserProfile,GetAddresses,AddAddress,UpdateUserAddress,DeleteUserAddress,UpdateDefaultAddress };
+    DeleteUser,GetUserProfile,GetAddresses,AddAddress,UpdateUserAddress,DeleteUserAddress,UpdateDefaultAddress }in;
