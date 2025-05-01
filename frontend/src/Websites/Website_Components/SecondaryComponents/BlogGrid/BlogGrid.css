@@ -1,0 +1,84 @@
+.blg-mn-heading .section-heading-main-wrapper{
+    padding: 0px;
+    text-align: left;
+    margin:0px 55px;
+}
+
+.blg-mn-heading .section-heading-main-wrapper .section-main-heading p{
+    font-size: 44px;
+    font-weight: 900;
+}
+
+.blg-mn-heading .section-main-sub-heading{
+    display: none;
+}
+
+.blg-mn-section {
+    display: flex;
+    gap: 20px;
+    padding: 40px 55px;
+    background: #fff;
+  }
+  
+  .blg-mn-card {
+    background-image: url('https://release-release.myshopify.com/cdn/shop/articles/image_5-min_7.png?v=1711103797&width=840');
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  
+  .blg-mn-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .blg-mn-card:first-child {
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    color: #fff;
+  }
+  
+  .blg-mn-content {
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .blg-mn-card:first-child .blg-mn-content {
+    background-color: transparent;
+    color: #fff;
+  }
+  
+  .blg-mn-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+  
+  .blg-mn-date {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  
+  .blg-mn-read-more {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 2px;
+  }
+  
+  .blg-mn-light-text {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+    padding: 20px;
+  }
+  

@@ -10,6 +10,9 @@ import CollectionGrid from '../../Website_Components/SecondaryComponents/Collect
 import ScrollingText from '../../Website_Components/SecondaryComponents/ScrollingText/ScrollingText';
 import ScrollingTextBig from '../../Website_Components/SecondaryComponents/ScollingTextBig/ScrollingTextBig';
 import MegaVideoSlider from '../../Website_Components/SecondaryComponents/MegaVideoSlider/MegaVideoSlider';
+import LookBook from '../../Website_Components/SecondaryComponents/LookBook/LookBook';
+import USP from '../../Website_Components/SecondaryComponents/USP/USP';
+import BlogGrid from '../../Website_Components/SecondaryComponents/BlogGrid/BlogGrid';
 
 
 
@@ -25,7 +28,10 @@ const Home = () => {
     <MegaVideoSlider/>
     <CollectionCardSlider Slug="Topwear" />
     <Textoverimage/>
+    <LookBook/>
+    <USP/>
     <Testimonialsnew/>
+    <BlogGrid/>
     <Newsletter/>
     <Footer/>
     </>
