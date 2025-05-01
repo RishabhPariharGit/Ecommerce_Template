@@ -26,7 +26,8 @@ const WebsiteRoutes = () => {
       <Route path="/collections/:slug" element={<MainProductPage />} />
       <Route path="/textoverimage" element={<Textoverimage />} />     
       <Route path="/product/:slug" element={<SingleProductpage />} />
-      <Route path="/My/Profile" element={<UserProfile />} />
+      <Route path="/My/Profile" element={<UserProfile isEditMode={false}/>} />
+      <Route path="/My/Profile/Edit" element={<UserProfile isEditMode={true}/>} />
       <Route path="/My/Orders" element={<Orders />} />
       <Route path="/Checkout/cart" element={<CartItems />} />
       <Route path="/Checkout/address" element={<Address />} />

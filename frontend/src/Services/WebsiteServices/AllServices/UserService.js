@@ -60,6 +60,7 @@ export const getUserByUsername = async (Username) => {
 };
 
 export const updateUser = async (Username, UserData) => {
+  debugger
   try {
     const response = await api.put(`/UpdateUser/${Username}`, UserData); 
     return response;

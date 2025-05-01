@@ -7,8 +7,8 @@ const AddressModel = require('../Models/Address');
 
 const RegisterUser = async (req, res) => {
     try {
-        const { Name, Username, Email, Phone, Password, IsAdmin, IsSystemAdmin } = req.body;
-        if (!Name || !Username || !Email || !Phone || !Password) {
+        const { FirstName, LastName, Username, Email, Phone, Password, IsAdmin, IsSystemAdmin, AlternatePhone, Gender, DateOfBirth } = req.body;
+        if (!FirstName || !LastName || !Username || !Email || !Phone || !Password) {
             return res.status(400).json({ message: "All fields are required" });
         }
         const existingUser = await UserModel.findOne({ Email });
@@ -18,13 +18,17 @@ const RegisterUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(Password, salt);
         const newUser = new UserModel({
-            Name,
+            FirstName,
+            LastName,
             Username,
             Email,
             Phone,
             Password: hashedPassword,
             IsAdmin,
-            IsSystemAdmin
+            IsSystemAdmin,
+            AlternatePhone,
+            Gender,
+            DateOfBirth
         });
         const savedUser = await newUser.save();
         if (!savedUser) {
@@ -33,7 +37,7 @@ const RegisterUser = async (req, res) => {
         if (IsAdmin) {
             const adminRole = new RoleModel({
                 RoleName: 'Admin',
-                userId: savedUser._id 
+                userId: savedUser._id
             });
 
             await adminRole.save();
@@ -74,7 +78,7 @@ const LoginUser = async (req, res) => {
             httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'Lax',
-            maxAge: 30 * 24 * 60 * 60 * 1000, 
+            maxAge: 30 * 24 * 60 * 60 * 1000,
         });
         const roleData = await RoleModel.findOne({ userId: user._id });
         if (roleData != null) {
@@ -99,19 +103,19 @@ const GetAllUsers = async (req, res) => {
         if (!Users || Users.length === 0) {
             return res.status(404).json({ message: 'No users found' });
         }
-        const userIds = Users.map(user => user._id); 
+        const userIds = Users.map(user => user._id);
         const Roles = await RoleModel.find({ userId: { $in: userIds } })
-            .select('RoleName userId -_id'); 
+            .select('RoleName userId -_id');
         const usersWithRoles = Users.map(user => {
             const userRoles = Roles.filter(role => role.userId.toString() === user._id.toString());
             return {
-                ...user._doc, 
-                Roles: userRoles.map(role => role.RoleName) 
+                ...user._doc,
+                Roles: userRoles.map(role => role.RoleName)
             };
         });
-        return res.status(200).json({data:usersWithRoles});
+        return res.status(200).json({ data: usersWithRoles });
     } catch (err) {
-        console.error("Error:", err);       
+        console.error("Error:", err);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
@@ -133,8 +137,22 @@ const GetUserByUsername = async (req, res) => {
 
 const UpdateUser = async (req, res) => {
     try {
-        const { Name, Username, Email, Phone, IsAdmin, IsSystemAdmin } = req.body;
+        const { 
+            FirstName, 
+            LastName, 
+            Username, 
+            Email, 
+            Phone, 
+            Password, 
+            IsAdmin, 
+            IsSystemAdmin, 
+            AlternatePhone, 
+            Gender, 
+            DateOfBirth 
+        } = req.body;
+
         const { Username: currentUsername } = req.params;
+
         const user = await UserModel.findOne({
             Username: { $regex: new RegExp(`^${currentUsername}$`, 'i') }
         });
@@ -142,25 +160,40 @@ const UpdateUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
+
+        // Check for unique Username
         if (Username && Username !== user.Username) {
             const existingUser = await UserModel.findOne({ Username });
             if (existingUser) {
                 return res.status(400).json({ message: "Username already in use by another user" });
             }
-            user.Username = Username; 
+            user.Username = Username;
         }
+
+        // Check for unique Email
         if (Email && Email !== user.Email) {
             const existingUser = await UserModel.findOne({ Email });
             if (existingUser) {
                 return res.status(400).json({ message: "Email already in use by another user" });
             }
-            user.Email = Email; 
+            user.Email = Email;
         }
-        if (Name) user.Name = Name;
+
+        // Update other fields if provided
+        if (FirstName) user.FirstName = FirstName;
+        if (LastName) user.LastName = LastName;
         if (Phone) user.Phone = Phone;
+        if (AlternatePhone) user.AlternatePhone = AlternatePhone;
+        if (Gender) user.Gender = Gender;
+        if (DateOfBirth) user.DateOfBirth = DateOfBirth;
+        if (Password) user.Password = Password; // Assuming you hash it elsewhere (like in pre-save middleware)
+
         const updatedUser = await user.save();
+
+        // Remove old roles
         await RoleModel.deleteMany({ userId: updatedUser._id });
 
+        // Add roles if needed
         if (IsAdmin) {
             const adminRole = new RoleModel({
                 RoleName: 'Admin',
@@ -187,7 +220,9 @@ const UpdateUser = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
-const DeleteUser = async (req, res) => { 
+
+
+const DeleteUser = async (req, res) => {
     const { id } = req.params;
     try {
         const user = await UserModel.findById(id);
@@ -209,8 +244,23 @@ const DeleteUser = async (req, res) => {
 
 const GetUserProfile = async (req, res) => {
     try {
-        const user = req.user;
-        return res.status(200).json({ user });
+        const token = req.headers.authorization?.split(' ')[1];
+        let UserId = null;
+
+        // Verify token if it exists
+        if (token) {
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                UserId = decoded.userId;
+            } catch (err) {
+                return res.status(401).json({ message: 'Unauthorized: Invalid token.' });
+            }
+        }
+        const user = await UserModel.findOne({ _id: UserId });
+        if (!user) {
+            return res.status(401).json({ error: "User does not exist" });
+        }
+        return res.status(200).json({ data: user, message: "Succesfully retrieved user" });
     } catch (err) {
         console.error("Error:", err);
         return res.status(500).json({ message: "Internal Server Error" });
@@ -220,15 +270,15 @@ const GetUserProfile = async (req, res) => {
 
 const GetAddresses = async (req, res) => {
     try {
-      const addresses = await AddressModel.find({ UserId: req.user.id });
-      res.status(200).json(addresses);
+        const addresses = await AddressModel.find({ UserId: req.user.id });
+        res.status(200).json(addresses);
     } catch (error) {
-      res.status(500).json({ message: 'Error fetching addresses', error });
+        res.status(500).json({ message: 'Error fetching addresses', error });
     }
-  };
+};
 
-  
-  const AddAddress = async (req, res) => {
+
+const AddAddress = async (req, res) => {
     const { Name, Mobile, PinCode, Address, Locality, City, State, IsDefault, Type } = req.body;
 
     try {
@@ -304,18 +354,18 @@ const UpdateUserAddress = async (req, res) => {
         } else {
             // If the current address is the only address left, it should be set as default
             const remainingAddresses = await AddressModel.find({ UserId: address.UserId });
-            
+
             if (remainingAddresses.length === 1) {
                 // Only one address left, so make it the default
                 address.IsDefault = true;
             } else {
                 // Check if there is already a default address
-                const existingDefault = await AddressModel.findOne({ 
-                    UserId: address.UserId, 
-                    IsDefault: true, 
-                    _id: { $ne: address._id } 
+                const existingDefault = await AddressModel.findOne({
+                    UserId: address.UserId,
+                    IsDefault: true,
+                    _id: { $ne: address._id }
                 });
-                
+
                 console.log(existingDefault)
                 if (!existingDefault) {
                     // If no default address exists, make the first remaining address default
@@ -339,13 +389,13 @@ const UpdateUserAddress = async (req, res) => {
     }
 };
 
-  
-  const DeleteUserAddress = async (req, res) => {
+
+const DeleteUserAddress = async (req, res) => {
     const { id } = req.params;
 
     try {
         const address = await AddressModel.findById(id);
-        
+
         if (!address) {
             return res.status(404).json({ message: 'Address not found' });
         }
@@ -416,5 +466,10 @@ const UpdateDefaultAddress = async (req, res) => {
     }
 };
 
-module.exports = { RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser, 
-    DeleteUser,GetUserProfile,GetAddresses,AddAddress,UpdateUserAddress,DeleteUserAddress,UpdateDefaultAddress }in;
+
+
+
+module.exports = {
+    RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser,
+    DeleteUser, GetUserProfile, GetAddresses, AddAddress, UpdateUserAddress, DeleteUserAddress, UpdateDefaultAddress
+};
