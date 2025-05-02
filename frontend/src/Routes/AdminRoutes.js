@@ -17,6 +17,9 @@ import AnnouncementForm from '../Admin/Tabs/CMS/Sections/Announcement/Announceme
 import ImageSliderList from '../Admin/Tabs/CMS/Sections/ImageSlider/ImageSliderList';
 import ImageSliderForm from '../Admin/Tabs/CMS/Sections/ImageSlider/ImageSliderForm';
 
+import ScrollingTextList from '../Admin/Tabs/CMS/Sections/ScrollingText/ScrollingTextList';
+import ScrollingTextForm from '../Admin/Tabs/CMS/Sections/ScrollingText/ScrollingTextForm';
+
 
 const AdminRoutes = () => {
   return (
@@ -113,8 +116,8 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
-       
-       
+
+
 
         <Route
           path="Announcements"
@@ -166,6 +169,34 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
+
+
+        <Route
+          path="ScrollingTexts"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ScrollingTextList />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/ScrollingText/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ScrollingTextForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/ScrollingText/Edit/:Id"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ScrollingTextForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
+
+
         {/* Unauthorized Route */}
         <Route
           path="/not-authorized"

@@ -8,6 +8,7 @@ const { GetAll_Active_Announcements
 const { GetAll_Active_Categories } = require("../controllers/CategoryController");
 
 const { GetAll_Active_ImageSliders } = require("../controllers/ImageSliderController");
+const { GetAll_Active_ScrollingTexts } = require("../controllers/ScrollingTextController");
 
 const { GetAllProductsBySlug ,
   GetAll_Active_Product,
@@ -80,5 +81,8 @@ router.post('/AddToWishlist', AddToWishlist);
 router.get("/GetWishListItems", GetWishListItems);
 router.delete('/removeWishListItem/:id', DeleteWishlistItem);
 router.get("/GetWishlistCount", GetWishlistCount);
+
+//ScrollingText Route
+router.get("/GetAllActiveScrollingText", GetAll_Active_ScrollingTexts);
 
 module.exports = router;

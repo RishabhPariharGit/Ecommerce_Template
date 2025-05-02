@@ -147,7 +147,7 @@ import {
 const Sidenav = ({ closeSidenav }) => {
   const navigate = useNavigate();
   const [openCategory, setOpenCategory] = useState(false);
-
+  const [OpenSection, setOpenSection] = useState(false);
   const handleLogout = () => {
     Cookies.remove('token');
     Cookies.remove('role');
@@ -205,20 +205,38 @@ const Sidenav = ({ closeSidenav }) => {
             </List>
           </Collapse>
 
+         
+
           <ListItemButton component={Link} to="/admin/Products" onClick={closeSidenav} className="sidenav-button">
             <ListItemIcon className="sidenav-icon"><Inventory /></ListItemIcon>
             <ListItemText primary="Products" />
           </ListItemButton>
 
-          <ListItemButton component={Link} to="/admin/Announcements" onClick={closeSidenav} className="sidenav-button">
-            <ListItemIcon className="sidenav-icon"><Campaign /></ListItemIcon>
-            <ListItemText primary="Announcement" />
+          <ListItemButton onClick={() => setOpenSection(!OpenSection)} className="sidenav-button">
+            <ListItemIcon className="sidenav-icon"><Category /></ListItemIcon>
+            <ListItemText primary="Sections Management" />
+            {openCategory ? <ExpandLess className="sidenav-icon" /> : <ExpandMore className="sidenav-icon" />}
           </ListItemButton>
+          <Collapse in={OpenSection} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton component={Link} to="/admin/Announcements" onClick={closeSidenav} className="sidenav-button sidenav-subbutton">
+                <ListItemIcon className="sidenav-icon"><SubdirectoryArrowRight /></ListItemIcon>
+                <ListItemText primary="Announcement" />
+              </ListItemButton>
 
-          <ListItemButton component={Link} to="/admin/ImageSliders" onClick={closeSidenav} className="sidenav-button">
-            <ListItemIcon className="sidenav-icon"><Image /></ListItemIcon>
-            <ListItemText primary="ImageSlider" />
-          </ListItemButton>
+              <ListItemButton component={Link} to="/admin/ImageSliders" onClick={closeSidenav} className="sidenav-button sidenav-subbutton">
+                <ListItemIcon className="sidenav-icon"><SubdirectoryArrowRight /></ListItemIcon>
+                <ListItemText primary="ImageSlider" />
+              </ListItemButton>
+
+              <ListItemButton component={Link} to="/admin/ScrollingTexts" onClick={closeSidenav} className="sidenav-button sidenav-subbutton">
+                <ListItemIcon className="sidenav-icon"><SubdirectoryArrowRight /></ListItemIcon>
+                <ListItemText primary="ScrollingText" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+
+
 
           <ListItemButton component={Link} to="/admin/Users" onClick={closeSidenav} className="sidenav-button">
             <ListItemIcon className="sidenav-icon"><People /></ListItemIcon>
