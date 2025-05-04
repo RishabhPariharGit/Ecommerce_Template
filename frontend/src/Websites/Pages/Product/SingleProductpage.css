@@ -68,9 +68,9 @@
     gap: 15px;
 }
 .main-image-display-wrapper img{
-width: 480px;
 height: 580px;
 object-fit: cover;
+border-radius: 8px;
 }
 
 .main-product-details-wrapper {
@@ -79,12 +79,14 @@ object-fit: cover;
 
 .main-image-display-wrapper {
     position: relative;
+    height: fit-content;
 }
 
 .main-product-carousel-buttons-wrapper {
     position: absolute;
-    top: 90%;
-    left: 90%;
+    bottom: 0;
+    right: 0;
+    padding-bottom: 30px;
     transform: translateX(-50%);
     z-index: 10; /* Ensures buttons appear above the image */
     display: flex;

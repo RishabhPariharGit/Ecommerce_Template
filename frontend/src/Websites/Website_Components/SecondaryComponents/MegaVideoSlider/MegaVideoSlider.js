@@ -4,6 +4,8 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './MegaVideoSlider.css';
+import { Autoplay } from 'swiper/modules';
+
 
 const videos = [
   {
@@ -80,6 +82,10 @@ const MegaVideoSlider = () => {
         spaceBetween={30}
         centeredSlides={true}
         loop={true}
+        autoplay={{
+            delay: 3000, // time in ms between slides
+            disableOnInteraction: false, // continue autoplay after user interaction
+          }}
         breakpoints={{
           768: {
             slidesPerView: 1.5,
@@ -88,6 +94,7 @@ const MegaVideoSlider = () => {
             slidesPerView: 1.5,
           },
         }}
+        modules={[Autoplay]}
       >
         {videos.map((video, index) => (
           <SwiperSlide key={video.id}>
@@ -97,6 +104,7 @@ const MegaVideoSlider = () => {
                 className="mega-video-element"
                 poster={video.thumbnail}
                 muted
+                autoPlay
                 loop
                 preload="metadata"
                 onClick={() => handlePlay(index)}

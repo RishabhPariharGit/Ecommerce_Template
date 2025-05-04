@@ -7,7 +7,7 @@ const Newsletter = () => {
     <div className="main-news-container-devider">
 
   <div className="text-section">
-    <h2>  JOIN OUR NEWSLETTER</h2>
+    <h2>Join Our Newsletter</h2>
     <p>
       Subscribe to our newsletter to receive the latest updates, news, and
       special offers directly in your inbox. Be the first to know about our new

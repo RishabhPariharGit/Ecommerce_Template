@@ -6,7 +6,7 @@ const SectionHeading =  ({ heading, subheading }) => {
     <div>
         <div className='section-heading-main-wrapper'>
         <div className='section-main-heading'>
-            <p>{heading}</p>
+            <h2>{heading}</h2>
 </div>
         <div className='section-main-sub-heading'>
             <p>

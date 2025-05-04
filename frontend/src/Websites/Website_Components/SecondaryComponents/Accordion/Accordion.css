@@ -1,0 +1,35 @@
+.cstm-accrdn-clss-accordion {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .cstm-accrdn-clss-accordion-item {
+    border-top: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .cstm-accrdn-clss-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0 10px;
+  }
+  
+  .cstm-accrdn-clss-accordion-icon {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cstm-accrdn-clss-stars {
+    color: black;
+    display: flex;
+    gap: 2px;
+  }
+
+  
+  .cstm-accrdn-clss-accordion-content {
+    padding: 10px 20px;
+    font-size: 15px;
+  }
+  
