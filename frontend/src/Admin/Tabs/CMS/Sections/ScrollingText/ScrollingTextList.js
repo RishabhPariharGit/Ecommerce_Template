@@ -32,7 +32,8 @@ const EditableCell = ({ initialValue, row, column }) => {
 };
 
 const ScrollingTextList = () => {
-    const [ScrollingTexts, setScrollingTexts] = useState([]);
+    const [normalTexts, setNormalTexts] = useState([]);
+    const [megaTexts, setMegaTexts] = useState([]);
     const [globalFilter, setGlobalFilter] = useState('');
     const [sorting, setSorting] = useState([]);
     const [pageSize, setPageSize] = useState(5);
@@ -45,7 +46,9 @@ const ScrollingTextList = () => {
             const fetchData = async () => {
                 try {
                     const response = await getAllScrollingTexts();
-                    setScrollingTexts(response?.data || []);
+                    const allTexts = response?.data || [];
+                    setNormalTexts(allTexts.filter(item => !item.isMegaText));
+                    setMegaTexts(allTexts.filter(item => item.isMegaText));
                 } catch (error) {
                     console.error('Error fetching ScrollingTexts:', error);
                 }
@@ -72,7 +75,8 @@ const ScrollingTextList = () => {
         ) {
             try {
                 await deleteScrollingText(id);
-                setScrollingTexts((prev) => prev.filter((slider) => slider._id !== id));
+                setNormalTexts((prev) => prev.filter((text) => text._id !== id));
+                setMegaTexts((prev) => prev.filter((text) => text._id !== id));
             } catch (error) {
                 console.error('Error deleting ScrollingText:', error);
             }
@@ -116,13 +120,10 @@ const ScrollingTextList = () => {
         []
     );
 
-    const table = useReactTable({
-        data: ScrollingTexts,
+    const tableNormal = useReactTable({
+        data: normalTexts,
         columns,
-        state: {
-            globalFilter,
-            sorting,
-        },
+        state: { globalFilter, sorting },
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
@@ -136,11 +137,27 @@ const ScrollingTextList = () => {
             },
         },
     });
-
+    const tableMega = useReactTable({
+        data: megaTexts,
+        columns,
+        state: { globalFilter, sorting },
+        onSortingChange: setSorting,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        columnResizeMode,
+        enableColumnResizing: true,
+        initialState: {
+            pagination: {
+                pageSize: pageSize,
+            },
+        },
+    });
     return (
         <div className="table-main-div">
             <div className="white-bg-btn">
-                <p>Image Sliders</p>
+                <p>ScrollingTexts</p>
                 <button className="button" onClick={handleCreate}>
                     Create ScrollingText
                 </button>
@@ -148,119 +165,236 @@ const ScrollingTextList = () => {
 
             <div className="white-bg">
                 <div className="table-sub-head">
-                    <p>All Image Sliders</p>
+                    <p>All  ScrollingText</p>
                 </div>
                 <hr />
                 <div className="p-4">
-                <div className="white-bg">
-              
-                    <div className="table-top-bar">
-                        <div className="entries-dropdown flex items-center gap-3">
-                            <span>Show</span>
-                            <select
-                                value={table.getState().pagination.pageSize}
-                                onChange={(e) => {
-                                    const newSize = Number(e.target.value);
-                                    table.setPageSize(newSize);
-                                    setPageSize(newSize);
-                                }}
-                            >
-                                <option value={5}>5</option>
-                                <option value={10}>10</option>
-                                <option value={25}>25</option>
-                                <option value={50}>50</option>
-                            </select>
-                            <span>entries</span>
+                    <div className="white-bg">
+                        <div className="table-top-bar">
+                            <div className="entries-dropdown flex items-center gap-3">
+                                <span>Show</span>
+                                <select
+                                    value={tableNormal.getState().pagination.pageSize}
+                                    onChange={(e) => {
+                                        const newSize = Number(e.target.value);
+                                        tableNormal.setPageSize(newSize);
+                                        setPageSize(newSize);
+                                    }}
+                                >
+                                    <option value={5}>5</option>
+                                    <option value={10}>10</option>
+                                    <option value={25}>25</option>
+                                    <option value={50}>50</option>
+                                </select>
+                                <span>entries</span>
+                            </div>
+
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                value={globalFilter}
+                                onChange={(e) => setGlobalFilter(e.target.value)}
+                                className="search-input"
+                            />
                         </div>
 
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            value={globalFilter}
-                            onChange={(e) => setGlobalFilter(e.target.value)}
-                            className="search-input"
-                        />
-                    </div>
-
-                    <div className="responsive-table-container">
-                        <table className="responsive-table">
-                            <thead>
-                                {table.getHeaderGroups().map((headerGroup) => (
-                                    <tr key={headerGroup.id}>
-                                        {headerGroup.headers.map((header) => (
-                                            <th
-                                                key={header.id}
-                                                style={{ width: header.getSize() }}
-                                                onClick={header.column.getToggleSortingHandler()}
-                                            >
-                                                {flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                                {header.column.getCanSort() && (
-                                                    <span className="sort-icon">
-                                                        {header.column.getIsSorted() === 'asc' && '▲'}
-                                                        {header.column.getIsSorted() === 'desc' && '▼'}
-                                                        {!header.column.getIsSorted() && '▼'}
-                                                    </span>
-                                                )}
-                                                {header.column.getCanResize() && (
-                                                    <div
-                                                        onMouseDown={header.getResizeHandler()}
-                                                        onTouchStart={header.getResizeHandler()}
-                                                        className="resizer"
-                                                    />
-                                                )}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                ))}
-                            </thead>
-                            <tbody>
-                                {table.getRowModel().rows.length > 0 ? (
-                                    table.getRowModel().rows.map((row) => (
-                                        <tr key={row.id}>
-                                            {row.getVisibleCells().map((cell) => (
-                                                <td key={cell.id}>
+                        <div className="responsive-table-container">
+                            <table className="responsive-table">
+                                <thead>
+                                    {tableNormal.getHeaderGroups().map((headerGroup) => (
+                                        <tr key={headerGroup.id}>
+                                            {headerGroup.headers.map((header) => (
+                                                <th
+                                                    key={header.id}
+                                                    style={{ width: header.getSize() }}
+                                                    onClick={header.column.getToggleSortingHandler()}
+                                                >
                                                     {flexRender(
-                                                        cell.column.columnDef.cell,
-                                                        cell.getContext()
+                                                        header.column.columnDef.header,
+                                                        header.getContext()
                                                     )}
-                                                </td>
+                                                    {header.column.getCanSort() && (
+                                                        <span className="sort-icon">
+                                                            {header.column.getIsSorted() === 'asc' && '▲'}
+                                                            {header.column.getIsSorted() === 'desc' && '▼'}
+                                                            {!header.column.getIsSorted() && '▼'}
+                                                        </span>
+                                                    )}
+                                                    {header.column.getCanResize() && (
+                                                        <div
+                                                            onMouseDown={header.getResizeHandler()}
+                                                            onTouchStart={header.getResizeHandler()}
+                                                            className="resizer"
+                                                        />
+                                                    )}
+                                                </th>
                                             ))}
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan={columns.length} style={{ textAlign: 'center', padding: '20px' }}>
-                                            No ScrollingTexts found
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
+                                    ))}
+                                </thead>
+                                <tbody>
+                                    {tableNormal.getRowModel().rows.length > 0 ? (
+                                        tableNormal.getRowModel().rows.map((row) => (
+                                            <tr key={row.id}>
+                                                {row.getVisibleCells().map((cell) => (
+                                                    <td key={cell.id}>
+                                                        {flexRender(
+                                                            cell.column.columnDef.cell,
+                                                            cell.getContext()
+                                                        )}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={columns.length} style={{ textAlign: 'center', padding: '20px' }}>
+                                                No ScrollingTexts found
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <div className="text-end">
-                        <button
-                            className="button Pagination-btn"
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                        >
-                            &lt;
-                        </button>
-                        <span>
-                            Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-                        </span>
-                        <button
-                            className="button Pagination-btn"
-                            onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
-                        >
-                            &gt;
-                        </button>
+                        <div className="text-end">
+                            <button
+                                className="button Pagination-btn"
+                                onClick={() => tableNormal.previousPage()}
+                                disabled={!tableNormal.getCanPreviousPage()}
+                            >
+                                &lt;
+                            </button>
+                            <span>
+                                Page {tableNormal.getState().pagination.pageIndex + 1} of {tableNormal.getPageCount()}
+                            </span>
+                            <button
+                                className="button Pagination-btn"
+                                onClick={() => tableNormal.nextPage()}
+                                disabled={!tableNormal.getCanNextPage()}
+                            >
+                                &gt;
+                            </button>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+
+            <div className="white-bg">
+                <div className="table-sub-head">
+                    <p>All  MegaScrollingText</p>
+                </div>
+                <hr />
+                <div className="p-4">
+                    <div className="white-bg">
+                        <div className="table-top-bar">
+                            <div className="entries-dropdown flex items-center gap-3">
+                                <span>Show</span>
+                                <select
+                                    value={tableMega.getState().pagination.pageSize}
+                                    onChange={(e) => {
+                                        const newSize = Number(e.target.value);
+                                        tableMega.setPageSize(newSize);
+                                        setPageSize(newSize);
+                                    }}
+                                >
+                                    <option value={5}>5</option>
+                                    <option value={10}>10</option>
+                                    <option value={25}>25</option>
+                                    <option value={50}>50</option>
+                                </select>
+                                <span>entries</span>
+                            </div>
+
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                value={globalFilter}
+                                onChange={(e) => setGlobalFilter(e.target.value)}
+                                className="search-input"
+                            />
+                        </div>
+
+                        <div className="responsive-table-container">
+                            <table className="responsive-table">
+                                <thead>
+                                    {tableMega.getHeaderGroups().map((headerGroup) => (
+                                        <tr key={headerGroup.id}>
+                                            {headerGroup.headers.map((header) => (
+                                                <th
+                                                    key={header.id}
+                                                    style={{ width: header.getSize() }}
+                                                    onClick={header.column.getToggleSortingHandler()}
+                                                >
+                                                    {flexRender(
+                                                        header.column.columnDef.header,
+                                                        header.getContext()
+                                                    )}
+                                                    {header.column.getCanSort() && (
+                                                        <span className="sort-icon">
+                                                            {header.column.getIsSorted() === 'asc' && '▲'}
+                                                            {header.column.getIsSorted() === 'desc' && '▼'}
+                                                            {!header.column.getIsSorted() && '▼'}
+                                                        </span>
+                                                    )}
+                                                    {header.column.getCanResize() && (
+                                                        <div
+                                                            onMouseDown={header.getResizeHandler()}
+                                                            onTouchStart={header.getResizeHandler()}
+                                                            className="resizer"
+                                                        />
+                                                    )}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </thead>
+                                <tbody>
+                                    {tableMega.getRowModel().rows.length > 0 ? (
+                                        tableMega.getRowModel().rows.map((row) => (
+                                            <tr key={row.id}>
+                                                {row.getVisibleCells().map((cell) => (
+                                                    <td key={cell.id}>
+                                                        {flexRender(
+                                                            cell.column.columnDef.cell,
+                                                            cell.getContext()
+                                                        )}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={columns.length} style={{ textAlign: 'center', padding: '20px' }}>
+                                                No ScrollingTexts found
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="text-end">
+                            <button
+                                className="button Pagination-btn"
+                                onClick={() => tableMega.previousPage()}
+                                disabled={!tableMega.getCanPreviousPage()}
+                            >
+                                &lt;
+                            </button>
+                            <span>
+                                Page {tableMega.getState().pagination.pageIndex + 1} of {tableMega.getPageCount()}
+                            </span>
+                            <button
+                                className="button Pagination-btn"
+                                onClick={() => tableMega.nextPage()}
+                                disabled={!tableMega.getCanNextPage()}
+                            >
+                                &gt;
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

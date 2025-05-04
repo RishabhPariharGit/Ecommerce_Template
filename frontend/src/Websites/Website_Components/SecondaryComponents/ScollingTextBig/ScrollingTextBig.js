@@ -1,20 +1,38 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import './ScrollingTextBig.css';
-
+import { getAllScrollingTextforSite } from '../../../../Services/WebsiteServices/AllServices/ScrollingTextService';
 const ScrollingTextBig = () => {
   const repeatCount = 30;
-  const items = [
-    "Stay cozy and stylish with our ultra-soft sweatshirt"
-  ];
+
+
+  const [Texts, setTexts] = useState([]);
+
+  useEffect(() => {
+      const fetchTexts = async () => {
+          try {
+              const response = await getAllScrollingTextforSite();
+              if (response && response.data) {
+                const allTexts = response?.data || [];   
+                setTexts(allTexts.filter(item => item.isMegaText));
+              } else {
+                setTexts([]);
+              }
+          } catch (err) {
+              console.log("Error during fetching images:", err);
+          }
+      };
+      fetchTexts();
+  }, []);
 
   return (
     <div className="marquee-main-container-big">
       <div className="main-marquee-cont-big">
         {Array.from({ length: repeatCount }).map((_, i) => (
           <ul key={i}>
-            {items.map((text, index) => (
+            {Texts.map((text, index) => (
               <li key={index}>
-                <span className="main-marquee-text-big">{text}</span>
+                <span className="main-marquee-text-big">{text.Text}</span>
               </li>
             ))}
           </ul>

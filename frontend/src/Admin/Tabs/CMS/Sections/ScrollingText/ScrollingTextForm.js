@@ -8,8 +8,10 @@ const ScrollingTextForm = ({ isEditMode = false }) => {
     const [previewSource, setPreviewSource] = useState('');
     const [formData, setFormData] = useState({
         Text: '',
-        Status: ''
+        Status: '',
+        isMegaText: false
     });
+
     const [isLoading, setIsLoading] = useState(true);
     const { Id } = useParams();
     const navigate = useNavigate();
@@ -29,9 +31,10 @@ const ScrollingTextForm = ({ isEditMode = false }) => {
                         return;
                     }
                     const ScrollingText = response.data;
-                    console.log("ScrollingText",ScrollingText)
+                    console.log("ScrollingText", ScrollingText)
                     setFormData({
                         Text: ScrollingText.Text,
+                        isMegaText: ScrollingText.isMegaText,
                         Status: ScrollingText.audit.status
                     });
                 } catch (err) {
@@ -53,20 +56,23 @@ const ScrollingTextForm = ({ isEditMode = false }) => {
     }, [isEditMode, Id]);
 
     const handleInputChange = (e) => {
-
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, type, checked, value } = e.target;
+        
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value, // Correctly handle checkbox value
+        }));
     };
-
     const handleCancel = () => {
         navigate('/admin/ScrollingTexts');
     };
 
-   
 
- 
+
+
 
     const handleSubmitFile = async (e) => {
-        
+
         e.preventDefault();
 
         try {
@@ -93,19 +99,19 @@ const ScrollingTextForm = ({ isEditMode = false }) => {
     return (
         <div>
 
-            
-                <div className='pagetitle'>
-                    {isEditMode ? 'Edit ScrollingText' : 'Create a New ScrollingText'}
-                </div>
-           
-          
+
+            <div className='pagetitle'>
+                {isEditMode ? 'Edit ScrollingText' : 'Create a New ScrollingText'}
+            </div>
+
+
             <div className="form-800">
                 <div className="white-bg">
                     <div className='input-form'>
                         <form onSubmit={handleSubmitFile}>
                             <table>
                                 <tbody>
-                                    
+
                                     <tr>
                                         <td colSpan="2">
                                             <div className="formlabel">Text</div>
@@ -116,7 +122,35 @@ const ScrollingTextForm = ({ isEditMode = false }) => {
                                             />
                                         </td>
                                     </tr>
-                                   
+                                    <tr>
+                                        <td colSpan="2">
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="isMegaText"
+                                                    checked={formData.isMegaText}
+                                                    onChange={handleInputChange}
+                                                    
+                                                />
+                                                Mega Scrolling Text?
+                                            </label>
+                                        </td>
+
+                                        {isEditMode && (
+                                            <td>
+                                                <label htmlFor="status">Status:</label>
+                                                <select
+                                                    name="Status"
+                                                    value={formData.Status}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                >
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </td>
+                                        )}
+                                    </tr>
                                     <tr>
 
                                         <td>

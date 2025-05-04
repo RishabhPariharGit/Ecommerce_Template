@@ -4,37 +4,37 @@ const fs = require('fs');
 const { GeneralStatus } = require('../Enum/Enum');
 
 const CreateScrollingText = async (req, res) => {
-    const { Text } = req.body;
+    const { Text, isMegaText } = req.body;
     if (!req.user || !req.user._id) {
-        return res.status(401).json({ message: 'Unauthorized: User not found' });
+      return res.status(401).json({ message: 'Unauthorized: User not found' });
     }
+  
     try {
-        const newScrollingText = new ScrollingTextModel({
-            Text,
-            audit: {
-                createdDate: new Date(),
-                createdBy: req.user._id,  
-                updatedDate: new Date(),
-                updatedBy: req.user._id, 
-                status: GeneralStatus.ACTIVE
-            }
-        });
-        const savedScrollingText = await newScrollingText.save();
-
-        return res.status(201).json({
-            message: 'ScrollingText created successfully!',
-            data: savedScrollingText
-        });
-
+      const newScrollingText = new ScrollingTextModel({
+        Text,
+        isMegaText,  
+        audit: {
+          createdDate: new Date(),
+          createdBy: req.user._id,
+          updatedDate: new Date(),
+          updatedBy: req.user._id,
+          status: GeneralStatus.ACTIVE
+        }
+      });
+  
+      const savedScrollingText = await newScrollingText.save();
+  
+      return res.status(201).json({
+        message: 'ScrollingText created successfully!',
+        data: savedScrollingText
+      });
+  
     } catch (err) {
-        console.error("Error creating ScrollingText:", err);
-        return res.status(500).json({ 
-            message: 'Error creating ScrollingText', 
-            data: null, 
-            error: err 
-        });
+      console.error("Error creating ScrollingText:", err);
+      return res.status(500).json({ message: 'Error creating ScrollingText', data: null, error: err });
     }
-};
+  };
+  
 
 
 const GetAllScrollingTexts = async (req, res) => {
@@ -88,7 +88,7 @@ const GetScrollingTextById = async (req, res) => {
 
 const UpdateScrollingText = async (req, res) => {
     const { Id } = req.params;
-    const { Text, Status} = req.body;
+    const { Text, isMegaText,Status} = req.body;
 
     try {  
         if (!req.user || !req.user._id) {
@@ -102,6 +102,7 @@ const UpdateScrollingText = async (req, res) => {
             });
         }
         existingScrollingText.Text = Text;
+        existingScrollingText.isMegaText = isMegaText;
         existingScrollingText.audit.status = Status;
         existingScrollingText.audit.updatedDate = new Date();
         existingScrollingText.audit.updatedBy = req.user._id;

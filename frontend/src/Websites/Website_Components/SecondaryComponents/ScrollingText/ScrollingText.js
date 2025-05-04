@@ -12,7 +12,8 @@ const ScrollingText = () => {
           try {
               const response = await getAllScrollingTextforSite();
               if (response && response.data) {
-                setTexts(response.data);
+                const allTexts = response?.data || [];   
+                setTexts(allTexts.filter(item => !item.isMegaText));
               } else {
                 setTexts([]);
               }

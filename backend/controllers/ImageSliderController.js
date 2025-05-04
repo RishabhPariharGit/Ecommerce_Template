@@ -183,6 +183,11 @@ const DeleteImageSlider = async (req, res) => {
 
     try {
         const ImageSlider = await ImageSliderModel.findById(id);
+        const cloudinary = req.app.locals.cloudinary;
+                if (ImageSlider.Image) {
+                    const public_id = ImageSlider.Image.split('/').pop().split('.')[0];
+                    await cloudinary.uploader.destroy(`ImageSlider/${public_id}`);
+                }
         if (!ImageSlider) {
             return res.status(404).json({ 
                 message: 'ImageSlider not found', 
