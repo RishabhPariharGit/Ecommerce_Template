@@ -19,8 +19,8 @@ const ImageGallery = ({ images, onImageHover }) => {
 const styles = {
   gallery: { display: "flex", flexDirection: "column", gap: "10px" },
   thumbnail: {
-    width: "70px",
-    height: "70px",
+    width: "80px",
+    height: "80px",
     cursor: "pointer",
     objectFit: "cover",
     border: "1px solid #ddd",

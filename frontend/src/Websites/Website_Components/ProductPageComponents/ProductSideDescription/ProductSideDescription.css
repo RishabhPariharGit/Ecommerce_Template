@@ -82,6 +82,11 @@
     border: 1px solid;
 }
 
+.main-prodiuct-secondary-details-wrapper-content.accordion-item{
+    padding-top: 0px !important;
+    margin-top: 30px;
+}
+
 /* Responsive styles for laptops (768px and above) */
 @media (min-width: 768px) {
     .main-prodiuct-secondary-details-wrapper-content h2 {

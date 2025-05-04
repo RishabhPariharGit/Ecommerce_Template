@@ -20,7 +20,7 @@ const LookBook = () => {
   return (
     <>
     <div className='lookbook-main-heading-primary-wrapper'>
- <div className='look-book-main-heading-main-wrapper'><p>Shop The Best Essentials</p></div>  
+ <div className='look-book-main-heading-main-wrapper'><h2>Shop The Best Essentials</h2></div>  
  <div className='look-book-main-sub-heading-main-wrapper'><p>These Categories are highly rated by our customers grab them all!</p></div>  
  </div>
  <div className="main-lookbook-wrapper">

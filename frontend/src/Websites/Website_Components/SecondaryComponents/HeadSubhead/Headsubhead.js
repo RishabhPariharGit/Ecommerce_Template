@@ -5,7 +5,7 @@ const Headsubhead = ({head, subhead}) => {
   return (
     <>
     <div className='head-subhead'>
-    <h1>{head}</h1>
+    <h2>{head}</h2>
     <p>{subhead}</p>
     </div>
     </>

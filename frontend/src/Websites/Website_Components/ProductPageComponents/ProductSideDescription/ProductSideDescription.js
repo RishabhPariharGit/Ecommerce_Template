@@ -1,8 +1,32 @@
 import React, { useState } from "react";
 import './ProductSideDescription.css';
+import Accordion from "../../SecondaryComponents/Accordion/Accordion";
 
 const ProductDetails = ({ product, cartProductIds, wishlistedProductIds, handleAddToCart, handleWishlist, navigate }) => {
     const [selectedSize, setSelectedSize] = useState(null);
+    const accordionSections = [
+        {
+          title: 'Delivery & Returns',
+          content: <p>Free delivery within 3–5 business days. Easy returns within 30 days.</p>,
+        },
+        {
+          title: 'Care Instructions',
+          content: (
+            <ul>
+              <li>Hand Wash Preferred: Use lukewarm water and a mild detergent specifically designed for wool.</li>
+              <li>Machine Wash if allowed: Use the wool/delicate cycle with cold water and a wool-friendly detergent.</li>
+              <li>Avoid Hot Water & Agitation: This can shrink or felt the wool.</li>
+              <li>Machine Wash if allowed: Use the wool/delicate cycle with cold water and a wool-friendly detergent.</li>
+              <li>Avoid Hot Water & Agitation: This can shrink or felt the wool.</li>
+            </ul>
+          ),
+          rightIcon: 'stars',
+        },
+        {
+          title: 'Product Information',
+          content: <p>Material: 100% Cotton. Made in India. Machine washable.</p>,
+        },
+      ];
 
     return (
         <div className="main-prodiuct-secondary-details-wrapper-content">
@@ -62,6 +86,9 @@ const ProductDetails = ({ product, cartProductIds, wishlistedProductIds, handleA
                 )}
                </div>
             </div>
+            <div className="main-prodiuct-secondary-details-wrapper-content accordion-item">
+           <Accordion sections={accordionSections}/>
+           </div>
         </div>
         
     );
