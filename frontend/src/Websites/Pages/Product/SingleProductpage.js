@@ -7,7 +7,7 @@ import { addProductToCart, getCartItems }
  from '../../../Services/WebsiteServices/AllServices/AddToCartService';
 import { addProductToWishlist, getWishListItems } 
 from '../../../Services/WebsiteServices/AllServices/WishlistService';
-import './SingleProductPage.css';
+import './SingleProductpage.css';
 import ImageGallery from "../../Website_Components/SecondaryComponents/ImageGallery/ImageGallery";
 import ProductDetails from 
 "../../Website_Components/ProductPageComponents/ProductSideDescription/ProductSideDescription";
