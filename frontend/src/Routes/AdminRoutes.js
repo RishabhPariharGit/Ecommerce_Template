@@ -20,6 +20,9 @@ import ImageSliderForm from '../Admin/Tabs/CMS/Sections/ImageSlider/ImageSliderF
 import ScrollingTextList from '../Admin/Tabs/CMS/Sections/ScrollingText/ScrollingTextList';
 import ScrollingTextForm from '../Admin/Tabs/CMS/Sections/ScrollingText/ScrollingTextForm';
 
+import ScrollingVideoList from '../Admin/Tabs/CMS/Sections/ScrollingVideo/ScrollingVideoList';
+import ScrollingVideoForm from '../Admin/Tabs/CMS/Sections/ScrollingVideo/ScrollingVideoForm';
+
 
 import UspsList from '../Admin/Tabs/CMS/Sections/Usps/UspsList';
 import UspsForm from '../Admin/Tabs/CMS/Sections/Usps/UspsForm';
@@ -222,6 +225,32 @@ const AdminRoutes = () => {
           element={
             <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
               <UspsForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
+
+
+        <Route
+          path="ScrollingVideos"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ScrollingVideoList />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/ScrollingVideo/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ScrollingVideoForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/ScrollingVideo/Edit/:Id"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <ScrollingVideoForm isEditMode={true} />
             </AuthGuard>
           }
         />

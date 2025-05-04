@@ -72,6 +72,13 @@ const { GetAllScrollingTexts,
    DeleteScrollingText
  } = require("../controllers/ScrollingTextController");
 
+ const { GetAllScrollingVideos, 
+  CreateScrollingVideo,
+   GetScrollingVideoById, 
+   UpdateScrollingVideo, 
+   DeleteScrollingVideo
+ } = require("../controllers/ScrollingVideoController");
+
 const { GetAllUsps, 
   CreateUsps,
    GetUspsById, 
@@ -157,10 +164,20 @@ router.put("/UpdateScrollingText/:Id", UpdateScrollingText);
 router.delete('/DeleteScrollingText/:id', DeleteScrollingText);
 
 
+//ScrollingVideo Route
+router.post("/CreateScrollingVideo", CreateScrollingVideo);
+router.get("/GetAllScrollingVideo", GetAllScrollingVideos);
+router.get("/ScrollingVideo/Edit/:Id", GetScrollingVideoById);
+router.put("/UpdateScrollingVideo/:Id", UpdateScrollingVideo);
+router.delete('/DeleteScrollingVideo/:id', DeleteScrollingVideo);
+
 //Usps Route
 router.post("/CreateUsps", CreateUsps);
 router.get("/GetAllUsps", GetAllUsps);
 router.get("/Usps/Edit/:Id", GetUspsById);
 router.put("/UpdateUsps/:Id", UpdateUsps);
 router.delete('/DeleteUsps/:id', DeleteUsps);
+
+
+
 module.exports = router;

@@ -238,6 +238,11 @@ const Sidenav = ({ closeSidenav }) => {
                 <ListItemIcon className="sidenav-icon"><SubdirectoryArrowRight /></ListItemIcon>
                 <ListItemText primary="Usps" />
               </ListItemButton>
+
+              <ListItemButton component={Link} to="/admin/ScrollingVideos" onClick={closeSidenav} className="sidenav-button sidenav-subbutton">
+                <ListItemIcon className="sidenav-icon"><SubdirectoryArrowRight /></ListItemIcon>
+                <ListItemText primary="ScrollingVideos" />
+              </ListItemButton>
             </List>
           </Collapse>
 
