@@ -1,57 +1,37 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './MegaVideoSlider.css';
-import { Autoplay } from 'swiper/modules';
-
-
-const videos = [
-  {
-    id: 1,
-    title: 'Rustic Charm',
-    url: 'https://urban-furniture-demo.myshopify.com/cdn/shop/videos/c/vp/49b9bf4eed444411b60620464003dceb/49b9bf4eed444411b60620464003dceb.HD-720p-2.1Mbps-28456099.mp4?v=0',
-    thumbnail: 'https://urban-furniture-demo.myshopify.com/cdn/shop/files/preview_images/49b9bf4eed444411b60620464003dceb.thumbnail.0000000000.jpg?v=1714650885&width=3840',
-  },
-  {
-    id: 2,
-    title: 'Cozy Living',
-    url: 'https://urban-furniture-demo.myshopify.com/cdn/shop/videos/c/vp/728938c42c254bb2a43481d6701d8830/728938c42c254bb2a43481d6701d8830.HD-720p-2.1Mbps-28456100.mp4?v=0',
-    thumbnail: 'https://urban-furniture-demo.myshopify.com/cdn/shop/files/preview_images/49b9bf4eed444411b60620464003dceb.thumbnail.0000000000.jpg?v=1714650885&width=3840',
-  },
-  {
-    id: 3,
-    title: 'Library Vibes',
-    url: 'https://urban-furniture-demo.myshopify.com/cdn/shop/videos/c/vp/49b9bf4eed444411b60620464003dceb/49b9bf4eed444411b60620464003dceb.HD-720p-2.1Mbps-28456099.mp4?v=0',
-    thumbnail: 'https://urban-furniture-demo.myshopify.com/cdn/shop/files/preview_images/49b9bf4eed444411b60620464003dceb.thumbnail.0000000000.jpg?v=1714650885&width=3840',
-  },
-
-  {
-    id: 4,
-    title: 'Library Vibes',
-    url: 'https://urban-furniture-demo.myshopify.com/cdn/shop/videos/c/vp/728938c42c254bb2a43481d6701d8830/728938c42c254bb2a43481d6701d8830.HD-720p-2.1Mbps-28456100.mp4?v=0',
-    thumbnail: 'https://urban-furniture-demo.myshopify.com/cdn/shop/files/preview_images/49b9bf4eed444411b60620464003dceb.thumbnail.0000000000.jpg?v=1714650885&width=3840',
-  },
-
-  {
-    id: 5,
-    title: 'Library Vibes',
-    url: 'https://urban-furniture-demo.myshopify.com/cdn/shop/videos/c/vp/49b9bf4eed444411b60620464003dceb/49b9bf4eed444411b60620464003dceb.HD-720p-2.1Mbps-28456099.mp4?v=0',
-    thumbnail: 'https://urban-furniture-demo.myshopify.com/cdn/shop/files/preview_images/49b9bf4eed444411b60620464003dceb.thumbnail.0000000000.jpg?v=1714650885&width=3840',
-  },
-];
+import { getAllScrollingVideoforSite } from '../../../../Services/WebsiteServices/AllServices/ScrollingVideoService';
 
 const MegaVideoSlider = () => {
   const videoRefs = useRef([]);
+  const [videos, setVideos] = useState([]);
   const [playingIndex, setPlayingIndex] = useState(null);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await getAllScrollingVideoforSite();
+        if (response && response.data) {
+          setVideos(response.data);
+        } else {
+          setVideos([]);
+        }
+      } catch (err) {
+        console.log("Error during fetching videos:", err);
+      }
+    };
+    fetchVideos();
+  }, []);
 
   const handlePlay = (index) => {
     const currentVideo = videoRefs.current[index];
 
     if (!currentVideo) return;
 
-    // Toggle play/pause if clicking the same video
     if (playingIndex === index) {
       if (currentVideo.paused) {
         currentVideo.play();
@@ -63,7 +43,6 @@ const MegaVideoSlider = () => {
       return;
     }
 
-    // Pause all other videos
     videoRefs.current.forEach((video, i) => {
       if (video && i !== index) {
         video.pause();
@@ -83,9 +62,9 @@ const MegaVideoSlider = () => {
         centeredSlides={true}
         loop={true}
         autoplay={{
-            delay: 3000, // time in ms between slides
-            disableOnInteraction: false, // continue autoplay after user interaction
-          }}
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
         breakpoints={{
           768: {
             slidesPerView: 1.5,
@@ -97,19 +76,19 @@ const MegaVideoSlider = () => {
         modules={[Autoplay]}
       >
         {videos.map((video, index) => (
-          <SwiperSlide key={video.id}>
+          <SwiperSlide key={video._id}>
             <div className="mega-video-card">
               <video
                 ref={(el) => (videoRefs.current[index] = el)}
                 className="mega-video-element"
-                poster={video.thumbnail}
+               
                 muted
                 autoPlay
                 loop
                 preload="metadata"
                 onClick={() => handlePlay(index)}
               >
-                <source src={video.url} type="video/mp4" />
+                <source src={video.Video} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
 
@@ -121,7 +100,7 @@ const MegaVideoSlider = () => {
                   >
                     ▶
                   </button>
-                  <div className="mega-video-title">{video.title}</div>
+                  <div className="mega-video-title">{video.Text}</div>
                 </div>
               )}
             </div>
