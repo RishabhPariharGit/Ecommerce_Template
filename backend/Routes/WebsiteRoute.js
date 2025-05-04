@@ -9,6 +9,7 @@ const { GetAll_Active_Categories } = require("../controllers/CategoryController"
 
 const { GetAll_Active_ImageSliders } = require("../controllers/ImageSliderController");
 const { GetAll_Active_ScrollingTexts } = require("../controllers/ScrollingTextController");
+const { GetAll_Active_Usps } = require("../controllers/UspsController");
 
 const { GetAllProductsBySlug ,
   GetAll_Active_Product,
@@ -84,5 +85,8 @@ router.get("/GetWishlistCount", GetWishlistCount);
 
 //ScrollingText Route
 router.get("/GetAllActiveScrollingText", GetAll_Active_ScrollingTexts);
+
+//Usps Route
+router.get("/GetAll_Active_Usps", GetAll_Active_Usps);
 
 module.exports = router;

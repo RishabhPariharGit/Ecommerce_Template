@@ -21,6 +21,9 @@ import ScrollingTextList from '../Admin/Tabs/CMS/Sections/ScrollingText/Scrollin
 import ScrollingTextForm from '../Admin/Tabs/CMS/Sections/ScrollingText/ScrollingTextForm';
 
 
+import UspsList from '../Admin/Tabs/CMS/Sections/Usps/UspsList';
+import UspsForm from '../Admin/Tabs/CMS/Sections/Usps/UspsForm';
+
 const AdminRoutes = () => {
   return (
     <AdminLayout>
@@ -196,6 +199,32 @@ const AdminRoutes = () => {
           }
         />
 
+
+
+        <Route
+          path="Usps"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <UspsList />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Usps/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <UspsForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Usps/Edit/:Id"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <UspsForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
 
         {/* Unauthorized Route */}
         <Route
