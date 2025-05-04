@@ -18,7 +18,8 @@ const AddressModel=require('./Models/Address')
 const PagesModel=require('./Models/Pages')
 const HomepageSectionModel =require('./Models/HomepageSections ')
 const AnnouncementModel =require('./Models/Announcement')
-const ImageSliderModel =require('./Models/ImageSlider')
+const ImageSliderModel =require('./Models/ImageSlider');
+const ScrollingTextModel = require('./Models/ScrollingText');
 
 const cloudinary = require('cloudinary').v2;  
 require('dotenv').config();
@@ -61,6 +62,7 @@ HomepageSectionModel();
 PagesModel();
 AnnouncementModel(); 
 ImageSliderModel();
+ScrollingTextModel();
 
 
 app.use('/admin', AdminRouter);

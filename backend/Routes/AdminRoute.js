@@ -64,6 +64,12 @@ const {
   UpdateImageSlider,
   DeleteImageSlider
  } = require("../controllers/ImageSliderController");
+const { GetAllScrollingTexts, 
+  CreateScrollingText,
+   GetScrollingTextById, 
+   UpdateScrollingText, 
+   DeleteScrollingText
+ } = require("../controllers/ScrollingTextController");
 
 
 // User Ruote
@@ -135,4 +141,12 @@ router.get("/ImageSlider/Edit/:Id", GetImageSliderById);
 router.put("/UpdateImageSlider/:Id", UpdateImageSlider);
 router.delete('/DeleteImageSlider/:id', DeleteImageSlider);
 
+
+
+//ScrollingText Route
+router.post("/CreateScrollingText", CreateScrollingText);
+router.get("/GetAllScrollingText", GetAllScrollingTexts);
+router.get("/ScrollingText/Edit/:Id", GetScrollingTextById);
+router.put("/UpdateScrollingText/:Id", UpdateScrollingText);
+router.delete('/DeleteScrollingText/:id', DeleteScrollingText);
 module.exports = router;

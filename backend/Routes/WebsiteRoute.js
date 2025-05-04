@@ -8,6 +8,7 @@ const { GetAll_Active_Announcements
 const { GetAll_Active_Categories } = require("../controllers/CategoryController");
 
 const { GetAll_Active_ImageSliders } = require("../controllers/ImageSliderController");
+const { GetAll_Active_ScrollingTexts } = require("../controllers/ScrollingTextController");
 
 const { GetAllProductsBySlug ,
   GetAll_Active_Product,
@@ -22,7 +23,9 @@ const {
 
 const {
   RegisterUser,
-  LoginUser 
+  LoginUser ,
+  GetUserProfile,
+  UpdateUser
 } = require('../Controllers/UserController');
 
 const {AddToCart,
@@ -39,6 +42,8 @@ const {AddToCart,
 //Uer Route
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
+router.get('/UserProfile', GetUserProfile);
+router.put("/UpdateUser/:Username", UpdateUser);
 
 //Announcement Route
 router.get("/GetAllActiveAnnouncement", GetAll_Active_Announcements);
@@ -76,5 +81,8 @@ router.post('/AddToWishlist', AddToWishlist);
 router.get("/GetWishListItems", GetWishListItems);
 router.delete('/removeWishListItem/:id', DeleteWishlistItem);
 router.get("/GetWishlistCount", GetWishlistCount);
+
+//ScrollingText Route
+router.get("/GetAllActiveScrollingText", GetAll_Active_ScrollingTexts);
 
 module.exports = router;
