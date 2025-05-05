@@ -11,9 +11,9 @@ const Footer = () => {
         <ul>
           <p className='main-abt'>About Us</p>
           <li>Our values</li>
-          <li>Privacy policy</li>
-          <li>Terms & conditions</li>
-          <li>Disclaimer</li>
+          <Link to={'/privacy-policy'}><li>Privacy policy</li></Link>
+          <Link to={'/terms-and-conditions'}><li>Terms & conditions</li></Link>
+          <Link to={'/shipping-policy'}><li>Shipping Policy</li></Link>
           <li>Corporate Information</li>
           <li>Media Outreach</li>
           <li>Distributor Queries</li>

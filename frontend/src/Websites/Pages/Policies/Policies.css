@@ -1,0 +1,36 @@
+.policy-container {
+    /* max-width: 900px; */
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    background-color: #fff;
+    line-height: 1.6;
+  }
+  
+  .policy-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #222;
+    text-align: center;
+  }
+  
+  .policy-container h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color: #444;
+  }
+  
+  .policy-container p,
+  .policy-container ul {
+    font-size: 18px;
+    margin-top: 0.5rem;
+  }
+  
+  .policy-container ul {
+    padding-left: 1.5rem;
+    list-style-type: disc;
+    line-height: 32px;
+  }
+  
