@@ -1,0 +1,22 @@
+.main-about-page-Heading-wrapper h2{
+    text-align: center;
+    font-size: 44px;
+    font-weight: 900;
+    padding: 50px;
+}
+
+.about-meet-team-mn-clss img{
+    border-radius: 5px;
+    width: auto;
+    height: 300px;
+}
+
+.main-meet-team-head .section-main-sub-heading{
+    display: none;
+}
+
+
+.main-meet-team-head .section-heading-main-wrapper{
+    
+    padding-bottom: 0px;
+}

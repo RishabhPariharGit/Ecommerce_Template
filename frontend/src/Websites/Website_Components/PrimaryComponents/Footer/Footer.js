@@ -1,5 +1,6 @@
 import React from 'react'
 import "./Footer.css";
+import { Link } from 'react-router-dom';
 
 
 const Footer = () => {
@@ -21,8 +22,8 @@ const Footer = () => {
       <div className='Category_Wrapper-Second'>
       <ul>
         <p className='main-quick'>Quick Links</p>
-          <li>Knowledge</li>
-          <li>FAQs</li>
+        <Link to={'/about'}><li>About</li></Link> 
+         <Link to={'/contact'}><li>Contact</li></Link> 
           <li>Return & refund policy</li>
           <li>Track order</li>
           <li>Help Center</li>
