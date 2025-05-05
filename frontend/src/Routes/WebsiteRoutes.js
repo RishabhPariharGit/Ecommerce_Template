@@ -14,6 +14,7 @@ import Address from '../Websites/Pages/Address/Addresspg'
 import Layout from '../Websites/Website_Components/Layout/Layout';
 import PaymentPage from '../Websites/Pages/PaymentPage/PaymentPage';
 import Orders from '../Websites/Pages/Orders/Orders';
+import About from '../Websites/Pages/About/Aboutpg';
 
 const WebsiteRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const WebsiteRoutes = () => {
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/about" element={<About/>} />
       <Route path="/collections/:slug" element={<MainProductPage />} />
       <Route path="/textoverimage" element={<Textoverimage />} />     
       <Route path="/product/:slug" element={<SingleProductpage />} />
