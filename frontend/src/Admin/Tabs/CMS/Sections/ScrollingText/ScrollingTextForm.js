@@ -123,18 +123,20 @@ const ScrollingTextForm = ({ isEditMode = false }) => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colSpan="2">
-                                            <label>
-                                                <input
+
+                                    <td>
+                                            <div className="d-flex align-items-center gap-2">
+                                            <input
                                                     type="checkbox"
                                                     name="isMegaText"
                                                     checked={formData.isMegaText}
                                                     onChange={handleInputChange}
                                                     
                                                 />
-                                                Mega Scrolling Text?
-                                            </label>
+                                                <div className="formlabel"> Mega Scrolling Text?</div>
+                                            </div>
                                         </td>
+                                       
 
                                         {isEditMode && (
                                             <td>

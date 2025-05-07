@@ -38,27 +38,27 @@ const AnnouncementForm = ({ isEditMode = false }) => {
                     setIsLoading(false);
                 }
             };
-    
+
             if (isEditMode && Id) {
                 loadAnnouncement();
             } else {
                 setIsLoading(false);
             }
-    
+
             isFetchedRef.current = true; // Mark data as fetched
         }
     }, [isEditMode, Id]);
-    
+
 
     const handleInputChange = (e) => {
         const { name, type, checked, value } = e.target;
-        
+
         setFormData((prev) => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value, // Correctly handle checkbox value
         }));
     };
-    
+
 
 
     const handleCancel = () => {
@@ -70,7 +70,7 @@ const AnnouncementForm = ({ isEditMode = false }) => {
 
 
     const handleSubmitFile = async (e) => {
-        
+
         e.preventDefault();
 
         try {
@@ -97,11 +97,11 @@ const AnnouncementForm = ({ isEditMode = false }) => {
     return (
         <div>
 
-            
-                <div className='pagetitle'>
-                    {isEditMode ? 'Edit Announcement' : 'Create a New Announcement'}
-                </div>
-           
+
+            <div className='pagetitle'>
+                {isEditMode ? 'Edit Announcement' : 'Create a New Announcement'}
+            </div>
+
             <div className="form-800">
                 <div className="white-bg">
                     <div className='input-form'>
@@ -119,15 +119,20 @@ const AnnouncementForm = ({ isEditMode = false }) => {
                                                 required
                                             />
                                         </td>
-                                        <td>
-                                            <div className="formlabel">Visible in Website</div>
-                                            <input
-                                                type="checkbox"
-                                                name="ShowInSite"
-                                                checked={formData.ShowInSite}  // Use checked instead of value
-                                                onChange={handleInputChange}
-                                            />
 
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div className="d-flex align-items-center gap-2">
+                                                <input
+                                                    type="checkbox"
+                                                    name="ShowInSite"
+                                                    checked={formData.ShowInSite}
+                                                    onChange={handleInputChange}
+                                                />
+                                                <div className="formlabel">Visible in Website</div>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -135,7 +140,7 @@ const AnnouncementForm = ({ isEditMode = false }) => {
 
                                         {isEditMode && (
                                             <td>
-                                                <label htmlFor="status">Status:</label>
+                                                <label htmlFor="status" className='formlabel'>Status:</label>
                                                 <select
                                                     name="Status"
                                                     value={formData.Status}
@@ -147,6 +152,7 @@ const AnnouncementForm = ({ isEditMode = false }) => {
                                                 </select>
                                             </td>
                                         )}
+                                        <td></td>
                                     </tr>
 
                                     <tr>

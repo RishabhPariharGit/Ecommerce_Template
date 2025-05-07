@@ -12,24 +12,7 @@ import {
     getPaginationRowModel,
     flexRender,
 } from '@tanstack/react-table';
-
-const EditableCell = ({ initialValue, row, column }) => {
-    const [value, setValue] = useState(initialValue);
-
-    const onBlur = () => {
-        row.original[column.id] = value;
-        // Optional: sync changes to backend if needed
-    };
-
-    return (
-        <input
-            className="editable-cell"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onBlur={onBlur}
-        />
-    );
-};
+;
 
 const AnnouncementList = () => {
     const [announcements, setAnnouncements] = useState([]);
@@ -86,27 +69,23 @@ const AnnouncementList = () => {
                 header: 'Text',
                 enableSorting: true,
                 enableResizing: true,
-                cell: ({ getValue, row, column }) => (
-                    <EditableCell initialValue={getValue()} row={row} column={column} />
-                ),
+                
             },
             {
-                accessorKey: 'Status',
+                id: 'status',
                 header: 'Status',
-                enableSorting: true,
-                enableResizing: true,
-                cell: ({ getValue, row, column }) => (
-                    <EditableCell initialValue={getValue()} row={row} column={column} />
+                cell: ({ row }) => (
+                  <span style={{ color: row.original.audit.status === 'Active' ? 'green' : 'red' }}>
+                    {row.original.audit.status || 'Inactive'}
+                  </span>
                 ),
-            },
+              },
             {
                 accessorKey: 'ShowInSite',
                 header: 'Visible in Site',
                 enableSorting: true,
                 enableResizing: true,
-                cell: ({ getValue, row, column }) => (
-                    <EditableCell initialValue={getValue()} row={row} column={column} />
-                ),
+                
             },
             {
                 id: 'actions',

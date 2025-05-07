@@ -115,24 +115,24 @@ const UspsForm = ({ isEditMode = false }) => {
 
     const handleSubmitFile = async (e) => {
         e.preventDefault();
-    
+
         const payload = {
             MainHeading: formData.MainHeading,
             SubHeading: formData.SubHeading,
             IconBlocks: formData.IconBlocks,
         };
-    
+
         if (isEditMode) {
             payload.Status = formData.Status;
         }
-    
+
         let response;
         if (isEditMode) {
             response = await updateUsps(Id, payload);
         } else {
             response = await addUsps(payload);
         }
-    
+
         if (response && response.data) {
             alert(response.message);
             navigate('/admin/Usps');
@@ -140,7 +140,7 @@ const UspsForm = ({ isEditMode = false }) => {
             alert('Unexpected response from the server');
         }
     };
-    
+
     if (isLoading) return <div>Loading...</div>;
 
     return (
@@ -186,7 +186,11 @@ const UspsForm = ({ isEditMode = false }) => {
                                         <td colSpan="2">
                                             <div className="formlabel">Icon Blocks</div>
                                             {formData.IconBlocks.map((block, index) => (
-                                                <div key={index} style={{ marginBottom: '10px' }}>
+                                                <div key={index} style={{
+                                                    marginBottom: '10px', gap: '10px',
+                                                    flexDirection: 'column',
+                                                    display: 'flex'
+                                                }}>
 
                                                     {/* Icon Image Upload */}
                                                     <input
@@ -221,17 +225,20 @@ const UspsForm = ({ isEditMode = false }) => {
                                                         required
                                                     />
 
-                                                    {/* Remove button */}
-                                                    {formData.IconBlocks.length > 1 && (
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => handleRemoveIconBlock(index)}
-                                                            className="button cancel-button"
-                                                            style={{ marginLeft: '10px' }}
-                                                        >
-                                                            Remove
-                                                        </button>
-                                                    )}
+                                                    <div>
+                                                        {/* Remove button */}
+                                                        {formData.IconBlocks.length > 1 && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleRemoveIconBlock(index)}
+                                                                className="button cancel-button"
+                                                                style={{ marginLeft: '10px' }}
+                                                            >
+                                                                Remove
+                                                            </button>
+                                                        )}
+                                                    </div>
+
 
                                                 </div>
                                             ))}

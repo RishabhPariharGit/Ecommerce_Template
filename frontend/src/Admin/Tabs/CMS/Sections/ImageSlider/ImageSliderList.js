@@ -13,23 +13,7 @@ import {
     flexRender,
 } from '@tanstack/react-table';
 
-const EditableCell = ({ initialValue, row, column }) => {
-    const [value, setValue] = useState(initialValue);
 
-    const onBlur = () => {
-        row.original[column.id] = value;
-        // Optionally sync to backend
-    };
-
-    return (
-        <input
-            className="editable-cell"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onBlur={onBlur}
-        />
-    );
-};
 
 const ImageSliderList = () => {
     const [imageSliders, setImageSliders] = useState([]);
@@ -86,10 +70,28 @@ const ImageSliderList = () => {
                 header: 'Text',
                 enableSorting: true,
                 enableResizing: true,
-                cell: ({ getValue, row, column }) => (
-                    <EditableCell initialValue={getValue()} row={row} column={column} />
-                ),
+                
             },
+            {
+                id: 'image',
+                header: 'Image',
+                cell: ({ row }) => (
+                  <img
+                    src={row.original.Image || 'default-image.jpg'} // Replace with your image URL field or a default image
+                    alt={row.original.Name}
+                    style={{ width: '70px', height: '50px', objectFit: 'cover' }}
+                  />
+                ),
+              },
+            {
+                id: 'status',
+                header: 'Status',
+                cell: ({ row }) => (
+                  <span style={{ color: row.original.audit.status === 'Active' ? 'green' : 'red' }}>
+                    {row.original.audit.status || 'Inactive'}
+                  </span>
+                ),
+              },
             {
                 id: 'actions',
                 header: 'Actions',

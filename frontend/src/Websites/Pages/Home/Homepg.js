@@ -21,12 +21,11 @@ const Home = () => {
     <>
     <ImageSlider/>
     <ScrollingText/>
-    <CollectionCardSlider Slug="summer-collection" />
+    <CollectionCardSlider/>
     <ScrollingTextBig/>
     <CollectionGrid/>
     <ProductCardSlider/>
     <MegaVideoSlider/>
-    <CollectionCardSlider Slug="Topwear" />
     <Textoverimage/>
     <LookBook/>
     <USP/>

@@ -82,6 +82,7 @@ const UspsList = () => {
                 enableResizing: true,
                
             },
+
             {
                 accessorKey: 'UspsIconCount',
                 header: 'UpsBlock Count',
@@ -89,6 +90,15 @@ const UspsList = () => {
                 enableResizing: true,
                
             },
+            {
+        id: 'status',
+        header: 'Status',
+        cell: ({ row }) => (
+          <span style={{ color: row.original.audit.status === 'Active' ? 'green' : 'red' }}>
+            {row.original.audit.status || 'Inactive'}
+          </span>
+        ),
+      },
             {
                 id: 'actions',
                 header: 'Actions',
