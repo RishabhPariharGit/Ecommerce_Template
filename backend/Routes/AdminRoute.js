@@ -79,12 +79,17 @@ const { GetAllScrollingTexts,
    DeleteScrollingVideo
  } = require("../controllers/ScrollingVideoController");
 
+
+
 const { GetAllUsps, 
   CreateUsps,
    GetUspsById, 
    UpdateUsps, 
    DeleteUsps
  } = require("../controllers/UspsController");
+
+ const {Createcollection,GetAllCollections,GetCollectionById,
+  UpdateCollection,DeleteCollection} =require('../controllers/CollectionController')
 // User Ruote
 
 
@@ -178,6 +183,13 @@ router.get("/Usps/Edit/:Id", GetUspsById);
 router.put("/UpdateUsps/:Id", UpdateUsps);
 router.delete('/DeleteUsps/:id', DeleteUsps);
 
+
+// Colections route
+router.post("/Createcollection", Createcollection);
+router.get("/GetAllCollections", GetAllCollections);
+router.get("/GetCollectionById/Edit/:Id", GetCollectionById);
+router.put("/UpdateCollection/:Id", UpdateCollection);
+router.delete('/DeleteCollection/:id', DeleteCollection);
 
 
 module.exports = router;

@@ -302,16 +302,27 @@ const UpdateProduct = async (req, res) => {
 
 const GetAllProducts = async (req, res) => {
     try {
-        const Products = await ProductModel.find();
-        if (!Products || Products.length === 0) {
-            return res.status(404).json({ message: 'No Products found', data: [] });
-        }
-        return res.status(200).json({ message: "Products retrieved successfully", data: Products });
+      const Products = await ProductModel.find()
+        .populate({
+          path: 'SubcategoryId',
+          select: 'Name'  // only fetch Subcategory Name field
+        })
+        .populate({
+          path: 'CategoryId',
+          select: 'Name'  // optional: if you also want category names
+        });
+  
+      if (!Products || Products.length === 0) {
+        return res.status(404).json({ message: 'No Products found', data: [] });
+      }
+  
+      return res.status(200).json({ message: "Products retrieved successfully", data: Products });
     } catch (err) {
-        console.error("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error", data: null });
+      console.error("Error:", err);
+      return res.status(500).json({ message: "Internal Server Error", data: null });
     }
-};
+  };
+  
 
 
 const GetProductBySlug = async (req, res) => {

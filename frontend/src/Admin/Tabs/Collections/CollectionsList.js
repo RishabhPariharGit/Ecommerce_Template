@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
-    getAllScrollingVideos,
-    deleteScrollingVideo,
-} from '../../../../../Services/AdminServices/Allservices/ScrollingVideoService';
+    getAllCollections,
+    deleteCollection,
+} from '../../../Services/AdminServices/Allservices/CollectionService';
 import { useNavigate } from 'react-router-dom';
 import {
     useReactTable,
@@ -12,56 +12,53 @@ import {
     getPaginationRowModel,
     flexRender,
 } from '@tanstack/react-table';
+import { toast } from 'react-toastify'; // ✅ Import toast
 
 
 
-const ScrollingVideoList = () => {
-    const [ScrollingVideos, setScrollingVideos] = useState([]);
+const CollectionList = () => {
+    const [Collections, setCollections] = useState([]);
     const [globalFilter, setGlobalFilter] = useState('');
     const [sorting, setSorting] = useState([]);
     const [pageSize, setPageSize] = useState(5);
+    const navigate = useNavigate();
     const [columnResizeMode] = useState('onChange');
     const isFetchedRef = useRef(false);
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (!isFetchedRef.current) {
-            const fetchData = async () => {
+            const fetchCollections = async () => {
                 try {
-                    const response = await getAllScrollingVideos();
-                    const allTexts = response?.data || [];
-                    setScrollingVideos(allTexts.filter(item => !item.isMegaText));
-                    
-                } catch (error) {
-                    console.error('Error fetching ScrollingVideos:', error);
+                    const response = await getAllCollections();
+                    setCollections(response?.data || []);
+                    toast.success('Collections loaded successfully'); // ✅ Success toast
+                } catch (err) {
+                    console.error('Error fetching Collections:', err);
+                    toast.error('Failed to load Collections'); // ❌ Error toast
                 }
             };
-
-            fetchData();
+            fetchCollections();
             isFetchedRef.current = true;
         }
     }, []);
 
-    const handleEdit = (id) => {
-        navigate(`/admin/ScrollingVideo/edit/${id}`);
+    const handleEdit = (Id) => {
+        navigate(`/admin/Collection/Edit/${Id}`);
     };
 
     const handleCreate = () => {
-        navigate('/admin/ScrollingVideo/create');
+        navigate('/admin/Collection/create');
     };
 
     const handleDelete = async (id) => {
-        if (
-            window.confirm(
-                'Are you sure you want to delete this ScrollingVideo? This will also delete related data.'
-            )
-        ) {
+        if (window.confirm('Are you sure you want to delete this Collection?')) {
             try {
-                await deleteScrollingVideo(id);
-                setScrollingVideos((prev) => prev.filter((text) => text._id !== id));
-                
-            } catch (error) {
-                console.error('Error deleting ScrollingVideo:', error);
+                await deleteCollection(id);
+                setCollections((prev) => prev.filter((s) => s._id !== id));
+                toast.success('Collection deleted successfully'); // ✅ Success toast
+            } catch (err) {
+                console.error('Error deleting Collection:', err);
+                toast.error('Failed to delete Collection'); // ❌ Error toast
             }
         }
     };
@@ -69,8 +66,23 @@ const ScrollingVideoList = () => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'Text',
-                header: 'Text',
+                accessorKey: 'Name',
+                header: 'Name',
+                enableSorting: true,
+                enableResizing: true,
+               
+            },
+            
+            {
+                accessorKey: 'Add_collections',
+                header: 'Add In collections',
+                enableSorting: true,
+                enableResizing: true,
+               
+            },
+            {
+                accessorKey: 'Add_Products',
+                header: 'Add In Product Card',
                 enableSorting: true,
                 enableResizing: true,
                
@@ -84,13 +96,14 @@ const ScrollingVideoList = () => {
                   </span>
                 ),
               },
+            
             {
                 id: 'actions',
                 header: 'Actions',
                 enableSorting: false,
                 enableResizing: false,
                 cell: ({ row }) => (
-                    <div className="customization-main-btns">
+                    <div className="action-buttons">
                         <button
                             className="gridbutton"
                             onClick={() => handleEdit(row.original._id)}
@@ -110,16 +123,19 @@ const ScrollingVideoList = () => {
         []
     );
 
-    const tableNormal = useReactTable({
-        data: ScrollingVideos,
+    const table = useReactTable({
+        data: Collections,
         columns,
-        state: { globalFilter, sorting },
+        state: {
+            globalFilter,
+            sorting,
+        },
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        columnResizeMode,
+        columnResizeMode: columnResizeMode,
         enableColumnResizing: true,
         initialState: {
             pagination: {
@@ -127,55 +143,56 @@ const ScrollingVideoList = () => {
             },
         },
     });
-   
     return (
         <div className="table-main-div">
             <div className="white-bg-btn">
-                <p>ScrollingVideos</p>
+                <p>Collections</p>
                 <button className="button" onClick={handleCreate}>
-                    Create ScrollingVideo
+                    Create Collection
                 </button>
             </div>
 
             <div className="white-bg">
                 <div className="table-sub-head">
-                    <p>All  ScrollingVideo</p>
+                    <p>All Collections</p>
                 </div>
                 <hr />
+
                 <div className="p-4">
                     <div className="white-bg">
                         <div className="table-top-bar">
                             <div className="entries-dropdown flex items-center gap-3">
                                 <span>Show</span>
                                 <select
-                                    value={tableNormal.getState().pagination.pageSize}
-                                    onChange={(e) => {
-                                        const newSize = Number(e.target.value);
-                                        tableNormal.setPageSize(newSize);
-                                        setPageSize(newSize);
-                                    }}
-                                >
-                                    <option value={5}>5</option>
-                                    <option value={10}>10</option>
-                                    <option value={25}>25</option>
-                                    <option value={50}>50</option>
-                                </select>
+                                        value={table.getState().pagination.pageSize}
+                                        onChange={(e) => {
+                                            table.setPageSize(Number(e.target.value));
+                                            setPageSize(Number(e.target.value));
+                                        }}
+                                    >
+                                        <option value={5}>5</option>
+                                        <option value={10}>10</option>
+                                        <option value={25}>25</option>
+                                        <option value={50}>50</option>
+                                    </select>
                                 <span>entries</span>
                             </div>
 
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                                value={globalFilter}
-                                onChange={(e) => setGlobalFilter(e.target.value)}
-                                className="search-input"
-                            />
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Search..."
+                                    value={globalFilter}
+                                    onChange={(e) => setGlobalFilter(e.target.value)}
+                                    className="search-input"
+                                />
+                            </div>
                         </div>
 
                         <div className="responsive-table-container">
                             <table className="responsive-table">
                                 <thead>
-                                    {tableNormal.getHeaderGroups().map((headerGroup) => (
+                                    {table.getHeaderGroups().map((headerGroup) => (
                                         <tr key={headerGroup.id}>
                                             {headerGroup.headers.map((header) => (
                                                 <th
@@ -207,55 +224,60 @@ const ScrollingVideoList = () => {
                                     ))}
                                 </thead>
                                 <tbody>
-                                    {tableNormal.getRowModel().rows.length > 0 ? (
-                                        tableNormal.getRowModel().rows.map((row) => (
-                                            <tr key={row.id}>
-                                                {row.getVisibleCells().map((cell) => (
-                                                    <td key={cell.id}>
-                                                        {flexRender(
-                                                            cell.column.columnDef.cell,
-                                                            cell.getContext()
-                                                        )}
-                                                    </td>
-                                                ))}
-                                            </tr>
-                                        ))
+                                    {table.getRowModel().rows.length > 0 ? (
+                                        table
+                                            .getRowModel()
+                                            .rows.slice(0, pageSize)
+                                            .map((row) => (
+                                                <tr key={row.id}>
+                                                    {row.getVisibleCells().map((cell) => (
+                                                        <td key={cell.id}>
+                                                            {flexRender(
+                                                                cell.column.columnDef.cell,
+                                                                cell.getContext()
+                                                            )}
+                                                        </td>
+                                                    ))}
+                                                </tr>
+                                            ))
                                     ) : (
                                         <tr>
-                                            <td colSpan={columns.length} style={{ textAlign: 'center', padding: '20px' }}>
-                                                No ScrollingVideos found
+                                            <td
+                                                colSpan={columns.length}
+                                                style={{ textAlign: 'center', padding: '20px' }}
+                                            >
+                                                No Collections found
                                             </td>
                                         </tr>
                                     )}
                                 </tbody>
                             </table>
                         </div>
-
-                        <div className="text-end">
-                            <button
-                                className="button Pagination-btn"
-                                onClick={() => tableNormal.previousPage()}
-                                disabled={!tableNormal.getCanPreviousPage()}
-                            >
-                                &lt;
-                            </button>
-                            <span>
-                                Page {tableNormal.getState().pagination.pageIndex + 1} of {tableNormal.getPageCount()}
-                            </span>
-                            <button
-                                className="button Pagination-btn"
-                                onClick={() => tableNormal.nextPage()}
-                                disabled={!tableNormal.getCanNextPage()}
-                            >
-                                &gt;
-                            </button>
-                        </div>
+                         {/* Pagination Controls */}
+                         <div className="text-end">
+                                <button
+                                    className=" button Pagination-btn"
+                                    onClick={() => table.previousPage()}
+                                    disabled={!table.getCanPreviousPage()}
+                                >
+                                    &lt;
+                                </button>
+                                <span>
+                                    Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                                </span>
+                                <button
+                                    className="button Pagination-btn"
+                                    onClick={() => table.nextPage()}
+                                    disabled={!table.getCanNextPage()}
+                                >
+                                    &gt;
+                                </button>
+                            </div>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
 
-export default ScrollingVideoList;
+export default CollectionList;

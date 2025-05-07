@@ -27,6 +27,9 @@ import ScrollingVideoForm from '../Admin/Tabs/CMS/Sections/ScrollingVideo/Scroll
 import UspsList from '../Admin/Tabs/CMS/Sections/Usps/UspsList';
 import UspsForm from '../Admin/Tabs/CMS/Sections/Usps/UspsForm';
 
+import CollectionsList from '../Admin/Tabs/Collections/CollectionsList';
+import CollectionsForm from '../Admin/Tabs/Collections/CollectionsForm';
+
 const AdminRoutes = () => {
   return (
     <AdminLayout>
@@ -254,6 +257,33 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
+
+
+        <Route
+          path="Collections"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <CollectionsList />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Collection/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <CollectionsForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Collection/Edit/:Id"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <CollectionsForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
+
 
         {/* Unauthorized Route */}
         <Route

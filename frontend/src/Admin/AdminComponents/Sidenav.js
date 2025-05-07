@@ -217,6 +217,7 @@ const Sidenav = ({ closeSidenav }) => {
             <ListItemText primary="Sections Management" />
             {openCategory ? <ExpandLess className="sidenav-icon" /> : <ExpandMore className="sidenav-icon" />}
           </ListItemButton>
+
           <Collapse in={OpenSection} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItemButton component={Link} to="/admin/Announcements" onClick={closeSidenav} className="sidenav-button sidenav-subbutton">
@@ -246,6 +247,11 @@ const Sidenav = ({ closeSidenav }) => {
             </List>
           </Collapse>
 
+
+          <ListItemButton component={Link} to="/admin/Collections" onClick={closeSidenav} className="sidenav-button">
+            <ListItemIcon className="sidenav-icon"><Inventory /></ListItemIcon>
+            <ListItemText primary="Collections" />
+          </ListItemButton>
 
 
           <ListItemButton component={Link} to="/admin/Users" onClick={closeSidenav} className="sidenav-button">

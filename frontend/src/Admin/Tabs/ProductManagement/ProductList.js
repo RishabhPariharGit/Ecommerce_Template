@@ -101,11 +101,24 @@ const ProductList = () => {
                 enableResizing: true,
             },
             {
-                accessorKey: 'CategoryName',
-                header: 'Category',
+                accessorKey: 'subcategoryName',
+                header: 'SubCategory',
                 enableSorting: true,
                 enableResizing: true,
+                cell: ({ row }) =>
+                row.original.SubcategoryId.length > 0
+                  ? row.original.SubcategoryId.map((subcategory) => subcategory.Name).join(', ')
+                  : 'N/A',
             },
+            {
+                id: 'status',
+                header: 'Status',
+                cell: ({ row }) => (
+                  <span style={{ color: row.original.audit.status === 'Active' ? 'green' : 'red' }}>
+                    {row.original.audit.status || 'Inactive'}
+                  </span>
+                ),
+              },
             {
                 id: 'actions',
                 header: 'Actions',

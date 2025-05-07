@@ -11,6 +11,8 @@ const { GetAll_Active_ImageSliders } = require("../controllers/ImageSliderContro
 const { GetAll_Active_ScrollingTexts } = require("../controllers/ScrollingTextController");
 const { GetAll_Active_ScrollingVideos } = require("../controllers/ScrollingVideoController");
 const { GetAll_Active_Usps } = require("../controllers/UspsController");
+const { GetCollectionByName } = require("../controllers/CollectionController");
+
 
 const { GetAllProductsBySlug ,
   GetAll_Active_Product,
@@ -92,5 +94,7 @@ router.get("/GetAll_Active_Usps", GetAll_Active_Usps);
 
 //ScrollingVideo Route
 router.get("/GetAllActiveScrollingVideo", GetAll_Active_ScrollingVideos);
+
+router.post("/GetColletionByname", GetCollectionByName);
 
 module.exports = router;
