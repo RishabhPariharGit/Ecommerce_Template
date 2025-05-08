@@ -1,0 +1,120 @@
+.fltr-cstm-clss-filter-section {
+    width: 350px;
+    padding: 20px;
+    border-right: 1px solid #eee;
+  }
+
+  .fltr-cstm-clss-filter-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid grey;
+}
+
+  .fltr-cstm-clss-filter-group {
+    margin-bottom: 20px;
+  }
+
+  .fltr-cstm-clss-filter-group h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .fltr-cstm-clss-filter-options {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .fltr-cstm-clss-filter-options li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .fltr-cstm-clss-filter-options label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .fltr-cstm-clss-filter-options input {
+    margin-left: 10px;
+  }
+
+  .fltr-cstm-clss-show-more {
+    color: #e60023;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .fltr-cstm-clss-color-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .fltr-cstm-clss-extra-categories {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+  }
+
+  .fltr-cstm-clss-extra-categories.expanded {
+    max-height: 200px;
+  }
+
+  .price-slider-label {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  #price-slider {
+    margin-top: 10px;
+  }
+
+  .price-range-display {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+
+  .noUi-connect {
+    background: #e60023;
+  }
+
+  .noUi-handle {
+    background: #e60023;
+    border: none;
+  }
+
+  .noUi-horizontal .noUi-handle {
+    width: 10px;
+    height: 10px;
+    top: -3px;
+    right: -3px;
+    border-radius: 50%;
+  }
+
+  .noUi-horizontal{
+    height: 6px;
+  }
+  .noUi-handle:before{
+    width: 0px;
+  }
+
+  .noUi-handle:after{
+    width: 0px;
+  }
