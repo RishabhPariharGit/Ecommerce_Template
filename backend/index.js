@@ -21,6 +21,7 @@ const AnnouncementModel =require('./Models/Announcement')
 const ImageSliderModel =require('./Models/ImageSlider');
 const ScrollingTextModel = require('./Models/ScrollingText');
 const ScrollingVideoModel = require('./Models/ScrollingVideo');
+const PolicyModel = require('./Models/Policy');
 
 const cloudinary = require('cloudinary').v2;  
 require('dotenv').config();
@@ -65,6 +66,7 @@ AnnouncementModel();
 ImageSliderModel();
 ScrollingTextModel();
 ScrollingVideoModel();
+PolicyModel();
 
 
 app.use('/admin', AdminRouter);

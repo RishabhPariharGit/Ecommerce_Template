@@ -253,6 +253,10 @@ const Sidenav = ({ closeSidenav }) => {
             <ListItemText primary="Collections" />
           </ListItemButton>
 
+          <ListItemButton component={Link} to="/admin/Policies" onClick={closeSidenav} className="sidenav-button">
+            <ListItemIcon className="sidenav-icon"><Inventory /></ListItemIcon>
+            <ListItemText primary="Policy" />
+          </ListItemButton>
 
           <ListItemButton component={Link} to="/admin/Users" onClick={closeSidenav} className="sidenav-button">
             <ListItemIcon className="sidenav-icon"><People /></ListItemIcon>

@@ -88,6 +88,13 @@ const { GetAllUsps,
    DeleteUsps
  } = require("../controllers/UspsController");
 
+
+ const {
+  GetAllPolicy, 
+  CreatePolicy, 
+  GetPolicyById, 
+  UpdatePolicy,
+  DeletePolicy} = require("../controllers/PolicyController");
  const {Createcollection,GetAllCollections,GetCollectionById,
   UpdateCollection,DeleteCollection} =require('../controllers/CollectionController')
 // User Ruote
@@ -190,6 +197,15 @@ router.get("/GetAllCollections", GetAllCollections);
 router.get("/GetCollectionById/Edit/:Id", GetCollectionById);
 router.put("/UpdateCollection/:Id", UpdateCollection);
 router.delete('/DeleteCollection/:id', DeleteCollection);
+
+
+//Policy Route
+router.post("/CreatePolicy", CreatePolicy);
+router.get("/GetAllPolicy", GetAllPolicy);
+router.get("/Policy/Edit/:Id", GetPolicyById);
+router.put("/UpdatePolicy/:Id", UpdatePolicy);
+router.delete('/DeletePolicy/:id', DeletePolicy);
+
 
 
 module.exports = router;
