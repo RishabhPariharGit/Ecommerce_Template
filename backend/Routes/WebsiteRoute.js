@@ -43,6 +43,8 @@ const {AddToCart,
     GetWishListItems,
     DeleteWishlistItem,GetWishlistCount}= require("../Controllers/WishListItemController");
 
+    const{GetPolicyBySlug}= require("../controllers/PolicyController")
+
 //Uer Route
 router.post("/RegisterUser", RegisterUser);
 router.post("/LoginUser", LoginUser);
@@ -96,5 +98,8 @@ router.get("/GetAll_Active_Usps", GetAll_Active_Usps);
 router.get("/GetAllActiveScrollingVideo", GetAll_Active_ScrollingVideos);
 
 router.post("/GetColletionByname", GetCollectionByName);
+
+
+router.post("/GetPolicyBySlug",GetPolicyBySlug)
 
 module.exports = router;

@@ -30,6 +30,10 @@ import UspsForm from '../Admin/Tabs/CMS/Sections/Usps/UspsForm';
 import CollectionsList from '../Admin/Tabs/Collections/CollectionsList';
 import CollectionsForm from '../Admin/Tabs/Collections/CollectionsForm';
 
+import PolicyList from '../Admin/Tabs/CMS/Pages/Policy/PolicyList';
+import PolicyForm from '../Admin/Tabs/CMS/Pages/Policy/PolicyForm';
+
+
 const AdminRoutes = () => {
   return (
     <AdminLayout>
@@ -284,6 +288,31 @@ const AdminRoutes = () => {
           }
         />
 
+
+        <Route
+          path="Policies"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <PolicyList />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Policy/create"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <PolicyForm isEditMode={false} />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Policy/Edit/:Id"
+          element={
+            <AuthGuard allowedRoles={['Admin', 'SystemAdmin']}>
+              <PolicyForm isEditMode={true} />
+            </AuthGuard>
+          }
+        />
 
         {/* Unauthorized Route */}
         <Route

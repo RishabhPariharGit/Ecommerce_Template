@@ -16,8 +16,7 @@ import PaymentPage from '../Websites/Pages/PaymentPage/PaymentPage';
 import Orders from '../Websites/Pages/Orders/Orders';
 import About from '../Websites/Pages/About/Aboutpg';
 import PrivacyPolicy from '../Websites/Pages/Policies/PrivacyPolicy';
-import TermsAndConditions from '../Websites/Pages/Policies/TermsAndConditions';
-import ShippingPolicy from '../Websites/Pages/Policies/ShippingPolicy';
+import Policies from '../Websites/Pages/Policies/Policies';
 
 const WebsiteRoutes = () => {
   return (
@@ -28,9 +27,9 @@ const WebsiteRoutes = () => {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/about" element={<About/>} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
-      <Route path="/terms-and-conditions" element={<TermsAndConditions/>} />
-      <Route path="/shipping-policy" element={<ShippingPolicy/>} />
+      <Route path="/privacy-policy" element={<Policies Slug="Privacy Policy"/>} />
+      <Route path="/terms-and-conditions" element={<Policies Slug="Terms and Conditions"/>} />
+      <Route path="/shipping-policy" element={<Policies Slug="Shipping Policy"/>} />
       <Route path="/collections/:slug" element={<MainProductPage />} />
       <Route path="/textoverimage" element={<Textoverimage />} />     
       <Route path="/product/:slug" element={<SingleProductpage />} />
