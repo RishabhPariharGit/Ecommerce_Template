@@ -164,3 +164,90 @@ button.add-to-cart {
     background-color: black;
     border-radius: 8px;
 }
+
+/* filters css start */
+
+/* .cstm-mn-clss-filter-wrapper {
+    font-family: sans-serif;
+    width: 260px;
+    padding: 20px;
+    color: #111;
+  }
+  
+  .cstm-mn-clss-filter-section {
+    margin-bottom: 30px;
+  }
+  
+  .cstm-mn-clss-filter-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .cstm-mn-clss-color-list,
+  .cstm-mn-clss-size-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cstm-mn-clss-color-list li,
+  .cstm-mn-clss-size-list li {
+    margin-bottom: 8px;
+  }
+  
+  .cstm-mn-clss-color-list label,
+  .cstm-mn-clss-size-list label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .cstm-mn-clss-color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    display: inline-block;
+  }
+  
+  input [type="checkbox"] {
+    margin-left: 10px;
+  }
+  
+  .cstm-mn-clss-count {
+    color: #888;
+    font-size: 13px;
+    margin-left: 4px;
+  }
+  
+  .cstm-mn-clss-show-more {
+    color: #d3004a;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .cstm-mn-clss-price-range {
+    font-size: 14px;
+  }
+  
+  .cstm-mn-clss-price-range input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+    accent-color: #d3004a;
+  }
+  
+  .collection-filters-secondary-wrapper {
+    padding: 30px;
+} */
+
+/* filters css end */

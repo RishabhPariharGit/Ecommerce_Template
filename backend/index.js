@@ -21,6 +21,7 @@ const AnnouncementModel =require('./Models/Announcement')
 const ImageSliderModel =require('./Models/ImageSlider');
 const ScrollingTextModel = require('./Models/ScrollingText');
 const ScrollingVideoModel = require('./Models/ScrollingVideo');
+const AboutUsModel = require('./Models/AboutUs');
 const PolicyModel = require('./Models/Policy');
 
 const cloudinary = require('cloudinary').v2;  
@@ -66,6 +67,8 @@ AnnouncementModel();
 ImageSliderModel();
 ScrollingTextModel();
 ScrollingVideoModel();
+AboutUsModel();
+
 PolicyModel();
 
 

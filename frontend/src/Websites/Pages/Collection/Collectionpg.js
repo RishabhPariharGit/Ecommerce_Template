@@ -9,6 +9,7 @@ import './Collectionpg.css';
 import Productcard from '../../Website_Components/Cards/View/Productcard/Productcard';
 import { CartContext } from '../../../Context/CartContext';
 import { WishlistContext } from '../../../Context/WishlistContext';
+import FilterSidebar from './Filters/FilterSidebar';
 
 const MainProductPage = () => {
     const { slug } = useParams();
@@ -128,7 +129,8 @@ const MainProductPage = () => {
                 <p>Collection short description should be written here and will look great!</p>
             </div>
             <div className='collection-display-main-wrapper-devide-in-two'>
-                <div className='collection-filters-main-wrapper'><p>filters</p></div>
+                {/* this will be filters corner */}
+                <FilterSidebar/>
                 <div className='collection-display-main-wrapper'>
                     {products.length > 0 ? (
                         <ul>
