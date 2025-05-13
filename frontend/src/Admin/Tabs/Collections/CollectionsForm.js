@@ -129,7 +129,7 @@ const CollectionsForm = ({ isEditMode = false }) => {
 
     const handleSubmitFile = async (e) => {
         e.preventDefault();
-debugger
+
         if (!formData.Name) {
             toast.error('Please enter a name.');
             return;

@@ -51,7 +51,7 @@ const WishlistItems = () => {
     }
   };
   const handleAddToCart = async (product) => {
-        debugger
+        
    
     try {
         const payload = {

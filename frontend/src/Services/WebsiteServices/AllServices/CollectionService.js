@@ -3,7 +3,7 @@
 import api from '../Api_Intersecptor/AxiosWebsite';
 
 export const getColletionByname = async (Name) => {
-  debugger
+  
     try { 
       const response = await api.post(`/GetColletionByname`, { Name }); 
       

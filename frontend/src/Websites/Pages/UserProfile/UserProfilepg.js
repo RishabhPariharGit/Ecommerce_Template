@@ -72,7 +72,7 @@ const UserProfile = ({ isEditMode = false }) => {
   };
 
   const handleSavechanges = async () => {
-    debugger
+    
     const token = Cookies.get('token');
     if (!token) {
       console.error('No token found');
