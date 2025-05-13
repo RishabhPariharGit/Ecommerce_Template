@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 // Add Usps
 export const addUsps = async (UspsData) => {
     try {
-      debugger
+      
         console.log("UspsData",UspsData.IconBlocks)
           const token = Cookies.get('token');
       

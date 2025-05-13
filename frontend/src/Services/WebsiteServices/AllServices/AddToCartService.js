@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 // Add Product to Cart
 export const addProductToCart = async (ProductData) => {
     try {
-        debugger
+        
         const guid = Cookies.get('guid'); // Retrieve GUID if available
         const token = Cookies.get('token'); // Retrieve Token if available
 

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 // Add Policy
 export const addPolicy = async (PolicyData) => {
     try {
-      debugger
+      
     
          
         const response = await api.post('/CreatePolicy', PolicyData);

@@ -67,18 +67,28 @@ const CollectionCardSlider = () => {
         </div>
 
         <Swiper
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
-          modules={[Navigation]}
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
-          loop={false}
-          spaceBetween={30}
-          slidesPerView={4}
-        >
+  onSwiper={(swiper) => (swiperRef.current = swiper)}
+  modules={[Navigation]}
+  navigation={{
+    prevEl: prevRef.current,
+    nextEl: nextRef.current,
+  }}
+  pagination={{ clickable: true }}
+  autoplay={{ delay: 3000, disableOnInteraction: false }}
+  loop={false}
+  spaceBetween={30}
+  breakpoints={{
+    0: {
+      slidesPerView: 1,
+    },
+    640: {
+      slidesPerView: 2,
+    },
+    1024: {
+      slidesPerView: 4,
+    },
+  }}
+>
           {collection?.SubcategoryId?.map((subcategory) => (
             <SwiperSlide key={subcategory._id} className="Main-swiper-mn-wrapper-clctn">
               <div className="w-full h-[400px] flex justify-center items-center bg-white rounded-xl shadow-md px-4">

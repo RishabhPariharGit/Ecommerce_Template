@@ -52,7 +52,7 @@ export const addProductToWishlist = async (ProductData) => {
 
   export const getWishlistCount = async (headers) => {
     try {
-        debugger
+        
         const response = await api.get('/GetWishlistCount', { headers });
         return response.data;
     } catch (error) {

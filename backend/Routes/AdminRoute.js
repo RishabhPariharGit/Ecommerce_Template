@@ -88,6 +88,8 @@ const { GetAllUsps,
    DeleteUsps
  } = require("../controllers/UspsController");
 
+ const { CreateAboutUs,
+ } = require("../controllers/AboutUsController");
 
  const {
   GetAllPolicy, 
@@ -205,6 +207,13 @@ router.get("/GetAllPolicy", GetAllPolicy);
 router.get("/Policy/Edit/:Id", GetPolicyById);
 router.put("/UpdatePolicy/:Id", UpdatePolicy);
 router.delete('/DeletePolicy/:id', DeletePolicy);
+
+// About Us Route
+router.post("/CreateAboutUs", CreateAboutUs);
+// router.get("/GetAllUsps", GetAllUsps);
+// router.get("/Usps/Edit/:Id", GetUspsById);
+// router.put("/UpdateUsps/:Id", UpdateUsps);
+// router.delete('/DeleteUsps/:id', DeleteUsps);
 
 
 
