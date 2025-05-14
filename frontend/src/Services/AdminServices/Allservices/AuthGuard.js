@@ -8,7 +8,7 @@ const AuthGuard = ({ children, allowedRoles }) => {
   const role = Cookies.get('role'); 
 
   if (!token) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/admin/login" replace />;
   }
   if (allowedRoles && !allowedRoles.includes(role)) {
     return <Navigate to="/not-authorized" replace />; 

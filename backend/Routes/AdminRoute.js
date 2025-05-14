@@ -11,7 +11,9 @@ const {
   AddAddress,
   UpdateUserAddress,
   DeleteUserAddress,
-  UpdateDefaultAddress
+  UpdateDefaultAddress,
+  AddUserAdmin,
+  LoginUserAsAdmin
 } = require('../Controllers/UserController');
 const {
   CreateCategory,
@@ -101,10 +103,13 @@ const { GetAllUsps,
   UpdateCollection,DeleteCollection} =require('../controllers/CollectionController')
 // User Ruote
 
+/*Login Route just before Auth because during login ther will be no token  */
+router.post("/loginUseras_admin", LoginUserAsAdmin);
 
 
 router.use(authMiddleware);
 // User Ruote
+router.post("/AddAdmin", AddUserAdmin);
 router.get("/User/Edit/:Username", GetUserByUsername);
 router.get("/GetAllUsers", GetAllUsers);
 router.put("/UpdateUser/:Username", UpdateUser);

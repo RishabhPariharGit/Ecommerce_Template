@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { registerUser, getUserByUsername, updateUser }
-    from '../../../Services/WebsiteServices/AllServices/UserService';
+import { addUser, getUserByUsername, updateUser }
+    from '../../../Services/AdminServices/Allservices/UserService';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../AdminStyle/AdminGlobalStyle.css';
 
 
 const UserForm = ({ isEditMode = false }) => {
     const [formData, setFormData] = useState({
-        Name: '',
+        FirstName: '',
+        LastName:'',
         Username: '',
         Email: '',
         Phone: '',
@@ -15,6 +16,7 @@ const UserForm = ({ isEditMode = false }) => {
         ConfirmPassword: '', // New Confirm Password field
         IsAdmin: false,
         IsSystemAdmin: false,
+        Status: '',
     });
 
     const { Username } = useParams();
@@ -29,7 +31,28 @@ const UserForm = ({ isEditMode = false }) => {
             const loadUser = async () => {
                 try {
                     const response = await getUserByUsername(Username);
-                    setFormData({ ...response.data, Password: '', ConfirmPassword: '' });
+                    if(response.data)
+                    {
+                        console.log("getUserByUsername",response.data)
+                        const user =response.data;
+                        setFormData({ 
+                            FirstName: user.FirstName,
+                            LastName:user.LastName,
+                            Username: user.Username,
+                            Email: user.Email,
+                            Phone: user.Phone,
+                            Password: '',
+                            ConfirmPassword: '', // New Confirm Password field
+                            IsAdmin: user.IsAdmin,
+                            IsSystemAdmin: user.IsSystemAdmin,
+                            Status: user.audit.status,
+                        });
+
+                    }else{
+                        setFormData(null);
+                    }
+                  
+
                 } catch (error) {
                     console.error('Error loading user:', error);
                 } finally {
@@ -68,7 +91,7 @@ const UserForm = ({ isEditMode = false }) => {
                 await updateUser(Username, formData);
                 console.log('User updated successfully');
             } else {
-                await registerUser(formData);
+                await addUser(formData);
                 console.log('User added successfully');
             }
             navigate('/admin/Users');
@@ -101,28 +124,29 @@ const UserForm = ({ isEditMode = false }) => {
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <div className="formlabel">Name</div>
+                                <td>
+                                        <div className="formlabel">FirstName</div>
                                         <input
                                             type="text"
-                                            name="Name"
-                                            value={formData.Name}
+                                            name="FirstName"
+                                            value={formData.FirstName}
                                             onChange={handleInputChange}
                                             required
                                         />
                                     </td>
                                     <td>
-                                        <div className="formlabel">Username</div>
+                                        <div className="formlabel">LastName</div>
                                         <input
                                             type="text"
-                                            name="Username"
-                                            value={formData.Username}
+                                            name="LastName"
+                                            value={formData.LastName}
                                             onChange={handleInputChange}
                                             required
-                                            disabled={isEditMode}
                                         />
-                                    </td>
+                                    </td> 
                                 </tr>
+                              
+
                                 <tr>
                                     <td>
                                         <div className="formlabel">Email</div>
@@ -176,6 +200,37 @@ const UserForm = ({ isEditMode = false }) => {
                                         </td>
                                     </tr>
                                 )}
+                                  <tr>
+                                    
+                                    <td>
+                                        <div className="formlabel">Username</div>
+                                        <input
+                                            type="text"
+                                            name="Username"
+                                            value={formData.Username}
+                                            onChange={handleInputChange}
+                                            required
+                                            disabled={isEditMode}
+                                        />
+                                    </td>
+
+                                    {isEditMode && (
+                                      
+                                            <td colSpan="2">
+                                                <label>Status:</label>
+                                                <select
+                                                    name="Status"
+                                                    value={formData.Status}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                >
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </td>
+                                       
+                                    )}
+                                </tr>
                                 <tr>
                                     <td>
                                         <div>

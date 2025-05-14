@@ -2,21 +2,49 @@ const UserModel = require('../Models/User');
 const RoleModel = require('../Models/Role')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const USerModel = require('../Models/User');
 const AddressModel = require('../Models/Address');
+const { GeneralStatus } = require('../Enum/Enum');
+// const nodemailer = require('nodemailer');
 
-const RegisterUser = async (req, res) => {
+// Configure Nodemailer Transporter
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         user: 'pallavihanwat000@gmail.com', // Replace with your Gmail address
+//         pass: 'ucje mlae hmxx qxgz', // Use your App Password
+//     },
+// });
+
+/* Start Admin Methods */
+const AddUserAdmin = async (req, res) => {
     try {
-        const { FirstName, LastName, Username, Email, Phone, Password, IsAdmin, IsSystemAdmin, AlternatePhone, Gender, DateOfBirth } = req.body;
-        if (!FirstName || !LastName || !Username || !Email || !Phone || !Password) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
+        const {
+            FirstName,
+            LastName,
+            Username,
+            Email,
+            Phone,
+            Password,
+            IsAdmin,
+            IsSystemAdmin,
+            AlternatePhone,
+            Gender,
+            DateOfBirth
+        } = req.body;
+
+        
+
         const existingUser = await UserModel.findOne({ Email });
         if (existingUser) {
             return res.status(400).json({ message: "User with this email already exists" });
         }
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(Password, salt);
+
+        // Determine the creator/updater
+        const userId = req.user ? req.user._id : "self"; // or 'self' as a string
+
         const newUser = new UserModel({
             FirstName,
             LastName,
@@ -28,36 +56,60 @@ const RegisterUser = async (req, res) => {
             IsSystemAdmin,
             AlternatePhone,
             Gender,
-            DateOfBirth
+            DateOfBirth,
+            audit: {
+                createdDate: new Date(),
+                createdBy: userId,
+                updatedDate: new Date(),
+                updatedBy: userId,
+                status: GeneralStatus.ACTIVE
+            }
         });
+
         const savedUser = await newUser.save();
         if (!savedUser) {
             return res.status(500).json({ message: "User registration failed" });
         }
+
         if (IsAdmin) {
             const adminRole = new RoleModel({
                 RoleName: 'Admin',
-                userId: savedUser._id
+                userId: savedUser._id,
+                audit: {
+                    createdDate: new Date(),
+                    createdBy: userId,
+                    updatedDate: new Date(),
+                    updatedBy: userId,
+                    status: GeneralStatus.ACTIVE
+                }
             });
-
             await adminRole.save();
         }
+
         if (IsSystemAdmin) {
             const systemAdminRole = new RoleModel({
                 RoleName: 'SystemAdmin',
-                userId: savedUser._id
+                userId: savedUser._id,
+                audit: {
+                    createdDate: new Date(),
+                    createdBy: userId,
+                    updatedDate: new Date(),
+                    updatedBy: userId,
+                    status: GeneralStatus.ACTIVE
+                }
             });
-
             await systemAdminRole.save();
         }
-        return res.status(200).json({ message: "User registered successfully", userId: savedUser._id });
+
+        return res.status(200).json({ message: "User registered successfully", data: savedUser});
     } catch (err) {
         console.error("Error:", err);
         return res.status(500).json({ message: "Internal Server Error" });
     }
-}
+};
 
-const LoginUser = async (req, res) => {
+
+const LoginUserAsAdmin = async (req, res) => {
     try {
         const { Username, Password } = req.body;
         const user = await UserModel.findOne({ Username });
@@ -73,7 +125,13 @@ const LoginUser = async (req, res) => {
             email: user.email,
         };
         const jwtToken = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '30d' });
-
+  // Automated Confirmation Email to the User
+//   const confirmationMailOptions = {
+//     from: 'pallavihanwat000@gmail.com', // Your Gmail address
+//     to: email, // User's email
+//     subject: 'Thank You for Contacting Us!',
+//     text: `Hi ${name},\nThank you for reaching out to us. We have received your message:\n"${message}"\nWe will get back to you shortly.\nBest regards,\nYour Company Name`,
+// };
         res.cookie('token', jwtToken, {
             httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
@@ -128,7 +186,10 @@ const GetUserByUsername = async (req, res) => {
         if (!User) {
             return res.status(404).json({ message: 'User not found' });
         }
-        return res.status(200).json(User);
+        return res.status(200).json({
+            message: 'User retrived successfully!',
+            data: User
+        });
     } catch (err) {
         console.error("Error:", err);
         return res.status(500).json({ message: "Internal Server Error" });
@@ -148,11 +209,12 @@ const UpdateUser = async (req, res) => {
             IsSystemAdmin, 
             AlternatePhone, 
             Gender, 
-            DateOfBirth 
+            DateOfBirth ,
+            Status
         } = req.body;
 
         const { Username: currentUsername } = req.params;
-
+        const userId = req.user ? req.user._id : "self";
         const user = await UserModel.findOne({
             Username: { $regex: new RegExp(`^${currentUsername}$`, 'i') }
         });
@@ -187,7 +249,9 @@ const UpdateUser = async (req, res) => {
         if (Gender) user.Gender = Gender;
         if (DateOfBirth) user.DateOfBirth = DateOfBirth;
         if (Password) user.Password = Password; // Assuming you hash it elsewhere (like in pre-save middleware)
-
+        user.audit.updatedDate = new Date();
+        user.audit.updatedBy = userId;
+        user.audit.status = Status;
         const updatedUser = await user.save();
 
         // Remove old roles
@@ -232,7 +296,7 @@ const DeleteUser = async (req, res) => {
         const Role = await RoleModel.find({ UserId: user._id });
 
         await RoleModel.deleteMany({ UserId: user._id });
-        await USerModel.findByIdAndDelete(id);
+        await UserModel.findByIdAndDelete(id);
 
         res.status(200).json({ message: 'User and Role  deleted successfully!' });
     } catch (err) {
@@ -241,6 +305,8 @@ const DeleteUser = async (req, res) => {
     }
 };
 
+
+/* Start Admin Methods */
 
 const GetUserProfile = async (req, res) => {
     try {
@@ -470,6 +536,6 @@ const UpdateDefaultAddress = async (req, res) => {
 
 
 module.exports = {
-    RegisterUser, LoginUser, GetUserByUsername, GetAllUsers, UpdateUser,
+    AddUserAdmin, LoginUserAsAdmin, GetUserByUsername, GetAllUsers, UpdateUser,
     DeleteUser, GetUserProfile, GetAddresses, AddAddress, UpdateUserAddress, DeleteUserAddress, UpdateDefaultAddress
 };

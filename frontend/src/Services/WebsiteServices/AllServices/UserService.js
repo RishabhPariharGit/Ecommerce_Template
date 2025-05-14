@@ -50,7 +50,7 @@ export const deleteUser = async (UserId) => {
 
 export const getUserByUsername = async (Username) => {
   try {
-
+debugger
     const response = await api.get(`/User/Edit/${Username}`)
     return response
   } catch (error) {

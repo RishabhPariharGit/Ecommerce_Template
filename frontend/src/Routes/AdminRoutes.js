@@ -11,25 +11,18 @@ import ProductList from '../Admin/Tabs/ProductManagement/ProductList';
 import ProductForm from '../Admin/Tabs/ProductManagement/ProductForm';
 import UserList from '../Admin/Tabs/UserManagement/UserList';
 import UserForm from '../Admin/Tabs/UserManagement/UserForm';
-
 import AnnouncementList from '../Admin/Tabs/CMS/Sections/Announcement/AnnouncementList';
 import AnnouncementForm from '../Admin/Tabs/CMS/Sections/Announcement/AnnouncementForm';
 import ImageSliderList from '../Admin/Tabs/CMS/Sections/ImageSlider/ImageSliderList';
 import ImageSliderForm from '../Admin/Tabs/CMS/Sections/ImageSlider/ImageSliderForm';
-
 import ScrollingTextList from '../Admin/Tabs/CMS/Sections/ScrollingText/ScrollingTextList';
 import ScrollingTextForm from '../Admin/Tabs/CMS/Sections/ScrollingText/ScrollingTextForm';
-
 import ScrollingVideoList from '../Admin/Tabs/CMS/Sections/ScrollingVideo/ScrollingVideoList';
 import ScrollingVideoForm from '../Admin/Tabs/CMS/Sections/ScrollingVideo/ScrollingVideoForm';
-
-
 import UspsList from '../Admin/Tabs/CMS/Sections/Usps/UspsList';
 import UspsForm from '../Admin/Tabs/CMS/Sections/Usps/UspsForm';
-
 import CollectionsList from '../Admin/Tabs/Collections/CollectionsList';
 import CollectionsForm from '../Admin/Tabs/Collections/CollectionsForm';
-
 import PolicyList from '../Admin/Tabs/CMS/Pages/Policy/PolicyList';
 import PolicyForm from '../Admin/Tabs/CMS/Pages/Policy/PolicyForm';
 
@@ -40,6 +33,7 @@ const AdminRoutes = () => {
       <Routes>
         <Route path="/Dashboard" element={<AuthGuard allowedRoles={['Admin', 'SystemAdmin']}><Dashboard /> </AuthGuard>} />
 
+        {/* Category route */}
         <Route path="/Category/create" element={<AuthGuard allowedRoles={['Admin', 'SystemAdmin']}> <CategoryForm isEditMode={false} /> </AuthGuard>} />
         <Route
           path="/Category/edit/:slug"
@@ -57,6 +51,8 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
+
+        {/* SubCategory route */}
         <Route
           path="/SubCategory/create"
           element={
@@ -81,6 +77,8 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
+
+        {/* Products route */}
         <Route
           path="/Products"
           element={
@@ -105,6 +103,8 @@ const AdminRoutes = () => {
             </AuthGuard>
           }
         />
+
+        {/* Users route */}
         <Route
           path="/Users"
           element={
@@ -131,7 +131,7 @@ const AdminRoutes = () => {
         />
 
 
-
+        {/* Announcements route */}
         <Route
           path="Announcements"
           element={
@@ -157,7 +157,7 @@ const AdminRoutes = () => {
           }
         />
 
-
+        {/* ImageSliders route */}
         <Route
           path="ImageSliders"
           element={
@@ -183,7 +183,7 @@ const AdminRoutes = () => {
           }
         />
 
-
+        {/* ScrollingTexts route */}
         <Route
           path="ScrollingTexts"
           element={
@@ -210,7 +210,7 @@ const AdminRoutes = () => {
         />
 
 
-
+        {/* Usps route */}
         <Route
           path="Usps"
           element={
@@ -236,7 +236,7 @@ const AdminRoutes = () => {
           }
         />
 
-
+        {/* ScrollingVideos route */}
         <Route
           path="ScrollingVideos"
           element={
@@ -262,7 +262,7 @@ const AdminRoutes = () => {
           }
         />
 
-
+        {/* Collections route */}
         <Route
           path="Collections"
           element={
@@ -288,7 +288,7 @@ const AdminRoutes = () => {
           }
         />
 
-
+        {/* Policies route */}
         <Route
           path="Policies"
           element={
