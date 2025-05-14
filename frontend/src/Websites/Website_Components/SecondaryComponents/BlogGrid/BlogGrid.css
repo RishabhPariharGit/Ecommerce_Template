@@ -82,3 +82,15 @@
     padding: 20px;
   }
   
+  @media (max-width: 480px) {
+  .blg-mn-section{
+display: block;
+  }
+  .blg-mn-card{
+    display: flex;
+  }
+  .blg-mn-card:first-child .blg-mn-content {
+    background-color: #2e2c2c;
+    color: #fff;
+}
+}

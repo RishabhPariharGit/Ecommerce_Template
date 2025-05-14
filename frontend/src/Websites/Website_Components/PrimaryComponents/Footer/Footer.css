@@ -34,3 +34,19 @@
         margin-bottom: 10px;
     }
     
+    @media (max-width: 480px) {
+        .Main-Footer-Main-Wrapper {
+            padding: 40px;
+            margin-top: 50px;
+        }
+
+    .Category-Wrapper-One, .Category_Wrapper-Second, .Category-wrapper-Third{
+    width: 100%;
+}
+.Main-Footer-Categories-Wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+}
+    }
