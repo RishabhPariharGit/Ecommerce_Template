@@ -13,23 +13,6 @@ import {
     flexRender,
 } from '@tanstack/react-table';
 
-const EditableCell = ({ initialValue, row, column }) => {
-    const [value, setValue] = useState(initialValue);
-
-    const onBlur = () => {
-        row.original[column.id] = value;
-        // Optionally sync to backend
-    };
-
-    return (
-        <input
-            className="editable-cell"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onBlur={onBlur}
-        />
-    );
-};
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -38,6 +21,8 @@ const UserList = () => {
     const [pageSize, setPageSize] = useState(5);
     const isFetchedRef = useRef(false);
     const navigate = useNavigate();
+    const [columnResizeMode] = useState('onChange');
+
 
     useEffect(() => {
         if (!isFetchedRef.current) {
@@ -77,37 +62,48 @@ const UserList = () => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'Name',
-                header: 'Name',
-                enableSorting: true,
-                cell: ({ getValue, row, column }) => (
-                    <EditableCell initialValue={getValue()} row={row} column={column} />
-                ),
-            },
+      accessorKey: 'Name',
+      header: 'Name',
+      enableSorting: true,
+      cell: ({ row }) => {
+        const { FirstName, LastName } = row.original;
+        return `${FirstName} ${LastName}`;
+      }
+    },
             {
                 accessorKey: 'Username',
                 header: 'Username',
-                enableSorting: true,
-                cell: ({ getValue, row, column }) => (
-                    <EditableCell initialValue={getValue()} row={row} column={column} />
-                ),
+                enableSorting: true
+                
             },
             {
                 accessorKey: 'Email',
                 header: 'Email',
-                enableSorting: true,
-                cell: ({ getValue, row, column }) => (
-                    <EditableCell initialValue={getValue()} row={row} column={column} />
-                ),
+                enableSorting: true
+               
             },
             {
-                accessorKey: 'Role',
+                accessorKey: 'Roles',
                 header: 'Role',
-                enableSorting: true,
-                cell: ({ getValue, row, column }) => (
-                    <EditableCell initialValue={getValue()} row={row} column={column} />
-                ),
+                enableSorting: false, // sorting arrays is messy unless handled manually
+                cell: ({ row }) => (
+                  <div>
+                    {row.original.Roles.length > 0
+                      ? row.original.Roles.join(', ')
+                      : 'No Role'}
+                  </div>
+                )
             },
+            {
+                id: 'status',
+                header: 'Status',
+                cell: ({ row }) => (
+                  <span style={{ color: row.original.audit.status === 'Active' ? 'green' : 'red' }}>
+                    {row.original.audit.status || 'Inactive'}
+                  </span>
+                ),
+              },
+              
             {
                 id: 'actions',
                 header: 'Actions',
@@ -132,25 +128,24 @@ const UserList = () => {
         []
     );
 
+   
     const table = useReactTable({
         data: users,
         columns,
-        state: {
-            globalFilter,
-            sorting,
-        },
+        state: { globalFilter, sorting },
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        columnResizeMode,
+        enableColumnResizing: true,
         initialState: {
             pagination: {
                 pageSize: pageSize,
             },
         },
     });
-
     return (
         <div className="table-main-div">
             <div className="white-bg-btn">

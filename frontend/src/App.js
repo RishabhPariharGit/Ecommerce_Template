@@ -4,7 +4,7 @@ import WebsiteRoutes from './Routes/WebsiteRoutes';
 import AdminRoutes from './Routes/AdminRoutes';
 import { CartProvider } from './Context/CartContext';
 import { WishlistProvider } from './Context/WishlistContext';
-
+import LoginForm from '../src/Admin/AdminLoginForm/Login'
 
 function App() {
   return (
@@ -20,6 +20,8 @@ function App() {
             </WishlistProvider>
           } 
         />
+            {/* Admin login route - should not use AdminLayout */}
+            <Route path="/admin/login" element={<LoginForm />} />
         <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>

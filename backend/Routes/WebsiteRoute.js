@@ -26,8 +26,6 @@ const {
  } = require("../Controllers/SubCategoryController");
 
 const {
-  RegisterUser,
-  LoginUser ,
   GetUserProfile,
   UpdateUser
 } = require('../Controllers/UserController');
@@ -46,8 +44,8 @@ const {AddToCart,
     const{GetPolicyBySlug}= require("../controllers/PolicyController")
 
 //Uer Route
-router.post("/RegisterUser", RegisterUser);
-router.post("/LoginUser", LoginUser);
+
+
 router.get('/UserProfile', GetUserProfile);
 router.put("/UpdateUser/:Username", UpdateUser);
 
