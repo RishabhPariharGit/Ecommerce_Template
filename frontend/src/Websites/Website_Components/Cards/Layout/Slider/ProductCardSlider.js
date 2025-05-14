@@ -136,22 +136,32 @@ const [cartProductIds, setCartProductIds] = useState(new Set());
           </div>
         </div>
         
-        <Swiper
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
-          modules={[Navigation]}
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
-          loop={false}
-          spaceBetween={30}
-          slidesPerView={4}
-        >
+             <Swiper
+       onSwiper={(swiper) => (swiperRef.current = swiper)}
+       modules={[Navigation]}
+       navigation={{
+         prevEl: prevRef.current,
+         nextEl: nextRef.current,
+       }}
+       pagination={{ clickable: true }}
+       autoplay={{ delay: 3000, disableOnInteraction: false }}
+       loop={false}
+       spaceBetween={30}
+       breakpoints={{
+         0: {
+           slidesPerView: 1,
+         },
+         640: {
+           slidesPerView: 2,
+         },
+         1024: {
+           slidesPerView: 4,
+         },
+       }}
+     >
           {products.map((product) => (
             <SwiperSlide className="Main-swiper-mn-wrapper-clctn" key={product._id}>
-              <div className="w-full h-[400px] flex justify-center items-center bg-white rounded-xl shadow-md px-4">
+              <div className="w-full h-[400px] flex justify-center items-center bg-white rounded-xl shadow-md px-4 mb-clss">
                 <Productcard
                                                   key={product._id}
                                                   product={product}

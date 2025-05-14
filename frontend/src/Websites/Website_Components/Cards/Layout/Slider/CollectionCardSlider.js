@@ -91,7 +91,7 @@ const CollectionCardSlider = () => {
 >
           {collection?.SubcategoryId?.map((subcategory) => (
             <SwiperSlide key={subcategory._id} className="Main-swiper-mn-wrapper-clctn">
-              <div className="w-full h-[400px] flex justify-center items-center bg-white rounded-xl shadow-md px-4">
+              <div className="w-full h-[400px] flex justify-center items-center bg-white rounded-xl shadow-md px-4 mb-clss">
                 <CollectionCard product={subcategory} />
               </div>
             </SwiperSlide>
